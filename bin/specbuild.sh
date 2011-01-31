@@ -21,7 +21,7 @@ VERSION=`uname -v`
 
 case ${VERSION} in
     snv*)
-	echo "OpenSolaris. set --ips"
+	echo "Solaris 11/OpenIndiana set --ips"
 	REPTYPE='--ips'
 	;;
     Generic*)
@@ -34,7 +34,7 @@ case ${VERSION} in
 esac
 
 
-${PKGTOOL} build-only --patchdirs=`pwd`/patches --sourcedirs=`pwd` ${REPTYPE} --download ${SPEC}
+${PKGTOOL} build-only --patchdirs=`pwd`/patches --sourcedirs=`pwd`/ext-sources:`pwd`/copyright:`pwd`/include ${REPTYPE} --download ${SPEC}
 RESULT=$?
 if [ ${RESULT} = 0 -a ${REPTYPE} = '--svr4' ];then
     pkgtrans ~/packages/PKGS/ ~/packages/PKGS/${SPEC%.*}.pkg ${SPEC%.*}

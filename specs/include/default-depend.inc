@@ -3,7 +3,9 @@
 #
 # Copyright (c) 2003 Sun Microsystems, Inc.
 #
-Requires: SUNWcsr
-Requires: SUNWcsu
-Requires: SUNWcsd
-Requires: SUNWcsl
+# Comment out by TAKI.
+#   That dependencies cause sereve dependency by compiling system.
+#Requires: SUNWcsr
+#Requires: SUNWcsu
+#Requires: SUNWcsd
+#Requires: SUNWcsl

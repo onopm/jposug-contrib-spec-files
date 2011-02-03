@@ -25,7 +25,7 @@ Nkf is a Kanji code converter for terminals, hosts, and networks. Nkf
 converts input Kanji code to 7-bit JIS, MS-kanji (shifted-JIS) or EUC.
 
 %package  NKF
-IPS_package_name: library/perl-5/NKF
+IPS_package_name: library/perl-5/nkf
 Summary:        Perl extension for Network Kanji Filter
 Group:          Applications/Text
 BuildRequires:	SUNWperl584core

@@ -16,7 +16,7 @@ IPS_package_name: library/perl-5/image-metadata-jpeg
 Version:	0.153
 IPS_component_version: 0.153
 Summary:	Access to and modification of JPEG meta-data
-License:	Artistic
+License:	GPLv2
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 Url:		http://search.cpan.org/~bettelli/%{tarball_name}-%{tarball_version}
@@ -62,3 +62,5 @@ rm -rf $RPM_BUILD_ROOT
 #%{_bindir}/*
 
 %changelog
+* Sat Feb  5 2011 - TAKI,Yasushi <taki@justplayer.com>
+- Initial spec file

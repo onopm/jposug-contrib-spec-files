@@ -1657,6 +1657,8 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %{_prefix}/%{major_version}/bin/amd64/vacuumlo
 
 %changelog
+* Fri Feb  4 JST 2011 TAKI, Yasushi <taki@justplayer.com>
+- Support 9.0.3
 * Tue Feb  1 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Fix some problems.
 * Tue Jan 25 JST 2011 TAKI, Yasushi <taki@justplayer.com>

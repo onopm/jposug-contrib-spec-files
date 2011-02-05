@@ -13,12 +13,17 @@ Name:		   nkf
 Version:	   2.1.1
 IPS_package_name:  text/nkf
 License:           BSD
+Group:             Applications/Text
 URL:               http://nkf.sourceforge.jp/
 Source0:           http://dl.sourceforge.jp/%{name}/48945/%{name}-%{version}.tar.gz
 Buildroot:         %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:     SUNWperl584core
 BuildRequires:     system/library/iconv/utf-8
 SUNW_Copyright:    %{name}.copyright
+
+Meta(info.maintainer_url):      http://sourceforge.jp/forum/forum.php?forum_id=25193
+Meta(info.upstream_url):        http://sourceforge.jp/projects/nkf/
+Meta(info.classification):      org.opensolaris.category.2008:Text
 
 %description
 Nkf is a Kanji code converter for terminals, hosts, and networks. Nkf
@@ -39,10 +44,6 @@ This is a Perl Extension version of nkf (Network Kanji Filter).
 It converts the last argument and return converted result.
 Conversion details are specified by flags before the last argument.
 
-Meta(info.maintainer):          s.miyaza@gmail.com
-Meta(info.upstream):            Naruse Yui <naruse@users.sourceforge.jp>
-Meta(info.upstream_url):        http://sourceforge.jp/projects/nkf/
-Meta(info.classification):	org.opensolaris.category.2008:Text
 
 %prep
 %setup -q -n %{name}-%{version}

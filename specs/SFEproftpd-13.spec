@@ -179,11 +179,14 @@ cp %{SOURCE9} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/samples-conf.d/logs.co
 mkdir -p ${RPM_BUILD_ROOT}/var/proftpd/1.3/pub
 mkdir -p ${RPM_BUILD_ROOT}/var/proftpd/1.3/logs
 
+rmdir ${RPM_BUILD_ROOT}/var/run
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr (-, root, bin)
+%dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/sbin
@@ -193,6 +196,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/sbin/*
 %{_prefix}/%{major_version}/share/*
 
+%dir %attr (0755, root, sys) %{_sysconfdir}
 %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd
 %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3
 %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3/conf.d/
@@ -209,7 +213,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) /var/proftpd/1.3/pub
 %dir %attr (0755, root, bin) /var/proftpd/1.3/logs
 %dir %attr (0755, root, sys) %{_localstatedir}
-%dir %attr (0755, root, sys) %{_localstatedir}/run
+%dir %attr (0755, root, sys) /var/svc
+%dir %attr (0755, root, sys) /var/svc/manifest
+%dir %attr (0755, root, sys) /var/svc/manifest/network
 %class(manifest) %attr(0444, root, sys) /var/svc/manifest/network/proftpd.xml
 %attr (0511,root,bin) /lib/svc/method/proftpd
 
@@ -235,6 +241,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files postgres
 %defattr (-, root, bin)
+%dir %attr (0755, root, sys) %{_sysconfdir}
 %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3/samples-conf.d/
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/libexec
 %{_sysconfdir}/proftpd/1.3/samples-conf.d/postgres.conf
@@ -244,6 +251,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files mysql
 %defattr (-, root, bin)
+%dir %attr (0755, root, sys) %{_sysconfdir}
 %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3/samples-conf.d/
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/libexec
 %{_sysconfdir}/proftpd/1.3/samples-conf.d/mysql.conf
@@ -258,5 +266,7 @@ rm -rf $RPM_BUILD_ROOT
 - Initial Revision
 * Tue Jan 12 2010 TAKI, Yasushi <taki@justplayer.com>
 - Support 1.3.2c
-* Wed Feb  2 17:18:32 JST 2011 TAKI, Yasushi <taki@justplayer.com>
+* Wed Feb  2 2011 TAKI, Yasushi <taki@justplayer.com>
 - Support 1.3.3d and mod_gss
+* Sun Mar 27 2011 TAKI, Yasushi <taki@justplayer.com>
+- Change Permission at /etc

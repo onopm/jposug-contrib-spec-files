@@ -96,10 +96,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr (-, root, bin)
+%dir %attr(0755, root, sys) %{_prefix}
 %dir %attr(0755, root, bin) %{_prefix}/php/5.2/modules
 %{_prefix}/php/5.2/modules/*
+%dir %attr(0755, root, sys) %{_sysconfdir}
 %{_sysconfdir}/php/5.2/conf.d/*
 
 %changelog
-* Tue Jun 30 2009 TAKI, Yasushi <taki@justplayer.com>
+* Sun Mar 27 2011 TAKI, Yasushi <taki@justplayer.com>
+- Change Permission at /etc
+* Tue Jun 30 2011 TAKI, Yasushi <taki@justplayer.com>
 - Initial Revision

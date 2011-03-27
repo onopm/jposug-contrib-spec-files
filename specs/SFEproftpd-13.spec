@@ -243,6 +243,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr (0755, root, sys) %{_sysconfdir}
 %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3/samples-conf.d/
+%dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/libexec
 %{_sysconfdir}/proftpd/1.3/samples-conf.d/postgres.conf
 %{_prefix}/%{major_version}/libexec/mod_sql_postgres.a
@@ -253,6 +254,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr (0755, root, sys) %{_sysconfdir}
 %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3/samples-conf.d/
+%dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/libexec
 %{_sysconfdir}/proftpd/1.3/samples-conf.d/mysql.conf
 %{_prefix}/%{major_version}/libexec/mod_sql_mysql.a

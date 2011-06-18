@@ -37,18 +37,18 @@
 %endif
 
 %ifarch i386
-%define gcc_optflags           %_gcc_opt_level -march=i586 -Xlinker -i -fno-omit-frame-pointer %gcc_picflags
-%define gcc_cxx_optflags       %_gxx_opt_level -march=i586 -Xlinker -i -fno-omit-frame-pointer %gcc_picflags
+%define gcc_optflags           %_gcc_opt_level -march=i686 -Xlinker -i -fno-omit-frame-pointer %gcc_picflags
+%define gcc_cxx_optflags       %_gxx_opt_level -march=i686 -Xlinker -i -fno-omit-frame-pointer %gcc_picflags
 %endif
 
 %ifarch sparc
-%define suncc_optflags           -i %_cc_opt_level -xstrconst -xarch=v8a -mr
-%define suncc_cxx_optflags       -i %_cxx_opt_level -xarch=v8a -mr -norunpath
+%define suncc_optflags           -i %_cc_opt_level -xstrconst -xarch=v8plusa -mr
+%define suncc_cxx_optflags       -i %_cxx_opt_level -xarch=v8plusa -mr -norunpath
 %endif
 
 %ifarch i386
-%define suncc_optflags           -i %_cc_opt_level -xstrconst -xpentium -mr -xregs=no%%frameptr
-%define suncc_cxx_optflags       -i %_cxx_opt_level -pentium -mr -norunpath -xregs=no%%frameptr
+%define suncc_optflags           -i %_cc_opt_level -xstrconst -xarch=pentium_pro -mr -xregs=no%%frameptr
+%define suncc_cxx_optflags       -i %_cxx_opt_level -xarch=pentium_pro -mr -norunpath -xregs=no%%frameptr
 %endif
 
 %if %cc_is_gcc
@@ -90,6 +90,9 @@
 %define xorg_lib_path   -L%xorg_lib -R%xorg_lib
 
 # ChangeLog:
+# 2011-03-18  Milan Jurik
+# - move minimal x86 CPU to pentium_pro/i686
+# - move minimal SPARC CPU to UltraSPARC
 # 2008-05-09  Laszlo (Laca) Peter  <laca@sun.com>
 # - use %_gpp instead of g++ when checking the version of g++
 # 2008-02-17  Laszlo (Laca) Peter  <laca@sun.com>

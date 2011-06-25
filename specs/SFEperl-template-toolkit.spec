@@ -7,6 +7,7 @@
 # includes module(s):
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 Name:		SFEperl-template-toolkit
 IPS_package_name: library/perl-5/template-toolkit
@@ -20,10 +21,8 @@ SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/A/AB/ABW/Template-Toolkit-%{version}.tar.gz
 
-BuildRequires:	SUNWperl584core
-BuildRequires:	SUNWperl584usr
-Requires:	SUNWperl584core
-Requires:	SUNWperl584usr
+BuildRequires:  %{pnm_buildrequires_perl_default}
+Requires:  	%{pnm_requires_perl_default}
 
 Meta(info.maintainer):          pkglabo.justplayer.com <pkgadmin@justplayer.com>
 Meta(info.upstream):            Andy Wardley <cpan@wardley.org>
@@ -36,7 +35,7 @@ Extensive Toolkit for template processing
 %setup -q -n Template-Toolkit-%{version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4
+perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version}
 make
 
 %install

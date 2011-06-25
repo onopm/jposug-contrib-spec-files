@@ -4,6 +4,7 @@
 # package are under the same license as the package itself.
 
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define _prefix %{_basedir}/gnu
 %define tarball_name file

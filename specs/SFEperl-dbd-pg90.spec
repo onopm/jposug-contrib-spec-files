@@ -6,7 +6,9 @@
 #
 # includes module(s):
 #
+
 %include Solaris.inc
+%include packagenamemacros.inc
 
 Name:		SFEperl-dbd-pg90
 IPS_package_name: library/perl-5/dbd-pg90
@@ -20,17 +22,15 @@ SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/T/TU/TURNSTEP/DBD-Pg-%{version}.tar.gz
 
-BuildRequires:	SUNWperl584core
-BuildRequires:	SUNWperl584usr
-BuildRequires:	library/perl-5/version
-BuildRequires:	library/perl-5/test-simple
-BuildRequires:	library/perl-5/database
-BuildRequires:	database/postgres-90/developer
-BuildRequires:	database/postgres-90/library
-Requires:	SUNWperl584core
-Requires:	SUNWperl584usr
-Requires:	library/perl-5/database
-Requires:	database/postgres-90/library
+BuildRequires:  %{pnm_buildrequires_perl_default}
+Requires:  	%{pnm_requires_perl_default}
+BuildRequires:	SFEperl-version
+BuildRequires:	SFEperl-test-simple
+BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
+BuildRequires:	SFEpostgres-90-library
+BuildRequires:	SFEpostgres-90-developer
+Requires:	%{pnm_requires_SUNWpmdbi}
+Requires:	SFEpostgres-90-library
 
 Meta(info.maintainer):          taki@justplayer.com
 Meta(info.upstream):            Greg Sabino Mullane <greg@turnstep.com>
@@ -44,7 +44,7 @@ Postgres Driver for DBI
 
 %build
 POSTGRES_LIB="/usr/postgres/9.0/lib/"; export POSTGRES_LIB
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4 
+perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version} 
 make
 
 %install

@@ -5,9 +5,9 @@
 #
 
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define yaml_version 0.72
-%define perl_version 5.8.4
 
 Name:                    SFEperl-yaml
 IPS_package_name:        library/perl-5/yaml
@@ -16,9 +16,9 @@ Version:                 %{perl_version}.%{yaml_version}
 Source:                  http://search.cpan.org/CPAN/authors/id/A/AD/ADAMK/YAML-%{yaml_version}.tar.gz
 SUNW_BaseDir:            %{_basedir}
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
-Requires:                SUNWperl584core
-BuildRequires:           SUNWperl584core
-#BuildRequires:           SUNWsfwhea
+BuildRequires:  %{pnm_buildrequires_perl_default}
+Requires:  	%{pnm_requires_perl_default}
+
 
 %ifarch sparc
 %define perl_dir sun4-solaris-64int

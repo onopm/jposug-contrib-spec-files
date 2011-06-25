@@ -7,6 +7,7 @@
 # includes module(s):
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define tarball_version 0.06
 Name:		SFEperl-proc-daemon
@@ -21,10 +22,8 @@ SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/D/DE/DETI/Proc/Proc-Daemon-%{tarball_version}.tar.gz
 
-BuildRequires:	SUNWperl584core
-BuildRequires:	SUNWperl584usr
-Requires:	SUNWperl584core
-Requires:	SUNWperl584usr
+BuildRequires:  %{pnm_buildrequires_perl_default}
+Requires:  	%{pnm_requires_perl_default}
 
 Meta(info.maintainer):          pkglabo.justplayer.com <pkgadmin@justplayer.com>
 Meta(info.upstream):            Earl Hood <ehood@cpan.org>
@@ -38,7 +37,7 @@ Proc Daemon
 %setup -q -n Proc-Daemon-%{tarball_version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4
+perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version}
 make
 
 %install

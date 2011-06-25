@@ -7,6 +7,7 @@
 # includes module(s):
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 Name:		SFEperl-appconfig
 IPS_package_name: library/perl-5/appconfig
@@ -19,11 +20,9 @@ Url:		http://search.cpan.org/~abw/AppConfig-%{version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/A/AB/ABW/AppConfig-%{version}.tar.gz
+BuildRequires:  %{pnm_buildrequires_perl_default}
+Requires:  	%{pnm_requires_perl_default}
 
-BuildRequires:	SUNWperl584core
-BuildRequires:	SUNWperl584usr
-Requires:	SUNWperl584core
-Requires:	SUNWperl584usr
 
 Meta(info.maintainer):          taki@justplayer.com
 Meta(info.upstream):            Andy Wardley <cpan@wardley.org>
@@ -36,7 +35,7 @@ Application config (from ARGV, file, ...)
 %setup -q -n AppConfig-%{version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4
+perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version}
 make
 
 %install

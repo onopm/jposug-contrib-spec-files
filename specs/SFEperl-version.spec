@@ -5,9 +5,9 @@
 #
 
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define version_version 0.76
-%define perl_version 5.8.4
 
 Name:                    SFEperl-version
 IPS_package_name:        library/perl-5/version
@@ -16,9 +16,9 @@ Version:                 %{perl_version}.%{version_version}
 Source:                  http://www.cpan.org/modules/by-module/version/version-%{version_version}.tar.gz
 SUNW_BaseDir:            %{_basedir}
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
-Requires:                SUNWperl584core
-BuildRequires:           SUNWperl584core
-#BuildRequires:           SUNWsfwhea
+
+BuildRequires:  %{pnm_buildrequires_perl_default}
+Requires:  	%{pnm_requires_perl_default}
 
 %ifarch sparc
 %define perl_dir sun4-solaris-64int
@@ -33,19 +33,22 @@ BuildRequires:           SUNWperl584core
 %build
 cd version-%{version_version}
 perl Makefile.PL \
-    PREFIX=$RPM_BUILD_ROOT%{_prefix} \
-    INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version} \
-    INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir} \
-    INSTALLSITEMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-    INSTALLSITEMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
-    INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-    INSTALLMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3
+    PREFIX=%{_prefix}\
+    DESTDIR=$RPM_BUILD_ROOT \
+    LIB=/usr/perl5/vendor_perl/%{perl_version}
+
 make CC=$CC CCCDLFLAGS="%picflags" OPTIMIZE="%optflags" LD=$CC
 
 %install
 rm -rf $RPM_BUILD_ROOT
 cd version-%{version_version}
 make install
+
+# Workaround , not work INSTALLSITEMAN3DIR.
+mkdir -p $RPM_BUILD_ROOT%{_mandir}/man3/
+mv $RPM_BUILD_ROOT/usr/man/man3/version.3 $RPM_BUILD_ROOT%{_mandir}/man3/
+rmdir $RPM_BUILD_ROOT/usr/man/man3
+rmdir $RPM_BUILD_ROOT/usr/man
 
 rm -rf $RPM_BUILD_ROOT%{_prefix}/lib
 
@@ -56,25 +59,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr (-, root, bin)
-%dir %attr(0755, root, bin) %{_prefix}/perl5
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl/%{perl_version}
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir}
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir}/version
-%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir}/version/*
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir}/auto
-%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir}/auto/*
-%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir}/version.*
-%dir %attr(0755, root, sys) %{_datadir}
-%dir %attr(0755, root, bin) %{_mandir}
-%dir %attr(0755, root, bin) %{_mandir}/man3
-%{_mandir}/man3/*
+%defattr(-,root,bin)
+%{_prefix}/perl5
+#%attr(755,root,sys) %dir %{_datadir}
+%{_mandir}
+
 
 %changelog
 * Thr Apr 30 2009 - Thomas Wagner
 - bump to 0.76
 * Wed Jun 18 2008 - daymobrew@users.sourceforge.net
 - Bump to 0.7501.
-
 * Tue Nov 13 2007 - trisk@acm.jhu.edu
 - Initial spec

@@ -7,6 +7,7 @@
 # includes module(s):
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define tarball_version 0.79
 
@@ -22,10 +23,8 @@ SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/M/MI/MIVKOVIC/Mail-Sendmail-0.79.tar.gz
 
-BuildRequires:	SUNWperl584core
-BuildRequires:	SUNWperl584usr
-Requires:	SUNWperl584core
-Requires:	SUNWperl584usr
+BuildRequires:  %{pnm_buildrequires_perl_default}
+Requires:  	%{pnm_requires_perl_default}
 
 Meta(info.maintainer):          taki@justplayer.com
 Meta(info.upstream):            Milivoj Ivkovic <mivkovic@cpan.org>
@@ -38,7 +37,7 @@ Simple platform independent mailer
 %setup -q -n Mail-Sendmail-%{tarball_version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4
+perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version}
 make
 
 %install

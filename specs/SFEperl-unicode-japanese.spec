@@ -7,6 +7,7 @@
 # includes module(s):
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 Name:		SFEperl-unicode-japanese
 IPS_package_name: library/perl-5/unicode-japanese
@@ -19,11 +20,8 @@ Url:		http://search.cpan.org/~hio/Unicode-Japanese-%{version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/H/HI/HIO/Unicode-Japanese-%{version}.tar.gz
-
-BuildRequires:	SUNWperl584core
-BuildRequires:	SUNWperl584usr
-Requires:	SUNWperl584core
-Requires:	SUNWperl584usr
+BuildRequires:  %{pnm_buildrequires_perl_default}
+Requires:  	%{pnm_requires_perl_default}
 
 Meta(info.maintainer):          taki@justplayer.com
 Meta(info.upstream):            YAMASHINA Hio <hio@hio.jp>
@@ -36,7 +34,7 @@ Japanese Character Encoding Handler
 %setup -q -n Unicode-Japanese-%{version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4
+perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version}
 make
 
 %install

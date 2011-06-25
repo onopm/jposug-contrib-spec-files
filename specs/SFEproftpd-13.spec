@@ -6,11 +6,12 @@
 #
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define _prefix		 /usr/proftpd
 %define major_version	 1.3
 %define tarball_name     proftpd
-%define tarball_version  1.3.3d
+%define tarball_version  1.3.3e
 %define gss_version      1.3.3
 %define _basedir	 /
 
@@ -18,7 +19,7 @@ Name:                    SFEproftpd-13
 IPS_package_name:        service/network/proftpd-13
 Summary:                 Highly configurable GPL-licensed FTP server software
 Version:                 1.3.3
-IPS_component_version:   1.3.3.0.4
+IPS_component_version:   1.3.3.0.5
 License:		 GPL
 Url:                     http://www.proftpd.org/
 Source:                  ftp://ftp.proftpd.org/distrib/source/%{tarball_name}-%{tarball_version}.tar.gz
@@ -39,18 +40,16 @@ SUNW_Basedir:            %{_basedir}
 SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
-#BuildRequires: SUNWmysql51u
-#BuildRequires: SUNWmysql51r
-#BuildRequires: SUNWmysql51lib
-BuildRequires: database/mysql-51
-BuildRequires: database/mysql-51/library
-BuildRequires: database/postgres-90/developer
-BuildRequires: database/postgres-90/library
-BuildRequires: SUNWopenssl-include
-BuildRequires: SUNWgss
+BuildRequires: %{pnm_buildrequires_SUNWmysql51}
+BuildRequires: %{pnm_buildrequires_SUNWmysql51_devel}
+BuildRequires: %{pnm_buildrequires_database_mysql_51_library}
+BuildRequires: %{pnm_buildrequires_SUNWopenssl_devel}
+BuildRequires: %{pnm_buildrequires_SUNWgss}
+BuildRequires: %{pnm_buildrequires_SUNWgssc_devel}
+BuildRequires: SFEpostgres-90
 
-Requires: SUNWopenssl-libraries
-Requires: SUNWgss
+Requires: %{pnm_requires_library_security_openssl}
+Requires: %{pnm_requires_SUNWgssc}
 
 # OpenSolaris IPS Package Manifest Fields
 Meta(info.upstream):	 	The ProFTPD Project team
@@ -85,6 +84,7 @@ Summary:		 %{summary} - MySQL module
 SUNW_BaseDir:            /
 Requires:                %{name}
 Requires:                %{name}-sql
+Requires:	         SFEpostgres-90-library
 
 %package mysql
 IPS_package_name:	 service/network/proftpd-13/module/mysql51
@@ -92,6 +92,8 @@ Summary:		 %{summary} - PostgreSQL module
 SUNW_BaseDir:            /
 Requires:                %{name}
 Requires:                %{name}-sql
+Requires:	         %{pnm_requires_database_mysql_51_library}
+
 
 %prep
 %setup -c -n %taball_name-%taball_version

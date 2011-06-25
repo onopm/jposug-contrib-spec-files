@@ -30,7 +30,7 @@ BuildRequires: %{pnm_buildrequires_SUNWphp52}
 BuildRequires: %{pnm_buildrequires_SUNWgsed_devel}
 
 Requires: %{pnm_requires_SUNWphp52}
-Requires: SFEfile
+Requires: SFElibyaml
 
 # OpenSolaris IPS Package Manifest Fields
 Meta(info.upstream):	 	http://code.google.com/p/php-yaml/

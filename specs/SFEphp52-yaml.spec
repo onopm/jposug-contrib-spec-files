@@ -94,7 +94,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.2/conf.d/*
 
 %changelog
-* Sun Mar 27 2011 TAKI, Yasushi <taki@justplayer.com>
-- Change Permission at /etc
-* Tue Jun 30 2011 TAKI, Yasushi <taki@justplayer.com>
+* Sat Jun 25 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Initial Revision

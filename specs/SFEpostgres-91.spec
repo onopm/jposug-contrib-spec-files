@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.1.1
+%define tarball_version  9.1.2
 %define major_version	 9.1
 
 %define _basedir         %{_prefix}/%{major_version}

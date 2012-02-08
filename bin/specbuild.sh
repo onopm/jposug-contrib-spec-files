@@ -1,6 +1,15 @@
 #!/bin/ksh
 
-PKGTOOL=/opt/dtbld/bin/pkgtool
+getcmd() {
+    CMD=''
+    for _CMD in $* ; do
+        CMD=`[ -x $_CMD ] && echo $_CMD`
+        [ -z "$CMD" ] || break;
+    done
+    echo $CMD
+}
+
+PKGTOOL=`getcmd /bin/pkgtool /opt/dtbld/bin/pkgtool`
 SOURCES=~/packages/SOURCES/
 
 SPEC=$1

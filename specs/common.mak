@@ -3,21 +3,21 @@
 #
 
 SPECBUILD=../bin/specbuild.sh 
-REPOSITRY=mypkgs
+REPOSITRY=localhost
 TARGETMAK=target.mak
 SPECDEPEND=../bin/spec_depend.pl
 SPECDEPENDINSTALL=../bin/spec_depend_install.pl
 CHECK_INSTALL=../bin/check_install.sh
 PKGSEND_MANIFEST=../bin/pkgsend_manifest.sh
 
-.SUFFIXES : .spec .manifest
-.SUFFIXES : .manifest .info
+.SUFFIXES : .spec .proto
+.SUFFIXES : .proto .info
 
-.spec.manifest :
+.spec.proto :
 	$(SPECBUILD) $<
-	cp -p ~/packages/PKGMAPS/manifests/$@ $@
+	cp -p ~/packages/PKGMAPS/proto/$@ $@
 
-.manifest.info:
-	pfexec pkg refresh $(REPOSITRY)
-	pfexec pkg install -v pkg://$(REPOSITRY)/$(patsubst %.manifest,%,$<)
-	pfexec pkg info $(patsubst %.manifest,%,$<) > $@
+.proto.info:
+	sudo pkg refresh $(REPOSITRY)
+	sudo pkg install -v `awk -F: '/^IPS_Package_Name/{print $$2}' $(patsubst %.proto,%,$<).spec` || true
+	sudo pkg info `awk -F: '/^IPS_Package_Name/{print $$2}' $(patsubst %.proto,%,$<).spec` > $@

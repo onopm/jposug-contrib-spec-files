@@ -55,3 +55,4 @@ RESULT=$?
 if [ ${RESULT} = 0 -a ${REPTYPE} = '--svr4' ];then
     pkgtrans ~/packages/PKGS/ ~/packages/PKGS/${SPEC%.*}.pkg ${SPEC%.*}
 fi
+exit ${RESULT}

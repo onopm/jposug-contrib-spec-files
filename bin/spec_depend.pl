@@ -4,11 +4,10 @@ use strict;
 use warnings;
 use Pod::Usage;
 
-#exit unless $ARGV[0];
 my $build_list = shift || 'build.list';
-die "$build_list not found." if ! -r $build_list;
+pod2usage("$build_list not found.") if ! -f $build_list;
 
-open my $list_fh, "<", $build_list or die "open error $!\n";
+open my $list_fh, "<", $build_list or pod2usage("$build_list open error. :$!");
 
 while(my $spec_file = <$list_fh>){
     $spec_file =~ s/#.*//g;
@@ -24,6 +23,7 @@ while(my $spec_file = <$list_fh>){
 
     print "${sfe_name}.info : $build_requires\n";
 }
+
 exit;
 
 sub search_build_require {
@@ -59,17 +59,11 @@ __END__
 
 =head1 NAME
 
-amon2-setup.pl - setup script for amon2
+spec_build.pl - search depend local-spec-files.
 
 =head1 SYNOPSIS
 
-    % amon2-setup.pl MyApp
-
-            --flavor=Basic   basic flavour(default)
-            --flavor=Lite    Amon2::Lite flavour
-            --flavor=Minimum minimalistic flavour for benchmarking
-
-                                    --help   Show this help
+    % spec_build.pl [build.list]
 
 =head1 AUTHOR
 

@@ -576,7 +576,7 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0644, root, sys) /etc/security/exec_attr.d/service\%2Fdatabase\%2Fpostgres-91
 %attr (0644, root, sys) /etc/security/prof_attr.d/service\%2Fdatabase\%2Fpostgres-91
 %attr (0644, root, sys) /etc/user_attr.d/service\%2Fdatabase\%2Fpostgres-91
-%attr (0444, root, sys) /var/svc/manifest/application/database/postgresql_91.xml
+%class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/postgresql_91.xml
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/initdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_controldata
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_ctl

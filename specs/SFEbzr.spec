@@ -4,6 +4,7 @@
 # includes module(s): bzr
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define python_version 2.6
 %define tarball_version 2.2.0
@@ -21,11 +22,8 @@ BuildRoot:		%{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:		%{_prefix}
 SUNW_Copyright:         %{name}.copyright
 
-#Requires: SUNWPython
-Requires: runtime/python-26
-%include default-depend.inc
-#BuildRequires: SUNWPython-devel
-BuildRequires: runtime/python-26
+Requires: %{pnm_requires_SUNWPython}
+BuildRequires: %{pnm_buildrequires_SUNWPython_devel}
 
 %description
 Bazaar source code management system.

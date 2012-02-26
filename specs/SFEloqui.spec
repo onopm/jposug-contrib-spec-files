@@ -72,8 +72,8 @@ cd %{tarball_name}-%{tarball_version}
 %define target i386-sun-solaris
 %endif
 
-export CC=/usr/bin/gcc
-export CXX=/usr/bin/g++
+export CC=gcc
+export CXX=g++
 export LDFLAGS="%_ldflags %gnu_lib_path -lsocket"
 
 ./configure --prefix=%{_prefix} \

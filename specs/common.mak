@@ -3,7 +3,7 @@
 #
 
 SPECBUILD=../bin/specbuild.sh 
-REPOSITRY=localhost
+REPOSITRY=${PKGBUILD_IPS_REPO}
 TARGETMAK=target.mak
 SPECDEPEND=../bin/spec_depend.pl
 SPECDEPENDINSTALL=../bin/spec_depend_install.pl
@@ -19,5 +19,11 @@ PKGSEND_MANIFEST=../bin/pkgsend_manifest.sh
 
 .proto.info:
 	sudo pkg refresh $(REPOSITRY)
-	sudo pkg install -v `awk -F: '/^IPS_Package_Name/{print $$2}' $(patsubst %.proto,%,$<).spec` || true
-	sudo pkg info `awk -F: '/^IPS_Package_Name/{print $$2}' $(patsubst %.proto,%,$<).spec` > $@
+	PKGNAME=`awk -F: 'tolower($$1)~/^ips_package_name/{print $$2}' $(patsubst %.proto,%,$<).spec` ;\
+		    if [ -n "$${PKGNAME}" ] ; then \
+		       sudo pkg install -v $${PKGNAME} &&\
+		       sudo pkg info $${PKGNAME} > $@ ;\
+		    else \
+		       echo ips_package_name is not found in $<;\
+		       exit 1;\
+		    fi

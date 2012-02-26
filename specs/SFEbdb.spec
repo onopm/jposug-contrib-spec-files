@@ -9,7 +9,7 @@
 %include usr-gnu.inc
 
 Name:		SFEbdb
-IPS_Package_Name:	database/berkeleydb-5
+IPS_Package_Name:	database/berkeleydb-48
 Summary:	Berkeley DB
 Group:		System/Databases
 Version:	4.8.30

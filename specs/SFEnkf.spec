@@ -4,6 +4,7 @@
 # includes module(s):
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define         perl_vendorarch %(%{__perl} -MConfig -e 'print $Config{vendorarch}')
 %define         perl_archlib    %(%{__perl} -MConfig -e 'print $Config{archlib}')
@@ -84,17 +85,32 @@ chmod 0755 $RPM_BUILD_ROOT%{perl_vendorarch}/auto/NKF/NKF.so
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-, root, root, -)
+%defattr(-, root, sys, -)
+%dir %{_prefix}
+%dir %{_datadir}
+%defattr(-, root, bin, -)
+%dir %{_bindir}
+%dir %{_mandir}/man1
+%dir %{_mandir}/ja_JP.UTF-8
+%dir %{_mandir}/ja_JP.UTF-8/man1
+%defattr(-, root, bin, -)
 %{_bindir}/nkf
 %{_mandir}/man1/nkf.1*
 %{_mandir}/ja_JP.UTF-8/man1/nkf.1*
 
 %files  NKF
-%defattr (-, root, root, -)
+%defattr (-, root, sys, -)
+%dir %{_prefix}
+%defattr (-, root, bin, -)
+%dir %{perl_vendorarch}
+%dir %{perl_man3dir}
 %{perl_vendorarch}/NKF.pm
 %{perl_vendorarch}/auto/*
 %{perl_man3dir}/NKF.3
 
 %changelog
+* Thu Mar 15 2021 Satoru MIYAZAKI <s.miyaza@gmail.com> 
+- add dir entries
+
 * Thu Feb  3 2011 Satoru MIYAZAKI <s.miyaza@gmail.com> 
 - Support for Solaris11 Express.

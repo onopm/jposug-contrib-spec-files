@@ -1,0 +1,92 @@
+--- lsof_4.83_src/dialects/sun/dsock.c	2010-01-18 11:04:03.000000000 -0800
++++ lsof_4.83_src-patched/dialects/sun/dsock.c	2012-03-11 10:33:46.681168883 -0700
+@@ -707,7 +707,7 @@
+ 		ty = "IPv6";
+ 	    (void) snpf(Lf->type, sizeof(Lf->type), ty);
+ 
+-	    switch (cs.conn_ulp) {
++	    switch (cs.conn_proto) {
+ 	    case IPPROTO_TCP:
+ 
+ 	    /*
+@@ -769,8 +769,10 @@
+ 		    ta = (unsigned char *)&cs.connua_v6addr.connua_faddr;
+ 		    la = (unsigned char *)&cs.connua_v6addr.connua_laddr;
+ 		} else {
+-		    ta = (unsigned char *)&cs.conn_rem;
+-		    la = (unsigned char *)&cs.conn_src;
++		    /* ta = (unsigned char *)&cs.conn_rem; */
++		    /* la = (unsigned char *)&cs.conn_src; */
++		    ta = (unsigned char *)&cs.conn_faddr_v4;
++		    la = (unsigned char *)&cs.conn_laddr_v4;
+ 		}
+ 		if (!IPv_ADDR_UNSPEC(af, ta) || (u_short)cs.conn_fport) {
+ 		    fa = ta;
+@@ -871,8 +873,10 @@
+ 		    ta = (unsigned char *)&cs.connua_v6addr.connua_faddr;
+ 		    la = (unsigned char *)&cs.connua_v6addr.connua_laddr;
+ 		} else {
+-		    ta = (unsigned char *)&cs.conn_rem;
+-		    la = (unsigned char *)&cs.conn_src;
++		    /* ta = (unsigned char *)&cs.conn_rem; */
++		    /* la = (unsigned char *)&cs.conn_src; */
++		    ta = (unsigned char *)&cs.conn_faddr_v4;
++		    la = (unsigned char *)&cs.conn_laddr_v4;
+ 		}
+ 		if (!IPv_ADDR_UNSPEC(af, ta) || (u_short)cs.conn_fport) {
+ 		    fa = ta;
+@@ -930,7 +934,7 @@
+ 	     *
+ 	     * Set protocol name.
+ 	     */
+-		if (cs.conn_ulp == IPPROTO_ICMP)
++		if (cs.conn_proto == IPPROTO_ICMP)
+ 		    ty = "ICMP";
+ 		else
+ 		    ty = "ICMP6";
+@@ -1013,7 +1017,7 @@
+ 		(void) snpf(Namech, Namechl - 1,
+ 		    "unsupported conn_s AF_INET%s protocol: %u",
+ 		    (af == AF_INET6) ? "6" : "",
+-		    (unsigned int)cs.conn_ulp);
++		    (unsigned int)cs.conn_proto);
+ 		Namech[Namechl - 1] = '\0';
+ 		enter_nm(Namech);
+ 		return(1);
+@@ -1093,7 +1097,7 @@
+ 
+ 	    break;
+ 	default:
+-	    (void) printiproto((int)cs.conn_ulp);
++	    (void) printiproto((int)cs.conn_proto);
+ 	    (void) snpf(Namech, Namechl - 1, "unsupported socket family: %u",
+ 		so->so_family);
+ 	    Namech[Namechl - 1] = '\0';
+@@ -1341,7 +1345,7 @@
+ #else	/* solaris>90000 && defined(HAS_IPCLASSIFIER_H) */
+ # if	solaris>=110000
+ 		if (!kread(pcb, (char *)&cs, sizeof(cs))
+-		&&  (cs.conn_ulp == IPPROTO_TCP)
++		&&  (cs.conn_proto == IPPROTO_TCP)
+ 		) {
+ 		    ics = 1;
+ 		    if ((ka = (KA_T)cs.conn_proto_priv.cp_tcp)
+@@ -1409,7 +1413,7 @@
+ 		    ucs = 1;
+ #else	/* solaris>=110000 */
+ 		if (!kread(pcb, (char *)&cs, sizeof(cs))
+-		&&  (cs.conn_ulp == IPPROTO_UDP)
++		&&  (cs.conn_proto == IPPROTO_UDP)
+ 		) {
+ 		    ics = 1;
+ 		    if ((ka = (KA_T)cs.conn_proto_priv.cp_udp)
+@@ -1548,7 +1552,8 @@
+ #  if	solaris>=110000
+ 		    la = (af == AF_INET6)
+ 		       ? (unsigned char *)&cs.connua_v6addr.connua_laddr
+-		       : (unsigned char *)&cs.conn_src;
++		       /* : (unsigned char *)&cs.conn_src; */
++		       : (unsigned char *)&cs.conn_laddr_v4;
+ 	            lp = cs.conn_lport;
+ #  else	/* solaris<110000 */
+ #   if	defined(HASIPv6)

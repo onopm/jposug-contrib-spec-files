@@ -8,7 +8,7 @@
 %include packagenamemacros.inc
 
 Name:                SFEagg
-IPS_package_name:    library/graphics/pixman
+IPS_package_name:    library/graphics/agg
 Summary:             Anti-Grain Geometry (AGG) rendering engine
 Version:             2.5
 Source:              http://www.antigrain.com/agg-%{version}.tar.gz

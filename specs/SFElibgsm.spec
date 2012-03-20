@@ -23,6 +23,8 @@ Summary:	%{libgsm.summary}
 Version:	%{libgsm.version}
 IPS_package_name:  library/media/gsm
 License:	%{libgsm.license}
+
+SUNW_Copyright:    %{name}.copyright
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 

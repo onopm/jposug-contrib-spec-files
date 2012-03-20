@@ -28,13 +28,11 @@ Source:			 http://launchpad.net/%{tarball_name}/%{major_version}/%{tarball_versi
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Basedir:            %{_basedir}
-#SUNW_Copyright:          %{name}.copyright
+SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
-#BuildRequires: %{pnm_buildrequires_SUNWgob2}
-BuildRequires: developer/gob2
-#Requires: %{pnm_requires_SUNWgob2}
-Requires: developer/gob2
+BuildRequires: SFEgob
+Requires: SFEgob
 
 # OpenSolaris IPS Package Manifest Fields
 Meta(info.upstream):	 	Loqui Developer Team

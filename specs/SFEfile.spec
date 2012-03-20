@@ -1,5 +1,4 @@
 #
-# Copyright (c) 2006 Sun Microsystems, Inc.
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 
@@ -15,7 +14,7 @@ Summary:             determine file type
 Version:             5.05
 IPS_component_version: 5.5
 Source:              ftp://ftp.astron.com/pub/file/file-%{version}.tar.gz
-
+SUNW_Copyright:      %{name}.copyright
 SUNW_BaseDir:        %{_basedir}
 BuildRoot:           %{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc

@@ -18,6 +18,7 @@ IPS_package_name:  library/text/yaml
 License:	MIT license
 Source:		%{src_url}/%{tarball_name}-%{tarball_version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
+SUNW_Copyright:          %{name}.copyright
 
 #Meta(info.maintainer_url):      http://pyyaml.org/wiki/LibYAML
 Meta(info.upstream_url):        http://pyyaml.org/wiki/LibYAML
@@ -46,7 +47,7 @@ cd %{tarball_name}-%{tarball_version}
 %endif
 
 export CC=cc
-export CFLAGS="-i -xO4 -xspace -xstrconst -fast -Kpic -xregs=no%frameptr -xCC"
+export CFLAGS="-i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
 
 ./configure\
  --prefix=%{_prefix}\
@@ -60,7 +61,7 @@ gmake -j$CPUS
 %ifarch amd64 sparcv9
 cd ../%{tarball_name}-%{tarball_version}-64
 
-export CFLAGS="-m64 -i -xO4 -xspace -xstrconst -fast -Kpic -xregs=no%frameptr -xCC"
+export CFLAGS="-m64 -i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
 
 ./configure\
  --prefix=%{_prefix}\
@@ -88,11 +89,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, sys) %{_prefix}
 %dir %attr(0755, root, bin) %{_prefix}/lib
+%dir %attr(0755, root, other) %{_prefix}/lib/pkgconfig
+%dir %attr(0755, root, bin) %{_prefix}/lib/amd64
+%dir %attr(0755, root, other) %{_prefix}/lib/amd64/pkgconfig
 %dir %attr(0755, root, bin) %{_prefix}/include
-%{_prefix}/lib/*
+%{_prefix}/lib/libyaml*
+%{_prefix}/lib/pkgconfig/*
+%{_prefix}/lib/amd64/libyaml*
+%{_prefix}/lib/amd64/pkgconfig/*
 %{_prefix}/include/*
 
 %changelog
-* Sat Jun 25 JST 2011 TAKI, Yasushi <taki@justplayer.com>
+* Wed Mar 21 2012 TAKI, Yasushi <taki@justplayer.com>
+- fix compile option
+- fix pkgconfig permision
+* Sat Jun 25 2012 TAKI, Yasushi <taki@justplayer.com>
 - Initial Revision
 

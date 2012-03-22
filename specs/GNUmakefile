@@ -4,7 +4,7 @@
 
 all: ${TARGET}
 
-depend:
+depend::
 	rm -f $(TARGETMAK)
 	if [ -z $${PKGBUILD_IPS_REPO} ];then \
 		echo REPOSITRY=localhost >> $(TARGETMAK);\
@@ -15,11 +15,11 @@ depend:
 	echo 'all : $$(TARGET)' >> $(TARGETMAK)
 	$(SPECDEPEND) >> $(TARGETMAK)
 
-preinstall:
-	$(SPECDEPENDINSTALL) $(wildcard *.spec) | xargs pfexec pkg install -v
+preinstall::
+	pkg install -v $(PRE_INSTALL)
 
-check_install:
+check_install::
 	$(CHECK_INSTALL) $(wildcard *.spec)
 
-clean:
+clean::
 	rm -f $(TARGET) $(patsubst %.info,%.proto,$(TARGET))

@@ -26,27 +26,31 @@ foreach my $spec_file (@spec_file_lines){
 
     my %requires;
     my %definelist;
-    my %depend_file = search_depend_files($spec_file,\%requires,\%definelist);
+    search_depend_files($spec_file,\%requires,\%definelist);
 
     my $depend_sources='';
 
-    if(%depend_file){
-	if(defined($depend_file{'buildrequires'})){
+    if(%requires){
+	if(defined($requires{'buildrequires'})){
 	    my $build_requires='';
-	    foreach my $depend (@{$depend_file{'buildrequires'}}){
+	    foreach my $depend (@{$requires{'buildrequires'}}){
 #		print "[${depend}.spec]\n";
-		$build_requires.=$depend.'.info' if(grep(($_ eq $depend.'.spec'),@spec_file_lines));
+		if(grep(($_ eq $depend.'.spec'),@spec_file_lines)) {
+		    $build_requires.=$depend.'.info ' ;
+		} else {
+		    print "PRE_INSTALL+=$depend\n";
+		}
 	    }
 	    my $sfe_name = $spec_file;
 	    $sfe_name=~ s/\.spec$/.info/g;
 	    print "${sfe_name} : ${build_requires}\n" if(${build_requires});
-	} elsif(defined($depend_file{'patch'})){
-	    my $sources='patches/'.join ' patches/',@{$depend_file{'patch'}};
+	} elsif(defined($requires{'patch'})){
+	    my $sources='patches/'.join ' patches/',@{$requires{'patch'}};
 	    my $sfe_name = $spec_file;
 	    $depend_sources.=' '.${sources} if(${sources});
-	} elsif(defined($depend_file{'source'})){
+	} elsif(defined($requires{'source'})){
 	    my $sources='';
-	    foreach (@{$depend_file{'source'}}){
+	    foreach (@{$requires{'source'}}){
 		if(! /^(http|https|ftp):\/\//){
 		    $sources.='ext-sources/'.$_.' ';
 		}
@@ -62,9 +66,9 @@ foreach my $spec_file (@spec_file_lines){
 exit;
 
 sub search_depend_files {
-    my ($file_name,$r,$d) = @_;
-    my %requires = %$r;
-    my %definelist = %$d;
+    my ($file_name,$requires,$definelist) = @_;
+#    my %requires = $r;
+#    my %definelist = $d;
     return if ! -r $file_name;
 
 #    my %requires;
@@ -82,35 +86,35 @@ sub search_depend_files {
         $line =~ s/\r?\n//g;
 
         if($line =~ s/^\%include\s+(.+)//g){
-#	    my $file=$1;
+	    my $file=$1;
 #	    print "$file\n";
-#	    if ( -r $file ){
-#		search_depend_files($file,\%requires,\%definelist);
-#	    } elsif ( -r 'include/'.$file ){
-#		search_depend_files('include/'.$file,\%requires,\%definelist);
-#	    }
+	    if ( -r $file ){
+		search_depend_files($file,$requires,$definelist);
+	    } elsif ( -r 'include/'.$file ){
+		search_depend_files('include/'.$file,$requires,$definelist);
+	    }
         } elsif( $line =~ /^(buildrequires):\s*([\/\w-]+)/i ||
 	    $line =~ /^(source)[\d]*:\s*(.+)/i ||
 	    $line =~ /^(patch)[\d]*:\s*(.+)/i
 	    ){
 	    my $key=lc($1);
-	    my $val=replace_define($2,%definelist);
+	    my $val=replace_define($2,%$definelist);
 #	    print "line=$line\n";
 #	    print "KEY:VAL=$key:$val\n";
-	    push @{$requires{$key}}, $val;
+	    push @{$requires->{$key}}, $val;
 	} elsif( $line =~ /\%define\s+(.+?)\s+(.+)/i ||
 		 $line =~ /^([A-Za-z_][A-Za-z0-9_]+):\s*(.+)/i
 	    ){
 	    my $key=lc($1);
 	    my $val=$2;
 #	    print "define KEY:VAL=$key:$val\n";
-	    $definelist{$key}=$val;
+	    $definelist->{$key}=$val;
 	}
     }
     close $fh;
-#   print Dumper \%requires;
-#   print "------------\n";
-    return %requires;
+#    print Dumper $requires;
+#    print "------------\n";
+    return $requires;
 }
 
 sub replace_define {

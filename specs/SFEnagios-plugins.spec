@@ -170,6 +170,7 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_ircd
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_ircd.pl
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_jabber
+%attr (0555, root, bin) %{_libdir}/nagios/plugins/check_ldap
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_load
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_log
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_log.sh
@@ -229,6 +230,9 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Tue Mar 27 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add check_ldap to %files
+
 * Fri May 20 2011 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
 - modify install section.
 - add make check_swap

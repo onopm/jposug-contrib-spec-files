@@ -64,6 +64,7 @@ make -j$CPUS
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
+echo "import site; site.addsitedir('/usr/lib/python3.2/vendor-packages')" > $RPM_BUILD_ROOT%{_libdir}/python3.2/site-packages/vendor-packages.pth
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -99,5 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Support for OpenIndiana
+* Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- vendor-packages directory support
 
 

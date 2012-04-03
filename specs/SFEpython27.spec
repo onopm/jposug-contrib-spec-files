@@ -27,11 +27,11 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright:	Python27.copyright
 
-# # OpenSolaris IPS Manifest Fields
-# Meta(info.maintainer): A Hettinger <ahettinger@prominic.net>
-# Meta(info.upstream):  Guido van Rossum and the Python community <python-dev@python.org>
-# Meta(info.repository_url): http://svn.python.org/projects/python/branches/release32-maint
-# Meta(info.classification): org.opensolaris.category.2008:Development/Python
+# OpenSolaris IPS Manifest Fields
+Meta(info.maintainer): A Hettinger <ahettinger@prominic.net>
+Meta(info.upstream):  Guido van Rossum and the Python community <python-dev@python.org>
+Meta(info.repository_url): http://svn.python.org/projects/python/branches/release32-maint
+Meta(info.classification): org.opensolaris.category.2008:Development/Python
 
 
 %description
@@ -64,6 +64,7 @@ make -j$CPUS
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
+echo "import site; site.addsitedir('/usr/lib/python2.7/vendor-packages')" > $RPM_BUILD_ROOT%{_libdir}/python2.7/site-packages/vendor-packages.pth
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -94,3 +95,5 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sun Apr 1 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Support for OpenIndiana
+* Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- vender-packages directory support

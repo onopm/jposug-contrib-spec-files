@@ -130,10 +130,14 @@ do
 done
 
 cd ../plugins-scripts
-for i in check_*
+for i in check_* utils.sh utils.pm
 do
-    [ -x $i ] && \
-    install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
+    if [ -x $i ] 
+    then
+	install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
+    else
+	install -m 0644 $i %{buildroot}%{_libdir}/nagios/plugins
+    fi
 done
 
 
@@ -215,6 +219,8 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/negate
 %attr (4555, root, bin) %{_libdir}/nagios/plugins/pst3
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/urlize
+%attr (0644, root, bin) %{_libdir}/nagios/plugins/utils.sh
+%attr (0644, root, bin) %{_libdir}/nagios/plugins/utils.pm
 
 
 %files dig
@@ -230,7 +236,10 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
-* Tue Mar 27 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Fri Apr 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add utils.sh and utils.pm to %files
+
+* Tue Mar 27 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add check_ldap to %files
 
 * Fri May 20 2011 - Fumihisa Tonaka <fumi.ftnk@gmail.com>

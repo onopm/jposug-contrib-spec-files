@@ -12,7 +12,7 @@
 
 Name:           puppet
 IPS_package_name:        system/management/puppet
-Version:        2.7.12
+Version:        2.7.13
 #Release:        0.1rc1%{?dist}
 Release:        1%{?dist}
 Summary:        A network tool for managing many disparate systems
@@ -21,7 +21,7 @@ License:        ASL 2.0
 URL:            http://puppetlabs.com
 Source0:        http://puppetlabs.com/downloads/%{name}/%{name}-%{version}.tar.gz
 #Source0:        http://puppetlabs.com/downloads/%{name}/%{name}-%{version}rc1.tar.gz
-Source1:        http://puppetlabs.com/downloads/%{name}/%{name}-%{version}.tar.gz.asc
+# Source1:        http://puppetlabs.com/downloads/%{name}/%{name}-%{version}.tar.gz.asc
 #Source1:        http://puppetlabs.com/downloads/%{name}/%{name}-%{version}rc1.tar.gz.asc
 Source2:        svc-puppetd
 Source3:        svc-puppetmasterd
@@ -232,6 +232,9 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 rm -rf %{buildroot}
 
 %changelog
+* Fri Apr 13 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update to 2.7.13
+
 * Sat Mar 24 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - import to solaris
 

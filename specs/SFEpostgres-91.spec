@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.1.2
+%define tarball_version  9.1.3
 %define major_version	 9.1
 
 %define _basedir         %{_prefix}/%{major_version}
@@ -19,7 +19,7 @@
 Name:                    SFEpostgres-91
 IPS_package_name:        database/postgres-91
 Summary:	         PostgreSQL client tools
-Version:                 9.1.1
+Version:                 9.1.3
 License:		 PostgreSQL
 Url:                     http://www.postgresql.org/
 Source:			 http://wwwmaster.postgresql.org/redir/311/h/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
@@ -451,9 +451,9 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %{_prefix}/%{major_version}/share/extension/plpython2u--1.0.sql
 %{_prefix}/%{major_version}/share/extension/plpython2u--unpackaged--1.0.sql
 %{_prefix}/%{major_version}/share/extension/plpython2u.control
-%{_prefix}/%{major_version}/share/extension/plpython3u--1.0.sql
-%{_prefix}/%{major_version}/share/extension/plpython3u--unpackaged--1.0.sql
-%{_prefix}/%{major_version}/share/extension/plpython3u.control
+# %{_prefix}/%{major_version}/share/extension/plpython3u--1.0.sql
+# %{_prefix}/%{major_version}/share/extension/plpython3u--unpackaged--1.0.sql
+# %{_prefix}/%{major_version}/share/extension/plpython3u.control
 %{_prefix}/%{major_version}/share/extension/plpythonu--1.0.sql
 %{_prefix}/%{major_version}/share/extension/plpythonu--unpackaged--1.0.sql
 %{_prefix}/%{major_version}/share/extension/plpythonu.control
@@ -655,12 +655,12 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/euc2004_sjis2004.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/plpython2.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpqwalreceiver.so
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/initdb-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_controldata-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_ctl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/initdb-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_controldata-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_ctl-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/plpgsql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/postgres-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/postgres-%{major_version}.mo
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/conversion_create.sql
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/information_schema.sql
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/pg_hba.conf.sample
@@ -913,6 +913,9 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %{_prefix}/%{major_version}/bin/amd64/vacuumlo
 
 %changelog
+* Tue Apr 24 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 9.1.13
+- exclude some .mo files for server to avoid confilict
 * Fri Sep 16 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Bump to 9.1.0
 * Sun Jul 31 JST 2011 TAKI, Yasushi <taki@justplayer.com>

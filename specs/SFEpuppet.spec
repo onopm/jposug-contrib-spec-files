@@ -91,9 +91,9 @@ ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 
 install -d -m0755 %{buildroot}%{_sysconfdir}/puppet/manifests
 install -d -m0755 %{buildroot}%{_datadir}/%{name}/modules
-install -d -m0755 %{buildroot}%{_localstatedir}/lib/puppet
-install -d -m0755 %{buildroot}%{_localstatedir}/run/puppet
-install -d -m0750 %{buildroot}%{_localstatedir}/log/puppet
+# install -d -m0755 %{buildroot}%{_localstatedir}/run/puppet
+# install -d -m0755 %{buildroot}%{_localstatedir}/lib/puppet
+# install -d -m0750 %{buildroot}%{_localstatedir}/log/puppet
 
 
 install -Dp -m0644 %{SOURCE2} %{buildroot}/lib/svc/method/svc-puppetd
@@ -149,11 +149,17 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 # %dir %attr (0755, root, bin) /usr/ruby/1.8/lib/ruby
 # %dir %attr (0755, root, bin) /usr/ruby/1.8/share
 # %dir %attr (0755, root, bin) /lib
-%dir %attr (0755, root, sys) %{_localstatedir}/log
+%dir %attr (0755, root, sys) %{_localstatedir}
+# %dir %attr (0755, root, sys) %{_localstatedir}/log
+# %dir %attr (0755, root, other) %{_localstatedir}/lib
 %dir %attr (0755, root, sys) %{_localstatedir}/svc
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
+%dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/system
 %attr (0755, root, bin) %{ruby_sitelibdir}/
-%dir %{_sysconfdir}/puppet
+%dir %attr (0755, root, sys) %{_sysconfdir}
+%dir %attr (0755, root, sys) %{_sysconfdir}/puppet
+%dir %attr (0755, root, sys) /usr/share
+%dir %attr (0755, root, other) /usr/share/doc
 # %if 0%{?fedora} >= 15
 # %config(noreplace) %{_sysconfdir}/tmpfiles.d/%{name}.conf
 # %endif
@@ -168,9 +174,11 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 %{_datadir}/%{name}
 # These need to be owned by puppet so the server can
 # write to them
-%attr(-, puppet, puppet) %{_localstatedir}/run/puppet
-%attr(-, puppet, puppet) %{_localstatedir}/log/puppet
-%attr(-, puppet, puppet) %{_localstatedir}/lib/puppet
+# %dir %attr(-, puppet, puppet) %{_localstatedir}/run/puppet
+# %dir %attr(0755, root, sys) %{_localstatedir}/log
+# %dir %attr(0755, puppet, puppet) %{_localstatedir}/log/puppet
+# %dir %attr(0755, root, other) %{_localstatedir}/lib
+# %dir %attr(0755, puppet, puppet) %{_localstatedir}/lib/puppet
 %{_mandir}/man5/puppet.conf.5.gz
 %{_mandir}/man8/pi.8.gz
 %{_mandir}/man8/puppet.8.gz
@@ -213,12 +221,19 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 
 
 %files server
-%defattr(-, root, root, 0755)
+%defattr(-, root, bin, 0755)
+%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, sys) %{_localstatedir}
+%dir %attr (0755, root, sys) %{_localstatedir}/svc
+%dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
+%dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/system
 %{_sbindir}/puppetmasterd
 %{_sbindir}/puppetrun
 %{_sbindir}/puppetqd
 # %config(noreplace) %{_sysconfdir}/puppet/fileserver.conf
-%dir %{_sysconfdir}/puppet/manifests
+%dir %attr (0755, root, sys) %{_sysconfdir}
+%dir %attr (0755, root, sys) %{_sysconfdir}/puppet
+%dir %attr (0755, root, sys) %{_sysconfdir}/puppet/manifests
 %ghost %config(noreplace,missingok) %{_sysconfdir}/puppet/puppetmasterd.conf
 %{_mandir}/man8/filebucket.8.gz
 %{_mandir}/man8/puppetmasterd.8.gz
@@ -232,6 +247,9 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 rm -rf %{buildroot}
 
 %changelog
+* Wed Apr 25 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- adjust %files and init scripts to Oracle Solaris 11
+
 * Fri Apr 13 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update to 2.7.13
 

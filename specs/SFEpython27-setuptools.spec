@@ -21,7 +21,8 @@ BuildRoot:              %{_tmppath}/%{name}-%{version}-build
 License:                PSF-2 license
 SUNW_Copyright:         SFEpython27-setuptools.copyright
 
-Requires:               SFEpython27
+BuildRequires: SFEpython27
+Requires:      SFEpython27
 
 %define python_version 2.7
 
@@ -57,3 +58,5 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sun Apr 2 2012 - Osamu Tabata<cantimerny.g@gmail.com>
 - Support for OpenIndiana
+* Sun Apr 30 2012 - Osamu Tabata<cantimerny.g@gmail.com>
+- Buildrequire append

@@ -59,12 +59,19 @@ yourself.
 CPUS=$(psrinfo | awk '$2=="on-line"{cpus++}END{if(cpus==0){print 1}else{print cpus }}')
 
 env CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{_prefix} \
-					--mandir=%{_mandir}
+					--mandir=%{_mandir} \
+                                        --enable-shared
 make -j$CPUS
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 echo "import site; site.addsitedir('/usr/lib/python2.7/vendor-packages')" > $RPM_BUILD_ROOT%{_libdir}/python2.7/site-packages/vendor-packages.pth
+mv $RPM_BUILD_ROOT%{_bindir}/python $RPM_BUILD_ROOT%{_bindir}/python2.7
+mv $RPM_BUILD_ROOT%{_bindir}/idle $RPM_BUILD_ROOT%{_bindir}/idle2.7
+mv $RPM_BUILD_ROOT%{_bindir}/pydoc $RPM_BUILD_ROOT%{_bindir}/pydoc2.7
+mv $RPM_BUILD_ROOT%{_bindir}/2to3 $RPM_BUILD_ROOT%{_bindir}/2to32.7
+mv $RPM_BUILD_ROOT%{_bindir}/smtpd.py $RPM_BUILD_ROOT%{_bindir}/smtpd2.7.py
+rm $RPM_BUILD_ROOT%{_bindir}/python-config
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -72,23 +79,22 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,bin)
 %dir %attr (0755, root, bin) %{_bindir}
-%{_bindir}/idle
-%{_bindir}/2to3
-%{_bindir}/python
 %{_bindir}/python2.7
+%{_bindir}/idle2.7
+%{_bindir}/pydoc2.7
+%{_bindir}/2to32.7
+%{_bindir}/smtpd2.7.py
 %{_bindir}/python2.7-config
-%{_bindir}/python-config
-%{_bindir}/pydoc
-%{_bindir}/smtpd.py
 %dir %attr (0755, root, bin) %{_libdir}
+%{_libdir}/libpython2.7.so
+%{_libdir}/libpython2.7.so.1.0
 %{_libdir}/python2.7/*
 %dir %attr (0755, root, other) %{_libdir}/pkgconfig 
 %{_libdir}/pkgconfig/python.pc
 %{_libdir}/pkgconfig/python-2.7.pc
-%{_libdir}/libpython2.7.a
+%dir %attr (0755, root, sys) %{_datadir}
 %dir %attr(0755, root, bin) %{_mandir}
-%dir %attr(0755, root, bin) %{_mandir}/*
-%{_mandir}/*/*
+%{_mandir}/man1/python2.7.1
 %dir %attr(0755, root, bin) %{_includedir}
 %{_includedir}/python2.7/*
 
@@ -97,3 +103,5 @@ rm -rf $RPM_BUILD_ROOT
 - Support for OpenIndiana
 * Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - vender-packages directory support
+* Mon Apr 30 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- Fixed a file conflict of python2.6

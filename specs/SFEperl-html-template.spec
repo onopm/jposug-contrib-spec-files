@@ -10,6 +10,7 @@
 
 %define tarball_version 2.91
 %define tarball_name    HTML-Template
+%define perl_version 5.12
 
 Name:		SFEperl-html-template
 IPS_package_name: library/perl-5/html-template
@@ -40,7 +41,7 @@ a simple HTML templating system
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4
+perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version}
 make
 
 %install
@@ -62,3 +63,8 @@ rm -rf $RPM_BUILD_ROOT
 #%{_bindir}/*
 
 %changelog
+* Thu May  3 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- define perl_version and use %{perl_version}
+
+* Sun Apr 29 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- initial

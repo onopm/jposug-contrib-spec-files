@@ -24,10 +24,8 @@ SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHILLI/Log-Log4perl-%{tarball_version}.tar.gz
 
-BuildRequires:	SUNWperl584core
-BuildRequires:	SUNWperl584usr
-Requires:	SUNWperl584core
-Requires:	SUNWperl584usr
+BuildRequires:	runtime/perl-512
+Requires:	runtime/perl-512
 
 Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
 Meta(info.upstream):            Michael Schilli <m@perlmeister.com>
@@ -40,7 +38,7 @@ Log4j implementation in Perl
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4
+perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.12
 make
 
 %install
@@ -61,4 +59,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}
 %attr(755,root,bin) %dir %{_bindir}
 %attr (555, root, bin) %{_bindir}/l4p-tmpl
+
 %changelog
+

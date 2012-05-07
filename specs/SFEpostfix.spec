@@ -96,6 +96,8 @@ cp "%{SOURCE1}" "${RPM_BUILD_ROOT}/%{svcdir}/smtp-postfix.xml"
 %dir %{postfix_usr_dir}/man/man1
 %dir %{postfix_usr_dir}/man/man5
 %dir %{postfix_usr_dir}/man/man8
+%dir %attr (0755, root, sys) /var
+%dir %attr (0755, root, other) /var/lib
 %dir %{postfix_var_dir}/spool/pid
 %defattr (0700, smmsp, mail)
 %dir %{postfix_etc_dir} 
@@ -114,6 +116,7 @@ cp "%{SOURCE1}" "${RPM_BUILD_ROOT}/%{svcdir}/smtp-postfix.xml"
 %dir %{postfix_var_dir}/spool/public  
 %dir %{postfix_var_dir}/spool/saved   
 %dir %{postfix_var_dir}/spool/trace   
+%dir %attr(0755, root, sys) /etc
 %defattr (0755, root, bin)
 %config %{postfix_etc_dir}/main.cf
 %config %{postfix_etc_dir}/access
@@ -132,6 +135,7 @@ cp "%{SOURCE1}" "${RPM_BUILD_ROOT}/%{svcdir}/smtp-postfix.xml"
 %{postfix_etc_dir}/TLS_LICENSE
 %attr (2755, root, mail) %{postfix_usr_dir}/sbin/postqueue
 %attr (2755, root, mail) %{postfix_usr_dir}/sbin/postdrop
+%dir %attr (0755, root, sys) /usr
 %{postfix_usr_dir}/sbin/postalias
 %{postfix_usr_dir}/sbin/postcat
 %{postfix_usr_dir}/sbin/postconf
@@ -153,6 +157,8 @@ cp "%{SOURCE1}" "${RPM_BUILD_ROOT}/%{svcdir}/smtp-postfix.xml"
 %class(manifest) %attr (0444, root, sys) %{svcdir}/smtp-postfix.xml
 
 %changelog
+* Mon May  7 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify some %attr for Solaris 11
 * Thu Feb 10 2011 - Satoru MIYAZAKI<s.miyaza@gmail.com>
 - Bump to 2.8.0
 * Tue Dec 15 2009 - matthias _at_ matthias _dot_ nl

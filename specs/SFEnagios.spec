@@ -10,7 +10,7 @@
 
 Name:		SFEnagios
 IPS_package_name:        diagnostic/nagios
-Version:	3.3.1
+Version:	3.4.0
 Summary:	Host/service/network monitoring program
 Group:		Applications/System
 License:	GPLv2
@@ -18,7 +18,7 @@ URL:		http://www.nagios.org/
 Source:		%{sf_download}/nagios/nagios-%{version}.tar.gz
 Source1:	nagios.xml
 Source2:	svc-nagios
-Patch1:		SFEnagios-3.3.1.diff
+# Patch1:		SFEnagios-3.3.1.diff
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
@@ -81,7 +81,7 @@ may compile against.
 
 %prep
 %setup -q -n nagios
-%patch1 -p1
+# %patch1 -p1
 
 %build
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
@@ -185,13 +185,14 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %doc Changelog INSTALLING LICENSE README UPGRADING
 %dir %attr (0755, root, sys) %{_datadir}
 %dir %attr (0755, root, other) %{_docdir}
-%{_datadir}/nagios/html/robots.txt
-%{_datadir}/nagios/html/[^i]*
-%{_datadir}/nagios/html/contexthelp
-%{_datadir}/nagios/html/[^d]*
-%{_datadir}/nagios/html/[^m]*
-%{_datadir}/nagios/html/[^s]*
-%attr(0644, root, bin) %config(noreplace) %{_datadir}/nagios/html/config.inc.php
+# %{_datadir}/nagios/html/robots.txt
+# %{_datadir}/nagios/html/[^i]*
+# %{_datadir}/nagios/html/contexthelp
+# %{_datadir}/nagios/html/[^d]*
+# %{_datadir}/nagios/html/[^m]*
+# %{_datadir}/nagios/html/[^s]*
+# %attr(0644, root, bin) %config(noreplace) %{_datadir}/nagios/html/config.inc.php
+%{_datadir}/nagios/html
 %dir %attr (0755, root, bin) %{_sbindir}
 %{_sbindir}/*
 %{_libdir}/nagios/cgi-bin/*cgi
@@ -233,6 +234,10 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_includedir}/nagios
 
 %changelog
+* Wed May  9 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 3.4.0
+- remove patch1
+
 * Tue Mar 27 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify owner, group and permission for Solaris 11
 

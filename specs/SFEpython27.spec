@@ -100,6 +100,7 @@ rm $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/python-config
 rm $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/python
 rm $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/pkgconfig/python.pc
 find $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{pyver} -name '*.pyo' -exec rm -f {} \;
+echo "import site; site.addsitedir('/usr/lib/%{_arch64}/python%{pyver}/vendor-packages')" > $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{pyver}/site-packages/vendor-packages.pth
 %endif
 
 %clean
@@ -107,20 +108,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%dir %attr (0755, root, bin) %{_bindir}/amd64
-%{_bindir}/amd64/python2.7
-%{_bindir}/amd64/idle2.7
-%{_bindir}/amd64/pydoc2.7
-%{_bindir}/amd64/2to32.7
-%{_bindir}/amd64/smtpd2.7.py
-%{_bindir}/amd64/python2.7-config
+%dir %attr (0755, root, bin) %{_bindir}/%{_arch64}
+%{_bindir}/%{_arch64}/python2.7
+%{_bindir}/%{_arch64}/idle2.7
+%{_bindir}/%{_arch64}/pydoc2.7
+%{_bindir}/%{_arch64}/2to32.7
+%{_bindir}/%{_arch64}/smtpd2.7.py
+%{_bindir}/%{_arch64}/python2.7-config
 
-%dir %attr (0755, root, bin) %{_libdir}/amd64
-%{_libdir}/amd64/libpython2.7.so
-%{_libdir}/amd64/libpython2.7.so.1.0
-%{_libdir}/amd64/python2.7/*
-%dir %attr (0755, root, other) %{_libdir}/amd64/pkgconfig 
-%{_libdir}/amd64/pkgconfig/python-2.7.pc
+%dir %attr (0755, root, bin) %{_libdir}/%{_arch64}
+%{_libdir}/%{_arch64}/libpython2.7.so
+%{_libdir}/%{_arch64}/libpython2.7.so.1.0
+%{_libdir}/%{_arch64}/python2.7/*
+%dir %attr (0755, root, other) %{_libdir}/%{_arch64}/pkgconfig 
+%{_libdir}/%{_arch64}/pkgconfig/python-2.7.pc
 
 %dir %attr (0755, root, sys) %{_datadir}
 %dir %attr(0755, root, bin) %{_mandir}
@@ -129,6 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/python2.7/*
 
 %changelog
+* Sun May 10 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- vender-packages directory support
 * Sun May 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Only 64bit Python2.7 package
 * Sun May 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>

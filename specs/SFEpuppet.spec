@@ -27,7 +27,7 @@ Source2:        svc-puppetd
 Source3:        svc-puppetmasterd
 Source4:        puppetd.xml
 Source5:        puppetmasterd.xml
-
+Source6:        puppet-pkg.rb
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
@@ -95,12 +95,11 @@ install -d -m0755 %{buildroot}%{_datadir}/%{name}/modules
 # install -d -m0755 %{buildroot}%{_localstatedir}/lib/puppet
 # install -d -m0750 %{buildroot}%{_localstatedir}/log/puppet
 
-
 install -Dp -m0644 %{SOURCE2} %{buildroot}/lib/svc/method/svc-puppetd
 install -Dp -m0644 %{SOURCE3} %{buildroot}/lib/svc/method/svc-puppetmasterd
 install -Dp -m0644 %{SOURCE4} %{buildroot}%{_localstatedir}/svc/manifest/system/management/puppetd.xml
 install -Dp -m0644 %{SOURCE5} %{buildroot}%{_localstatedir}/svc/manifest/system/management/puppetmasterd.xml
-
+install -m0755 %{SOURCE6} %{buildroot}/usr/ruby/1.8/lib/ruby/site_ruby/1.8/puppet/provider/package/pkg.rb
 
 # We need something for these ghosted files, otherwise rpmbuild
 # will complain loudly. They won't be included in the binary packages
@@ -247,6 +246,9 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 rm -rf %{buildroot}
 
 %changelog
+* Thu May 10 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Source6 for Solaris 11
+
 * Wed Apr 25 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - adjust %files and init scripts to Oracle Solaris 11
 

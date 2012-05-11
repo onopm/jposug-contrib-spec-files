@@ -91,6 +91,7 @@ ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 
 install -d -m0755 %{buildroot}%{_sysconfdir}/puppet/manifests
 install -d -m0755 %{buildroot}%{_datadir}/%{name}/modules
+install -d -m0755 %{buildroot}%{_localstatedir}/lib
 # install -d -m0755 %{buildroot}%{_localstatedir}/run/puppet
 # install -d -m0755 %{buildroot}%{_localstatedir}/lib/puppet
 # install -d -m0750 %{buildroot}%{_localstatedir}/log/puppet
@@ -105,7 +106,7 @@ install -m0755 %{SOURCE6} %{buildroot}/usr/ruby/1.8/lib/ruby/site_ruby/1.8/puppe
 # will complain loudly. They won't be included in the binary packages
 touch %{buildroot}%{_sysconfdir}/puppet/puppetmasterd.conf
 touch %{buildroot}%{_sysconfdir}/puppet/puppetca.conf
-touch %{buildroot}%{_sysconfdir}/puppet/puppetd.conf
+touch %{buildroot}%{_sysconfdir}/puppet/puppet.conf
 
 # Install the ext/ directory to %%{_datadir}/%%{name}
 install -d %{buildroot}%{_datadir}/%{name}
@@ -166,7 +167,7 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 # %config(noreplace) %{_sysconfdir}/puppet/puppet.conf
 %config(noreplace) %{_sysconfdir}/puppet/auth.conf
 %ghost %config(noreplace,missingok) %{_sysconfdir}/puppet/puppetca.conf
-%ghost %config(noreplace,missingok) %{_sysconfdir}/puppet/puppetd.conf
+%ghost %config(noreplace,missingok) %{_sysconfdir}/puppet/puppet.conf
 # We don't want to require emacs or vim, so we need to own these dirs
 %attr (0755, root, bin) %{_datadir}/emacs
 %attr (0755, root, bin) %{_datadir}/vim
@@ -176,7 +177,7 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 # %dir %attr(-, puppet, puppet) %{_localstatedir}/run/puppet
 # %dir %attr(0755, root, sys) %{_localstatedir}/log
 # %dir %attr(0755, puppet, puppet) %{_localstatedir}/log/puppet
-# %dir %attr(0755, root, other) %{_localstatedir}/lib
+%dir %attr(0755, root, other) %{_localstatedir}/lib
 # %dir %attr(0755, puppet, puppet) %{_localstatedir}/lib/puppet
 %{_mandir}/man5/puppet.conf.5.gz
 %{_mandir}/man8/pi.8.gz
@@ -239,6 +240,7 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 %{_mandir}/man8/puppetrun.8.gz
 %{_mandir}/man8/puppetqd.8.gz
 %{_mandir}/man8/puppet-master.8.gz
+%dir %attr(0755, root, other) %{_localstatedir}/lib
 %class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/system/management/puppetmasterd.xml
 %attr (0555, root, bin) /lib/svc/method/svc-puppetmasterd
 
@@ -246,6 +248,10 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 rm -rf %{buildroot}
 
 %changelog
+* Fri May 11 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- include /var/lib to %files because it is needed at first time.
+- rename /etc/puppet/puppetd.conf to /etc/puppet/puppet.conf
+
 * Thu May 10 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Source6 for Solaris 11
 

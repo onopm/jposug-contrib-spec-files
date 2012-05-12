@@ -66,9 +66,9 @@ cp -rp %{_name}-%{unmangled_version} %{_name}-%{unmangled_version}-64
 cd %{_name}-%{unmangled_version}-64
 %patch1 -p0
 
-export CFLAGS="-i -xO4 -xspace -xstrconst -mr -xregs=no%frameptr -m64"
-export LDFLAGS="%_ldflags -m64 -L/usr/gnu/lib/%{_arch64} -R/usr/gnu/lib/%{_arch64}"
-export LD_OPTIONS="-m64 -R/usr/sfw/lib/%{_arch64}:/usr/gnu/lib/%{_arch64} -L/usr/sfw/lib/%{_arch64}:/usr/gnu/lib/%{_arch64}"
+export CFLAGS="-i -xO4 -xspace -xstrconst -mr -mt=yes -m64 -I/usr/include"
+export LDFLAGS="-m64 -R/usr/lib/%{_arch64} -L/usr/lib/%{_arch64}"
+export LD_OPTIONS="-R/usr/lib/%{_arch64}:/usr/sfw/lib/%{_arch64} -L/usr/lib/%{_arch64}:/usr/sfw/lib/%{_arch64}"
 env CFLAGS="$CFLAGS" ./configure --prefix=%{_prefix} \
                                  --bindir=%{_bindir}/%{_arch64} \
                                  --libdir=%{_libdir}/%{_arch64} \
@@ -130,6 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/python2.7/*
 
 %changelog
+* Sun May 12 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- Correction of the Import error
 * Sun May 10 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - vender-packages directory support
 * Sun May 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>

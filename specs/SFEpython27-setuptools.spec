@@ -35,7 +35,7 @@ Requires:      SFEpython27
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{execpython} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{_prefix} --no-compile
+%{execpython} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{_prefix}
 
 
 # move to vendor-packages
@@ -62,6 +62,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun May 11 2012 - Osamu Tabata<cantimerny.g@gmail.com>
+- delete --no-compile option
 * Sun May 11 2012 - Osamu Tabata<cantimerny.g@gmail.com>
 - Python 2.7 amd64 arch support
 * Sun Apr 2 2012 - Osamu Tabata<cantimerny.g@gmail.com>

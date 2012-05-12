@@ -33,7 +33,7 @@ Requires:                SFEpython27
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{execpython} setup.py install --root=$RPM_BUILD_ROOT/% --prefix=%{_prefix}
+%{execpython} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{_prefix}
 
 # move to vendor-packages
 mkdir -p $RPM_BUILD_ROOT%{_bindir}/%{_arch64}

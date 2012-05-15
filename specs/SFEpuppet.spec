@@ -12,7 +12,7 @@
 
 Name:           puppet
 IPS_package_name:        system/management/puppet
-Version:        2.7.13
+Version:        2.7.14
 #Release:        0.1rc1%{?dist}
 Release:        1%{?dist}
 Summary:        A network tool for managing many disparate systems
@@ -248,6 +248,9 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 rm -rf %{buildroot}
 
 %changelog
+* Wed May 16 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.7.14
+
 * Fri May 11 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - include /var/lib to %files because it is needed at first time.
 - rename /etc/puppet/puppetd.conf to /etc/puppet/puppet.conf

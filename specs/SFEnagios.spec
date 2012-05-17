@@ -10,7 +10,7 @@
 
 Name:		SFEnagios
 IPS_package_name:        diagnostic/nagios
-Version:	3.4.0
+Version:	3.4.1
 Summary:	Host/service/network monitoring program
 Group:		Applications/System
 License:	GPLv2
@@ -234,6 +234,9 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_includedir}/nagios
 
 %changelog
+* Thu May 17 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 3.4.1
+
 * Wed May  9 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 3.4.0
 - remove patch1

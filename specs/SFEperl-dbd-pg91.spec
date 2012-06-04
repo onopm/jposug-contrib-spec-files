@@ -39,13 +39,11 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 Postgres Driver for DBI
 
 %package 512
-IPS_package_name: library/perl-5/dbd-pg91
+IPS_package_name: library/perl-5/dbd-pg91-512
 Summary: Postgres Driver for DBI
 Requires: perl-512
 Requires:	%{pnm_requires_SUNWpmdbi}
 Requires:	database/postgres-91/library
-BuildRequires:  library/perl-5/digest-sha-512
-
 
 %prep
 %setup -q -n DBD-Pg-%{version}
@@ -81,5 +79,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Jun 04 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify IPS_package_name for package 512.
+
 * Mon Jun 04 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

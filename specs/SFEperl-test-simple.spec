@@ -74,7 +74,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
 %dir %attr(0755, root, sys) /usr/share
 %{_mandir}
 
@@ -89,6 +88,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon 04 Jun 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify %files to avoid file conflict.
+
 * Mon 04 Jun 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.98
 

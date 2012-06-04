@@ -11,7 +11,7 @@
 
 Name:		SFEperl-test-simple
 IPS_package_name: library/perl-5/test-simple
-Version:	0.96
+Version:	0.98
 Summary:	Basic utilities for writing tests
 License:	Artistic
 Distribution:   OpenSolaris
@@ -89,5 +89,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon 04 Jun 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.98
+
 * Mon 04 Jun 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512

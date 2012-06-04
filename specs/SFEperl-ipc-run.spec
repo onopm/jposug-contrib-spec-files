@@ -94,3 +94,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon 04 Jun 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- initial commit

@@ -7,6 +7,9 @@
 # includes module(s): [postfix]
 #
 
+%include Solaris.inc
+%include packagenamemacros.inc
+
 %define   postfix_usr_dir  %{_prefix}/postfix
 %define   postfix_var_dir  %{_var}/postfix
 %define   postfix_etc_dir  /etc/postfix
@@ -15,21 +18,32 @@
 %define postdrop_group postdrop
 %define maildrop_group %{postdrop_group}
 %define maildrop_gid   %{POSTDROP_GID}
-%include Solaris.inc
+%define svcdir /var/svc/manifest/network
+
+%define postfix_config_dir      %{_sysconfdir}/postfix
+%define postfix_daemon_dir      %{postfix_usr_dir}/libexec
+%define postfix_command_dir     %{postfix_usr_dir}/sbin
+%define postfix_queue_dir       %{postfix_var_dir}/spool
+%define postfix_data_dir        %{postfix_usr_dir}/lib
+%define postfix_doc_dir         %{_docdir}/%{name}-%{version}
+%define postfix_sample_dir      %{postfix_doc_dir}/samples
+%define postfix_readme_dir      %{postfix_doc_dir}/README_FILES
+
 
 Name:           postfix
 Summary:        postfix mail server
-Version:        2.8.0
+Version:        2.8.11
 IPS_package_name: service/network/smtp/postfix
 License:        IBM Public License
 Url:            http://www.postfix.org
 Source:         ftp://ftp.cs.uu.nl/mirror/postfix/postfix-release/official/%{name}-%{version}.tar.gz
 Source1:	postfix-manifest.xml
+Source2:	svc-postfix
 Patch1:		SFEpostfix-01-sys_defs.h.diff
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Release:	2
+Release:	1
 SUNW_Basedir:   /
 SUNW_Copyright: %{name}.copyright
 
@@ -64,7 +78,7 @@ make makefiles CCARGS='-DDEF_CONFIG_DIR=\"%{postfix_etc_dir}\" \
  -DDEF_COMMAND_DIR=\"%{postfix_usr_dir}/sbin\" \
  -DDEF_DAEMON_DIR=\"%{postfix_usr_dir}/libexec\" \
  -DDEF_DATA_DIR=\"%{postfix_usr_dir}/lib\" \
- -DDEF_MANPAGE_DIR=\"%{postfix_usr_dir}/man\" \
+ -DDEF_MANPAGE_DIR=\"%{_mandir}\" \
  -DDEF_QUEUE_DIR=\"%{postfix_var_dir}/spool\" \
  -DDEF_MAILQ_PATH=\"%{postfix_usr_dir}/bin/mailq\" \
  -DDEF_NEWALIASPATH=\"%{postfix_usr_dir}/bin/newaliases\" \
@@ -75,49 +89,78 @@ make makefiles CCARGS='-DDEF_CONFIG_DIR=\"%{postfix_etc_dir}\" \
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
-env -i "LD_LIBRARY_PATH=%buildroot%_libdir" \
-        sh postfix-install -non-interactive \
-                install_root=%buildroot \
-                tempdir=%_tmppath
+rm -rf $buildroot
 
+env -i "LD_LIBRARY_PATH=%buildroot%_libdir" \
+    sh postfix-install -non-interactive \
+    install_root=%buildroot \
+    tempdir=%_tmppath \
+    config_directory=%{postfix_config_dir} \
+    daemon_directory=%{postfix_daemon_dir} \
+    command_directory=%{postfix_command_dir} \
+    queue_directory=%{postfix_queue_dir} \
+    data_directory=%{postfix_data_dir} \
+    sendmail_path=%{postfix_command_dir}/sendmail \
+    newaliases_path=%{postfix_usr_dir}/bin/newaliases \
+    mailq_path=%{postfix_usr_dir}/bin/mailq \
+    mail_owner=%{postfix_user} \
+    setgid_group=%{maildrop_group} \
+    manpage_directory=%{_mandir} \
+    sample_directory=%{postfix_sample_dir} \
+    readme_directory=%{postfix_readme_dir} || exit 1
+
+mv %buildroot%{_mandir}/man1/mailq.1 %buildroot%{_mandir}/man1/mailq.postfix.1
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
-mv %buildroot/usr/bin/newaliases %buildroot%{postfix_usr_dir}/bin/newaliases
-rm -rf %buildroot/usr/bin
-%define svcdir /var/lib/svc/manifest/network
-mkdir -p "${RPM_BUILD_ROOT}/%{svcdir}"
-cp "%{SOURCE1}" "${RPM_BUILD_ROOT}/%{svcdir}/smtp-postfix.xml"
+
+mkdir -p "${RPM_BUILD_ROOT}%{svcdir}"
+cp "%{SOURCE1}" "${RPM_BUILD_ROOT}%{svcdir}/smtp-postfix.xml"
+mkdir -p "${RPM_BUILD_ROOT}/lib/svc/method"
+cp "%{SOURCE2}" "${RPM_BUILD_ROOT}/lib/svc/method/"
+
+%post
+# upgrade configuration files if necessary
+%{_sbindir}/postfix set-permissions upgrade-configuration \
+        daemon_directory=%{postfix_daemon_dir} \
+        command_directory=%{postfix_command_dir} \
+        mail_owner=%{postfix_user} \
+        setgid_group=%{maildrop_group} \
+        manpage_directory=%{_mandir} \
+        sample_directory=%{postfix_sample_dir} \
+        readme_directory=%{postfix_readme_dir} &> /dev/null
+
+%actions
+group groupname="postfix"
+group groupname="postdrop"
+user ftpuser=false gcos-field="Postfix Reserved UID" username="postfix" password=NP group="postfix"
 
 %files
 %defattr (0755, root, bin)
 %dir %{postfix_usr_dir}/bin    
 %dir %{postfix_usr_dir}/libexec
-%dir %{postfix_usr_dir}/man    
-%dir %{postfix_usr_dir}/man/man1
-%dir %{postfix_usr_dir}/man/man5
-%dir %{postfix_usr_dir}/man/man8
-%dir %attr (0755, root, sys) /var
-%dir %attr (0755, root, other) /var/lib
-%dir %{postfix_var_dir}/spool/pid
-%defattr (0700, smmsp, mail)
-%dir %{postfix_etc_dir} 
-%dir %{postfix_usr_dir}/lib
+%dir %attr (0755, root, sys) /usr/share
+%dir %{_mandir}
+%dir %{_mandir}/man1
+%dir %{_mandir}/man5
+%dir %{_mandir}/man8
+%dir %attr(0755, root, sys) /var
+%dir %attr(0755, postfix, mail) %{postfix_usr_dir}/lib
 %dir %{postfix_var_dir}/spool
-%dir %{postfix_var_dir}/spool/active
-%dir %{postfix_var_dir}/spool/bounce
-%dir %{postfix_var_dir}/spool/corrupt
-%dir %{postfix_var_dir}/spool/defer  
-%dir %{postfix_var_dir}/spool/deferred
-%dir %{postfix_var_dir}/spool/flush   
-%dir %{postfix_var_dir}/spool/hold    
-%dir %{postfix_var_dir}/spool/incoming
-%dir %{postfix_var_dir}/spool/private 
-%dir %{postfix_var_dir}/spool/maildrop
-%dir %{postfix_var_dir}/spool/public  
-%dir %{postfix_var_dir}/spool/saved   
-%dir %{postfix_var_dir}/spool/trace   
+%dir %attr(0755, postfix, postdrop) %{postfix_var_dir}/spool/maildrop
+%dir %attr(0710, postfix, postdrop) %{postfix_var_dir}/spool/public  
+%dir %attr(0700, root, root) %{postfix_var_dir}/spool/pid
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/active
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/bounce
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/corrupt
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/defer  
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/deferred
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/flush   
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/hold    
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/incoming
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/private 
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/saved   
+%dir %attr(0700, postfix, mail) %{postfix_var_dir}/spool/trace   
 %dir %attr(0755, root, sys) /etc
-%defattr (0755, root, bin)
+%dir %attr(0755, root, mail)  %{postfix_etc_dir}
 %config %{postfix_etc_dir}/main.cf
 %config %{postfix_etc_dir}/access
 %config %{postfix_etc_dir}/master.cf
@@ -133,8 +176,8 @@ cp "%{SOURCE1}" "${RPM_BUILD_ROOT}/%{svcdir}/smtp-postfix.xml"
 %{postfix_etc_dir}/main.cf.default
 %{postfix_etc_dir}/makedefs.out
 %{postfix_etc_dir}/TLS_LICENSE
-%attr (2755, root, mail) %{postfix_usr_dir}/sbin/postqueue
-%attr (2755, root, mail) %{postfix_usr_dir}/sbin/postdrop
+%attr (2755, root, postdrop) %{postfix_usr_dir}/sbin/postqueue
+%attr (2755, root, postdrop) %{postfix_usr_dir}/sbin/postdrop
 %dir %attr (0755, root, sys) /usr
 %{postfix_usr_dir}/sbin/postalias
 %{postfix_usr_dir}/sbin/postcat
@@ -150,13 +193,27 @@ cp "%{SOURCE1}" "${RPM_BUILD_ROOT}/%{svcdir}/smtp-postfix.xml"
 %{postfix_usr_dir}/bin/mailq
 %{postfix_usr_dir}/bin/newaliases
 %{postfix_usr_dir}/libexec/*
-%{postfix_usr_dir}/man/man1/*
-%{postfix_usr_dir}/man/man5/*
-%{postfix_usr_dir}/man/man8/*
-%dir %attr (0755, root, sys) %{svcdir}
-%class(manifest) %attr (0444, root, sys) %{svcdir}/smtp-postfix.xml
+%dir %{_mandir}/man1/*
+%dir %{_mandir}/man5/*
+%dir %{_mandir}/man8/*
+%dir %attr(0755, root, other) %{_docdir}
+%doc %{postfix_doc_dir}
+%dir %attr (0755, root, sys) /var/svc
+%dir %attr (0755, root, sys) /var/svc/manifest
+%dir %attr (0755, root, sys) /var/svc/manifest/network
+%class(manifest) %attr (0444, root, sys) /var/svc/manifest/network/smtp-postfix.xml
+%dir %attr (0755, root, bin) /lib
+%dir %attr (0755, root, bin) /lib/svc
+%dir %attr (0755, root, bin) /lib/svc/method
+%attr (0555, root, bin) /lib/svc/method/svc-postfix
+
 
 %changelog
+* Mon Jun 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.8.11
+- modify SMF manifest
+- add %actions
+- modify postfix-install options
 * Mon May  7 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify some %attr for Solaris 11
 * Thu Feb 10 2011 - Satoru MIYAZAKI<s.miyaza@gmail.com>

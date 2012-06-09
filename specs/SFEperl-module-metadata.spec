@@ -35,16 +35,44 @@ Meta(info.upstream_url):        http://search.cpan.org/~dagolden/%{tarball_name}
 Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
+Gather package and POD information from perl module files 
+
+%package 584
+IPS_package_name: library/perl-5/module-metadata-584
+Summary: Gather package and POD information from perl module files for perl-584
+BuildRequires:	runtime/perl-584
+Requires:	runtime/perl-584
+
+%package 512
+IPS_package_name: library/perl-5/module-metadata-512
+Summary: Gather package and POD information from perl module files perl-512
+BuildRequires:	runtime/perl-512
+Requires:	runtime/perl-512
+
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.12
+export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+/usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.8.4
 make
+# make test
+
+rm -rf $RPM_BUILD_ROOT
+make pure_install
+
+export PERL5LIB=/usr/perl5/vendor_perl/5.12
+/usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.12
+make
+# make test
 
 %install
-rm -rf $RPM_BUILD_ROOT
+# rm -rf $RPM_BUILD_ROOT
 make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
@@ -55,10 +83,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
+# %{_prefix}/perl5
 %attr(755,root,sys) %dir %{_datadir}
 %{_mandir}
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
 
+%files 584
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.8.4
+
+%files 512
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.12
+
 %changelog
+* Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate packages for perl-584 and perl-512.

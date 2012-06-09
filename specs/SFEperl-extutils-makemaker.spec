@@ -39,6 +39,7 @@ Writes Makefiles for extensions
 IPS_package_name: library/perl-5/extutils-makemaker-584
 Summary: Writes Makefiles for extensions for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/extutils-install-584
 Requires:	runtime/perl-584
 Requires:	library/perl-5/extutils-makemaker
 
@@ -46,6 +47,7 @@ Requires:	library/perl-5/extutils-makemaker
 IPS_package_name: library/perl-5/extutils-makemaker-512
 Summary: Writes Makefiles for extensions for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/extutils-install-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/extutils-makemaker
 
@@ -53,6 +55,7 @@ Requires:	library/perl-5/extutils-makemaker
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
+export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
 /usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
   DESTDIR=$RPM_BUILD_ROOT \
   LIB=/usr/perl5/vendor_perl/5.8.4
@@ -62,6 +65,7 @@ make test
 rm -rf $RPM_BUILD_ROOT
 make pure_install
 
+export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
   DESTDIR=$RPM_BUILD_ROOT \
   LIB=/usr/perl5/vendor_perl/5.12
@@ -95,5 +99,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires library/perl-5/extutils-install
+- export PERL5LIB to adjust @inc
 * Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -40,6 +40,7 @@ IPS_package_name: library/perl-5/extutils-makemaker-584
 Summary: Writes Makefiles for extensions for perl-584
 BuildRequires:	runtime/perl-584
 BuildRequires:	library/perl-5/extutils-install-584
+BuildRequires:	library/perl-5/file-copy-recursive-584
 Requires:	runtime/perl-584
 Requires:	library/perl-5/extutils-makemaker
 
@@ -48,6 +49,7 @@ IPS_package_name: library/perl-5/extutils-makemaker-512
 Summary: Writes Makefiles for extensions for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/extutils-install-512
+BuildRequires:	library/perl-5/file-copy-recursive-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/extutils-makemaker
 
@@ -99,6 +101,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Jun 10 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires to avoid confilict with file-copy-recursive
 * Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires library/perl-5/extutils-install
 - export PERL5LIB to adjust @inc

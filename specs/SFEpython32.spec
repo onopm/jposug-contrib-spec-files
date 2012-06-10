@@ -1,32 +1,33 @@
 #
-# spec file for package SFEpython27
+# spec file for package SFEpython3
+#
 #
 
 %define _name Python
-%define version 2.7.2
-%define unmangled_version 2.7.2
+%define version 3.2.2
+%define unmangled_version 3.2.2
 %define release 1
-%define pyver 2.7
+%define pyver 3.2
 
 %include Solaris.inc
 %include packagenamemacros.inc
 
-Name: SFEpython27
-IPS_Package_Name:	runtime/python-27
+Name: SFEpython32
+IPS_Package_Name:	runtime/python-32
 Summary: The Python interpreter, libraries and utilities
 Group: Development/Python
 Version: %{version}
 Release: %{release}
 License: PSF license
 Source: http://www.python.org/ftp/python/%{unmangled_version}/%{_name}-%{unmangled_version}.tar.bz2
-Patch1: SFEpython27-lib64.diff
-Url: http://www.python.org/download/releases/2.7.2
+Patch1: SFEpython32-lib64.diff
+Url: http://www.python.org/download/releases/3.2.2
 Group: Development/Libraries
 %include default-depend.inc
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 SUNW_Basedir:	%{_basedir}
-SUNW_Copyright:	Python27.copyright
+SUNW_Copyright:	Python3.copyright
 
 # OpenSolaris IPS Manifest Fields
 Meta(info.maintainer): A Hettinger <ahettinger@prominic.net>
@@ -64,7 +65,7 @@ cp -rp %{_name}-%{unmangled_version} %{_name}-%{unmangled_version}-64
 %build
 %ifarch amd64 sparcv9
 cd %{_name}-%{unmangled_version}-64
-%patch1 -p0
+%patch1 -p1
 
 export CFLAGS="-i -xO4 -xspace -xstrconst -mr -mt=yes -m64 -I/usr/include"
 export LDFLAGS="-m64 -R/usr/lib/%{_arch64} -L/usr/lib/%{_arch64}"
@@ -92,14 +93,7 @@ make -j$CPUS
 %ifarch amd64 sparcv9
 cd %{_name}-%{unmangled_version}-64
 make install DESTDIR=$RPM_BUILD_ROOT
-mv $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/idle $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/idle%{pyver}
-mv $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/pydoc $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/pydoc%{pyver}
-mv $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/2to3 $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/2to3%{pyver}
-mv $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/smtpd.py $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/smtpd%{pyver}.py
-rm $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/python-config
-rm $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/python
-rm $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/pkgconfig/python.pc
-find $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{pyver} -name '*.pyo' -exec rm -f {} \;
+find $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{pyver} -name '*.pyo' -exec rm -rf {} \;
 echo "import site; site.addsitedir('/usr/lib/%{_arch64}/python%{pyver}/vendor-packages')" > $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{pyver}/site-packages/vendor-packages.pth
 %endif
 
@@ -108,39 +102,43 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%dir %attr (0755, root, bin) %{_bindir}/%{_arch64}
-%{_bindir}/%{_arch64}/python2.7
-%{_bindir}/%{_arch64}/idle2.7
-%{_bindir}/%{_arch64}/pydoc2.7
-%{_bindir}/%{_arch64}/2to32.7
-%{_bindir}/%{_arch64}/smtpd2.7.py
-%{_bindir}/%{_arch64}/python2.7-config
-
-%dir %attr (0755, root, bin) %{_libdir}/%{_arch64}
-%{_libdir}/%{_arch64}/libpython2.7.so
-%{_libdir}/%{_arch64}/libpython2.7.so.1.0
-%{_libdir}/%{_arch64}/python2.7/*
-%dir %attr (0755, root, other) %{_libdir}/%{_arch64}/pkgconfig 
-%{_libdir}/%{_arch64}/pkgconfig/python-2.7.pc
+%dir %attr (0755, root, bin) %{_bindir}
+%{_bindir}/%{_arch64}/idle3
+%{_bindir}/%{_arch64}/idle%{pyver}
+%{_bindir}/%{_arch64}/2to3
+%{_bindir}/%{_arch64}/2to3-%{pyver}
+%{_bindir}/%{_arch64}/python3
+%{_bindir}/%{_arch64}/python%{pyver}
+%{_bindir}/%{_arch64}/python%{pyver}m
+%{_bindir}/%{_arch64}/python3-config
+%{_bindir}/%{_arch64}/python%{pyver}-config
+%{_bindir}/%{_arch64}/python%{pyver}m-config
+%{_bindir}/%{_arch64}/pydoc3
+%{_bindir}/%{_arch64}/pydoc%{pyver}
+%dir %attr (0755, root, bin) %{_libdir}
+%{_libdir}/%{_arch64}/libpython%{pyver}m.so
+%{_libdir}/%{_arch64}/libpython3.so
+%{_libdir}/%{_arch64}/libpython%{pyver}m.so.1.0
+%{_libdir}/%{_arch64}/python%{pyver}/*
+%dir %attr (0755, root, other) %{_libdir}/%{_arch64}/pkgconfig
+%{_libdir}/%{_arch64}/pkgconfig/python3.pc
+%{_libdir}/%{_arch64}/pkgconfig/python-%{pyver}m.pc
+%{_libdir}/%{_arch64}/pkgconfig/python-%{pyver}.pc
 
 %dir %attr (0755, root, sys) %{_datadir}
 %dir %attr(0755, root, bin) %{_mandir}
-%{_mandir}/man1/python2.7.1
+%{_mandir}/man1/python3.2.1
 %dir %attr(0755, root, bin) %{_includedir}
-%{_includedir}/python2.7/*
+%{_includedir}/python%{pyver}m/*
 
 %changelog
 * Sun May 12 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Correction of the Import error
-* Sun May 10 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
-- vender-packages directory support
-* Sun May 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
-- Only 64bit Python2.7 package
-* Sun May 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
-- Support for arch amd64
-* Mon Apr 30 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
-- Fixed a file conflict of python2.6
+* Sun May 11 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- Only 64bit Python3.2 package
 * Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
-- vender-packages directory support
-* Sun Apr 1 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Support for OpenIndiana
+* Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- vendor-packages directory support
+
+

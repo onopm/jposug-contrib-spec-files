@@ -12,7 +12,7 @@
 %include packagenamemacros.inc
 
 Name: SFEpython27
-IPS_Package_Name:	runtime/python-27
+IPS_Package_Name:	runtime/SFEpython-27
 Summary: The Python interpreter, libraries and utilities
 Group: Development/Python
 Version: %{version}
@@ -59,6 +59,7 @@ yourself.
 %ifarch amd64 sparcv9
 rm -rf %{_name}-%{unmangled_version}-64
 cp -rp %{_name}-%{unmangled_version} %{_name}-%{unmangled_version}-64
+rm -rf %{_name}-%{unmangled_version}
 %endif
 
 %build
@@ -130,6 +131,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/python2.7/*
 
 %changelog
+* Sun June 10 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- Support for Solaris11
 * Sun May 12 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Correction of the Import error
 * Sun May 10 2012 -  Osamu Tabata<cantimerny.g@gmail.com>

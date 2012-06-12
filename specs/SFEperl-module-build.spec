@@ -36,13 +36,13 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 %description
 Build, test, and install Perl modules
 
-%package 584
-IPS_package_name: library/perl-5/module-build-584
-Summary: Build, test, and install Perl modules for perl-584
-BuildRequires:	runtime/perl-584
-BuildRequires:	library/perl-5/extutils-install-584
-BuildRequires:	library/perl-5/perl-ostype-584
-Requires:	runtime/perl-584
+# %package 584
+# IPS_package_name: library/perl-5/module-build-584
+# Summary: Build, test, and install Perl modules for perl-584
+# BuildRequires:	runtime/perl-584
+# BuildRequires:	library/perl-5/extutils-install-584
+# BuildRequires:	library/perl-5/perl-ostype-584
+# Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/module-build-512
@@ -56,29 +56,35 @@ Requires:	runtime/perl-512
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
-/usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
-  DESTDIR=$RPM_BUILD_ROOT \
-  LIB=/usr/perl5/vendor_perl/5.8.4
-make
-make test
+# export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+# /usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
+#   DESTDIR=$RPM_BUILD_ROOT \
+#   LIB=/usr/perl5/vendor_perl/5.8.4
+# make
+# make test
 
-rm -rf $RPM_BUILD_ROOT
-make pure_install
+# rm -rf $RPM_BUILD_ROOT
+# make pure_install
 
-export PERL5LIB=/usr/perl5/vendor_perl/5.12
-/usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
-  DESTDIR=$RPM_BUILD_ROOT \
-  LIB=/usr/perl5/vendor_perl/5.12
-make
-make test
+# export PERL5LIB=/usr/perl5/vendor_perl/5.12
+# /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
+#   DESTDIR=$RPM_BUILD_ROOT \
+#   LIB=/usr/perl5/vendor_perl/5.12
+# make
+# make test
 
+/usr/perl5/5.12/bin/perl Build.PL \
+  --installdirs vendor \
+  --destdir $RPM_BUILD_ROOT
+/usr/perl5/5.12/bin/perl ./Build
+# /usr/perl5/5.12/bin/perl ./Build test
 
 %install
-#rm -rf $RPM_BUILD_ROOT
-make pure_install
-mkdir -p $RPM_BUILD_ROOT%{_datadir}
-mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
+rm -rf $RPM_BUILD_ROOT
+#make pure_install
+/usr/perl5/5.12/bin/perl ./Build install --destdir $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/man
+mv $RPM_BUILD_ROOT/usr/perl5/5.12/man $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 
 %clean
@@ -92,14 +98,19 @@ rm -rf $RPM_BUILD_ROOT
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
 
-%files 584
-%defattr (-, root, bin)
-%{_prefix}/perl5/vendor_perl/5.8.4
+# %files 584
+# %defattr (-, root, bin)
+# %{_prefix}/perl5/vendor_perl/5.8.4
 
 %files 512
 %defattr (-, root, bin)
 %{_prefix}/perl5/vendor_perl/5.12
+%attr(755,root,sys) %dir /usr/perl5/5.12/bin
+/usr/perl5/5.12/bin/*
 
 %changelog
+* Tue Jun 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use Build.PL instead of Makefile.PL
+- stop to generate package for perl-584
 * Sun Jun 10 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512

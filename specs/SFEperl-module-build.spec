@@ -105,10 +105,12 @@ rm -rf $RPM_BUILD_ROOT
 %files 512
 %defattr (-, root, bin)
 %{_prefix}/perl5/vendor_perl/5.12
-%attr(755,root,sys) %dir /usr/perl5/5.12/bin
+%attr(755,root,bin) %dir /usr/perl5/5.12/bin
 /usr/perl5/5.12/bin/*
 
 %changelog
+* Tue Jun 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify %attr
 * Tue Jun 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use Build.PL instead of Makefile.PL
 - stop to generate package for perl-584

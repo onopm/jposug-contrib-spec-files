@@ -31,12 +31,41 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
 Application config (from ARGV, file, ...)
+
+# %package 584
+# IPS_package_name: library/perl-5/appconfig-584
+# Summary: Application config (from ARGV, file, ...) for perl-584
+# BuildRequires:	runtime/perl-584
+# BuildRequires:	library/perl-5/json-pp-584 # not builded yet
+# Requires:	runtime/perl-584
+
+%package 512
+IPS_package_name: library/perl-5/appconfig-512
+Summary: Application config (from ARGV, file, ...) for perl-512
+BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/json-pp-512
+Requires:	runtime/perl-512
+
 %prep
 %setup -q -n AppConfig-%{version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version}
+# export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+# /usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
+#   DESTDIR=$RPM_BUILD_ROOT \
+#   LIB=/usr/perl5/vendor_perl/5.8.4
+# make
+# make test
+
+# rm -rf $RPM_BUILD_ROOT
+# make pure_install
+
+export PERL5LIB=/usr/perl5/vendor_perl/5.12
+/usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.12
 make
+make test
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -56,6 +85,17 @@ rm -rf $RPM_BUILD_ROOT
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
 
+# %files 584
+# %defattr (-, root, bin)
+# %{_prefix}/perl5/vendor_perl/5.8.4
+
+%files 512
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.12
+
 %changelog
-* Wed Jun 13 2012 - Fumhisa TONAKA <fumi.ftnk@gmail.com>
-- initical commit
+* Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for perl-512
+- add make test
+* Wed Jun 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- initial commit

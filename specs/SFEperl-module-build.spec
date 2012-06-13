@@ -87,6 +87,8 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/man
 mv $RPM_BUILD_ROOT/usr/perl5/5.12/man $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 
+rm -rf $RPM_BUILD_ROOT/usr/perl5/5.12
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -105,10 +107,12 @@ rm -rf $RPM_BUILD_ROOT
 %files 512
 %defattr (-, root, bin)
 %{_prefix}/perl5/vendor_perl/5.12
-%attr(755,root,bin) %dir /usr/perl5/5.12/bin
-/usr/perl5/5.12/bin/*
+# %attr(755,root,bin) %dir /usr/perl5/5.12/bin
+# /usr/perl5/5.12/bin/*
 
 %changelog
+* Wed Jun 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- exclude executable files whitch conflict with perl-512
 * Tue Jun 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify %attr
 * Tue Jun 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

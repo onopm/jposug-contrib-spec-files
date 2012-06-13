@@ -57,3 +57,5 @@ rm -rf $RPM_BUILD_ROOT
 #%{_bindir}/*
 
 %changelog
+* Wed Jun 13 2012 - Fumhisa TONAKA <fumi.ftnk@gmail.com>
+- initical commit

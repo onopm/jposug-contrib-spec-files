@@ -11,7 +11,7 @@
 
 Name:		SFEperl-unicode-japanese
 IPS_package_name: library/perl-5/unicode-japanese
-Version:	0.47
+Version:	0.49
 Summary:	Japanese Character Encoding Handler
 License:	Artistic
 Distribution:   OpenSolaris
@@ -56,3 +56,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 
 %changelog
+* Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.49

@@ -36,13 +36,12 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 %description
 JSON-PP
 
-# %package 584
-# IPS_package_name: library/perl-5/json-pp-584
-# Summary: JSON-PP for perl-584
-# BuildRequires:	runtime/perl-584
-# cpan-meta-yaml not builded yet
-# BuildRequires:	library/perl-5/cpan-meta-yaml
-# Requires:	runtime/perl-584
+%package 584
+IPS_package_name: library/perl-5/json-pp-584
+Summary: JSON-PP for perl-584
+BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/cpan-meta-yaml
+Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/json-pp-512
@@ -57,15 +56,15 @@ Requires:       library/perl-5/json-pp
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-# export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
-# /usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
-#   DESTDIR=$RPM_BUILD_ROOT \
-#   LIB=/usr/perl5/vendor_perl/5.8.4
-# make
-# make test
+export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+/usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.8.4
+make
+make test
 
-# rm -rf $RPM_BUILD_ROOT
-# make pure_install
+rm -rf $RPM_BUILD_ROOT
+make pure_install
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
@@ -75,7 +74,7 @@ make
 make test
 
 %install
-rm -rf $RPM_BUILD_ROOT
+# rm -rf $RPM_BUILD_ROOT
 make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
@@ -92,14 +91,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,bin) %dir %{_bindir}
 %{_bindir}/*
 
-# %files 584
-# %defattr (-, root, bin)
-# %{_prefix}/perl5/vendor_perl/5.8.4
+%files 584
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.8.4
 
 %files 512
 %defattr (-, root, bin)
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate packages for perl-584 and perl-512
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

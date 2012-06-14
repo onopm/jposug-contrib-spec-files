@@ -39,13 +39,55 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
 Postgres Driver for DBI
+
+# %package 584
+# IPS_package_name: library/perl-5/dbd-pg90-584
+# Summary: Postgres Driver for DBI for perl-584
+# BuildRequires:	runtime/perl-584
+# BuildRequires:	library/perl-5/version-584
+# BuildRequires:	library/perl-5/test-simple-584
+# BuildRequires:	library/perl-5/json-pp-584 # not builded yet
+# BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
+# BuildRequires:	SFEpostgres-90-library
+# BuildRequires:	SFEpostgres-90-developer
+# Requires:	runtime/perl-584
+
+%package 512
+IPS_package_name: library/perl-5/dbd-pg90-512
+Summary: Postgres Driver for DBI for perl-512
+BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/version-512
+BuildRequires:	library/perl-5/test-simple-512
+BuildRequires:	library/perl-5/json-pp-512
+BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
+BuildRequires:	SFEpostgres-90-library
+BuildRequires:	SFEpostgres-90-developer
+Requires:	runtime/perl-512
+
+
 %prep
 %setup -q -n DBD-Pg-%{version}
 
 %build
 POSTGRES_LIB="/usr/postgres/9.0/lib/"; export POSTGRES_LIB
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version} 
+
+# export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+# /usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
+#   DESTDIR=$RPM_BUILD_ROOT \
+#   LIB=/usr/perl5/vendor_perl/5.8.4
+# make
+# # make test
+
+# rm -rf $RPM_BUILD_ROOT
+# make pure_install DESTDIR=$RPM_BUILD_ROOT
+
+export PERL5LIB=/usr/perl5/vendor_perl/5.12
+/usr/perl5/5.12/bin/perl Makefile.PL  PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.12
 make
+make test
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -65,6 +107,15 @@ rm -rf $RPM_BUILD_ROOT
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
 
+# %files 584
+# %defattr (-, root, bin)
+# %{_prefix}/perl5/vendor_perl/5.8.4
+
+%files 512
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.12
+
 %changelog
 * Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.19.2
+- generate packages for perl-512

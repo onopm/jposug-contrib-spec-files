@@ -12,7 +12,7 @@
 
 Name:		SFEperl-dbd-pg90
 IPS_package_name: library/perl-5/dbd-pg90
-Version:	2.17.1
+Version:	2.19.2
 Summary:	Postgres Driver for DBI
 License:	Artistic
 Distribution:   OpenSolaris
@@ -66,3 +66,5 @@ rm -rf $RPM_BUILD_ROOT
 #%{_bindir}/*
 
 %changelog
+* Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.19.2

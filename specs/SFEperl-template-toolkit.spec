@@ -11,7 +11,7 @@
 
 Name:		SFEperl-template-toolkit
 IPS_package_name: library/perl-5/template-toolkit
-Version:	2.22
+Version:	2.24
 Summary:	Extensive Toolkit for template processing
 License:	Artistic
 Distribution:   OpenSolaris
@@ -57,3 +57,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 
 %changelog
+* Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.24

@@ -11,7 +11,7 @@
 %define tarball_version 0.08
 %define tarball_name    Filesys-Notify-Simple
 
-Name:		SFEperl-filesys-notify-simple
+Name:		SFEperl-fs-notify-simple
 IPS_package_name: library/perl-5/filesys-notify-simple
 Version:	0.08
 IPS_component_version: 0.8
@@ -21,7 +21,7 @@ Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 Url:		http://search.cpan.org/~miyagawa/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
-SUNW_Copyright: %{name}.copyright
+SUNW_Copyright: SFEperl-filesys-notify-simple.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/M/MI/MIYAGAWA/Filesys-Notify-Simple-%{tarball_version}.tar.gz
 
 BuildRequires:	runtime/perl-584
@@ -95,5 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sat Jun 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify Name because old name is too long.
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

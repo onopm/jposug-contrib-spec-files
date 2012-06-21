@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 0.09
+%define tarball_version 0.10
 %define tarball_name    Kossy
 
 Name:		SFEperl-kossy
 IPS_package_name: library/perl-5/kossy
-Version:	0.09
-IPS_component_version: 0.9
+Version:	0.10
+IPS_component_version: 0.10
 Summary:	Kossy
 License:	Artistic
 Distribution:   OpenSolaris
@@ -101,5 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/perl5/5.12/bin/*
 
 %changelog
+* Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 0.10
 * Sat Jun 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

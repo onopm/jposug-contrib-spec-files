@@ -23,10 +23,10 @@
 # %define SUNWPython     %(/usr/bin/pkginfo -q SUNWPython && echo 1 || echo 0)
 
 Name:                    rrdtool
-IPS_package_name:        image/rrdtool
+IPS_package_name:        image/jposug-rrdtool
 Summary:                 rrdtool - data logging and graphing system for time series data.
 URL:                     http://oss.oetiker.ch/rrdtool/
-Version:                 1.4.3
+Version:                 1.4.7
 Source:                  http://oss.oetiker.ch/rrdtool/pub/rrdtool-%{version}.tar.gz
 
 # SUNW_BaseDir:            %{_basedir}
@@ -110,6 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-, root, bin)
 %doc README COPYING NEWS TODO THREADS
+%dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_bindir}
 %{_bindir}/*
 
@@ -141,6 +142,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jun 22 2012 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
+- modify IPS_package_name
+- bump to 1.4.7
+- modify %attr for /usr
 * Thu May  3 2012 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
 - import to jposug from file-spec-extra
 - disable lua

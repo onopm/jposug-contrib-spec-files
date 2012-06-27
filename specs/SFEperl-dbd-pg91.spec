@@ -42,6 +42,7 @@ Requires: perl-512
 BuildRequires:	runtime/perl-584
 Requires:	database/postgres-91/library
 Requires:	library/perl-5/database-584
+Requires:	library/perl-5/version-584
 
 %package 512
 IPS_package_name: library/perl-5/dbd-pg91-512
@@ -50,6 +51,7 @@ Requires: perl-512
 BuildRequires:	runtime/perl-512
 Requires:	database/postgres-91/library
 Requires:	library/perl-5/database-512
+Requires:	library/perl-5/version-512
 
 %prep
 %setup -q -n DBD-Pg-%{version}
@@ -97,6 +99,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Jun 28 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
+
 * Mon Jun 04 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generage package for perl-584
 

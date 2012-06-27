@@ -58,14 +58,17 @@ Requires:	library/perl-5/version-512
 
 %build
 POSTGRES_LIB="/usr/postgres/9.1/lib/"; export POSTGRES_LIB
+export PERL5LIB=/usr/perl5/vendor_perl/5.8.4 
 /usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
     DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4
 make
-PERL5LIB=/usr/perl5/vendor_perl/5.8.4 make test
+make test
 rm -rf $RPM_BUILD_ROOT
 make pure_install
 
+
 POSTGRES_LIB="/usr/postgres/9.1/lib/"; export POSTGRES_LIB
+export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
     DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.12
 make
@@ -101,6 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Thu Jun 28 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
+- export PERL5LIB to pass make test for perl-584
 
 * Mon Jun 04 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generage package for perl-584

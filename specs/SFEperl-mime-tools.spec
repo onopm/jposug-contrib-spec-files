@@ -45,6 +45,7 @@ BuildRequires:	library/perl-5/test-deep-584
 BuildRequires:	library/perl-5/mime-base64-584
 Requires:	runtime/perl-584
 Requires:	library/perl-5/mailtools-584
+Requires:	library/perl-5/mime-base64-584
 
 %package 512
 IPS_package_name: library/perl-5/mime-tools-512
@@ -54,6 +55,7 @@ BuildRequires:	library/perl-5/mailtools-512
 BuildRequires:	library/perl-5/test-deep-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/mailtools-512
+Requires:	library/perl-5/mime-base64-512
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -104,5 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Jun 28 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Tue Jun 26 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   1.4.7
+Version:   2.0.1
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -36,6 +36,9 @@ BuildRequires: library/perl-5/log-log4perl
 BuildRequires: library/perl-5/net-server
 BuildRequires: library/perl-5/net-ssleay-512
 BuildRequires: library/perl-5/net-snmp
+BuildRequires: library/perl-5/io-scalar-512
+BuildRequires: library/perl-5/test-differences-512
+BuildRequires: library/perl-5/test-longstring-512
 
 # java buildrequires on fedora
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6 
@@ -148,6 +151,7 @@ export PATH=/usr/perl5/5.12/bin:$PATH
 # export  CLASSPATH=plugins/javalib/org/munin/plugin/jmx:$(build-classpath mx4j):$CLASSPATH
 # %endif
 make 	CONFIG=dists/redhat/Makefile.config
+make test
 
 %install
 
@@ -265,6 +269,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %dir %attr(0755, root, sys) /etc/munin/conf.d
 %dir %attr(0755, root, sys) /etc/munin/munin-conf.d
 %dir %attr(0755, root, sys) /etc/munin/templates
+%attr(0755, root, sys) /etc/munin/static
 %config(noreplace) /etc/munin/templates/*
 # %config(noreplace) /etc/cron.d/munin
 %dir %attr(0755, root, sys) /var
@@ -334,12 +339,19 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 
 %files common
 %defattr(-, root, bin)
-%doc Announce-1.4.0 ChangeLog COPYING HACKING.pod perltidyrc README RELEASE UPGRADING
+%doc Announce-2.0 ChangeLog COPYING HACKING.pod perltidyrc README RELEASE UPGRADING
 %attr(755, root, sys) %dir /usr
 %dir %attr(0755, root, sys) %{_datadir}
 %dir %attr(0755, root, other) %{_docdir}
 %dir %{perl_vendorlib}/Munin
 %{perl_vendorlib}/Munin/Common
+/var/lib/munin/spool
+/var/lib/munin/cgi-tmp
+/usr/share/munin/munin-async
+/usr/share/munin/munin-storable2datafile
+/usr/share/munin/munin-datafile2storable
+/usr/share/munin/munin-asyncd
+/usr/sbin/munin-sched
 
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6
 # %files java-plugins
@@ -348,6 +360,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Fri Jun  29 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.0.1
+
 * Thu May  3 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - import to jposug
 - update to 1.4.7

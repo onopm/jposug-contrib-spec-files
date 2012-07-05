@@ -25,7 +25,36 @@ Source2:        growthforecast.xml
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/dbd-sqlite-512
+BuildRequires:	library/perl-5/dbix-sunny-512
+BuildRequires:	library/perl-5/file-zglob-512
+BuildRequires:	library/perl-5/http-date-512
+BuildRequires:	library/perl-5/kossy-512
+BuildRequires:	library/perl-5/list-moreutils-512
+BuildRequires:	library/perl-5/log-minimal-512
+BuildRequires:	library/perl-5/plack-builder-conditionals-512
+BuildRequires:	library/perl-5/plack-middleware-scope-container-512
+BuildRequires:	library/perl-5/proclet-512
+BuildRequires:	library/perl-5/scope-container-512
+BuildRequires:	library/perl-5/scope-container-dbi-512
+BuildRequires:	library/perl-5/starlet-512
+#BuildRequires:	library/perl-5/time-piece-512
+
 Requires:	runtime/perl-512
+Requires:	library/perl-5/dbd-sqlite-512
+Requires:	library/perl-5/dbix-sunny-512
+Requires:	library/perl-5/file-zglob-512
+Requires:	library/perl-5/http-date-512
+Requires:	library/perl-5/kossy-512
+Requires:	library/perl-5/list-moreutils-512
+Requires:	library/perl-5/log-minimal-512
+Requires:	library/perl-5/plack-builder-conditionals-512
+Requires:	library/perl-5/plack-middleware-scope-container-512
+Requires:	library/perl-5/proclet-512
+Requires:	library/perl-5/scope-container-512
+Requires:	library/perl-5/scope-container-dbi-512
+Requires:	library/perl-5/starlet-512
+# Requires:	library/perl-5/time-piece-512
 
 %description
 GrowthForecast - Lightning Fast Graphing/Visualization
@@ -88,6 +117,8 @@ user ftpuser=false gcos-field="GrowthForecast Reserved UID" username="growthfore
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/site/growthforecast.xml
 
 %changelog
+* Thu Jul 05 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires and Requires
 * Sun Jun 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add SMF manifest and method file
 - modify %attr

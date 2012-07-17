@@ -175,7 +175,7 @@ test -x $BASEDIR/var/lib/postrun/postrun || exit 0
   echo '/usr/sbin/groupdel nagios';
 ) | $BASEDIR/var/lib/postrun/postrun -i -a
 
-%actions
+%actions common
 group groupname="nagios"
 user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=NP group="nagios"
 # need to add user webservd to nagios group
@@ -234,6 +234,9 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_includedir}/nagios
 
 %changelog
+* Thu Jul 17 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- 
+
 * Thu May 17 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 3.4.1
 

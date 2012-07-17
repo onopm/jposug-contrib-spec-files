@@ -53,7 +53,7 @@
       <propval name='vardir' type='astring'
 	       value='/var/log/nagios' />
       <propval name='runfile' type='astring'
-	       value='/var/run/nagios-nrpe.pid' />
+	       value='/var/run/nrpe.pid' />
       <propval name='lockdir' type='astring'
 	       value='/var/lock/subsys' />
       <propval name='lockfile' type='astring'

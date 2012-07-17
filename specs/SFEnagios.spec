@@ -20,7 +20,6 @@ Source1:	nagios.xml
 Source2:	svc-nagios
 # Patch1:		SFEnagios-3.3.1.diff
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
 
 BuildRequires:	SUNWsndmu
@@ -198,6 +197,13 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_libdir}/nagios/cgi-bin/*cgi
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins/eventhandlers
+%dir %attr (0755, root, sys) %{_localstatedir}/svc
+%dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
+%dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
+%class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/site/nagios.xml
+%dir %attr (0755, root, bin) /lib/svc
+%dir %attr (0755, root, bin) /lib/svc/method
+%attr (0555, root, bin) /lib/svc/method/svc-nagios
 
 %files common
 %defattr(-, root, bin)
@@ -221,13 +227,6 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %dir %attr(2775, nagios, webservd) %{_localstatedir}/log/nagios/rw
 %dir %attr(0750, nagios, nagios) %{_localstatedir}/log/nagios/spool/
 %dir %attr(0750, nagios,nagios) %{_localstatedir}/log/nagios/spool/checkresults
-%dir %attr (0755, root, sys) %{_localstatedir}/svc
-%dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
-%dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
-%class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/site/nagios.xml
-%dir %attr (0755, root, bin) /lib/svc
-%dir %attr (0755, root, bin) /lib/svc/method
-%attr (0555, root, bin) /lib/svc/method/svc-nagios
 
 %files devel
 %defattr(-, root, bin)
@@ -235,7 +234,8 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 
 %changelog
 * Thu Jul 17 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- 
+- set %actions for nagios/common
+- move SMF files from nagios/common to nagios
 
 * Thu May 17 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 3.4.1

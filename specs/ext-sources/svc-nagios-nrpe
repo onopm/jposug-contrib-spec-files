@@ -20,8 +20,7 @@ status_nrpe ()
 
 killproc_nrpe ()
 {
-    pid_nrpe
-    kill $2 $NrpePID
+    kill $NrpePID
 }
 
 
@@ -75,7 +74,8 @@ case "$1" in
   stop)
 	# Stop daemons.
 	echo -n "Shutting down nrpe: "
-	killproc nrpe
+	pid_nrpe	
+	killproc_nrpe
 	echo
 	rm -f $NrpeLockDir/$NrpeLockFile $NrpeRunFile
 	;;

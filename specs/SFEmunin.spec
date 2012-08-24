@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.1
+Version:   2.0.4
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -36,7 +36,7 @@ BuildRequires: library/perl-5/log-log4perl
 BuildRequires: library/perl-5/net-server
 BuildRequires: library/perl-5/net-ssleay-512
 BuildRequires: library/perl-5/net-snmp
-BuildRequires: library/perl-5/io-scalar-512
+BuildRequires: library/perl-5/io-stringy-512
 BuildRequires: library/perl-5/test-differences-512
 BuildRequires: library/perl-5/test-longstring-512
 
@@ -203,7 +203,8 @@ cp -a master/www/* %{buildroot}/var/www/html/munin/
 # install config for postfix under fedora
 # install -m 0644 %{SOURCE6} %{buildroot}/etc/munin/plugin-conf.d/postfix
 rm -f $RPM_BUILD_ROOT/usr/lib/munin-jmx-plugins.jar
-rm -r $RPM_BUILD_ROOT/usr/lib
+rm -f $RPM_BUILD_ROOT/usr/share/munin/munin-jmx-plugins.jar
+# rm -r $RPM_BUILD_ROOT/usr/lib
 rm -rf $RPM_BUILD_ROOT/etc/rc.d
 rm -rf $RPM_BUILD_ROOT/var/run
 # rm -rf $RPM_BUILD_ROOT/var/lib
@@ -345,6 +346,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %dir %attr(0755, root, other) %{_docdir}
 %dir %{perl_vendorlib}/Munin
 %{perl_vendorlib}/Munin/Common
+%dir %attr (0755, root, sys) /var
+%dir %attr(0755, root, other) /var/lib
+%dir %attr(-, munin, munin) /var/lib/munin
 /var/lib/munin/spool
 /var/lib/munin/cgi-tmp
 /usr/share/munin/munin-async
@@ -360,6 +364,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Fri Aug 24 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.0.4
+
 * Fri Jun  29 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 2.0.1
 

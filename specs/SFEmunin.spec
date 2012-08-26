@@ -150,7 +150,13 @@ export PATH=/usr/perl5/5.12/bin:$PATH
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6
 # export  CLASSPATH=plugins/javalib/org/munin/plugin/jmx:$(build-classpath mx4j):$CLASSPATH
 # %endif
+#make 	CONFIG=dists/redhat/Makefile.config
 make 	CONFIG=dists/redhat/Makefile.config
+	PREFIX=%{_prefix} \
+ 	DOCDIR=%{_docdir}/%{name}-%{version} \
+	MANDIR=%{_mandir} \
+	CONFDIR=/etc/munin
+
 make test
 
 %install
@@ -163,6 +169,7 @@ make	CONFIG=dists/redhat/Makefile.config \
 	PREFIX=%{buildroot}%{_prefix} \
  	DOCDIR=%{buildroot}%{_docdir}/%{name}-%{version} \
 	MANDIR=%{buildroot}%{_mandir} \
+    	CONFDIR=%{buildroot}/etc/munin \
 	DESTDIR=%{buildroot} \
 	install
 
@@ -364,6 +371,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Sun Aug 26 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify make options
+
 * Fri Aug 24 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 2.0.4
 

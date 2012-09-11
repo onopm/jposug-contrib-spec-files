@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.0.8
+%define tarball_version  9.0.9
 %define major_version	 9.0
 
 %define _basedir         %{_prefix}/%{major_version}
@@ -19,7 +19,7 @@
 Name:                    SFEpostgres-90
 IPS_package_name:        database/postgres-90
 Summary:	         PostgreSQL client tools
-Version:                 9.0.8
+Version:                 9.0.9
 License:		 PostgreSQL
 Url:                     http://www.postgresql.org/
 #Source:			 http://wwwmaster.postgresql.org/redir/311/h/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
@@ -1574,6 +1574,8 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %{_prefix}/%{major_version}/bin/amd64/vacuumlo
 
 %changelog
+* Mon Sep 10 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.0.9
 * Thu Jun 14 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.0.8
 - modify Source URL

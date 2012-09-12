@@ -32,7 +32,7 @@
 
 Name:           postfix
 Summary:        postfix mail server
-Version:        2.8.11
+Version:        2.8.12
 IPS_package_name: service/network/smtp/postfix
 License:        IBM Public License
 Url:            http://www.postfix.org
@@ -209,6 +209,8 @@ user ftpuser=false gcos-field="Postfix Reserved UID" username="postfix" password
 
 
 %changelog
+* Thu Sep 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.8.12
 * Mon Jun 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 2.8.11
 - modify SMF manifest

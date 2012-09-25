@@ -52,6 +52,7 @@ Requires: library/perl-5/net-server
 Requires: library/perl-5/net-snmp
 Requires: library/perl-5/rrdtool
 Requires: library/perl-5/log-log4perl
+Requires: library/perl-5/html-template
 Requires: system/font/truetype/dejavu
 # Requires: logrotate
 # Requires: /bin/mail
@@ -373,6 +374,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Tue Sep 25 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires to munin
+
 * Mon Sep 24 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires to munin and munin-node
 

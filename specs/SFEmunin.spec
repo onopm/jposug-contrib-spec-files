@@ -54,6 +54,9 @@ Requires: library/perl-5/rrdtool
 Requires: library/perl-5/log-log4perl
 Requires: library/perl-5/html-template
 Requires: library/perl-5/io-socket-inet6-512
+Requires: library/perl-5/uri-512
+Requires: library/perl-5/file-copy-recursive-512
+Requires: library/perl-5/date-manip-512
 Requires: system/font/truetype/dejavu
 # Requires: logrotate
 # Requires: /bin/mail

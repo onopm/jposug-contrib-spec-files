@@ -42,6 +42,7 @@ Summary: Libwww-perl for perl-584
 BuildRequires:	runtime/perl-584
 Requires:	runtime/perl-584
 Requires:       library/perl-5/http-message-584
+Requires:       library/perl-5/http-date-584
 
 %package 512
 IPS_package_name: library/perl-5/lwp-512
@@ -49,6 +50,7 @@ Summary: Libwww-perl for perl-512
 BuildRequires:	runtime/perl-512
 Requires:	runtime/perl-512
 Requires:       library/perl-5/http-message-512
+Requires:       library/perl-5/http-date-512
 
 %prep
 %setup -q -n libwww-perl-%{tarball_version}

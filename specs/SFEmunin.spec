@@ -16,8 +16,7 @@ URL:       http://munin-monitoring.org/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 Source0: http://downloads.sourceforge.net/sourceforge/munin/%{tarball_name}-%{version}.tar.gz
-
-# Patch1: munin-1.4.0-config.patch
+Patch1: SFEmunin-SyncDictFile.patch
 # Patch2: munin-1.4.2-fontfix.patch
 # Patch3: munin-1.4.5-uppercase.patch
 
@@ -146,7 +145,7 @@ and node (munin-node) packages.
 
 %prep
 %setup -q
-# %patch1 -p1
+%patch1
 # %if 0%{?rhel} < 6 && 0%{?fedora} < 11
 # %patch2 -p0
 # %endif
@@ -378,6 +377,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Wed Sat 29 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add patch1 to avoid flock error
+
 * Wed Sep 26 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires to munin
 

@@ -16,6 +16,9 @@ URL:       http://munin-monitoring.org/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 Source0: http://downloads.sourceforge.net/sourceforge/munin/%{tarball_name}-%{version}.tar.gz
+Source1:	munin-asyncd.xml
+Source2:	svc-munin-asyncd
+
 Patch1: SFEmunin-SyncDictFile.patch
 # Patch2: munin-1.4.2-fontfix.patch
 # Patch3: munin-1.4.5-uppercase.patch
@@ -26,18 +29,21 @@ Patch1: SFEmunin-SyncDictFile.patch
 # Source4: munin.logrotate
 # Source6: munin-1.2.6-postfix-config
 
-BuildRequires: library/perl-5/module-build
+# BuildRequires: library/perl-5/module-build
+BuildRequires: %{pnm_requires_perl5_module_build}
+
 # needed for hostname for the defaut config
 # BuildRequires: net-tools
-BuildRequires: library/perl-5/html-template
 
-BuildRequires: library/perl-5/log-log4perl
-BuildRequires: library/perl-5/net-server
-BuildRequires: library/perl-5/net-ssleay-512
-BuildRequires: library/perl-5/net-snmp
-BuildRequires: library/perl-5/io-stringy-512
-BuildRequires: library/perl-5/test-differences-512
-BuildRequires: library/perl-5/test-longstring-512
+BuildRequires: %{pnm_buildrequires_perl5_html_template}
+BuildRequires: %{pnm_buildrequires_perl5_log_log4perl}
+BuildRequires: %{pnm_buildrequires_perl5_net_server}
+BuildRequires: %{pnm_buildrequires_perl5_net_ssleay_512}
+BuildRequires: %{pnm_buildrequires_perl5_net_snmp}
+BuildRequires: %{pnm_buildrequires_perl5_io_stringy_512}
+BuildRequires: %{pnm_buildrequires_perl5_test_differences_512}
+BuildRequires: %{pnm_buildrequires_perl5_test_longstring_512}
+
 
 # java buildrequires on fedora
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6 
@@ -47,16 +53,16 @@ BuildRequires: library/perl-5/test-longstring-512
 # %endif
 
 Requires: %{name}-common = %{version}
-Requires: library/perl-5/net-server
-Requires: library/perl-5/net-snmp
-Requires: library/perl-5/rrdtool
-Requires: library/perl-5/log-log4perl
-Requires: library/perl-5/html-template
-Requires: library/perl-5/io-socket-inet6-512
-Requires: library/perl-5/uri-512
-Requires: library/perl-5/file-copy-recursive-512
-Requires: library/perl-5/date-manip-512
-Requires: system/font/truetype/dejavu
+Requires: %{pnm_requires_perl5_net_server}
+Requires: %{pnm_requires_perl5_net_snmp}
+Requires: %{pnm_requires_perl5_rrdtool}
+Requires: %{pnm_requires_perl5_log_log4perl}
+Requires: %{pnm_requires_perl5_html_template}
+Requires: %{pnm_requires_perl5_io_socket_inet6_512}
+Requires: %{pnm_requires_perl5_uri_512}
+Requires: %{pnm_requires_perl5_file_copy_recursive_512}
+Requires: %{pnm_requires_perl5_date_manip_512}
+Requires: %{pnm_requires_ttf_dejavu}
 # Requires: logrotate
 # Requires: /bin/mail
 # Requires(pre): shadow-utils
@@ -131,6 +137,17 @@ maintaining a rattling ease of installation and configuration.
 
 This package contains common files that are used by both the server (munin)
 and node (munin-node) packages. 
+
+
+%package async
+IPS_package_name:        diagnostic/munin/async
+Group: System Environment/Daemons
+Summary: Network-wide graphing framework (async)
+BuildArchitectures: noarch
+Requires: %{name}-common = %{version}
+
+%description async
+munin-async
 
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6
 # %package java-plugins
@@ -225,6 +242,11 @@ rm -rf $RPM_BUILD_ROOT/var/run
 # Use system font
 rm -f $RPM_BUILD_ROOT/%{_datadir}/munin/DejaVuSansMono.ttf
 rm -f $RPM_BUILD_ROOT/%{_datadir}/munin/DejaVuSans.ttf
+
+install -d 0755 %{buildroot}%/var/svc/manifest/site
+install -m 0644 %{SOURCE1} %{buildroot}%/var/svc/manifest/site
+install -d 0755 %{buildroot}%/lib/svc/method
+install -m 0555 %{SOURCE2} %{buildroot}%/lib/svc/method
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -364,11 +386,26 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %dir %attr(-, munin, munin) /var/lib/munin
 /var/lib/munin/spool
 /var/lib/munin/cgi-tmp
-/usr/share/munin/munin-async
 /usr/share/munin/munin-storable2datafile
 /usr/share/munin/munin-datafile2storable
-/usr/share/munin/munin-asyncd
 /usr/sbin/munin-sched
+
+%files async
+%defattr(-, root, bin)
+%dir %attr(755, root, sys) /usr
+%dir %attr(0755, root, sys) %{_datadir}
+/usr/share/munin/munin-async
+/usr/share/munin/munin-asyncd
+%dir %attr (0755, root, sys) %{_localstatedir}
+%dir %attr (0755, root, sys) %{_localstatedir}/svc
+%dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
+%dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
+%class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/site/munin-asyncd.xml
+%dir %attr (0755, root, bin) /lib
+%dir %attr (0755, root, bin) /lib/svc
+%dir %attr (0755, root, bin) /lib/svc/method
+%attr (0555, root, bin) /lib/svc/method/svc-munin-asyncd
+
 
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6
 # %files java-plugins
@@ -377,7 +414,11 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
-* Wed Sat 29 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Tue Oct 02 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add async subpackage for munin-aync
+- add SMF manifest and script for munin-asyncd
+
+* Wed Sat 29 2012
 - add patch1 to avoid flock error
 
 * Wed Sep 26 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

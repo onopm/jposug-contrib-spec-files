@@ -38,7 +38,6 @@ BuildRequires:	library/perl-5/proclet-512
 BuildRequires:	library/perl-5/scope-container-512
 BuildRequires:	library/perl-5/scope-container-dbi-512
 BuildRequires:	library/perl-5/starlet-512
-#BuildRequires:	library/perl-5/time-piece-512
 
 Requires:	runtime/perl-512
 Requires:	library/perl-5/dbd-sqlite-512
@@ -54,7 +53,7 @@ Requires:	library/perl-5/proclet-512
 Requires:	library/perl-5/scope-container-512
 Requires:	library/perl-5/scope-container-dbi-512
 Requires:	library/perl-5/starlet-512
-# Requires:	library/perl-5/time-piece-512
+Requires:	library/perl-5/time-piece-512
 
 %description
 GrowthForecast - Lightning Fast Graphing/Visualization
@@ -119,6 +118,7 @@ user ftpuser=false gcos-field="GrowthForecast Reserved UID" username="growthfore
 %changelog
 * Thu Oct 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.31
+- add Requires
 * Thu Jul 05 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires and Requires
 * Sun Jun 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.6
+Version:   2.0.7
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -18,6 +18,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source0: http://downloads.sourceforge.net/sourceforge/munin/%{tarball_name}-%{version}.tar.gz
 Source1:	munin-asyncd.xml
 Source2:	svc-munin-asyncd
+Source3:        SFEmunin-Makefile.config
 
 Patch1: SFEmunin-SyncDictFile.patch
 # Patch2: munin-1.4.2-fontfix.patch
@@ -29,20 +30,18 @@ Patch1: SFEmunin-SyncDictFile.patch
 # Source4: munin.logrotate
 # Source6: munin-1.2.6-postfix-config
 
-# BuildRequires: library/perl-5/module-build
-BuildRequires: %{pnm_requires_perl5_module_build}
+BuildRequires: library/perl-5/module-build
 
 # needed for hostname for the defaut config
 # BuildRequires: net-tools
 
-BuildRequires: %{pnm_buildrequires_perl5_html_template}
-BuildRequires: %{pnm_buildrequires_perl5_log_log4perl}
-BuildRequires: %{pnm_buildrequires_perl5_net_server}
-BuildRequires: %{pnm_buildrequires_perl5_net_ssleay_512}
-BuildRequires: %{pnm_buildrequires_perl5_net_snmp}
-BuildRequires: %{pnm_buildrequires_perl5_io_stringy_512}
-BuildRequires: %{pnm_buildrequires_perl5_test_differences_512}
-BuildRequires: %{pnm_buildrequires_perl5_test_longstring_512}
+BuildRequires: library/perl-5/log-log4perl
+BuildRequires: library/perl-5/net-server
+BuildRequires: library/perl-5/net-ssleay-512
+BuildRequires: library/perl-5/net-snmp
+BuildRequires: library/perl-5/io-stringy-512
+BuildRequires: library/perl-5/test-differences-512
+BuildRequires: library/perl-5/test-longstring-512
 
 
 # java buildrequires on fedora
@@ -53,16 +52,17 @@ BuildRequires: %{pnm_buildrequires_perl5_test_longstring_512}
 # %endif
 
 Requires: %{name}-common = %{version}
-Requires: %{pnm_requires_perl5_net_server}
-Requires: %{pnm_requires_perl5_net_snmp}
-Requires: %{pnm_requires_perl5_rrdtool}
-Requires: %{pnm_requires_perl5_log_log4perl}
-Requires: %{pnm_requires_perl5_html_template}
-Requires: %{pnm_requires_perl5_io_socket_inet6_512}
-Requires: %{pnm_requires_perl5_uri_512}
-Requires: %{pnm_requires_perl5_file_copy_recursive_512}
-Requires: %{pnm_requires_perl5_date_manip_512}
-Requires: %{pnm_requires_ttf_dejavu}
+Requires: library/perl-5/net-server
+Requires: library/perl-5/net-snmp
+Requires: library/perl-5/rrdtool
+Requires: library/perl-5/log-log4perl
+Requires: library/perl-5/html-template
+Requires: library/perl-5/io-socket-inet6-512
+Requires: library/perl-5/uri-512
+Requires: library/perl-5/file-copy-recursive-512
+Requires: library/perl-5/date-manip-512
+Requires: system/font/truetype/dejavu
+
 # Requires: logrotate
 # Requires: /bin/mail
 # Requires(pre): shadow-utils
@@ -174,10 +174,15 @@ export PATH=/usr/perl5/5.12/bin:$PATH
 # export  CLASSPATH=plugins/javalib/org/munin/plugin/jmx:$(build-classpath mx4j):$CLASSPATH
 # %endif
 #make 	CONFIG=dists/redhat/Makefile.config
-make 	CONFIG=dists/redhat/Makefile.config
-	PREFIX=%{_prefix} \
+# make -f dists/sunos/Makefile
+
+cp %{SOURCE3} .
+make    CONFIG=SFEmunin-Makefile.config \
+        PREFIX=%{_prefix} \
  	DOCDIR=%{_docdir}/%{name}-%{version} \
 	MANDIR=%{_mandir} \
+	LOGDIR=/var/log/munin \
+	SPOOLDIR=/var/lib/munin/spool \
 	CONFDIR=/etc/munin
 
 make test
@@ -188,11 +193,13 @@ make test
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6
 # 	JAVALIBDIR=%{buildroot}%{_datadir}/java \
 # %endif
-make	CONFIG=dists/redhat/Makefile.config \
+make    CONFIG=SFEmunin-Makefile.config \
 	PREFIX=%{buildroot}%{_prefix} \
  	DOCDIR=%{buildroot}%{_docdir}/%{name}-%{version} \
 	MANDIR=%{buildroot}%{_mandir} \
     	CONFDIR=%{buildroot}/etc/munin \
+	LOGDIR=%{buildroot}/var/log/munin \
+	SPOOLDIR=%{buildroot}/var/lib/munin/spool \
 	DESTDIR=%{buildroot} \
 	install
 
@@ -247,6 +254,9 @@ install -d 0755 %{buildroot}%/var/svc/manifest/site
 install -m 0644 %{SOURCE1} %{buildroot}%/var/svc/manifest/site
 install -d 0755 %{buildroot}%/lib/svc/method
 install -m 0555 %{SOURCE2} %{buildroot}%/lib/svc/method
+
+rm -r $RPM_BUILD_ROOT/usr/log
+rm -r $RPM_BUILD_ROOT/var/opt
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -362,11 +372,11 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %{_datadir}/munin/plugins/
 %dir %attr(0755, root, other) %{_docdir}
 %doc %{_docdir}/%{name}-%{version}/
-%attr(755, root, sys) %dir /usr
-%attr(755, root, bin) %dir %{_mandir}
-%attr(755, root, bin) %dir %{_mandir}/man1
-%attr(755, root, bin) %dir %{_mandir}/man3
-%attr(755, root, bin) %dir %{_mandir}/man5
+%attr(0755, root, sys) %dir /usr
+%attr(0755, root, bin) %dir %{_mandir}
+%attr(0755, root, bin) %dir %{_mandir}/man1
+%attr(0755, root, bin) %dir %{_mandir}/man3
+%attr(0755, root, bin) %dir %{_mandir}/man5
 %doc %{_mandir}/man5/munin-node*
 %doc %{_mandir}/man3/Munin*
 %doc %{_mandir}/man1/munin*
@@ -392,7 +402,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 
 %files async
 %defattr(-, root, bin)
-%dir %attr(755, root, sys) /usr
+%dir %attr(0755, root, sys) /usr
 %dir %attr(0755, root, sys) %{_datadir}
 /usr/share/munin/munin-async
 /usr/share/munin/munin-asyncd
@@ -414,11 +424,15 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
-* Tue Oct 02 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Fri Oct 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.7
+- modify some attr 755 to 0755
+
+* Tue Oct 02 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add async subpackage for munin-aync
 - add SMF manifest and script for munin-asyncd
 
-* Wed Sat 29 2012
+* Wed Sat 29 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add patch1 to avoid flock error
 
 * Wed Sep 26 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

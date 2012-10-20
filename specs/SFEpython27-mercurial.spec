@@ -1,48 +1,80 @@
 #
-# spec file for package SFEpython27-mercurial-21
+# spec file for package SFEpython27-mercurial
 #
-# includes module(s): SFEpython27-mercurial-21
+# includes module(s): SFEpython27-mercurial
 #
 %include Solaris.inc
 %include packagenamemacros.inc
 %include default-depend.inc
 
-%define src_url     http://mercurial.selenic.com/release
-%define src_name    mercurial
-%define python_version 2.7
-%define execpython      %{_bindir}/%{_arch64}/python%{python_version}
+%define src_url         http://mercurial.selenic.com/release
+%define src_name        mercurial
+%define pyprefix        /usr/python
+%define pyver           2.7
+%define hgver           2.3
+%define execpython      %{pyprefix}/bin/python%{pyver}
+%define execpython64    %{pyprefix}/bin/%{_arch64}/python%{pyver}
+%define _lib32          lib
+%define _lib64          lib64
 
-Name:                    SFEpython27-mercurial-21
-IPS_package_name:        developer/versioning/mercurial-21
-Summary:                 The Mercurial Source Control Management System
-URL:                     http://www.sqlalchemy.org
-Version:                 2.1.2
-Source:                  %{src_url}/%{src_name}-%{version}.tar.gz
-SUNW_BaseDir:            %{_basedir}
-BuildRoot:               %{_tmppath}/%{name}-%{version}-build
-License:                 GPLv2
-SUNW_Copyright:	         SFEpython27-mercurial-21.copyright
-BuildRequires:           SFEpython27
-Requires:                SFEpython27
+Name:                   SFEpython27-mercurial
+IPS_package_name:       developer/versioning/SFEmercurial
+Summary:                The Mercurial Source Control Management System
+URL:                    http://www.sqlalchemy.org
+Version:                2.3.2
+Source:                 %{src_url}/%{src_name}-%{version}.tar.gz
+SUNW_BaseDir:           %{_basedir}
+BuildRoot:              %{_tmppath}/%{name}-%{version}-build
+License:                GPLv2
+SUNW_Copyright:	        SFEpython27-mercurial.copyright
+Requires:               SFEpython27
 
 %prep
-%setup -q -n %{src_name}-%{version}
+%setup -c -n %{src_name}-%{version}
+
+%ifarch amd64 sparcv9
+rm -rf %{src_name}-%{version}-64
+cp -rp %{src_name}-%{version} %{src_name}-%{version}-64
+#rm -rf %{_name}-%{unmangled_version}
+%endif
 
 %build
+cd %{src_name}-%{version}
 %{execpython} setup.py build
 
+%ifarch amd64 sparcv9
+cd ../%{src_name}-%{version}-64
+%{execpython64} setup.py build
+%endif
+
+
 %install
-rm -rf $RPM_BUILD_ROOT
-%{execpython} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{_prefix}
+cd %{src_name}-%{version}
+%{execpython} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{pyprefix}
+mv $RPM_BUILD_ROOT%{pyprefix}/bin/hg $RPM_BUILD_ROOT%{pyprefix}/bin/hg%{hgver}
+
+%ifarch amd64 sparcv9
+cd ../%{src_name}-%{version}-64
+%{execpython64} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{pyprefix}
+mkdir -p $RPM_BUILD_ROOT%{pyprefix}/bin/%{_arch64}
+mv $RPM_BUILD_ROOT%{pyprefix}/bin/hg  $RPM_BUILD_ROOT%{pyprefix}/bin/%{_arch64}/hg%{hgver}
+%endif
+
 
 # move to vendor-packages
-mkdir -p $RPM_BUILD_ROOT%{_bindir}/%{_arch64}
-cp $RPM_BUILD_ROOT%{_bindir}/hg $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/hg
-rm $RPM_BUILD_ROOT%{_bindir}/hg
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/vendor-packages
-mv $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/site-packages/* \
-   $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/vendor-packages/
-rmdir $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/site-packages
+mkdir -p $RPM_BUILD_ROOT%{pyprefix}/%{_lib32}/python%{pyver}/vendor-packages
+mv $RPM_BUILD_ROOT%{pyprefix}/%{_lib32}/python%{pyver}/site-packages/* \
+   $RPM_BUILD_ROOT%{pyprefix}/%{_lib32}/python%{pyver}/vendor-packages/
+rmdir $RPM_BUILD_ROOT%{pyprefix}/%{_lib32}/python%{pyver}/site-packages
+
+
+%ifarch amd64 sparcv9
+mkdir -p $RPM_BUILD_ROOT%{pyprefix}/%{_lib64}/python%{pyver}/vendor-packages
+mv $RPM_BUILD_ROOT%{pyprefix}/%{_lib64}/python%{pyver}/site-packages/* \
+   $RPM_BUILD_ROOT%{pyprefix}/%{_lib64}/python%{pyver}/vendor-packages/
+rmdir $RPM_BUILD_ROOT%{pyprefix}/%{_lib64}/python%{pyver}/site-packages
+%endif
+
 
 %{?pkgbuild_postprocess: %pkgbuild_postprocess -v -c "%{version}:%{jds_version}:%{name}:$RPM_ARCH:%(date +%%Y-%%m-%%d):%{support_level}" $RPM_BUILD_ROOT}
 
@@ -51,10 +83,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr (-, root, bin)
-%dir %attr (0755, root, bin) %{_bindir}/%{_arch64}
-%{_bindir}/%{_arch64}/hg
-%dir %attr (0755, root, bin) %{_libdir}/%{_arch64}
-%{_libdir}/%{_arch64}/python%{python_version}/vendor-packages
+%dir %attr (0755, root, bin) %{pyprefix}/bin
+%{pyprefix}/bin/hg%{hgver}
+
+%dir %attr (0755, root, bin) %{pyprefix}/%{_lib32}
+%{pyprefix}/%{_lib32}/python%{pyver}/*
+
+%ifarch amd64 sparcv9
+%defattr (-, root, bin)
+%dir %attr (0755, root, bin) %{pyprefix}/bin/%{_arch64}
+%{pyprefix}/bin/%{_arch64}/hg%{hgver}
+
+%dir %attr (0755, root, bin) %{pyprefix}/%{_lib64}
+%{pyprefix}/%{_lib64}/python%{pyver}/*
+%endif
 
 %changelog
 * Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>

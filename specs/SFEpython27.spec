@@ -24,6 +24,7 @@ Version:             %{version}
 Release:             %{release}
 License:             PSF license
 Source:              http://www.python.org/ftp/python/%{unmangled_version}/%{_name}-%{unmangled_version}.tar.bz2
+Source1:             SFEpython27-pyconfig.h
 Patch1:              SFEpython27-lib64.diff
 Url:                 http://www.python.org/download/releases/2.7.3
 Group:               Development/Libraries
@@ -137,6 +138,7 @@ mv $RPM_BUILD_ROOT%{_prefix}/bin/%{_arch64}/2to3 $RPM_BUILD_ROOT%{_prefix}/bin/%
 mv $RPM_BUILD_ROOT%{_prefix}/bin/%{_arch64}/idle $RPM_BUILD_ROOT%{_prefix}/bin/%{_arch64}/idle%{pyver}
 mv $RPM_BUILD_ROOT%{_prefix}/bin/%{_arch64}/pydoc $RPM_BUILD_ROOT%{_prefix}/bin/%{_arch64}/pydoc%{pyver}
 mv $RPM_BUILD_ROOT%{_prefix}/bin/%{_arch64}/smtpd.py  $RPM_BUILD_ROOT%{_prefix}/bin/%{_arch64}/smtpd%{pyver}.py
+cp %{SOURCE1} $RPM_BUILD_ROOT/%{_prefix}/include/python%{pyver}/pyconfig.h
 find $RPM_BUILD_ROOT%{_prefix}/%{_lib64}/python%{pyver} -name '*.pyo' -exec rm -f {} \;
 echo "import site; site.addsitedir('%{_prefix}/%{_lib64}/python%{pyver}/vendor-packages')" > $RPM_BUILD_ROOT%{_prefix}/%{_lib64}/python%{pyver}/site-packages/vendor-packages.pth
 %endif
@@ -155,6 +157,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/bin/python%{pyver}-config
 %dir %attr (0755, root, bin) %{_prefix}/lib
 %{_prefix}/lib/*
+%dir %attr (0755, root, bin) %{_prefix}/include
+%{_prefix}/include/python%{pyver}/*
+
 %ifarch amd64 sparcv9
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_prefix}/bin/%{_arch64}
@@ -168,11 +173,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib64}/*
 %dir %attr (0755, root, bin) %{_prefix}/share
 %{_prefix}/share/*
-%dir %attr (0755, root, bin) %{_prefix}/include
-%{_prefix}/include/python%{pyver}/*
 %endif
 
 %changelog
+* Wed Sep 17 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- Add pyconfig.h
 * Wed Sep 17 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Support for Solaris11 and version up 2.7.2 to 2.7.3
 * Sun May 12 2012 -  Osamu Tabata<cantimerny.g@gmail.com>

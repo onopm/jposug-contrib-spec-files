@@ -11,7 +11,7 @@
 %define src_name        mercurial
 %define pyprefix        /usr/python
 %define pyver           2.7
-%define hgver           2.3
+%define hgver           2.1
 %define execpython      %{pyprefix}/bin/python%{pyver}
 %define execpython64    %{pyprefix}/bin/%{_arch64}/python%{pyver}
 %define _lib32          lib
@@ -21,7 +21,7 @@ Name:                   SFEpython27-mercurial
 IPS_package_name:       developer/versioning/SFEmercurial
 Summary:                The Mercurial Source Control Management System
 URL:                    http://www.sqlalchemy.org
-Version:                2.3.2
+Version:                2.1.2
 Source:                 %{src_url}/%{src_name}-%{version}.tar.gz
 SUNW_BaseDir:           %{_basedir}
 BuildRoot:              %{_tmppath}/%{name}-%{version}-build
@@ -99,6 +99,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Sep 21 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+- version 2.1.2 set
 * Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Python 2.7 amd64 arch support
 * Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>

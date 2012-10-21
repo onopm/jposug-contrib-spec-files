@@ -11,7 +11,7 @@ Name:		SFEldns
 IPS_Package_Name:	library/ldns
 URL:		http://www.nlnetlabs.nl/projects/ldns/
 Summary:	ldns library for DNS programming
-Version:	1.6.12
+Version:	1.6.13
 Group:		System/Libraries
 License:	BSD
 SUNW_Copyright:	ldns.copyright
@@ -26,6 +26,7 @@ Requires:	SUNWopenssl-libraries
 The goal of ldns is to simplify DNS programming, it supports recent RFCs like the DNSSEC documents, and allows developers to easily create software conforming to current RFCs, and experimental software for current Internet Drafts.
 
 %package devel
+IPS_Package_Name: library/ldns/developer
 Summary:         %{summary} - development files
 SUNW_BaseDir:    %{_basedir}
 %include default-depend.inc
@@ -38,7 +39,8 @@ Requires: %name
 ./configure --prefix=%{_prefix}	\
 	--sysconfdir=%{_sysconfdir} \
 	--disable-static \
-	--disable-gost
+	--disable-gost \
+        --disable-ecdsa
 
 make
 
@@ -63,6 +65,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}
 
 %changelog
+* Wed Jun 06 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.13
+- add --disable-ecdsa because ecdsa is enabled by default
+* Fri Apr 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- set IPS_Package_Name to SFEldns-devel
 * Sat Feb 25 2012 - Satoru MIYAZAKI<s.miyaza@gmail.com>
 - bump to 1.6.12
 * Fri Nov 25 2011 - Milan Jurik

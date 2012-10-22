@@ -199,8 +199,9 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins/eventhandlers
 
 %files common
-%defattr(-, root, sys)
+%defattr(-, root, bin)
 ## %{_initrddir}/nagios
+%dir %attr(0755, root, sys) %{_sysconfdir}
 %dir %attr(0755, root, bin) %{_sysconfdir}/apache2
 %dir %attr(0755, root, bin) %{_sysconfdir}/apache2/2.2
 %dir %attr(0755, root, bin) %{_sysconfdir}/apache2/2.2/conf.d
@@ -210,6 +211,8 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/objects
 %config(noreplace) %{_sysconfdir}/nagios/objects/*cfg
 %dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/private
+%dir %attr(0755, root, sys) %{_localstatedir}
+%dir %attr(0755, root, sys) %{_localstatedir}/log
 %dir %attr(0755, root, bin) %{_localstatedir}/spool
 %dir %attr(0755, nagios, nagios) %{_localstatedir}/spool/nagios
 %dir %attr(0750, nagios, webservd) %{_localstatedir}/log/nagios
@@ -230,19 +233,22 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_includedir}/nagios
 
 %changelog
-* Tue Aug 23 2011 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Tue Mar 27 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify owner, group and permission for Solaris 11
+
+* Tue Aug 23 2011 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update to 3.3.1
 
-* Tue May 17 2011 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Tue May 17 2011 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add requires. apache-php5 and naios/plugins.
 - add "--sbindir=%{_libdir}/nagios/cgi-bin" to configure
 - modify attr of %{_sysconfdir}/nagios
 
-* Mon May 16 2011 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Mon May 16 2011 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify SMF manifest
 - modify SMF init file
 
-* Tue May 10 2011 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Tue May 10 2011 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add IPS_package_name to divide package
 - mv init script to /lib/svc/method
 - modify init script to adjust some file pathes

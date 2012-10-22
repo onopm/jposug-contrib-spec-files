@@ -5,8 +5,10 @@
 #
 %include Solaris.inc
 %include packagenamemacros.inc
+%include default-depend.inc
 
 %define python_version  2.7
+%define execpython      %{_bindir}/%{_arch64}/python%{python_version}
 
 Name:		SFEpython27-django
 IPS_Package_Name:	web/python/django
@@ -19,7 +21,7 @@ Source:		http://media.djangoproject.com/releases/1.3/Django-%{version}.tar.gz
 SUNW_Copyright:	SFEpython27-django.copyright
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
-%include default-depend.inc
+
 
 Requires: SFEpython27
 Requires: SFEpython27-setuptools
@@ -28,26 +30,34 @@ Requires: SFEpython27-setuptools
 %setup -q -n Django-%version
 
 %build
-python setup.py build
+%{execpython} setup.py build
 
 %install
-rm -rf %{buildroot}
-python setup.py install --root=%{buildroot} --prefix=%{_prefix} --no-compile
+rm -rf $RPM_BUILD_ROOT
+%{execpython} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{_prefix}
 
 # move to vendor-packages
-mkdir -p %{buildroot}%{_libdir}/python%{python_version}/vendor-packages
-mv %{buildroot}%{_libdir}/python%{python_version}/site-packages/* \
-   %{buildroot}%{_libdir}/python%{python_version}/vendor-packages/
-rmdir %{buildroot}%{_libdir}/python%{python_version}/site-packages
+mkdir -p $RPM_BUILD_ROOT%{_bindir}/%{_arch64}
+cp $RPM_BUILD_ROOT%{_bindir}/django-admin.py $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/django-admin.py
+rm $RPM_BUILD_ROOT%{_bindir}/django-admin.py
+mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/vendor-packages
+mv $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/site-packages/* \
+   $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/vendor-packages/
+rmdir $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/site-packages
 
 %clean
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
+
 
 %files
 %defattr (-, root, bin)
-%{_bindir}
-%{_libdir}/python%{python_version}/vendor-packages
+%dir %attr (0755, root, bin) %{_bindir}/%{_arch64}
+%{_bindir}/%{_arch64}/django-admin.py
+%dir %attr (0755, root, bin) %{_libdir}/%{_arch64}
+%{_libdir}/%{_arch64}/python%{python_version}/vendor-packages
 
 %changelog
+* Sun Apr 4 2012 - Osamu Tabata<cantimerny.g@gmail.com>
+- Supprt for amd64 arch
 * Sun Apr 4 2012 - Osamu Tabata<cantimerny.g@gmail.com>
 - Support for OpenIndiana

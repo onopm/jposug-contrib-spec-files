@@ -1,6 +1,5 @@
 #!/usr/bin/perl
 
-
 use strict;
 use warnings;
 use Pod::Usage;
@@ -14,8 +13,22 @@ pod2usage("$build_list not found.") if ! -f $build_list;
 open my $list_fh, "<", $build_list or pod2usage("$build_list open error. :$!");
 my @spec_file_lines=<$list_fh>;
 close $list_fh;
-chomp foreach @spec_file_lines;
-#p \@spec_file_lines;
+#chomp foreach @spec_file_lines;
+
+# SFE package list の作成
+# spec_file_linesからわざわざ詰め直して作る理由は、あとから追加される可能性があるため
+my %sfe_pkg_list;
+foreach (@spec_file_lines){
+    s/#.*//g;
+    s/^s+//g;
+    s/s+$//g;
+    s/\r?\n//g;
+    next unless /\.spec$/;
+
+    my $spec=$_;
+    $spec=~s/.spec$//;
+    $sfe_pkg_list{$spec}=1;
+}
 
 foreach my $spec_file (@spec_file_lines){
     $spec_file =~ s/#.*//g;
@@ -32,10 +45,12 @@ foreach my $spec_file (@spec_file_lines){
 
     if(%requires){
 	if(defined($requires{'buildrequires'})){
+	    # TODO: ここはjikkou 
 	    my $build_requires='';
 	    foreach my $depend (@{$requires{'buildrequires'}}){
-#		print "[${depend}.spec]\n";
-		if(grep(($_ eq $depend.'.spec'),@spec_file_lines)) {
+		print STDERR "depend check:$depend\n";
+		if( $sfe_pkg_list{$depend} ){
+		    print STDERR "add build requires:$depend.info\n";
 		    $build_requires.=$depend.'.info ' ;
 		} else {
 		    print "PRE_INSTALL+=$depend\n";
@@ -67,12 +82,7 @@ exit;
 
 sub search_depend_files {
     my ($file_name,$requires,$definelist) = @_;
-#    my %requires = $r;
-#    my %definelist = $d;
     return if ! -r $file_name;
-
-#    my %requires;
-#    my %definelist;
 
     open my $fh, "<", $file_name;
     if(!$fh){
@@ -80,7 +90,7 @@ sub search_depend_files {
         return;
     }
 
-#   print "--- ${file_name}  ----\n";
+#   print STDERR "--- ${file_name}  ----\n";
 
     while(my $line = <$fh>){
         $line =~ s/\r?\n//g;
@@ -102,12 +112,23 @@ sub search_depend_files {
 #	    print "line=$line\n";
 #	    print "KEY:VAL=$key:$val\n";
 	    push @{$requires->{$key}}, $val;
+	} elsif( $line =~ /\%package\s+(-n)?\s*(.+)/i ){
+	    my $opt=$1 || '';
+	    my $package=$2;
+	    my $sfe_pkg;
+	    if($opt){
+		$sfe_pkg=replace_define($package,%$definelist);
+	    } else {
+		$sfe_pkg=replace_define("%{name}-".$package,%$definelist);
+	    }
+	    $sfe_pkg_list{$sfe_pkg}=1;
+	    print STDERR "Add sfe_pkg_list $sfe_pkg\n";
 	} elsif( $line =~ /\%define\s+(.+?)\s+(.+)/i ||
 		 $line =~ /^([A-Za-z_][A-Za-z0-9_]+):\s*(.+)/i
 	    ){
 	    my $key=lc($1);
 	    my $val=$2;
-#	    print "define KEY:VAL=$key:$val\n";
+#	    print STDERR "define KEY:VAL=$key:$val\n";
 	    $definelist->{$key}=$val;
 	}
     }

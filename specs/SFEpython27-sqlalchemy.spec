@@ -1,29 +1,28 @@
 #
-# spec file for package SFEpython27-mercurial-21
+# spec file for package SFEpython27-sqlalchemy
 #
-# includes module(s): SFEpython27-mercurial-21
+# includes module(s): sqlalchemy
 #
 %include Solaris.inc
 %include packagenamemacros.inc
 %include default-depend.inc
 
-%define src_url     http://mercurial.selenic.com/release
-%define src_name    mercurial
-%define python_version 2.7
+%define src_url     http://nchc.dl.sourceforge.net/sourceforge/sqlalchemy
+%define src_name    SQLAlchemy
+%define python_version  2.7
 %define execpython      %{_bindir}/%{_arch64}/python%{python_version}
 
-Name:                    SFEpython27-mercurial-21
-IPS_package_name:        developer/versioning/mercurial-21
-Summary:                 The Mercurial Source Control Management System
+
+Name:                    SFEpython27-sqlalchemy
+Summary:                 SQL-Alchemy is a Python SQL toolkit and Object Relational Mapper
 URL:                     http://www.sqlalchemy.org
-Version:                 2.1.2
+Version:                 0.7.6
 Source:                  %{src_url}/%{src_name}-%{version}.tar.gz
 SUNW_BaseDir:            %{_basedir}
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
-License:                 GPLv2
-SUNW_Copyright:	         SFEpython27-mercurial-21.copyright
-BuildRequires:           SFEpython27
 Requires:                SFEpython27
+SUNW_Copyright:	         SFEpython27-sqlalchemy.copyright
+
 
 %prep
 %setup -q -n %{src_name}-%{version}
@@ -36,9 +35,6 @@ rm -rf $RPM_BUILD_ROOT
 %{execpython} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{_prefix}
 
 # move to vendor-packages
-mkdir -p $RPM_BUILD_ROOT%{_bindir}/%{_arch64}
-cp $RPM_BUILD_ROOT%{_bindir}/hg $RPM_BUILD_ROOT%{_bindir}/%{_arch64}/hg
-rm $RPM_BUILD_ROOT%{_bindir}/hg
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/vendor-packages
 mv $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/site-packages/* \
    $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/python%{python_version}/vendor-packages/
@@ -51,13 +47,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr (-, root, bin)
-%dir %attr (0755, root, bin) %{_bindir}/%{_arch64}
-%{_bindir}/%{_arch64}/hg
 %dir %attr (0755, root, bin) %{_libdir}/%{_arch64}
 %{_libdir}/%{_arch64}/python%{python_version}/vendor-packages
 
 %changelog
-* Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
-- Python 2.7 amd64 arch support
-* Sun Apr 3 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
+* Sun Apr 5 2012 - Osamu Tabata<cantimerny.g@gmail.com>
+- Support for amd64 arch
+* Sun Apr 5 2012 - Osamu Tabata<cantimerny.g@gmail.com>
 - Support for OpenIndiana
+

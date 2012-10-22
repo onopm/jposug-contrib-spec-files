@@ -16,10 +16,7 @@ depend::
 	$(SPECDEPEND) >> $(TARGETMAK)
 
 preinstall::
-	pkg install -v $(PRE_INSTALL)
-
-check_install::
-	$(CHECK_INSTALL) $(wildcard *.spec)
+	sudo pkg install -v $(PRE_INSTALL)
 
 clean::
 	rm -f $(TARGET) $(patsubst %.info,%.proto,$(TARGET))

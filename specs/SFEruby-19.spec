@@ -6,7 +6,7 @@
 %define _name ruby
 %define version 1.9.3
 %define unmangled_version 1.9.3
-%define patchlevel 194
+%define patchlevel 286
 
 %include Solaris.inc
 %include packagenamemacros.inc
@@ -45,5 +45,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/1.9
 
 %changelog
+* Mon Oct 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to patchlevel 286
 * Sat Jun 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

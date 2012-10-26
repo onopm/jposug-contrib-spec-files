@@ -34,13 +34,13 @@ cross-platform specification language that manages all the separate elements
 normally aggregated in different files, like users, cron jobs, and hosts,
 along with obviously discrete elements like packages, services, and files.
 
-%package server
+%package master
 IPS_package_name:        system/management/puppet3/master
 Group:		Applications/System
 Summary:        Server for the puppet system management tool
 Requires:       system/management/puppet3 = %{version}
 
-%description server
+%description master
 Provides the central puppet server daemon which provides manifests to clients.
 The server can also function as a certificate authority and file server.
 
@@ -87,6 +87,9 @@ cd %{buildroot}/usr/bin
 ln -s ../../%{_bindir}/extlookup2hiera .
 ln -s ../../%{_bindir}/puppet .
 
+%actions master
+group groupname="puppet"
+user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=NP group="puppet"
 
 %files
 %defattr(-, root, bin, 0755)
@@ -153,7 +156,7 @@ ln -s ../../%{_bindir}/puppet .
 
 
 
-%files server
+%files master
 %defattr(-, root, bin, 0755)
 %dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, sys) %{_localstatedir}
@@ -172,5 +175,8 @@ ln -s ../../%{_bindir}/puppet .
 rm -rf %{buildroot}
 
 %changelog
+* Fri Oct 26 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add %action to add user and group
+- modify package name
 * Wed Oct 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 1.15
+%define tarball_version 1.18
 %define tarball_name    Test-TCP
 
 Name:		SFEperl-test-tcp
 IPS_package_name: library/perl-5/test-tcp
-Version:	1.15
-IPS_component_version: 1.15
+Version:	1.18
+IPS_component_version: 1.18
 Summary:	Test-TCP
 License:	Artistic
 Distribution:   OpenSolaris
@@ -97,5 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Oct 28 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 1.18
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -7,7 +7,7 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define version_version 0.99
+%define version_version 0.9901
 
 Name:                    SFEperl-version
 IPS_package_name:        library/perl-5/version
@@ -99,6 +99,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jun 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.9901
 * Mon Jun 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512
 * Sun Apr 29 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

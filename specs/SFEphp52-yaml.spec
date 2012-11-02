@@ -9,13 +9,13 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  1.0.1
+%define tarball_version  1.1.0
 %define tarball_name     yaml
 
 Name:                    SFEphp52-yaml
 IPS_package_name:	 web/php-52/extension/php-yaml
 Summary:                 PHP 5.2 module for YAML
-Version:                 1.0.1
+Version:                 1.1.0
 License:		 PHP License
 Url:                     http://pecl.php.net/package/%{tarball_name}
 Source:                  http://pecl.php.net/get/%{tarball_name}-%{tarball_version}.tgz
@@ -31,6 +31,7 @@ BuildRequires: %{pnm_buildrequires_SUNWgsed_devel}
 
 Requires: %{pnm_requires_SUNWphp52}
 Requires: SFElibyaml
+Requires: web/php-52/extension/php-date
 
 # OpenSolaris IPS Package Manifest Fields
 Meta(info.upstream):	 	http://code.google.com/p/php-yaml/
@@ -94,5 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.2/conf.d/*
 
 %changelog
+* Fri Nov 01 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.1.0
 * Sat Jun 25 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Initial Revision

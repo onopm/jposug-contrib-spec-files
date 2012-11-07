@@ -145,6 +145,7 @@ Group: System Environment/Daemons
 Summary: Network-wide graphing framework (async)
 BuildArchitectures: noarch
 Requires: %{name}-common = %{version}
+Requires: library/perl-5/db-file-512
 
 %description async
 munin-async
@@ -424,6 +425,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Wed Nov 07 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Fri Oct 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.7
 - modify some attr 755 to 0755

@@ -256,9 +256,6 @@ install -m 0644 %{SOURCE1} %{buildroot}%/var/svc/manifest/site
 install -d 0755 %{buildroot}%/lib/svc/method
 install -m 0555 %{SOURCE2} %{buildroot}%/lib/svc/method
 
-rm -r $RPM_BUILD_ROOT/usr/log
-rm -r $RPM_BUILD_ROOT/var/opt
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -427,6 +424,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %changelog
 * Wed Nov 07 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
+- modify for 11.1
+
 * Fri Oct 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.7
 - modify some attr 755 to 0755

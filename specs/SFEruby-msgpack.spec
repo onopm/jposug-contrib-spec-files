@@ -41,12 +41,12 @@ Requires:	runtime/ruby-19
 %setup -q -c -T
 # ruby 1.8
 mkdir -p .%{gemdir18}
-gem install --local --install-dir .%{gemdir18} \
+/usr/ruby/1.8/bin/gem install --local --install-dir .%{gemdir18} \
             --bindir .%{_bindir} \
             --force %{SOURCE0}
 
 mkdir -p .%{gemdir19}
-gem install --local --install-dir .%{gemdir19} \
+/usr/ruby/1.9/bin/gem install --local --install-dir .%{gemdir19} \
             --bindir .%{_bindir} \
             --force %{SOURCE0}
 
@@ -103,5 +103,7 @@ rm -rf %{buildroot}
 %{gemdir19}
 
 %changelog
+* Sun Nov 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use full path to gem
 * Sun Jun 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

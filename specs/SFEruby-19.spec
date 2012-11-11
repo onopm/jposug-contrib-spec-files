@@ -29,7 +29,20 @@ Url: http://www.ruby-lang.org/
 # %setup -c -n ruby-%{version}-p%{patchlevel}
 %setup -n ruby-%{version}-p%{patchlevel}
 %build
-./configure --prefix=/usr/ruby/1.9
+./configure --prefix=/usr/ruby/1.9 \
+    --bindir=/usr/ruby/1.9/bin \
+    --libdir=/usr/ruby/1.9/lib \
+    --sbindir=/usr/ruby/1.9/sbin \
+    --enable-dtrace \
+    --enable-shared \
+    --enable-install-doc \
+    --disable-option-checking \
+    --with-openssl \
+    --with-tk-dir=/usr \
+    --with-curses-dir=/usr \
+    CC=/usr/bin/gcc \
+    CXX=/usr/bin/g++
+
 make
 
 %install
@@ -45,6 +58,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/1.9
 
 %changelog
+* Sun Nov 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify configure option and use gcc
 * Mon Oct 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to patchlevel 286
 * Sat Jun 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -10,7 +10,7 @@
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
 Name: SFEruby-msgpack
-IPS_package_name:        library/ruby/msgpack
+IPS_package_name:        library/ruby-18/msgpack
 Summary: MessagePack is an efficient binary serialization format.
 Version: 0.4.7
 License: ASL 2.0
@@ -25,14 +25,8 @@ BuildRequires: runtime/ruby-18
 %description
 MessagePack is an efficient binary serialization format. It lets you exchange data among multiple languages like JSON but it's faster and smaller. For example, small integers (like flags or error code) are encoded into a single byte, and typical short strings only require an extra byte in addition to the strings themselves.
 
-%package 18
-IPS_package_name: library/ruby/msgpack-18
-Summary: MessagePack for Ruby 1.8
-BuildRequires:	runtime/ruby-18
-Requires:	runtime/ruby-18
-
 %package 19
-IPS_package_name: library/ruby/msgpack-19
+IPS_package_name: library/ruby-19/msgpack
 Summary: MessagePack for Ruby 1.9
 BuildRequires:	runtime/ruby-19
 Requires:	runtime/ruby-19
@@ -87,11 +81,6 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 # %dir %{geminstdir18}
 %dir %attr (0755, root, sys) /var
-# 1.8
-%files 18
-%defattr(0755,root,bin,-)
-# %{gemdir18}/doc/%{gemname}-%{version}
-%dir %attr (0755, root, sys) /var
 %{gemdir18}/gems/%{gemname}-%{version}/
 %{gemdir18}/cache/%{gemname}-%{version}.gem
 %{gemdir18}/specifications/%{gemname}-%{version}.gemspec
@@ -103,6 +92,8 @@ rm -rf %{buildroot}
 %{gemdir19}
 
 %changelog
+* Mon Nov 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify IPS package_name
 * Sun Nov 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use full path to gem
 * Sun Jun 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

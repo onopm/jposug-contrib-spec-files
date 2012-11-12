@@ -21,7 +21,8 @@ License: GPL
 Source: http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-%{version}-p%{patchlevel}.tar.gz
 Url: http://www.ruby-lang.org/
 
-
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
 
 %description
 
@@ -58,6 +59,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/1.9
 
 %changelog
+* Mon Nov 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires and Requires
 * Sun Nov 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify configure option and use gcc
 * Mon Oct 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

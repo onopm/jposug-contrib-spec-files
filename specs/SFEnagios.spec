@@ -10,7 +10,7 @@
 
 Name:		SFEnagios
 IPS_package_name:        diagnostic/nagios
-Version:	3.4.1
+Version:	3.4.2
 Summary:	Host/service/network monitoring program
 Group:		Applications/System
 License:	GPLv2
@@ -26,8 +26,8 @@ BuildRequires:	SUNWsndmu
 Requires:	SUNWsndmu
 BuildRequires:	SUNWjpg-devel
 Requires:	SUNWjpg
-BuildRequires:	SUNWgd2
-Requires:	SUNWgd2
+BuildRequires:	library/gd
+Requires:	library/gd
 Requires:	SUNWapch22u
 Requires:	pkg:/web/server/apache-22/module/apache-php5
 Requires:	pkg:/diagnostic/nagios/plugins
@@ -233,6 +233,9 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_includedir}/nagios
 
 %changelog
+* Wed Nov 14 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.4.2
+
 * Thu Jul 17 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - set %actions for nagios/common
 - move SMF files from nagios/common to nagios

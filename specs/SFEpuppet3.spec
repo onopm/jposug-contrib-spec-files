@@ -23,10 +23,13 @@ Source0:        http://puppetlabs.com/downloads/puppet/puppet-%{version}.tar.gz
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:  runtime/ruby-18
-BuildRequires:  runtime/ruby-18/facter
-Requires:  runtime/ruby-18
-Requires:  runtime/ruby-18/facter
+BuildRequires: runtime/ruby-18
+BuildRequires: runtime/ruby-18/facter
+Requires:      runtime/ruby-18
+Requires:      runtime/ruby-18/facter
+Requires:      library/ruby-18/hiera
+Requires:      library/ruby-18/hiera/puppet
+Requires:      library/ruby-18/hiera/json
 
 %description
 Puppet lets you centrally manage every important aspect of your system using a
@@ -35,10 +38,13 @@ normally aggregated in different files, like users, cron jobs, and hosts,
 along with obviously discrete elements like packages, services, and files.
 
 %package master
-IPS_package_name:        system/management/puppet3/master
-Group:		Applications/System
-Summary:        Server for the puppet system management tool
-Requires:       system/management/puppet3 = %{version}
+IPS_package_name: system/management/puppet3/master
+Group:		  Applications/System
+Summary:          Server for the puppet system management tool
+Requires:         system/management/puppet3 = %{version}
+Requires:         library/ruby-18/hiera
+Requires:         library/ruby-18/hiera/puppet
+Requires:         library/ruby-18/hiera/json
 
 %description master
 Provides the central puppet server daemon which provides manifests to clients.
@@ -175,6 +181,8 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
+* Tue Nov 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Thu Nov 01 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.0.1
 * Fri Oct 26 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

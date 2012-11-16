@@ -12,10 +12,14 @@ Summary:	Open source, full-featured SSL VPN package
 Group:		System/Security
 URL:		http://openvpn.net
 License:	GPLv2
-SUNW_copyright:	openvpn.copyright
 Version:	2.2.1
 Source:		http://swupdate.openvpn.net/community/releases/%srcname-%version.tar.gz
+Source1:        SFEopenvpn-openvpn.xml
+Source2:        SFEopenvpn-openvpn 
+# http://comments.gmane.org/gmane.os.solaris.opensolaris.pkg.sfe/28
+%define _basedir  /
 SUNW_BaseDir:   %{_basedir}
+SUNW_Copyright: %{name}.copyright
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
 
@@ -43,6 +47,11 @@ make -j$CPUS
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/network/
+cp %{SOURCE1} $RPM_BUILD_ROOT/var/svc/manifest/network/openvpn.xml
+mkdir -p $RPM_BUILD_ROOT/lib/svc/method/
+cp %{SOURCE2} $RPM_BUILD_ROOT/lib/svc/method/openvpn
+chmod +x $RPM_BUILD_ROOT/lib/svc/method/openvpn
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -57,8 +66,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/openvpn.8
 %dir %attr (0755, root, other) %dir %_docdir
 %_docdir/%srcname
+%class(manifest) %attr (0444, root, sys) /var/svc/manifest/network/openvpn.xml
+%attr (0555, root, bin) /lib/svc/method/openvpn
 
 %changelog
+* Fri Nov 16 2012 - YAMAMOTO Takashi
+- Added a manifest file
 * Tue Mar 20 2012 - YAMAMOTO Takashi
 - Initial, fix dependency using for pnm.
 * Wed Sep 28 2011 - Alex Viskovatoff

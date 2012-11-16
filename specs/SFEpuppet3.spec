@@ -30,6 +30,7 @@ Requires:      runtime/ruby-18/facter
 Requires:      library/ruby-18/hiera
 Requires:      library/ruby-18/hiera/puppet
 Requires:      library/ruby-18/hiera/json
+Requires:      archiver/gnu-tar
 
 %description
 Puppet lets you centrally manage every important aspect of your system using a
@@ -181,6 +182,8 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
+* Fri Nov 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Tue Nov 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Thu Nov 01 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

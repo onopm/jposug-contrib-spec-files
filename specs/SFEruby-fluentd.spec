@@ -9,8 +9,8 @@
 %define tarball_name    fluentd
 %define tarball_version 0.10.28
 
-Name:             SFEruby-fluentd
-IPS_package_name: library/ruby-19/fluentd
+Name:             SFEfluentd
+IPS_package_name: system/fluentd
 Summary:          Fluentd is a log collector daemon written in Ruby. 
 Version:          0.10.28
 License:          Apache License, Version 2.0
@@ -62,5 +62,7 @@ rm -rf %{buildroot}
 %{gemdir19}
 
 %changelog
+* Wed Nov 21 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify Name and IPS_package_name
 * Wed Nov 14 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

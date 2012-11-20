@@ -74,7 +74,7 @@ else
 fi
 # Location of openvpn binary
 openvpn=""
-openvpn_locations="/usr/sbin/openvpn /usr/local/sbin/openvpn"
+openvpn_locations="/sbin/openvpn /usr/sbin/openvpn /usr/local/sbin/openvpn"
 for location in $openvpn_locations
 do
   if [ -f "$location" ]

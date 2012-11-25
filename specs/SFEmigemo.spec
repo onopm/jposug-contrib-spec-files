@@ -25,14 +25,12 @@ Migemo is a tool for Japanese incremental search. It makes Japanese character re
 
 %build
 RUBY=/usr/ruby/1.8/bin/ruby ./configure \
-    --with-rubydir=%{ruby18_sitelibdir} \
+    --with-rubydir=%{ruby_sitelibdir} \
     --prefix=/usr
 
 make migemo.el
+make check
 
-cat > migemo-init.el <<EOF
-(load "migemo")
-EOF
 
 %install
 rm -rf %{buildroot}
@@ -64,7 +62,15 @@ rm -rf %{buildroot}
 %dir /usr/share/emacs/site-lisp
 /usr/share/emacs/site-lisp/migemo.el
 /usr/share/emacs/site-lisp/migemo.elc
+/usr/ruby/1.8/lib/ruby/site_ruby/1.8/migemo.rb
+/usr/ruby/1.8/lib/ruby/site_ruby/1.8/migemo-convert.rb
+/usr/ruby/1.8/lib/ruby/site_ruby/1.8/migemo-regex.rb
+/usr/ruby/1.8/lib/ruby/site_ruby/1.8/migemo-dict.rb
+/usr/ruby/1.8/lib/ruby/site_ruby/1.8/migemo-cache.rb
+/usr/ruby/1.8/lib/ruby/site_ruby/1.8/migemo-index.rb
 
 %changelog
 * Sun Nov 25 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- fix typo and add files
+

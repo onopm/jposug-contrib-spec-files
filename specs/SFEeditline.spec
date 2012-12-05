@@ -10,7 +10,7 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  20100424-3.0
+%define tarball_version  20120601-3.0
 %define tarball_name	 libedit
 
 Name:                    SFEeditline
@@ -133,6 +133,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/include/*
 
 %changelog
+* Wed Dec 05 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 20120601-3.0
 * Sun Jun  5 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Fix dependency using pnm.
 * Sat Mar 26 JST 2011 TAKI, Yasushi <taki@justplayer.com>

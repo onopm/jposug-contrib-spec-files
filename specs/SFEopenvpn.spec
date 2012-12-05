@@ -46,32 +46,32 @@ export LDFLAGS="%_ldflags"
 make -j$CPUS
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/network/
-cp %{SOURCE1} $RPM_BUILD_ROOT/var/svc/manifest/network/openvpn.xml
-mkdir -p $RPM_BUILD_ROOT/lib/svc/method/
-cp %{SOURCE2} $RPM_BUILD_ROOT/lib/svc/method/openvpn
-chmod +x $RPM_BUILD_ROOT/lib/svc/method/openvpn
-mkdir -p $RPM_BUILD_ROOT/var/run/openvpn
-mkdir -p $RPM_BUILD_ROOT/var/openvpn
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/etc/openvpn/ccd
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/etc/openvpn/easy-rsa
-install -m 0644 easy-rsa/2.0/* $RPM_BUILD_ROOT%{_prefix}/etc/openvpn/easy-rsa
-install -m 0644 easy-rsa/2.0/openssl-0.9.8.cnf $RPM_BUILD_ROOT%{_prefix}/etc/openvpn/easy-rsa/openssl.cnf
-install -m 0644 sample-scripts/bridge-start $RPM_BUILD_ROOT%{_prefix}/etc/openvpn
-install -m 0644 sample-scripts/bridge-stop $RPM_BUILD_ROOT%{_prefix}/etc/openvpn
-install -m 0644 sample-scripts/openvpn.init $RPM_BUILD_ROOT%{_prefix}/etc/openvpn
-install -m 0644 sample-config-files/static-home.conf $RPM_BUILD_ROOT%{_prefix}/etc/openvpn/static-home.conf.sample
-install -m 0644 sample-config-files/static-office.conf $RPM_BUILD_ROOT%{_prefix}/etc/openvpn/static-office.conf.sample
-install -m 0644 sample-config-files/tls-office.conf $RPM_BUILD_ROOT%{_prefix}/etc/openvpn/tls-office.conf.sample
-install -m 0644 sample-config-files/tls-home.conf $RPM_BUILD_ROOT%{_prefix}/etc/openvpn/tls-home.conf.sample
-install -m 0644 sample-config-files/client.conf $RPM_BUILD_ROOT%{_prefix}/etc/openvpn/client.conf.sample
-install -m 0644 sample-config-files/server.conf $RPM_BUILD_ROOT%{_prefix}/etc/openvpn
-install -m 0644 sample-config-files/README $RPM_BUILD_ROOT%{_prefix}/etc/openvpn
+rm -rf %{buildroot}
+make install DESTDIR=%{buildroot}
+mkdir -p %{buildroot}/var/svc/manifest/network/
+cp %{SOURCE1} %{buildroot}/var/svc/manifest/network/openvpn.xml
+mkdir -p %{buildroot}/lib/svc/method/
+cp %{SOURCE2} %{buildroot}/lib/svc/method/openvpn
+chmod +x %{buildroot}/lib/svc/method/openvpn
+mkdir -p %{buildroot}/var/run/openvpn
+mkdir -p %{buildroot}/var/openvpn
+mkdir -p %{buildroot}/%{_prefix}/etc/openvpn/ccd
+mkdir -p %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa
+install -m 0644 easy-rsa/2.0/* %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa
+install -m 0644 easy-rsa/2.0/openssl-0.9.8.cnf %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa/openssl.cnf
+install -m 0644 sample-scripts/bridge-start %{buildroot}/%{_prefix}/etc/openvpn
+install -m 0644 sample-scripts/bridge-stop %{buildroot}/%{_prefix}/etc/openvpn
+install -m 0644 sample-scripts/openvpn.init %{buildroot}/%{_prefix}/etc/openvpn
+install -m 0644 sample-config-files/static-home.conf %{buildroot}/%{_prefix}/etc/openvpn/static-home.conf.sample
+install -m 0644 sample-config-files/static-office.conf %{buildroot}/%{_prefix}/etc/openvpn/static-office.conf.sample
+install -m 0644 sample-config-files/tls-office.conf %{buildroot}/%{_prefix}/etc/openvpn/tls-office.conf.sample
+install -m 0644 sample-config-files/tls-home.conf %{buildroot}/%{_prefix}/etc/openvpn/tls-home.conf.sample
+install -m 0644 sample-config-files/client.conf %{buildroot}/%{_prefix}/etc/openvpn/client.conf.sample
+install -m 0644 sample-config-files/server.conf %{buildroot}/%{_prefix}/etc/openvpn
+install -m 0644 sample-config-files/README %{buildroot}/%{_prefix}/etc/openvpn
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr (-, root, bin)
@@ -92,8 +92,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0664, root, sys) %{_prefix}/etc/openvpn/easy-rsa/Makefile
 %attr (0664, root, sys) %{_prefix}/etc/openvpn/easy-rsa/openssl*
 %attr (0664, root, sys) %{_prefix}/etc/openvpn/easy-rsa/README
-%attr (0664, root, sys) %{_prefix}/etc/openvpn/easy-rsa/vars
-%attr (0664, root, sys) %{_prefix}/etc/openvpn/*.conf*
+%attr (0664, root, sys) %config(noreplace) %{_prefix}/etc/openvpn/easy-rsa/vars
+%attr (0664, root, sys) %config(noreplace) %{_prefix}/etc/openvpn/*.conf*
 %attr (0664, root, sys) %{_prefix}/etc/openvpn/README
 %attr (0664, root, sys) %{_prefix}/etc/openvpn/bridge-*
 %attr (0664, root, sys) %{_prefix}/etc/openvpn/openvpn.init

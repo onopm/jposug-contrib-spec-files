@@ -1,18 +1,18 @@
 %include Solaris.inc
 
-%{!?ruby_sitelibdir19: %define ruby19_sitelibdir %(ruby19 -rrbconfig -e 'puts RbConfig::CONFIG["sitelibdir"]')}
+%{!?ruby_sitelibdir19: %define ruby19_sitelibdir %(/usr/ruby/1.9/bin/ruby -rrbconfig -e 'puts RbConfig::CONFIG["sitelibdir"]')}
 
 %define gemname fluentd
-%define gemdir19 %(ruby19 -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.10.28
+%define tarball_version 0.10.29
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
 Summary:          Fluentd is a log collector daemon written in Ruby. 
-Version:          0.10.28
+Version:          0.10.29
 License:          Apache License, Version 2.0
 URL:              http://fluentd.org/
 Source0:          http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
@@ -25,6 +25,7 @@ BuildRequires:	runtime/ruby-19
 BuildRequires:	library/ruby-19/jeweler
 BuildRequires:	library/ruby-19/rr
 BuildRequires:	library/ruby-19/timecop
+BuildRequires:	library/text/yaml
 Requires:	runtime/ruby-19
 Requires:	library/ruby-19/cool.io
 Requires:	library/ruby-19/http_parser.rb
@@ -62,6 +63,8 @@ rm -rf %{buildroot}
 %{gemdir19}
 
 %changelog
+* Wed Dec 05 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.10.29
 * Wed Nov 21 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify Name and IPS_package_name
 * Wed Nov 14 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

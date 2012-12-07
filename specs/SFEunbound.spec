@@ -18,8 +18,8 @@ BuildRoot:	%{_tmppath}/unbound-%{version}-build
 SUNW_Copyright:	unbound.copyright
 SUNW_BaseDir:	/
 BuildRequires: SUNWflexlex
-BuildRequires: SUNWopenssl-include
-Requires: SUNWopenssl-libraries
+BuildRequires: library/security/openssl
+Requires: library/security/openssl
 BuildRequires: SUNWlexpt
 Requires: SUNWlexpt
 BuildRequires: SFEldns-devel
@@ -132,6 +132,8 @@ user ftpuser=false gcos-field="Unbound Reserved UID" username="unbound" password
 %{_libdir}/libunbound*
 
 %changelog
+* Fri Dec 07 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify requires to build Solaris 11.1
 * Thu Jun 07 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.4.17
 - add --disable-ecdsa because ecdsa is enabled by default

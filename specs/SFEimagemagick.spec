@@ -51,10 +51,12 @@ BuildRequires:  %{pnm_buildrequires_SUNWzlib}
 Requires:       %{pnm_requires_SUNWzlib}
 BuildRequires:  %{pnm_buildrequires_SUNWopenexr}
 Requires:       %{pnm_requires_SUNWopenexr}
+%if %cc_is_gcc
 BuildRequires:  sfe/system/library/gcc-runtime
 Requires:       sfe/system/library/gcc-runtime
 BuildRequires:  sfe/developer/gcc 
 Requires:       sfe/developer/gcc
+%endif
 
 %package devel
 Summary:                 %{summary} - development files
@@ -167,6 +169,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (-, root, root) %_sysconfdir/ImageMagick
 
 %changelog
+* Fri Dec 07 2012 - YAMAMOTO Takashi 
+- Fix gcc dependency problems.
 * Fri Dec 07 2012 - YAMAMOTO Takashi 
 - Ready for gcc and ruby's 'rmagick (2.13.1)', PerlMagick
 - use pnm macros

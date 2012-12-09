@@ -9,10 +9,11 @@
 
 %include Solaris.inc
 %include packagenamemacros.inc
+%define with_mysql 1
 
-%define   postfix_usr_dir  %{_prefix}/postfix
-%define   postfix_var_dir  %{_var}/postfix
-%define   postfix_etc_dir  /etc/postfix
+%define postfix_usr_dir  %{_prefix}/postfix
+%define postfix_var_dir  %{_var}/postfix
+%define postfix_etc_dir  /etc/postfix
 %define postfix_user   postfix
 %define postfix_group  postfix
 %define postdrop_group postdrop
@@ -29,17 +30,31 @@
 %define postfix_sample_dir      %{postfix_doc_dir}/samples
 %define postfix_readme_dir      %{postfix_doc_dir}/README_FILES
 
+#if userid is already engaged
+#for other users/groups then postfix/postfix/postdrop, then
+#the user or group will be created with a numeric id given by
+#the system. Currently the UID/GID is possibly taken twice
+%define runuser         postfix
+%define runuserid       161
+%define runusergroup    other
+
+%define rungroup        postfix
+%define rungroupid      181
+%define rundropgroup    postdrop
+%define rundropgroupid  182
 
 Name:           postfix
 Summary:        postfix mail server
-Version:        2.8.12
+Version:        2.9.4
 IPS_package_name: service/network/smtp/postfix
 License:        IBM Public License
 Url:            http://www.postfix.org
 Source:         ftp://ftp.cs.uu.nl/mirror/postfix/postfix-release/official/%{name}-%{version}.tar.gz
-Source1:	postfix-manifest.xml
+Source1:	smtp-postfix.xml
 Source2:	svc-postfix
-Patch1:		SFEpostfix-01-sys_defs.h.diff
+# http://estseg.blogspot.jp/2010/03/postfix-w-opensolaris-nis.html
+# Если кто-то будет собирать Postfix на OpenSolaris b130 позднее получает следующее сообщение об ошибке:
+Patch1:		SFEpostfix-294-sys_defs.h.diff
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -53,7 +68,20 @@ BuildRequires: library/pcre
 BuildRequires: consolidation/sfw/sfw-incorporation
 Requires: library/pcre
 Requires: consolidation/sfw/sfw-incorporation
-
+BuildRequires:  sfe/database/bdb
+Requires:       library/security/cyrus-sasl
+BuildRequires:  library/security/cyrus-sasl
+Requires:       sfe/database/bdb
+%if %{with_mysql}
+BuildRequires:  %{pnm_buildrequires_database_mysql_51_library}
+BuildRequires:  %{pnm_buildrequires_mysql51}
+Requires:       %{pnm_requires_database_mysql_51_library}
+Requires:       %{pnm_requires_mysql51}
+%endif
+BuildRequires:  %{pnm_buildrequires_library_zlib}
+Requires:       %{pnm_requires_library_zlib}
+BuildRequires:  %{pnm_buildrequires_system_library_math}
+Requires:       %{pnm_requires_system_library_math}
 
 # OpenSolaris IPS Manifest Fields
 Meta(info.maintainer_url):      http://sourceforge.jp/forum/forum.php?forum_id=25193
@@ -67,14 +95,18 @@ Postfix is an attempt to provide an alternative to the widely-used Sendmail prog
 %prep
 rm -rf %name-%version
 %setup -q -n %name-%version
-%patch1
+%patch1 -p0
 
 %build
 
 #
 # Change some default locations
 #
-make makefiles CCARGS='-DDEF_CONFIG_DIR=\"%{postfix_etc_dir}\" \
+
+make makefiles OPT=' \
+ %optflags \
+' \
+CCARGS='-DDEF_CONFIG_DIR=\"%{postfix_etc_dir}\" \
  -DDEF_COMMAND_DIR=\"%{postfix_usr_dir}/sbin\" \
  -DDEF_DAEMON_DIR=\"%{postfix_usr_dir}/libexec\" \
  -DDEF_DATA_DIR=\"%{postfix_usr_dir}/lib\" \
@@ -84,12 +116,30 @@ make makefiles CCARGS='-DDEF_CONFIG_DIR=\"%{postfix_etc_dir}\" \
  -DDEF_NEWALIASPATH=\"%{postfix_usr_dir}/bin/newaliases\" \
  -DDEF_SENDMAIL_PATH=\"%{postfix_usr_dir}/sbin/sendmail\" \
  -UHAS_NISPLUS \
+ -DHAS_PCRE -I/usr/include/pcre \
+ -DHAS_DB -I/usr/gnu/include \
+ -DUSE_SASL_AUTH \
+ -DUSE_CYRUS_SASL -I/usr/gnu/include/sasl \
+%if %{with_mysql}
+ -DHAS_MYSQL -I/usr/mysql/include/mysql \
+%endif
+ -DHAS_LDAP -I/usr/include/openldap \
+' \
+AUXLIBS=' \
+ -L/usr/sfw/lib -R/usr/sfw/lib -lz -lm \
+%if %{with_mysql}
+ -L/usr/mysql/lib/mysql -R/usr/mysql/lib/mysql -lmysqlclient \
+%endif
+ -L/usr/gnu/lib -R/usr/gnu/lib -ldb \
+ -lpcre \
+ -L/usr/gnu/lib/sasl2 -R/usr/gnu/lib/sasl2 -lsasl2 \
+ -lldap-2.4 -llber-2.4 \
+ -M /usr/lib/ld/map.noexstk \
 '
-
 make
 
 %install
-rm -rf $buildroot
+rm -rf %{buildroot}
 
 env -i "LD_LIBRARY_PATH=%buildroot%_libdir" \
     sh postfix-install -non-interactive \
@@ -113,9 +163,9 @@ mv %buildroot%{_mandir}/man1/mailq.1 %buildroot%{_mandir}/man1/mailq.postfix.1
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 mkdir -p "${RPM_BUILD_ROOT}%{svcdir}"
-cp "%{SOURCE1}" "${RPM_BUILD_ROOT}%{svcdir}/smtp-postfix.xml"
+cp "%{SOURCE1}" "${RPM_BUILD_ROOT}%{svcdir}"
 mkdir -p "${RPM_BUILD_ROOT}/lib/svc/method"
-cp "%{SOURCE2}" "${RPM_BUILD_ROOT}/lib/svc/method/"
+cp "%{SOURCE2}" "${RPM_BUILD_ROOT}/lib/svc/method/postfix"
 
 %post
 # upgrade configuration files if necessary
@@ -129,9 +179,9 @@ cp "%{SOURCE2}" "${RPM_BUILD_ROOT}/lib/svc/method/"
         readme_directory=%{postfix_readme_dir} &> /dev/null
 
 %actions
-group groupname="postfix"
-group groupname="postdrop"
-user ftpuser=false gcos-field="Postfix Reserved UID" username="postfix" password=NP group="postfix"
+group groupname="%{rundropgroup}" gid="%{rundropgroupid}"
+group groupname="%{rungroup}" gid="%{rungroupid}"
+user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuserid}" password=NP group="%{runusergroup}" home-dir="%{_localstatedir}/spool/postfix" login-shell="/bin/true" group-list="mail"
 
 %files
 %defattr (0755, root, bin)
@@ -205,10 +255,13 @@ user ftpuser=false gcos-field="Postfix Reserved UID" username="postfix" password
 %dir %attr (0755, root, bin) /lib
 %dir %attr (0755, root, bin) /lib/svc
 %dir %attr (0755, root, bin) /lib/svc/method
-%attr (0555, root, bin) /lib/svc/method/svc-postfix
+%attr (0555, root, bin) /lib/svc/method/postfix
 
 
 %changelog
+* Thu Dec 09 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Fix manifest problems. Ready for hash:, pcre, sasl, ldap and mysql.
+- Bump to 2.9.4
 * Thu Sep 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 2.8.12
 * Mon Jun 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.7
+Version:   2.0.9
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -94,6 +94,7 @@ BuildArchitectures: noarch
 Requires: %{name}-common = %{version}
 Requires: library/perl-5/net-server
 Requires: library/perl-5/lwp-512
+Requires: library/perl-5/net-cidr-512
 # Requires: procps >= 2.0.7
 # Requires: sysstat, /usr/bin/which, hdparm
 # Requires(pre): shadow-utils
@@ -422,6 +423,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Mon Dec 10 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.0.9
 * Wed Nov 07 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 - modify for 11.1

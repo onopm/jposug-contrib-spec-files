@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
-<!--
-    <!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
--->
 <service_bundle type="manifest" name="postfix">
 	<service name="network/smtp" type="service" version="1">
 		<single_instance/>
@@ -41,10 +38,10 @@
             </loctext>
 				</common_name>
 				<documentation>
-					<manpage title="postfix" section="1M" manpath="/usr/local/man"/>
+					<manpage title="postfix" section="1" manpath="/usr/share/man"/>
 				</documentation>
 			</template>
 		</instance>
-		<stability value='Unstable' />
+		<stability value="Unstable"/>
 	</service>
 </service_bundle>

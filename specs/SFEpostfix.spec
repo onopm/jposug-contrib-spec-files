@@ -259,6 +259,8 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 
 
 %changelog
+* Thu Dec 10 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Added more dependency rules.
 * Thu Dec 09 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Fix manifest problems. Ready for hash:, pcre, sasl, ldap and mysql.
 - Bump to 2.9.4
@@ -289,4 +291,3 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 - First start with package that just contain the binaries, later versions should include correct users,ownerships and permissions
 * Thu Nov 12 2009 - matthias _at_ matthiaswies _dot_ nl
 - Initial version for the OpenSolaris postfix package
-

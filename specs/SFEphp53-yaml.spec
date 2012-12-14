@@ -28,9 +28,10 @@ SUNW_Basedir:            /
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: web/php-53
+BuildRequires: library/text/yaml
 
 Requires: web/php-53
-Requires: SFElibyaml
+Requires: library/text/yaml
 Requires: web/php-53/extension/php-date
 
 # OpenSolaris IPS Package Manifest Fields
@@ -97,3 +98,4 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sat Dec 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- add BuildRequires

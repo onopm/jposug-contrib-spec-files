@@ -28,9 +28,10 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: %{pnm_buildrequires_SUNWphp52}
 BuildRequires: %{pnm_buildrequires_SUNWgsed_devel}
+BuildRequires: library/text/yaml
 
 Requires: %{pnm_requires_SUNWphp52}
-Requires: SFElibyaml
+Requires: library/text/yaml
 Requires: web/php-52/extension/php-date
 
 # OpenSolaris IPS Package Manifest Fields
@@ -95,6 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.2/conf.d/*
 
 %changelog
+* Sat Dec 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Fri Nov 01 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.1.0
 * Sat Jun 25 JST 2011 TAKI, Yasushi <taki@justplayer.com>

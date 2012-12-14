@@ -14,7 +14,7 @@
 
 Name:		growthforecast
 IPS_package_name:        diagnostic/growthforecast
-Version:	0.31
+Version:	0.33
 Summary:	GrowthForecast - Lightning Fast Graphing/Visualization
 Group:		Applications/System
 License:	Perl5

@@ -11,6 +11,8 @@
 
 %define tarball_version 0.38
 %define tarball_name    YAML-LibYAML
+%define perl_version584 5.8.4
+%define perl_version512 5.12
 
 Name:		SFEperl-yaml-libyaml
 IPS_package_name: library/perl-5/yaml-libyaml
@@ -67,8 +69,8 @@ Requires:	runtime/perl-512
 # export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
 # /usr/perl5/5.8.4/bin/perl Makefile.PL \
 #     PREFIX=$RPM_BUILD_ROOT%{_prefix} \
-#     INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version} \
-#     INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir} \
+#     INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version584} \
+#     INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version584}/%{perl_dir} \
 #     INSTALLSITEMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
 #     INSTALLSITEMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
 #     INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
@@ -82,8 +84,8 @@ Requires:	runtime/perl-512
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL \
     PREFIX=$RPM_BUILD_ROOT%{_prefix} \
-    INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version} \
-    INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir} \
+    INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version512} \
+    INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version512}/%{perl_dir} \
     INSTALLSITEMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
     INSTALLSITEMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
     INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
@@ -109,13 +111,15 @@ rm -rf $RPM_BUILD_ROOT
 
 # %files 584
 # %defattr (-, root, bin)
-# %{_prefix}/perl5/vendor_perl/5.8.4
+# %{_prefix}/perl5/vendor_perl/%{perl_version584}
 
 %files 512
 %defattr (-, root, bin)
-%{_prefix}/perl5/vendor_perl/5.12
+%{_prefix}/perl5/vendor_perl/%{perl_version512}
 
 
 %changelog
+* Sun Dec 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- define perl_version584 and perl_version512 and use them
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for perl-512

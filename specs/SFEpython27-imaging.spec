@@ -8,6 +8,7 @@
 %define src_name        Imaging
 %define pyprefix        /usr/python
 %define pyver           2.7
+%define imgver          1.1.7
 %define execpython      %{pyprefix}/bin/python%{pyver}
 %define execpython64    %{pyprefix}/bin/%{_arch64}/python%{pyver}
 %define _lib32          lib
@@ -15,10 +16,10 @@
 
 
 Name:                   SFEpython27-imaging
-IPS_package_name:       library/python-2/SFEpython27-imaging
+IPS_package_name:       library/python-2/SFEpython27-imaging-%{imgver}
 Summary:                Pythons own image processing library
 URL:                    http://www.pythonware.com/products/pil/
-Version:                1.1.7
+Version:                %{imgver}
 Source:                 http://effbot.org/downloads/Imaging-%{version}.tar.gz
 SUNW_BaseDir:           %{_basedir}
 BuildRoot:              %{_tmppath}/%{name}-%{version}-build
@@ -27,10 +28,9 @@ BuildRequires:          SFEpython27-setuptools
 BuildRequires:          SUNWzlib
 BuildRequires:          SUNWjpg-devel
 BuildRequires:          SUNWpng-devel
-#BuildRequires:          SUNWfreetype2
-#BuildRequires:          SUNWgnome-base-libs-devel
+BuildRequires:          SUNWfreetype2
+BuildRequires:          SUNWgnome-base-libs-devel
 Requires:               runtime/SFEpython-273
-Requires:               SFEpython27
 Requires:               SUNWjpg
 Requires:               SUNWpng
 

@@ -10,6 +10,7 @@
 %define src_name        SQLAlchemy
 %define pyprefix        /usr/python
 %define pyver           2.7
+%define sqlver          0.7.9
 %define src_url         http://nchc.dl.sourceforge.net/sourceforge/sqlalchemy
 %define execpython      %{pyprefix}/bin/python%{pyver}
 %define execpython64    %{pyprefix}/bin/%{_arch64}/python%{pyver}
@@ -18,9 +19,10 @@
 
 
 Name:                   SFEpython27-sqlalchemy
+IPS_package_name:       library/python-2/SFEpython27-sqlalchemy-%{sqlver}
 Summary:                SQL-Alchemy is a Python SQL toolkit and Object Relational Mapper
 URL:                    http://www.sqlalchemy.org
-Version:                0.7.9
+Version:                %{sqlver}
 Source:                 %{src_url}/%{src_name}-%{version}.tar.gz
 SUNW_BaseDir:           %{_basedir}
 BuildRoot:              %{_tmppath}/%{name}-%{version}-build

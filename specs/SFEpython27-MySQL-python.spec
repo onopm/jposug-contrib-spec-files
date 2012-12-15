@@ -10,16 +10,17 @@
 %define mysqlver        5.1
 %define pyprefix        /usr/python
 %define pyver           2.7
+%define mypver          1.2.3
 %define execpython      %{pyprefix}/bin/python%{pyver}
 %define execpython64    %{pyprefix}/bin/%{_arch64}/python%{pyver}
 %define _lib32          lib
 %define _lib64          lib64
 
 Name:                    SFEpython27-MySQL-python
-IPS_package_name:        library/python-2/SFEMySQL-python
+IPS_package_name:        library/python-2/SFEMySQL-python-%{mypver}
 Summary:                 Python interface to MySQL
 URL:                     http://sourceforge.net/projects/mysql-python
-Version:                 1.2.3
+Version:                 %{mypver}
 Source:                  http://download.sourceforge.net/sourceforge/mysql-python/MySQL-python-%{version}.tar.gz
 SUNW_BaseDir:            %{_basedir}
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build

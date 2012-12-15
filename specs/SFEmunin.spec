@@ -385,7 +385,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %files common
 %defattr(-, root, bin)
 %doc Announce-2.0 ChangeLog COPYING HACKING.pod perltidyrc README RELEASE UPGRADING
-%attr(755, root, sys) %dir /usr
+%attr(0755, root, sys) %dir /usr
 %dir %attr(0755, root, sys) %{_datadir}
 %dir %attr(0755, root, other) %{_docdir}
 %dir %{perl_vendorlib}/Munin
@@ -423,8 +423,12 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Sat Dec 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix attr
+
 * Mon Dec 10 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 2.0.9
+
 * Wed Nov 07 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 - modify for 11.1

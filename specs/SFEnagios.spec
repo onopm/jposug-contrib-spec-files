@@ -192,11 +192,13 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 # %{_datadir}/nagios/html/[^s]*
 # %attr(0644, root, bin) %config(noreplace) %{_datadir}/nagios/html/config.inc.php
 %{_datadir}/nagios/html
+%dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_sbindir}
 %{_sbindir}/*
 %{_libdir}/nagios/cgi-bin/*cgi
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins/eventhandlers
+%dir %attr (0755, root, sys) %{_localstatedir}
 %dir %attr (0755, root, sys) %{_localstatedir}/svc
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
@@ -233,6 +235,9 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_includedir}/nagios
 
 %changelog
+* Sat Dev 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix attr
+
 * Wed Dev 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.4.3
 

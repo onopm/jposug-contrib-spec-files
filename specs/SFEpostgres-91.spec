@@ -467,10 +467,46 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 
 %files developer
 %defattr (-, root, bin)
-
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/amd64
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/internal
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/internal/libpq
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/informix
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/informix/esql
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/optimizer
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/regex
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/libpq
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/tsearch
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/tsearch/dicts
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/catalog
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/executor
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/nodes
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/tcop
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/utils
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/portability
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/mb
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/sys
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/netinet
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/arpa
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32_msvc
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32_msvc/sys
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/postmaster
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/parser
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/replication
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/storage
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/bootstrap
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/commands
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/foreign
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/lib
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/access
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/snowball
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/snowball/libstemmer
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/rewrite
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/libpq
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs
@@ -508,7 +544,43 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/Makefile.global
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/test/regress/pg_regress
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_config-%{major_version}.mo
-%attr (0644, root, bin) %{_prefix}/%{major_version}/include/*
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/internal/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/internal/libpq/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/informix/esql/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/optimizer/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/regex/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/libpq/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/tsearch/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/tsearch/dicts/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/catalog/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/executor/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/nodes/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/tcop/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/utils/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/portability/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/mb/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/sys/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/netinet/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/arpa/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32_msvc/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32_msvc/sys/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/postmaster/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/parser/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/replication/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/storage/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/bootstrap/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/commands/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/foreign/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/lib/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/access/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/snowball/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/snowball/libstemmer/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/rewrite/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/libpq/*.h
 
 %files documentation
 %defattr (-, root, bin)
@@ -915,6 +987,7 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %changelog
 * Sat Dec 15 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 9.1.7
+- fix '%files developer'
 * Thu Sep 27 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 9.1.6
 * Sun Aug 26 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

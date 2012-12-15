@@ -12,16 +12,17 @@
 %define pyprefix        /usr/python
 %define pyver           2.7
 %define hgver           2.1
+%define pkg_hgver       2.1.2
 %define execpython      %{pyprefix}/bin/python%{pyver}
 %define execpython64    %{pyprefix}/bin/%{_arch64}/python%{pyver}
 %define _lib32          lib
 %define _lib64          lib64
 
 Name:                   SFEpython27-mercurial
-IPS_package_name:       developer/versioning/SFEmercurial
+IPS_package_name:       developer/versioning/SFEmercurial-%{pkg_hgver}
 Summary:                The Mercurial Source Control Management System
 URL:                    http://www.sqlalchemy.org
-Version:                2.1.2
+Version:                %{pkg_hgver}
 Source:                 %{src_url}/%{src_name}-%{version}.tar.gz
 SUNW_BaseDir:           %{_basedir}
 BuildRoot:              %{_tmppath}/%{name}-%{version}-build

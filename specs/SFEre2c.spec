@@ -17,14 +17,15 @@ Source:                  %{sf_download}/re2c/re2c-%{version}.tar.gz
 
 SUNW_BaseDir:            %{_basedir}
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
+SUNW_Copyright:          re2c.copyright
 
-#BuildRequires: SFEgcc
-BuildRequires:           developer/gcc-3
+BuildRequires: SFEgcc
+#BuildRequires:           developer/gcc-3
 #Requires:      SFEgccruntime
-Requires:                system/library/gcc-3-runtime
+Requires:                system/library/gcc-runtime
 
 %include default-depend.inc
-
+%include packagenamemacros.inc
 
 
 %prep
@@ -32,8 +33,8 @@ Requires:                system/library/gcc-3-runtime
 
 %build
 
-export CC=/usr/bin/gcc
-export CXX=/usr/bin/g++
+export CC=/usr/gnu/bin/gcc
+export CXX=/usr/gnu/bin/g++
 export CFLAGS="%optflags -I%{gnu_inc} %{gnu_lib_path}"
 export CXXFLAGS="%cxx_optflags -I%{gnu_inc} %{gnu_lib_path}"
 export LDFLAGS="%_ldflags %gnu_lib_path"
@@ -68,6 +69,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 13 2012 - Osamu Tabata<cantimerny.g@gmail.com>
+- Sipport for Solaris11
 * Thr Aug 06 2009  - Thomas Wagner
 - switch to gcc4 - sunstudio spits "parser.y", line 98: Error: Cannot cast from std::pair<unsigned, re2c::RuleOp*> to std::pair<int, re2c::RegExp*>.
 - spamassassin now works with re2c (old re2c version did hang forever)

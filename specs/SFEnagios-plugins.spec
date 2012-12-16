@@ -10,7 +10,7 @@
 
 Name:		SFEnagios-plugins
 IPS_package_name:        diagnostic/nagios/plugins
-Version:	1.4.15
+Version:	1.4.16
 Summary:	Nagios plugins
 Group:		Applications/System
 License:	GPLv2
@@ -21,7 +21,7 @@ SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
 
 BuildRequires:	diagnostic/nagios/devel
-Requires:	diagnostic/nagios
+# Requires:	diagnostic/nagios/common
 
 %description
 Provides Nagios plugins
@@ -130,10 +130,14 @@ do
 done
 
 cd ../plugins-scripts
-for i in check_*
+for i in check_* utils.sh utils.pm
 do
-    [ -x $i ] && \
-    install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
+    if [ -x $i ] 
+    then
+	install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
+    else
+	install -m 0644 $i %{buildroot}%{_libdir}/nagios/plugins
+    fi
 done
 
 
@@ -170,6 +174,7 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_ircd
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_ircd.pl
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_jabber
+%attr (0555, root, bin) %{_libdir}/nagios/plugins/check_ldap
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_load
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_log
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_log.sh
@@ -214,6 +219,8 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/negate
 %attr (4555, root, bin) %{_libdir}/nagios/plugins/pst3
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/urlize
+%attr (0644, root, bin) %{_libdir}/nagios/plugins/utils.sh
+%attr (0644, root, bin) %{_libdir}/nagios/plugins/utils.pm
 
 
 %files dig
@@ -229,6 +236,16 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Tue Jul 17 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.4.16
+- comment out Requires
+
+* Fri Apr 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add utils.sh and utils.pm to %files
+
+* Tue Mar 27 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add check_ldap to %files
+
 * Fri May 20 2011 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
 - modify install section.
 - add make check_swap

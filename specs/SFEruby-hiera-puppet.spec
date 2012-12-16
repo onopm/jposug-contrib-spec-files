@@ -1,4 +1,4 @@
-83;40003;0c%include Solaris.inc
+%include Solaris.inc
 %include default-depend.inc
 
 %define gemname hiera-puppet
@@ -96,5 +96,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Sun Dec 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete unnecessary string which causes syntax error
 * Sun Oct 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

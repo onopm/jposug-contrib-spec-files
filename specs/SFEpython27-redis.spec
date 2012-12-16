@@ -9,17 +9,17 @@
 %define src_name         redis
 %define pyprefix         /usr/python
 %define pyver            2.7
-%define djver            1.3
+%define rdver            2.7.2
 %define execpython       %{pyprefix}/bin/python%{pyver}
 %define execpython64     %{pyprefix}/bin/%{_arch64}/python%{pyver}
 %define _lib32           lib
 %define _lib64           lib64
 
 Name:                    SFEpython27-redis
-IPS_package_name:        library/python-2/SFEpython27-redis
+IPS_package_name:        library/python-2/SFEpython27-redis-%{rdver}
 Summary:                 The Python interface to the Redis key-value store.
 URL:                     http://github.com/andymccurdy/redis-py
-Version:                 2.7.1
+Version:                 %{rdver}
 Source:                  http://cloud.github.com/downloads/andymccurdy/redis-py/redis-%{version}.tar.gz
 SUNW_BaseDir:            %{_basedir}
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build

@@ -10,20 +10,21 @@
 %define src_name        Django
 %define pyprefix        /usr/python
 %define pyver           2.7
-%define djver           1.3
+%define djver           1.4
+%define fdjver          1.4.3
 %define execpython      %{pyprefix}/bin/python%{pyver}
 %define execpython64    %{pyprefix}/bin/%{_arch64}/python%{pyver}
 %define _lib32          lib
 %define _lib64          lib64
 
 Name:		        SFEpython27-django
-IPS_Package_Name:	web/python/SFEdjango
-Version:	        1.3.4
+IPS_Package_Name:	web/python/SFEpython27-django-%{fdjver}
+Version:	        %{fdjver}
 Summary:	        A high-level Python Web framework that enables Rapid Development
 License:                BSD
 Group:                  Development/Languages/Python
 URL:                    http://www.djangoproject.com/
-Source:                 http://www.djangoproject.com/m/releases/1.3/Django-%{version}.tar.gz
+Source:                 http://www.djangoproject.com/m/releases/%{djver}/Django-%{version}.tar.gz
 SUNW_Copyright:	        SFEpython27-django.copyright
 BuildRoot:	        %{_tmppath}/%{name}-%{version}-build
 Requires:               runtime/SFEpython-273

@@ -21,7 +21,7 @@ SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
 
 BuildRequires:	diagnostic/nagios/devel
-# Requires:	diagnostic/nagios/common
+Requires:	diagnostic/nagios/common
 
 %description
 Provides Nagios plugins
@@ -238,7 +238,6 @@ rm -rf %{buildroot}
 %changelog
 * Tue Jul 17 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.4.16
-- comment out Requires
 
 * Fri Apr 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add utils.sh and utils.pm to %files

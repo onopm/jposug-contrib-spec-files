@@ -36,7 +36,8 @@ operating system. Additional facts can be added through simple Ruby scripts
 rm -rf %{buildroot}
 ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 mkdir -p %{buildroot}%{_bindir}
-install bin/facter %{buildroot}%{_bindir}/facter
+cd %{buildroot}%{_bindir}
+ln -s ../ruby/1.8/bin/facter .
 
 %clean
 rm -rf %{buildroot}
@@ -56,6 +57,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Dec 20 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- make symbolic link from /usr/ruby/1.8/bin/facter to /usr/bin/facter
 * Mon Dec 10 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update to 1.6.16
 

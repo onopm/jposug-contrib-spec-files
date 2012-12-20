@@ -49,6 +49,15 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT/usr/bin
+cd $RPM_BUILD_ROOT/usr/bin
+ln -s ../ruby/1.9/bin/erb erb19
+ln -s ../ruby/1.9/bin/gem gem19
+ln -s ../ruby/1.9/bin/irb irb19
+ln -s ../ruby/1.9/bin/rake rake19
+ln -s ../ruby/1.9/bin/rdoc rdoc19
+ln -s ../ruby/1.9/bin/ri ri19
+ln -s ../ruby/1.9/bin/ruby ruby19
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -56,9 +65,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,bin)
 %dir %attr (0755, root, sys) /usr
+/usr/bin/*19
 /usr/ruby/1.9
 
 %changelog
+* Fri Dec 20 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add symbolic link from /usr/ruby/1.9/bin/ruby to /usr/bin/ruby19 and so on.
 * Mon Nov 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires and Requires
 * Sun Nov 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

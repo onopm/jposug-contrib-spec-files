@@ -15,6 +15,7 @@ Source:                  http://pypi.python.org/packages/source/b/%{tarball_name
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:           runtime/python-26
+BuildRequires:           library/python-2/setuptools-26
 Requires:                runtime/python-26
 Requires:                library/python-2/funcparserlib-26
 Requires:                library/python-2/ordereddict-26
@@ -61,5 +62,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sun Oct 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -40,12 +40,14 @@ UNIVERSAL::can - work around buggy code calling UNIVERSAL::can() as a function
 IPS_package_name: library/perl-5/universal-can-584
 Summary: UNIVERSAL::can for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:  library/perl-5/extutils-makemaker-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/universal-can-512
 Summary: UNIVERSAL::can for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:  library/perl-5/extutils-makemaker-512
 Requires:	runtime/perl-512
 
 
@@ -98,5 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sun Jun 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

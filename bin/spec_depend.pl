@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+#
+#
+# SFE*.specどおしの依存関係を作成するプログラム
+#
+
 
 use strict;
 use warnings;
@@ -50,9 +55,11 @@ foreach my $spec_file (@spec_file_lines){
 	    foreach my $depend (@{$requires{'buildrequires'}}){
 		print STDERR "depend check:$depend\n";
 		if( $sfe_pkg_list{$depend} ){
+		    # SFEのパッケージにあるのならば、buildの順を調整する。
 		    print STDERR "add build requires:$depend.info\n";
 		    $build_requires.=$depend.'.info ' ;
 		} else {
+		    # そうでないものは、IPSからインストールにする。
 		    print "PRE_INSTALL+=$depend\n";
 		}
 	    }

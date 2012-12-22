@@ -25,6 +25,7 @@ Source1:	nagios-nrpe.xml
 Source2:	svc-nagios-nrpe
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
+BuildRequires:	diagnostic/nagios/devel
 Requires:       diagnostic/nagios/common
 
 %description
@@ -98,5 +99,7 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

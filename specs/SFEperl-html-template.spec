@@ -1,5 +1,5 @@
 #
-# spec file for package: SFEperl-net-snmp
+# spec file for package: SFEperl-html-template
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -8,39 +8,43 @@
 #
 %include Solaris.inc
 
-%define tarball_version v6.0.1
-%define tarball_name    Net-SNMP
+%define tarball_version 2.91
+%define tarball_name    HTML-Template
+%define perl_version 5.12
 
-Name:		SFEperl-net-snmp
-IPS_package_name: library/perl-5/net-snmp
-Version:	v6.0.1
-IPS_component_version: 0.0.1
-Summary:	Object oriented interface to SNMP
+Name:		SFEperl-html-template
+IPS_package_name: library/perl-5/html-template
+Version:	2.91
+IPS_component_version: 2.91
+Summary:	a simple HTML templating system
 License:	Artistic
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
-Url:		http://search.cpan.org/~dtown/%{tarball_name}-%{tarball_version}
+Url:		http://search.cpan.org/~samtregar/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/D/DT/DTOWN/Net-SNMP-%{tarball_version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/W/WO/WONKO/HTML-Template-%{tarball_version}.tar.gz
+
+BuildRequires:	runtime/perl-512
+Requires:	runtime/perl-512
 
 Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
-Meta(info.upstream):            David M. Town <dtown@cpan.org>
-Meta(info.upstream_url):        http://search.cpan.org/~dtown/%{tarball_name}-%{tarball_version}
+Meta(info.upstream):            Sam Tregar <sam@tregar.com>
+Meta(info.upstream_url):        http://search.cpan.org/~samtregar/%{tarball_name}-%{tarball_version}
 Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
-Object oriented interface to SNMP
+a simple HTML templating system
 
 %package 584
 IPS_package_name: library/perl-5/net-snmp-584
-Summary: Object oriented interface to SNMP for perl-584
+Summary: a simple HTML templating system for perl-584
 BuildRequires:	runtime/perl-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/net-snmp-512
-Summary: Object oriented interface to SNMP for perl-512
+Summary: a simple HTML templating system for perl-512
 BuildRequires:	runtime/perl-512
 Requires:	runtime/perl-512
 
@@ -79,8 +83,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,bin)
 %{_prefix}/perl5
 %{_mandir}
-%dir %{_bindir}
-%{_bindir}/snmpkey
 
 %files 584
 %defattr (-, root, bin)
@@ -91,5 +93,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
-* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512
+* Thu May  3 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- define perl_version and use %{perl_version}
+* Sun Apr 29 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- initial

@@ -63,15 +63,15 @@ SUNW_Basedir:   /
 SUNW_Copyright: %{name}.copyright
 
 %include default-depend.inc
-BuildRequires: developer/gnu-binutils
-BuildRequires: library/pcre
-BuildRequires: consolidation/sfw/sfw-incorporation
-Requires: library/pcre
-Requires: consolidation/sfw/sfw-incorporation
-BuildRequires:  sfe/database/bdb
+BuildRequires:  %{pnm_buildrequires_developer_gnu_binutils}
+BuildRequires:  %{pnm_buildrequires_library_pcre}
+BuildRequires:  consolidation/sfw/sfw-incorporation
+Requires:       %{pnm_requires_library_pcre}
+Requires:       consolidation/sfw/sfw-incorporation
+BuildRequires:  database/berkeleydb-48
 Requires:       library/security/cyrus-sasl
 BuildRequires:  library/security/cyrus-sasl
-Requires:       sfe/database/bdb
+Requires:       database/berkeleydb-48
 %if %{with_mysql}
 BuildRequires:  %{pnm_buildrequires_database_mysql_51_library}
 BuildRequires:  %{pnm_buildrequires_mysql51}
@@ -82,6 +82,8 @@ BuildRequires:  %{pnm_buildrequires_library_zlib}
 Requires:       %{pnm_requires_library_zlib}
 BuildRequires:  %{pnm_buildrequires_system_library_math}
 Requires:       %{pnm_requires_system_library_math}
+BuildRequires:  %{pnm_buildrequires_library_openldap}
+Requires:       %{pnm_requires_library_openldap}
 
 # OpenSolaris IPS Manifest Fields
 Meta(info.maintainer_url):      http://sourceforge.jp/forum/forum.php?forum_id=25193
@@ -259,8 +261,6 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 
 
 %changelog
-* Thu Dec 10 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
-- Added more dependency rules.
 * Thu Dec 09 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Fix manifest problems. Ready for hash:, pcre, sasl, ldap and mysql.
 - Bump to 2.9.4
@@ -291,3 +291,4 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 - First start with package that just contain the binaries, later versions should include correct users,ownerships and permissions
 * Thu Nov 12 2009 - matthias _at_ matthiaswies _dot_ nl
 - Initial version for the OpenSolaris postfix package
+

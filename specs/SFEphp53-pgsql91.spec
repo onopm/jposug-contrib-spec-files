@@ -11,9 +11,9 @@
 %define tarball_version  5.3.14
 %define tarball_name     php
 
-Name:                    SFEphp52-pgsql91
-IPS_package_name:	 web/php-52/extension/php-pgsql91
-Summary:                 PHP 5.2 module for PostgreSQL 91
+Name:                    SFEphp53-pgsql91
+IPS_package_name:	 web/php-53/extension/php-pgsql91
+Summary:                 PHP 5.3 module for PostgreSQL 91
 Version:                 5.3.14
 License:		 PHP License
 Url:                     http://www.php.net/
@@ -26,11 +26,11 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: web/php-53
 BuildRequires: text/gnu-sed
-BuildRequires: database/postgres-90/library
-BuildRequires: database/postgres-90/developer
-BuildRequires: SFEre2c
+BuildRequires: database/postgres-91/library
+BuildRequires: database/postgres-91/developer
+BuildRequires: developer/parser/re2c
 
-Requires: database/postgres-90/library
+Requires: database/postgres-91/library
 Requires: web/php-53
 
 %description

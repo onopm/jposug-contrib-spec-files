@@ -1,5 +1,5 @@
 #
-# spec file for package: SFEperl-mime-tools
+# spec file for package: SFEperl-module-metadata
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -7,55 +7,48 @@
 # includes module(s):
 #
 %include Solaris.inc
-%include packagenamemacros.inc
 
-%define tarball_version 5.503
-%define tarball_name    MIME-tools
+%define tarball_version 1.000009
+%define tarball_name    Module-Metadata
 
-Name:		SFEperl-mime-tools
-IPS_package_name: library/perl-5/mime-tools
-Version:	5.503
-IPS_component_version: 5.503
-Summary:	MIME::Tools
+Name:		SFEperl-module-metadata
+IPS_package_name: library/perl-5/module-metadata
+Version:	1.000009
+IPS_component_version: 1.9
+Summary:	Gather package and POD information from perl module files 
 License:	Artistic
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
-Url:		http://search.cpan.org/~dskoll/%{tarball_name}-%{tarball_version}
+Url:		http://search.cpan.org/~dagolden/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/D/DS/DSKOLL/MIME-tools-%{tarball_version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/Module-Metadata-%{tarball_version}.tar.gz
 
-BuildRequires:	runtime/perl-584
-BuildRequires:	runtime/perl-512
+BuildRequires:	SUNWperl584core
+BuildRequires:	SUNWperl584usr
+Requires:	SUNWperl584core
+Requires:	SUNWperl584usr
 
 Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
-Meta(info.upstream):            David F. Skoll <dfs+pause@roaringpenguin.com>
-Meta(info.upstream_url):        http://search.cpan.org/~dskoll/%{tarball_name}-%{tarball_version}
+Meta(info.upstream):            David Golden <dagolden@cpan.org>
+Meta(info.upstream_url):        http://search.cpan.org/~dagolden/%{tarball_name}-%{tarball_version}
 Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
-MIME::Tools
+Gather package and POD information from perl module files 
 
 %package 584
-IPS_package_name: library/perl-5/mime-tools-584
-Summary:  MIME::Tools for perl-584
+IPS_package_name: library/perl-5/module-metadata-584
+Summary: Gather package and POD information from perl module files for perl-584
 BuildRequires:	runtime/perl-584
-BuildRequires:	library/perl-5/mailtools-584
-BuildRequires:	library/perl-5/test-deep-584
-BuildRequires:	library/perl-5/mime-base64-584
-BuildRequires:	library/perl-5/io-584
 Requires:	runtime/perl-584
-Requires:	library/perl-5/mailtools-584
 
 %package 512
-IPS_package_name: library/perl-5/mime-tools-512
-Summary:  MIME::Tools for perl-512
+IPS_package_name: library/perl-5/module-metadata-512
+Summary: Gather package and POD information from perl module files perl-512
 BuildRequires:	runtime/perl-512
-BuildRequires:	library/perl-5/mailtools-512
-BuildRequires:	library/perl-5/test-deep-512
-BuildRequires:	library/perl-5/io-512
 Requires:	runtime/perl-512
-Requires:	library/perl-5/mailtools-512
+
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -66,21 +59,20 @@ export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
   DESTDIR=$RPM_BUILD_ROOT \
   LIB=/usr/perl5/vendor_perl/5.8.4
 make
-make test
+# make test
 
 rm -rf $RPM_BUILD_ROOT
 make pure_install
-make clean
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
   DESTDIR=$RPM_BUILD_ROOT \
   LIB=/usr/perl5/vendor_perl/5.12
 make
-make test
-
+# make test
 
 %install
+# rm -rf $RPM_BUILD_ROOT
 make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
@@ -91,10 +83,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-#%{_prefix}/perl5
-%attr(0755,root,sys) %dir %{_datadir}
+# %{_prefix}/perl5
+%attr(755,root,sys) %dir %{_datadir}
 %{_mandir}
-#%attr(0755,root,bin) %dir %{_bindir}
+#%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
 
 %files 584
@@ -106,7 +98,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
-* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- add BuildRequires
-* Tue Jun 26 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- initial commit
+* Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate packages for perl-584 and perl-512.

@@ -24,16 +24,19 @@ SUNW_Basedir:            /
 #SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires: SUNWphp52r
-BuildRequires: SUNWphp52u
-BuildRequires: SUNWgsed
+BuildRequires: %{pnm_buildrequires_SUNWphp52_devel}
+#BuildRequires: SUNWphp52r
+#BuildRequires: SUNWphp52u
+BuildRequires: %{pnm_buildrequires_SUNWgsed_devel}
+#BuildRequires: SUNWgsed
 BuildRequires: database/postgres-90/library
 BuildRequires: database/postgres-90/developer
 BuildRequires: SFEre2c
 
 Requires: database/postgres-90/library
-Requires: SUNWphp52r
-Requires: SUNWphp52u
+Requires: %{pnm_requires_SUNWphp52}
+#Requires: SUNWphp52r
+#Requires: SUNWphp52u
 
 # OpenSolaris IPS Package Manifest Fields
 #Meta(info.upstream):	 	

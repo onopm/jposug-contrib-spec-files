@@ -64,6 +64,7 @@ de4f6b6660596725bd8749387eef548c4c279838 spec_SFEactdiag_base
 92e10fb5229edab95f433ac6bd7ded98805cda2f spec_SFEblockdiag_base
 b829dfa4cbbd4b994d3588054fbddca13e734aae spec_SFEnwdiag_base
 916fdab2846b2d8c91423e1488873354db0b0db3 spec_SFEseqdiag_base
+<<<<<<< local
 dc780e11f71b0b1e806dfd468ae2c9f2dde7a85b spec_SFEruby-hiera-json_base
 dc780e11f71b0b1e806dfd468ae2c9f2dde7a85b spec_SFEruby-hiera-puppet_base
 69a967cd97b3b8405bdf05204cfb35adadcfe4c0 spec_SFEruby-yajl-ruby_base
@@ -129,3 +130,7 @@ a098106ff3da5ce7bd9202cc53b7fa96ea2c43ee spec_SFEperl-extutils-install_base
 7e1a3b44598e8768a7a58cd20e1e11a9e4d20ad0 spec_SFEperl-algorithm-diff_base
 a098106ff3da5ce7bd9202cc53b7fa96ea2c43ee spec_SFEperl-test-tester_base
 
+=======
+69a967cd97b3b8405bdf05204cfb35adadcfe4c0 spec_SFEopenvpn_base
+e9bd80a145b0a0f14bb242651ddfc68d9ac459b4 spec_SFEtun_base
+>>>>>>> other

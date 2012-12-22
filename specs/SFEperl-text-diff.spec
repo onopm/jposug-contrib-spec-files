@@ -40,12 +40,14 @@ Text::Diff - Perform diffs on files and record sets
 IPS_package_name: library/perl-5/text-diff-584
 Summary: Text::Diff for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/algorithm-diff-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/text-diff-512
 Summary: Text::Diff for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/algorithm-diff-512
 Requires:	runtime/perl-512
 
 
@@ -98,5 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Fri Jun 29 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

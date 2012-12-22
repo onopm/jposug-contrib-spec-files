@@ -41,6 +41,7 @@ IPS_package_name: library/perl-5/parse-cpan-meta-584
 Summary: Parse META.yml and META.json CPAN metadata files for perl-584
 BuildRequires:	runtime/perl-584
 BuildRequires:  library/perl-5/cpan-meta-yaml-584
+BuildRequires:  library/perl-5/json-pp-584
 Requires:	runtime/perl-584
 
 %package 512
@@ -48,6 +49,7 @@ IPS_package_name: library/perl-5/parse-cpan-meta-512
 Summary: Parse META.yml and META.json CPAN metadata files for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:  library/perl-5/cpan-meta-yaml-512
+BuildRequires:  library/perl-5/json-pp-512
 Requires:	runtime/perl-512
 
 

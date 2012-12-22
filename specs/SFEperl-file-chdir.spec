@@ -40,7 +40,7 @@ a more sensible way to change directories
 IPS_package_name: library/perl-5/file-chdir-584
 Summary: a more sensible way to change directories for perl-584
 BuildRequires:	runtime/perl-584
-BuildRequires:	library/perl-5/extutils-makemaker-548
+BuildRequires:	library/perl-5/extutils-makemaker-584
 Requires:	runtime/perl-584
 
 %package 512

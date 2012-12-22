@@ -58,7 +58,7 @@ BuildRequires:           runtime/perl-512
 Conflicts: SUNWrrdtool
 
 %package perl
-IPS_package_name:        library/perl-5/rrdtool
+IPS_package_name:        library/perl-5/rrdtool-512
 Summary: perl-rrdtool
 Requires: %{name} = %{version}
 Requires: runtime/perl-512

@@ -118,3 +118,5 @@ fc7372e98d8d600b7ca0cfc2d0610d4f4ae32da2 spec_SFEperl-json-pp_base
 24f3366868fb8286f2083d82972e45fd19f89311 spec_SFEperl-module-build_base
 24f3366868fb8286f2083d82972e45fd19f89311 spec_SFEperl-net-server_base
 24f3366868fb8286f2083d82972e45fd19f89311 spec_SFEperl-net-snmp_base
+7e1a3b44598e8768a7a58cd20e1e11a9e4d20ad0 spec_SFEperl-io-stringy_base
+

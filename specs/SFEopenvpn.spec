@@ -117,6 +117,8 @@ rm -rf %{buildroot}
 %dir %attr (0555, root, root) /var/run/openvpn
 
 %changelog
+* Tue Dec 10 2012 - YAMAMOTO Takashi
+- Corrected dependency.
 * Tue Nov 20 2012 - YAMAMOTO Takashi
 - Bump to 2.2.2. Fix some problems.
 * Fri Nov 16 2012 - YAMAMOTO Takashi

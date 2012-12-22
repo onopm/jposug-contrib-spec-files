@@ -48,6 +48,7 @@ BuildRequires:	library/perl-5/extutils-install-584
 # BuildRequires:	library/perl-5/archive-tar-584
 # BuildRequires:	library/perl-5/pod-readme-584
 BuildRequires:	library/perl-5/perl-ostype-584
+BuildRequires:	library/perl-5/module-metadata-584
 Requires:	runtime/perl-584
 
 %package 512
@@ -56,6 +57,7 @@ Summary: Build, test, and install Perl modules for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/extutils-install-512
 BuildRequires:	library/perl-5/perl-ostype-512
+BuildRequires:	library/perl-5/module-metadata-512
 Requires:	runtime/perl-512
 
 %prep
@@ -114,6 +116,8 @@ rm -rf $RPM_BUILD_ROOT
 # /usr/perl5/5.12/bin/*
 
 %changelog
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Tue Jun 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for perl-584
 * Wed Jun 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

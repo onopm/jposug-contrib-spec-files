@@ -144,8 +144,6 @@ ee2fd4d340ffcfb255d7b6a737e7e69154915c00 spec_SFEperl-sub-uplevel_base
 ee2fd4d340ffcfb255d7b6a737e7e69154915c00 spec_SFEperl-carp_base
 ee2fd4d340ffcfb255d7b6a737e7e69154915c00 spec_SFEperl-test-exception_base
 d812f715c2b7f9ee84361ab5ad65aa597630e31e spec_SFEperl-io_base
-<<<<<<< local
 69a967cd97b3b8405bdf05204cfb35adadcfe4c0 spec_SFEjasper_base
-=======
 24f3366868fb8286f2083d82972e45fd19f89311 spec_SFEperl-module-metadata_base
->>>>>>> other
+69a967cd97b3b8405bdf05204cfb35adadcfe4c0 spec_SFElibwebp_base

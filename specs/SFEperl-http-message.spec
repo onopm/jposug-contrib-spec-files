@@ -41,6 +41,9 @@ IPS_package_name: library/perl-5/http-message-584
 Summary: Base class for Request/Response for perl-584
 BuildRequires:	runtime/perl-584
 BuildRequires:	library/perl-5/io-compress-584
+BuildRequires:	library/perl-5/http-date-584
+BuildRequires:	library/perl-5/uri-584
+BuildRequires:	library/perl-5/html-parser-584
 Requires:	runtime/perl-584
 Requires:	library/perl-5/uri-584
 
@@ -49,6 +52,9 @@ IPS_package_name: library/perl-5/http-message-512
 Summary: Base class for Request/Response for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/io-compress-512
+BuildRequires:	library/perl-5/http-date-512
+BuildRequires:	library/perl-5/uri-512
+BuildRequires:	library/perl-5/html-parser-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/uri-512
 
@@ -99,8 +105,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Sep 27 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
-
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

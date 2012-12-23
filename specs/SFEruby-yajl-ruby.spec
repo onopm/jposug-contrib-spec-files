@@ -15,7 +15,6 @@ Version: 1.1.0
 License: MIT
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
-Source1: SFEruby-yajl-makefile
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %description
@@ -56,5 +55,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete Source1
 * Wed Nov 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

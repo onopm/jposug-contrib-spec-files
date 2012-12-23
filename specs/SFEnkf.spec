@@ -18,8 +18,11 @@ Group:             Applications/Text
 URL:               http://nkf.sourceforge.jp/
 Source0:           http://dl.sourceforge.jp/%{name}/48945/%{name}-%{version}.tar.gz
 Buildroot:         %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires:     SUNWperl584core
-BuildRequires:     system/library/iconv/utf-8
+BuildRequires:     %{pnm_buildrequires_SUNWperl584core_devel}
+BuildRequires:     %{pnm_buildrequires_system_library_iconv_utf_8}
+Requires:          %{pnm_requires_SUNWperl584core}
+Requires:          %{pnm_requires_system_library_iconv_utf_8}
+
 SUNW_Copyright:    %{name}.copyright
 
 Meta(info.maintainer_url):      http://sourceforge.jp/forum/forum.php?forum_id=25193

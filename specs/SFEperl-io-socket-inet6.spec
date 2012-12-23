@@ -40,6 +40,7 @@ IO::Socket::INET6
 IPS_package_name: library/perl-5/io-socket-inet6-584
 Summary: IO::Socket::INET6 for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/socket6-584
 Requires:	runtime/perl-584
 Requires:	library/perl-5/socket6-584
 
@@ -47,6 +48,7 @@ Requires:	library/perl-5/socket6-584
 IPS_package_name: library/perl-5/io-socket-inet6-512
 Summary: IO::Socket::INET6 for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/socket6-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/socket6-512
 
@@ -98,6 +100,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Wed Sep 26 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Tue Jun 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

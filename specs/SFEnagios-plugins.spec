@@ -31,8 +31,8 @@ IPS_package_name:        diagnostic/nagios/plugins/dig
 Group:		Applications/System
 Summary:	Provides check_dig plugin.
 SUNW_BaseDir:	/
-BuildRequires:  network/dns/bind
-Requires:       network/dns/bind
+# BuildRequires:  pkg:/network/dns/bind
+Requires:       pkg:/network/dns/bind
 
 %description dig
 Provides check_dig plugin.
@@ -42,8 +42,8 @@ IPS_package_name:        diagnostic/nagios/plugins/dns
 Group:		Applications/System
 Summary:	Provides check_dns plugin.
 SUNW_BaseDir:	/
-BuildRequires:  network/dns/bind
-Requires:       network/dns/bind
+# BuildRequires:  pkg:/network/dns/bind
+Requires:       pkg:/network/dns/bind
 
 %description dns
 Provides check_dns plugin.
@@ -236,6 +236,8 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify Requires and BuildRequires
 * Tue Jul 17 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.4.16
 

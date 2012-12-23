@@ -4,8 +4,11 @@
 # includes module(s): bzr
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define python_version 2.6
+
+%define bzr_major_version 2.5
 
 Name:		SFEbzr
 IPS_Package_Name:	developer/versioning/bazaar
@@ -13,15 +16,16 @@ Summary:	Bazaar Source Code Management System
 License:	GPLv2+
 SUNW_Copyright:	bzr.copyright
 Group:		Development/Source Code Management
-Version:	2.4.2
-Source:		http://launchpad.net/bzr/2.4/%{version}/+download/bzr-%{version}.tar.gz
+Version:	2.5.1
+Source:		http://launchpad.net/bzr/%{bzr_major_version}/%{version}/+download/bzr-%{version}.tar.gz
 URL:		http://bazaar-vcs.org
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:	%{_prefix}
-Requires: SUNWPython26
-%include default-depend.inc
-BuildRequires: SUNWPython26-devel
 
+#Requires: SUNWPython26
+Requires: %{pnm_requires_SUNWPython26}
+#BuildRequires: SUNWPython26-devel
+BuildRequires: %{pnm_buildrequires_SUNWPython26_devel}
 
 %description
 Bazaar source code management system.
@@ -59,8 +63,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python%{python_version}/vendor-packages/*
 %dir %attr (0755, root, sys) %{_datadir}
 %{_mandir}/man1/bzr.1
+%dir %attr (0755, root, bin) %{_localedir}
+%{_localedir}/*
 
 %changelog
+* Sun Dec 23 2012 - TAKI,Yasushi <taki@justplayer.com>
+- bump to 2.5.1
 * Sun Dec 11 2011 - Milan Jurik
 - bump to 2.4.2
 * Sat Jul 23 2011 - Guido Berhoerster <gber@openindiana.org>

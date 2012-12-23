@@ -2,8 +2,6 @@
 -include common.mak
 -include target.mak
 
-all: ${TARGET}
-
 depend::
 	rm -f $(TARGETMAK)
 	if [ -z $${PKGBUILD_IPS_REPO} ];then \
@@ -11,10 +9,10 @@ depend::
 	else \
 		echo REPOSITRY=$${PKGBUILD_IPS_REPO} >> $(TARGETMAK);\
 	fi
-	echo "TARGET=\\">> $(TARGETMAK)
+	echo "TARGET=\c">> $(TARGETMAK)
 	cat build.list | sed 's/^#.*//g;s/\.spec$$/.info/g;' |xargs >> $(TARGETMAK)
-	$(SPECDEPEND) >> $(TARGETMAK)
 	echo 'all : $$(TARGET)' >> $(TARGETMAK)
+	$(SPECDEPEND) >> $(TARGETMAK)
 
 preinstall::
 	sudo pkg install -v $(PRE_INSTALL)

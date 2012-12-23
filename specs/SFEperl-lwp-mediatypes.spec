@@ -1,5 +1,5 @@
 #
-# spec file for package: SFEperl-io-socket-inet6
+# spec file for package: SFEperl-lwp-mediatypes
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -7,50 +7,46 @@
 # includes module(s):
 #
 %include Solaris.inc
-%include packagenamemacros.inc
 
-%define tarball_version 2.69
-%define tarball_name    IO-Socket-INET6
+%define tarball_version 6.02
+%define tarball_name    LWP-MediaTypes
 
-Name:		SFEperl-io-socket-inet6
-IPS_package_name: library/perl-5/io-socket-inet6
-Version:	2.69
-IPS_component_version: 2.69
-Summary:	IO::Socket::INET6
+Name:		SFEperl-lwp-mediatypes
+IPS_package_name: library/perl-5/lwp-mediatypes
+Version:	6.02
+IPS_component_version: 6.2
+Summary:	Media types and mailcap processing
 License:	Artistic
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
-Url:		http://search.cpan.org/~shlomif/%{tarball_name}-%{tarball_version}
+Url:		http://search.cpan.org/~lwwwp/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/S/SH/SHLOMIF/IO-Socket-INET6-%{tarball_version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/G/GA/GAAS/LWP-MediaTypes-%{tarball_version}.tar.gz
 
 BuildRequires:	runtime/perl-584
 BuildRequires:	runtime/perl-512
 
 Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
-Meta(info.upstream):            Shlomi Fish <shlomif@shlomifish.org>
-Meta(info.upstream_url):        http://search.cpan.org/~shlomif/%{tarball_name}-%{tarball_version}
+Meta(info.upstream):            The libwww-perl mailing list <libwww@perl.org>
+Meta(info.upstream_url):        http://search.cpan.org/~lwwwp/%{tarball_name}-%{tarball_version}
 Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
-IO::Socket::INET6
+Media types and mailcap processing
 
 %package 584
-IPS_package_name: library/perl-5/io-socket-inet6-584
-Summary: IO::Socket::INET6 for perl-584
+IPS_package_name: library/perl-5/lwp-mediatypes-584
+Summary: Media types and mailcap processing for perl-584
 BuildRequires:	runtime/perl-584
-BuildRequires:	library/perl-5/socket6-584
 Requires:	runtime/perl-584
-Requires:	library/perl-5/socket6-584
 
 %package 512
-IPS_package_name: library/perl-5/io-socket-inet6-512
-Summary: IO::Socket::INET6 for perl-512
+IPS_package_name: library/perl-5/lwp-mediatypes-512
+Summary: Media types and mailcap processing for perl-512
 BuildRequires:	runtime/perl-512
-BuildRequires:	library/perl-5/socket6-512
 Requires:	runtime/perl-512
-Requires:	library/perl-5/socket6-512
+
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -65,7 +61,6 @@ make test
 
 rm -rf $RPM_BUILD_ROOT
 make pure_install
-make clean
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
@@ -100,9 +95,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
-* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- add BuildRequires
-* Wed Sep 26 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- add Requires
-* Tue Jun 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Sun Jun 10 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -1,5 +1,5 @@
 #
-# spec file for package: SFEperl-io-socket-inet6
+# spec file for package: SFEperl-html-parser
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -7,50 +7,49 @@
 # includes module(s):
 #
 %include Solaris.inc
-%include packagenamemacros.inc
 
-%define tarball_version 2.69
-%define tarball_name    IO-Socket-INET6
+%define tarball_version 3.69
+%define tarball_name    HTML-Parser
 
-Name:		SFEperl-io-socket-inet6
-IPS_package_name: library/perl-5/io-socket-inet6
-Version:	2.69
-IPS_component_version: 2.69
-Summary:	IO::Socket::INET6
+Name:		SFEperl-html-parser
+IPS_package_name: library/perl-5/html-parser
+Version:	3.69
+IPS_component_version: 3.69
+Summary:	Basic HTML Parser
 License:	Artistic
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
-Url:		http://search.cpan.org/~shlomif/%{tarball_name}-%{tarball_version}
+Url:		http://search.cpan.org/~gaas/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/S/SH/SHLOMIF/IO-Socket-INET6-%{tarball_version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/G/GA/GAAS/HTML-Parser-%{tarball_version}.tar.gz
 
 BuildRequires:	runtime/perl-584
 BuildRequires:	runtime/perl-512
 
 Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
-Meta(info.upstream):            Shlomi Fish <shlomif@shlomifish.org>
-Meta(info.upstream_url):        http://search.cpan.org/~shlomif/%{tarball_name}-%{tarball_version}
+Meta(info.upstream):            Gisle Aas <gisle@ActiveState.com>
+Meta(info.upstream_url):        http://search.cpan.org/~gaas/%{tarball_name}-%{tarball_version}
 Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
-IO::Socket::INET6
+Basic HTML Parser
 
 %package 584
-IPS_package_name: library/perl-5/io-socket-inet6-584
-Summary: IO::Socket::INET6 for perl-584
+IPS_package_name: library/perl-5/html-parser-584
+Summary: Basic HTML Parser for perl-584
 BuildRequires:	runtime/perl-584
-BuildRequires:	library/perl-5/socket6-584
+BuildRequires:	library/perl-5/html-tagset-584
 Requires:	runtime/perl-584
-Requires:	library/perl-5/socket6-584
+Requires:	library/perl-5/html-tagset-584
 
 %package 512
-IPS_package_name: library/perl-5/io-socket-inet6-512
-Summary: IO::Socket::INET6 for perl-512
+IPS_package_name: library/perl-5/html-parser-512
+Summary: Basic HTML Parser for perl-512
 BuildRequires:	runtime/perl-512
-BuildRequires:	library/perl-5/socket6-512
+BuildRequires:	library/perl-5/html-tagset-512
 Requires:	runtime/perl-512
-Requires:	library/perl-5/socket6-512
+Requires:	library/perl-5/html-tagset-512
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -65,7 +64,6 @@ make test
 
 rm -rf $RPM_BUILD_ROOT
 make pure_install
-make clean
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
@@ -100,9 +98,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
-* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- add BuildRequires
-* Wed Sep 26 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- add Requires
-* Tue Jun 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

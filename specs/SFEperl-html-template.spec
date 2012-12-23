@@ -37,13 +37,13 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 a simple HTML templating system
 
 %package 584
-IPS_package_name: library/perl-5/net-snmp-584
+IPS_package_name: library/perl-5/html-template-584
 Summary: a simple HTML templating system for perl-584
 BuildRequires:	runtime/perl-584
 Requires:	runtime/perl-584
 
 %package 512
-IPS_package_name: library/perl-5/net-snmp-512
+IPS_package_name: library/perl-5/html-template-512
 Summary: a simple HTML templating system for perl-512
 BuildRequires:	runtime/perl-512
 Requires:	runtime/perl-512
@@ -95,6 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512
+- fix IPS_package_name
 * Thu May  3 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - define perl_version and use %{perl_version}
 * Sun Apr 29 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -39,3 +39,7 @@ SFEre2c.spec
 SFEwine.spec
 SFExz.spec
 SFEgob.spec
+# openvpn
+SFElzo.spec
+SFEtun.spec
+SFEopenvpn.spec

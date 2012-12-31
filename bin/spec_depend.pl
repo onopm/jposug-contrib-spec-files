@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+#
+#
+# SFE*.specどおしの依存関係を作成するプログラム
+#
+
 
 use strict;
 use warnings;
@@ -17,7 +22,8 @@ close $list_fh;
 
 # SFE package list の作成
 # spec_file_linesからわざわざ詰め直して作る理由は、あとから追加される可能性があるため
-my %sfe_pkg_list;
+my %sfe_pkg_list; # specファイルの一覧が入るハッシュ。存在したら1。
+my %ips_spec_name; # IPS_package_nameから、specファイルを得るハッシュテーブル。
 foreach (@spec_file_lines){
     s/#.*//g;
     s/^s+//g;
@@ -26,9 +32,12 @@ foreach (@spec_file_lines){
     next unless /\.spec$/;
 
     my $spec=$_;
+    %ips_spec_name=(%ips_spec_name,get_build_requires($spec));
+
     $spec=~s/.spec$//;
     $sfe_pkg_list{$spec}=1;
 }
+
 
 foreach my $spec_file (@spec_file_lines){
     $spec_file =~ s/#.*//g;
@@ -50,9 +59,14 @@ foreach my $spec_file (@spec_file_lines){
 	    foreach my $depend (@{$requires{'buildrequires'}}){
 		print STDERR "depend check:$depend\n";
 		if( $sfe_pkg_list{$depend} ){
+		    # SFEのパッケージにあるのならば、buildの順を調整する。
 		    print STDERR "add build requires:$depend.info\n";
 		    $build_requires.=$depend.'.info ' ;
+		} elsif( $ips_spec_name{$depend} ) {
+		    print STDERR "add build requires:$ips_spec_name{$depend}.info for $depend\n";
+		    $build_requires.=$ips_spec_name{$depend}.'.info ' ;
 		} else {
+		    # そうでないものは、IPSからインストールにする。
 		    print "PRE_INSTALL+=$depend\n";
 		}
 	    }
@@ -145,6 +159,54 @@ sub replace_define {
     $line =~ s{\%\{([A-Za-z][0-9a-zA-Z_]*)\}}{$definelist{$1} // "%{$1}"}emg; 
     return $line;
 }
+
+sub get_build_requires {
+    my ($file_name) = @_;
+    return if ! -r $file_name;
+
+    open my $fh, "<", $file_name;
+    if(!$fh){
+        warn "SKIP: spec-file open error [$file_name]: $!";
+        return;
+    }
+    my %definelist;
+    my %result;
+
+    my $spec=$file_name;
+    $spec=~s/.spec$//;
+
+    while(my $line = <$fh>){
+        $line =~ s/\r?\n//g;
+
+	if( $line =~ /^IPS_package_name:\s*([\/\w-]+)/i 
+	    ){
+	    my $val=replace_define($1,%definelist);
+	    print STDERR "IPS PACKAGE NAME $val is in $file_name.\n";
+	    $result{$val}=$spec;
+	} elsif( $line =~ /\%package\s+(-n)?\s*(.+)/i ){
+	    my $opt=$1 || '';
+	    my $package=$2;
+	    my $sfe_pkg;
+	    if($opt){
+		$sfe_pkg=replace_define($package,%definelist);
+	    } else {
+		$sfe_pkg=replace_define("%{name}-".$package,%definelist);
+	    }
+	    $result{$sfe_pkg}=$spec;
+	    print STDERR "Extend Package NAME $sfe_pkg is in $file_name\n";
+	} elsif( $line =~ /\%define\s+(.+?)\s+(.+)/i ||
+		 $line =~ /^([A-Za-z_][A-Za-z0-9_]+):\s*(.+)/i
+	    ){
+	    my $key=lc($1);
+	    my $val=$2;
+#	    print STDERR "define KEY:VAL=$key:$val\n";
+	    $definelist{$key}=$val;
+	}
+    }
+    close $fh;
+    return %result;
+}
+
 
 __END__
 

@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.1.2
+%define tarball_version  9.1.7
 %define major_version	 9.1
 
 %define _basedir         %{_prefix}/%{major_version}
@@ -19,10 +19,10 @@
 Name:                    SFEpostgres-91
 IPS_package_name:        database/postgres-91
 Summary:	         PostgreSQL client tools
-Version:                 9.1.1
+Version:                 9.1.7
 License:		 PostgreSQL
 Url:                     http://www.postgresql.org/
-Source:			 http://wwwmaster.postgresql.org/redir/311/h/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
+Source:                  http://ftp.postgresql.org/pub/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
 Source1:		 postgres-91-postgres_91
 Source2:		 postgres-91-postgresql_91.xml
 Source3:		 postgres-91-auth_attr
@@ -451,9 +451,9 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %{_prefix}/%{major_version}/share/extension/plpython2u--1.0.sql
 %{_prefix}/%{major_version}/share/extension/plpython2u--unpackaged--1.0.sql
 %{_prefix}/%{major_version}/share/extension/plpython2u.control
-%{_prefix}/%{major_version}/share/extension/plpython3u--1.0.sql
-%{_prefix}/%{major_version}/share/extension/plpython3u--unpackaged--1.0.sql
-%{_prefix}/%{major_version}/share/extension/plpython3u.control
+# %{_prefix}/%{major_version}/share/extension/plpython3u--1.0.sql
+# %{_prefix}/%{major_version}/share/extension/plpython3u--unpackaged--1.0.sql
+# %{_prefix}/%{major_version}/share/extension/plpython3u.control
 %{_prefix}/%{major_version}/share/extension/plpythonu--1.0.sql
 %{_prefix}/%{major_version}/share/extension/plpythonu--unpackaged--1.0.sql
 %{_prefix}/%{major_version}/share/extension/plpythonu.control
@@ -467,10 +467,46 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 
 %files developer
 %defattr (-, root, bin)
-
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/amd64
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/internal
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/internal/libpq
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/informix
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/informix/esql
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/optimizer
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/regex
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/libpq
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/tsearch
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/tsearch/dicts
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/catalog
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/executor
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/nodes
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/tcop
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/utils
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/portability
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/mb
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/sys
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/netinet
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/arpa
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32_msvc
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/port/win32_msvc/sys
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/postmaster
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/parser
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/replication
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/storage
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/bootstrap
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/commands
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/foreign
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/lib
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/access
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/snowball
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/snowball/libstemmer
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/rewrite
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/libpq
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs
@@ -508,7 +544,43 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/Makefile.global
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/test/regress/pg_regress
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_config-%{major_version}.mo
-%attr (0644, root, bin) %{_prefix}/%{major_version}/include/*
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/internal/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/internal/libpq/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/informix/esql/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/optimizer/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/regex/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/libpq/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/tsearch/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/tsearch/dicts/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/catalog/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/executor/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/nodes/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/tcop/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/utils/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/portability/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/mb/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/sys/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/netinet/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32/arpa/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32_msvc/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/port/win32_msvc/sys/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/postmaster/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/parser/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/replication/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/storage/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/bootstrap/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/commands/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/foreign/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/lib/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/access/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/snowball/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/snowball/libstemmer/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/rewrite/*.h
+%attr (0644, root, bin) %{_prefix}/%{major_version}/include/libpq/*.h
 
 %files documentation
 %defattr (-, root, bin)
@@ -655,12 +727,12 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/euc2004_sjis2004.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/plpython2.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpqwalreceiver.so
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/initdb-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_controldata-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_ctl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/initdb-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_controldata-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_ctl-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/plpgsql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/postgres-%{major_version}.mo
+##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/postgres-%{major_version}.mo
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/conversion_create.sql
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/information_schema.sql
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/pg_hba.conf.sample
@@ -913,6 +985,19 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %{_prefix}/%{major_version}/bin/amd64/vacuumlo
 
 %changelog
+* Sat Dec 15 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 9.1.7
+- fix '%files developer'
+* Thu Sep 27 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 9.1.6
+* Sun Aug 26 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 9.1.5
+* Thu Jun 14 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 9.1.4
+- modify SOURCE url
+* Tue Apr 24 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 9.1.3
+- exclude some .mo files for server to avoid confilict
 * Fri Sep 16 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Bump to 9.1.0
 * Sun Jul 31 JST 2011 TAKI, Yasushi <taki@justplayer.com>

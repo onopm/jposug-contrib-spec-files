@@ -31,6 +31,10 @@ SFEperl-yaml.spec
 # SFEphp52-fileinfo.spec
 SFEphp52-pgsql90.spec
 SFEphp52-yaml.spec
+# postfix
+SFElibntlm.spec
+SFEcyrus-sasl.spec
+#SFEbdb.spec
 SFEpostfix.spec
 SFEpostgres-90.spec
 SFEpostgres-91.spec
@@ -39,3 +43,7 @@ SFEre2c.spec
 SFEwine.spec
 SFExz.spec
 SFEgob.spec
+# openvpn
+SFElzo.spec
+SFEtun.spec
+SFEopenvpn.spec

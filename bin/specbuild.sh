@@ -44,7 +44,7 @@ esac
 
 
 ${PKGTOOL} build-only \
-  --autodeps --specdirs=`pwd`:`pwd`/include\
+  --autodeps --nonotify --specdirs=`pwd`:`pwd`/include\
   --patchdirs=`pwd`/patches \
   --sourcedirs=`pwd`/ext-sources:`pwd`/copyright:`pwd`/include \
   ${REPTYPE} \

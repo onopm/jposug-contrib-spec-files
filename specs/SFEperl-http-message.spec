@@ -44,6 +44,8 @@ BuildRequires:	library/perl-5/io-compress-584
 BuildRequires:	library/perl-5/http-date-584
 BuildRequires:	library/perl-5/uri-584
 BuildRequires:	library/perl-5/html-parser-584
+BuildRequires:	library/perl-5/encode-locale-584
+BuildRequires:	library/perl-5/lwp-mediatypes-584
 Requires:	runtime/perl-584
 Requires:	library/perl-5/uri-584
 
@@ -55,6 +57,8 @@ BuildRequires:	library/perl-5/io-compress-512
 BuildRequires:	library/perl-5/http-date-512
 BuildRequires:	library/perl-5/uri-512
 BuildRequires:	library/perl-5/html-parser-512
+BuildRequires:	library/perl-5/encode-locale-512
+BuildRequires:	library/perl-5/lwp-mediatypes-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/uri-512
 

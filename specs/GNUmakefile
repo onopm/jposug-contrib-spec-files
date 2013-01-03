@@ -9,13 +9,13 @@ depend::
 	else \
 		echo REPOSITRY=$${PKGBUILD_IPS_REPO} >> $(TARGETMAK);\
 	fi
-	echo "TARGET=\c">> $(TARGETMAK)
+	printf "TARGET=">> $(TARGETMAK)
 	cat build.list | sed 's/^#.*//g;s/\.spec$$/.info/g;' |xargs >> $(TARGETMAK)
 	echo 'all : $$(TARGET)' >> $(TARGETMAK)
 	$(SPECDEPEND) >> $(TARGETMAK)
 
 preinstall::
-	sudo pkg install -v $(PRE_INSTALL)
+	${SUPERCMD} pkg install -v $(PRE_INSTALL)
 
 clean::
 	rm -f $(TARGET) $(TARGETMAK) $(patsubst %.info,%.proto,$(TARGET))

@@ -10,7 +10,7 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 %define with_mysql 1
-
+%define src_name postfix
 %define postfix_usr_dir  %{_prefix}/postfix
 %define postfix_var_dir  %{_var}/postfix
 %define postfix_etc_dir  /etc/postfix
@@ -43,13 +43,13 @@
 %define rundropgroup    postdrop
 %define rundropgroupid  182
 
-Name:           postfix
+Name:           SFEpostfix
 Summary:        postfix mail server
 Version:        2.9.4
 IPS_package_name: service/network/smtp/postfix
 License:        IBM Public License
 Url:            http://www.postfix.org
-Source:         ftp://ftp.cs.uu.nl/mirror/postfix/postfix-release/official/%{name}-%{version}.tar.gz
+Source:         ftp://ftp.cs.uu.nl/mirror/postfix/postfix-release/official/%{src_name}-%{version}.tar.gz
 Source1:	smtp-postfix.xml
 Source2:	svc-postfix
 # http://estseg.blogspot.jp/2010/03/postfix-w-opensolaris-nis.html
@@ -95,8 +95,8 @@ Meta(info.classification):      org.opensolaris.category.2008:System/Services
 Postfix is an attempt to provide an alternative to the widely-used Sendmail program. Postfix attempts to be fast, easy to administer, and hopefully secure, while at the same time being sendmail compatible enough to not upset your users.
 
 %prep
-rm -rf %name-%version
-%setup -q -n %name-%version
+rm -rf %src_name-%version
+%setup -q -n %src_name-%version
 %patch1 -p0
 
 %build

@@ -4,13 +4,13 @@
 # SFE*.specどおしの依存関係を作成するプログラム
 #
 
-
 use strict;
 use warnings;
 use Pod::Usage;
 # Debug (dumper
 use Data::Dumper;
 sub p { print Dumper shift }
+
 
 sub spectool($$)
 {
@@ -82,11 +82,11 @@ foreach my $spec_file (@spec_file_lines){
     search_depend_files($spec_file,\%requires);
 
     my $depend_sources='';
+    my $build_requires='';
  
     if(%requires){
 	if(defined($requires{'buildrequires'})){
 	    # TODO: ここはjikkou 
-	    my $build_requires='';
 	    foreach my $depend (@{$requires{'buildrequires'}}){
 		print STDERR "depend check:$depend\n";
 		if( $sfe_pkg_list{$depend} ){
@@ -127,7 +127,7 @@ foreach my $spec_file (@spec_file_lines){
     }
     my $sfe_name = $spec_file;
     $sfe_name=~ s/\.spec$/.proto/g;
-    print "${sfe_name} : ${spec_file} ${depend_sources}\n";
+    print "${sfe_name} : ${spec_file} ${depend_sources} ${build_requires}\n";
 }
 
 exit;

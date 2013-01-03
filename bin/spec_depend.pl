@@ -24,6 +24,13 @@ close $list_fh;
 # spec_file_linesからわざわざ詰め直して作る理由は、あとから追加される可能性があるため
 my %sfe_pkg_list; # specファイルの一覧が入るハッシュ。存在したら1。
 my %ips_spec_name; # IPS_package_nameから、specファイルを得るハッシュテーブル。
+
+# specファイル名からips_package_name群を返す変換テーブル表を作る
+# なんと汚いことに、このファイルポインタ$s2ifhは、遠く離れたget_build_requiresで
+# 出力される。何のためのモジュールかか（笑
+# ちなみにこのファイルは、install_spec.shでspecファイルからipsの名前でインストールするのに使う。
+open my $s2ifh, ">./spec2ipsname.list" or die("file write error");
+
 foreach (@spec_file_lines){
     s/#.*//g;
     s/^s+//g;
@@ -37,7 +44,7 @@ foreach (@spec_file_lines){
     $spec=~s/.spec$//;
     $sfe_pkg_list{$spec}=1;
 }
-
+close $s2ifh;
 
 foreach my $spec_file (@spec_file_lines){
     $spec_file =~ s/#.*//g;
@@ -160,6 +167,10 @@ sub replace_define {
     return $line;
 }
 
+
+#
+# 与えられたspecファイルから、ips_nameの羅列を返す
+#
 sub get_build_requires {
     my ($file_name) = @_;
     return if ! -r $file_name;
@@ -181,6 +192,7 @@ sub get_build_requires {
 	if( $line =~ /^IPS_package_name:\s*([\/\w-]+)/i 
 	    ){
 	    my $val=replace_define($1,%definelist);
+	    print $s2ifh "${spec}.spec:$val\n";
 	    print STDERR "IPS PACKAGE NAME $val is in $file_name.\n";
 	    $result{$val}=$spec;
 	} elsif( $line =~ /\%package\s+(-n)?\s*(.+)/i ){

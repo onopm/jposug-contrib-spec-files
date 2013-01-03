@@ -38,9 +38,9 @@ audio over the Internet.
 %package devel
 Summary:                 %{summary} - development files
 SUNW_BaseDir:            %{_basedir}
-IPS_package_name:  library/media/header-gsm
+#IPS_package_name:  library/media/header-gsm
 %include default-depend.inc
-Requires: %name
+#Requires: %name
 
 %prep
 rm -rf %name-%version

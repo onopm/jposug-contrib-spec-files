@@ -69,7 +69,12 @@ foreach (@spec_file_lines){
     $spec=~s/.spec$//;
     $sfe_pkg_list{$spec}=1;
 }
-
+# このファイルは、install_spec.shでspecファイルからipsの名前でインストールするのに使う。
+open my $s2ifh, ">./spec2ipsname.list" or die("file write error");
+for my $key (keys(%ips_spec_name)) {
+    print $s2ifh "$ips_spec_name{$key}.spec:$key\n" if ($key !~ /^SFE/);
+}
+close $s2ifh;
 
 foreach my $spec_file (@spec_file_lines){
     $spec_file =~ s/#.*//g;

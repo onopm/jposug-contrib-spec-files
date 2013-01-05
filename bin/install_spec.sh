@@ -36,7 +36,7 @@ echo "Install packages : ${PKGNAME}"
 if [ ! -z $PKGNAME ];then
     sudo pkg install -v ${PKGNAME}
     RES=$?
-    if [ $${RES} = 0 -o $${RES} = 4 ] ; then
+    if [ ${RES} = 0 -o ${RES} = 4 ] ; then
 	echo Get info files ${INFONAME}
 	sudo pkg info ${PKGNAME} > ${INFONAME}
     fi

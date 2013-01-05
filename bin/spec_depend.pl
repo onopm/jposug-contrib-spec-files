@@ -90,15 +90,16 @@ foreach my $spec_file (@spec_file_lines){
 	    my $sfe_name = $spec_file;
 	    $depend_sources.=' '.${sources} if(${sources});
 	}
-	if(defined($requires{'source'})){
-	    my $sources='';
-	    foreach (@{$requires{'source'}}){
-		if(! /^(http|https|ftp):\/\//){
-		    $sources.='ext-sources/'.$_.' ';
-		}
-	    }
-	    $depend_sources.=' '.${sources} if(${sources});
-	}
+	# いままでなかった問題が顕在化してくるのでコメントアウト
+	#if(defined($requires{'source'})){
+	#    my $sources='';
+	#    foreach (@{$requires{'source'}}){
+	#	if(! /^(http|https|ftp):\/\//){
+	#	    $sources.='ext-sources/'.$_.' ';
+	#	}
+	#    }
+	#    $depend_sources.=' '.${sources} if(${sources});
+	#}
     }
     my $sfe_name = $spec_file;
     $sfe_name=~ s/\.spec$/.proto/g;

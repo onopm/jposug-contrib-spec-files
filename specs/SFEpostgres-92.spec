@@ -1,5 +1,5 @@
 #
-# spec file for package PostgreSQL 9.0
+# spec file for package PostgreSQL 9.2
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -997,5 +997,7 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %{_prefix}/%{major_version}/bin/amd64/vacuumlo
 
 %changelog
+* Sun Jan  6 JST 2013 TAKI, Yasushi <taki@justplayer.com>
+- fix comment
 * Sat Dec 15 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

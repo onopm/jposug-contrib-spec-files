@@ -6,15 +6,16 @@
 #
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  5.2.12
+%define tarball_version  5.2.17
 %define tarball_name     php
 
 Name:                    SFEphp52-pgsql90
 IPS_package_name:	 web/php-52/extension/php-pgsql90
 Summary:                 PHP 5.2 module for PostgreSQL
-Version:                 5.2.12
+Version:                 5.2.17
 License:		 PHP License
 Url:                     http://www.php.net/
 Source:			 http://museum.php.net/php5/%{tarball_name}-%{tarball_version}.tar.bz2

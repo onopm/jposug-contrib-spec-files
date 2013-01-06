@@ -5,6 +5,7 @@
 SPECBUILD=../bin/specbuild.sh 
 TARGETMAK=target.mak
 SPECDEPEND=../bin/spec_depend.pl
+SPECDEPEND_ACCURATELY=../bin/spec_depend_spectool.pl
 SPECDEPENDINSTALL=../bin/spec_depend_install.pl
 CHECK_INSTALL=../bin/check_install.sh
 PKGSEND_MANIFEST=../bin/pkgsend_manifest.sh

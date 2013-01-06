@@ -2,7 +2,7 @@
 -include common.mak
 -include target.mak
 
-depend::
+predepend::
 	rm -f $(TARGETMAK)
 	if [ -z $${PKGBUILD_IPS_REPO} ];then \
 		echo REPOSITRY=localhost >> $(TARGETMAK);\
@@ -12,7 +12,12 @@ depend::
 	printf "TARGET=">> $(TARGETMAK)
 	cat build.list | sed 's/^#.*//g;s/\.spec$$/.info/g;' |xargs >> $(TARGETMAK)
 	echo 'all : $$(TARGET)' >> $(TARGETMAK)
+
+depend:: predepend
 	$(SPECDEPEND) >> $(TARGETMAK)
+
+depend_accurately:: predepend
+	$(SPECDEPEND_ACCURATELY) >> $(TARGETMAK)
 
 preinstall::
 	${SUPERCMD} pkg install -v $(PRE_INSTALL)

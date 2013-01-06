@@ -20,7 +20,7 @@ depend_accurately:: predepend
 	$(SPECDEPEND_ACCURATELY) >> $(TARGETMAK)
 
 preinstall::
-	${SUPERCMD} pkg install -v $(PRE_INSTALL)
+	sudo pkg install -v $(PRE_INSTALL)
 
 clean::
 	rm -f $(TARGET) $(TARGETMAK) $(patsubst %.info,%.proto,$(TARGET))

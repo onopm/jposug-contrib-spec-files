@@ -101,11 +101,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
 %attr(755,root,sys) %dir %{_datadir}
 %{_mandir}
-#%attr(755,root,sys) %dir %{_bindir}
-#%{_bindir}/*
 
 # %files 584
 # %defattr (-, root, bin)
@@ -116,6 +113,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Jan 06 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modifyl %files section because dbd-pg90 and dbd-pg90-512 included same file and conflicted
 * Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.19.2
 - generate packages for perl-512

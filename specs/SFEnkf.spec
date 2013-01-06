@@ -117,6 +117,10 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_man3dir}/NKF.3
 
 %changelog
+* Sun Jan  6 2013 TAKI, Yasushi <taki@justplayer.com>
+- Bump to 2.1.2
+- use pnmacro.
+- fix minor error
 * Thu Mar 15 2012 Satoru MIYAZAKI <s.miyaza@gmail.com> 
 - add dir entries
 * Thu Feb  3 2011 Satoru MIYAZAKI <s.miyaza@gmail.com> 

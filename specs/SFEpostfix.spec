@@ -26,7 +26,7 @@
 %define postfix_command_dir     %{postfix_usr_dir}/sbin
 %define postfix_queue_dir       %{postfix_var_dir}/spool
 %define postfix_data_dir        %{postfix_usr_dir}/lib
-%define postfix_doc_dir         %{_docdir}/%{name}-%{version}
+%define postfix_doc_dir         %{_docdir}/%{src_name}-%{version}
 %define postfix_sample_dir      %{postfix_doc_dir}/samples
 %define postfix_readme_dir      %{postfix_doc_dir}/README_FILES
 
@@ -104,9 +104,10 @@ rm -rf %src_name-%version
 #
 # Change some default locations
 #
-
+export CC=gcc
+export CXX=g++
 make makefiles OPT=' \
- %optflags \
+ -O3 \
 ' \
 CCARGS='-DDEF_CONFIG_DIR=\"%{postfix_etc_dir}\" \
  -DDEF_COMMAND_DIR=\"%{postfix_usr_dir}/sbin\" \
@@ -136,7 +137,6 @@ AUXLIBS=' \
  -lpcre \
  -L/usr/gnu/lib/sasl2 -R/usr/gnu/lib/sasl2 -lsasl2 \
  -lldap-2.4 -llber-2.4 \
- -M /usr/lib/ld/map.noexstk \
 '
 make
 
@@ -261,6 +261,8 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 
 
 %changelog
+* Mon Jan 07 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- build with gcc by default
 * Thu Dec 09 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Fix manifest problems. Ready for hash:, pcre, sasl, ldap and mysql.
 - Bump to 2.9.4

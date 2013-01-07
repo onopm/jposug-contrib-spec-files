@@ -37,6 +37,10 @@ case ${VERSION} in
 	echo "OpenIndiana mode. use IPS."
 	REPTYPE='--ips'
 	;;
+    oi*)
+	echo "OpenIndiana mode. use IPS."
+	REPTYPE='--ips'
+	;;
     Generic*)
 	echo "Solaris 10 mode. use SVr4."
 	REPTYPE='--svr4'

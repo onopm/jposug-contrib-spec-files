@@ -21,6 +21,13 @@ Source:		%{src_url}/%{src_name}-%{version}.tar.gz
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: SFEgcc
+Requires:      SFEgccruntime
+%endif
 
 %description
 A library for authenticating with Microsoft NTLM challenge-response, 
@@ -41,8 +48,10 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
      CPUS=1
 fi
 
-export CFLAGS="%optflags"
-export LDFLAGS="%_ldflags"
+export CC=gcc
+export CXX=g++
+export CFLAGS="-fPIC -O3"
+export LDFLAGS="%_ldflags -mimpure-text"
 
 ./configure --prefix=%{_prefix}			\
             --bindir=%{_bindir}			\
@@ -77,6 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Mon Jan 07 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- build with gcc by default
 * Sat Dec 08 2012 - YAMAMOTO Takashi
 - Initial revision for the jposug
 * Mon Dec 12 2011 - Milan Jurik

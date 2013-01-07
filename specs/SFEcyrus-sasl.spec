@@ -24,6 +24,13 @@ Requires: %{pnm_buildrequires_SUNWopenssl_libraries}
 BuildRequires: %{pnm_buildrequires_SUNWopenssl_libraries}
 Requires: library/security/libntlm
 BuildRequires: library/security/libntlm
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: SFEgcc
+Requires:      SFEgccruntime
+%endif
 
 %description
 SASL is the Simple Authentication and Security Layer, a method for adding authentication support to connection-based protocols.
@@ -40,9 +47,12 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
 fi
 
 # needed to prevent an error during configure - strip whitespace
-CFLAGS="%optflags -I/usr/gnu/include -I/usr/include/gssapi"
-export CFLAGS="`echo $CFLAGS`"
-export LDFLAGS="-L/usr/gnu/lib -R/usr/gnu/lib"
+export CC=gcc
+export CXX=g++
+#CFLAGS="%optflags -I/usr/gnu/include -I/usr/include/gssapi"
+#export CFLAGS="`echo $CFLAGS`"
+export CFLAGS="-I/usr/gnu/include -I/usr/include/gssapi -fPIC -O3"
+export LDFLAGS="-mimpure-text %_ldflags -L/usr/gnu/lib -R/usr/gnu/lib"
 
 ./configure -prefix %{_prefix} \
            --enable-shared=yes \
@@ -86,6 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/*
 
 %changelog
+* Mon Jan 07 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- build with gcc by default
 * Sat Dec 08 2012 - YAMAMOTO Takashi
 - use pnm macros
 * Mon Dec 12 2011 - Milan Jurik

@@ -96,6 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/*
 
 %changelog
+* Tue Jan 08 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- fix linker option problem
 * Mon Jan 07 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - build with gcc by default
 * Sat Dec 08 2012 - YAMAMOTO Takashi

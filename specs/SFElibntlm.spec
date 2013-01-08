@@ -51,7 +51,7 @@ fi
 export CC=gcc
 export CXX=g++
 export CFLAGS="-fPIC -O3"
-export LDFLAGS="%_ldflags -mimpure-text"
+export LDFLAGS="%_ldflags"
 
 ./configure --prefix=%{_prefix}			\
             --bindir=%{_bindir}			\

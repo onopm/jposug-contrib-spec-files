@@ -52,7 +52,7 @@ export CXX=g++
 #CFLAGS="%optflags -I/usr/gnu/include -I/usr/include/gssapi"
 #export CFLAGS="`echo $CFLAGS`"
 export CFLAGS="-I/usr/gnu/include -I/usr/include/gssapi -fPIC -O3"
-export LDFLAGS="-mimpure-text %_ldflags -L/usr/gnu/lib -R/usr/gnu/lib"
+export LDFLAGS="%_ldflags -L/usr/gnu/lib -R/usr/gnu/lib"
 
 ./configure -prefix %{_prefix} \
            --enable-shared=yes \

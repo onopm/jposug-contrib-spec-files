@@ -5,7 +5,6 @@
 
 %include Solaris.inc
 %include packagenamemacros.inc
-%include usr-gnu.inc
 
 Name:		SFEcyrus-sasl
 SUNW_Copyright: %{name}.copyright
@@ -13,6 +12,7 @@ IPS_Package_Name:	library/security/cyrus-sasl
 Summary:	Simple Authentication and Security Layer library
 Version:	2.1.26
 Source:		ftp://ftp.cyrusimap.org/cyrus-sasl/cyrus-sasl-%{version}.tar.gz
+Patch0:		saslutil.c.patch
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
@@ -40,6 +40,7 @@ If its use is negotiated, a security layer is inserted between the protocol and 
 
 %prep
 %setup -q -n cyrus-sasl-%{version}
+%patch0 -p0
 
 %build
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
@@ -55,7 +56,7 @@ export CXX=g++
 export CFLAGS="-I/usr/gnu/include -I/usr/include/gssapi -fPIC -O3"
 export LDFLAGS="%_ldflags -L/usr/gnu/lib -R/usr/gnu/lib"
 
-./configure -prefix %{_prefix} \
+./configure --prefix %{_prefix} \
            --enable-shared=yes \
            --enable-static=no \
            --with-dbpath=%{_sysconfdir}/sasldb2 \
@@ -86,6 +87,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.so*
 %dir %attr (0755, root, other) %{_libdir}/sasl2
 %{_libdir}/sasl2/lib*.so*
+%dir %attr (0755, root, other) %{_libdir}/pkgconfig
+%{_libdir}/pkgconfig/*
 %dir %attr (0755, root, bin) %{_includedir}
 %dir %attr (0755, root, other) %{_includedir}/sasl
 %{_includedir}/sasl/*
@@ -97,6 +100,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/*
 
 %changelog
+* Tue Jan 08 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Bump to 2.1.26 (by TAKI,Yasushi <taki@justplayer.com>)
+- changed %_prefix
+- Fix error "identifier redeclared: gethostname" for Solaris11
+- Fix configure option problem
 * Tue Jan 08 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - fix linker option problem
 * Mon Jan 07 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>

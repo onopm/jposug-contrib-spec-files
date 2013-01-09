@@ -5,6 +5,9 @@
 
 %include Solaris.inc
 %include packagenamemacros.inc
+%define cc_is_gcc 1
+%define _gpp g++
+%include base.inc
 
 Name:		SFEcyrus-sasl
 SUNW_Copyright: %{name}.copyright
@@ -53,14 +56,16 @@ export CC=gcc
 export CXX=g++
 #CFLAGS="%optflags -I/usr/gnu/include -I/usr/include/gssapi"
 #export CFLAGS="`echo $CFLAGS`"
-export CFLAGS="-I/usr/gnu/include -I/usr/include/gssapi -fPIC -O3"
-export LDFLAGS="%_ldflags -L/usr/gnu/lib -R/usr/gnu/lib"
+export CFLAGS="%optflags -I/usr/include/gssapi -fPIC"
+export CXXFLAGS="%cxx_optflags"
+export LDFLAGS="%_ldflags"
 
 ./configure --prefix %{_prefix} \
            --enable-shared=yes \
            --enable-static=no \
            --with-dbpath=%{_sysconfdir}/sasldb2 \
            --with-plugindir=%{_libdir}/sasl2 \
+           --includedir=%{_includedir}/sasl2 \
            --sysconfdir %{_sysconfdir} \
            --mandir %{_mandir} \
            --with-ipctype=doors
@@ -90,8 +95,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, other) %{_libdir}/pkgconfig
 %{_libdir}/pkgconfig/*
 %dir %attr (0755, root, bin) %{_includedir}
-%dir %attr (0755, root, other) %{_includedir}/sasl
-%{_includedir}/sasl/*
+%dir %attr (0755, root, other) %{_includedir}/sasl2
+%{_includedir}/sasl2/*
 %dir %attr (0755, root, sys) %{_datadir}
 %dir %attr (0755, root, bin) %{_mandir}
 %dir %attr (0755, root, bin) %{_mandir}/man3
@@ -100,6 +105,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/*
 
 %changelog
+* Wed Jan 09 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- add --includedir
 * Tue Jan 08 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Bump to 2.1.26 (by TAKI,Yasushi <taki@justplayer.com>)
 - changed %_prefix

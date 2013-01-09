@@ -11,17 +11,18 @@ Name:		SFEcyrus-sasl
 SUNW_Copyright: %{name}.copyright
 IPS_Package_Name:	library/security/cyrus-sasl
 Summary:	Simple Authentication and Security Layer library
-Version:	2.1.25
-Source:		ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/cyrus-sasl-%{version}.tar.gz
-
+Version:	2.1.26
+Source:		ftp://ftp.cyrusimap.org/cyrus-sasl/cyrus-sasl-%{version}.tar.gz
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
 
 Requires: %{pnm_requires_SUNWsqlite3} 
 BuildRequires: %{pnm_buildrequires_SUNWsqlite3}
-Requires: %{pnm_buildrequires_SUNWopenssl_libraries}
-BuildRequires: %{pnm_buildrequires_SUNWopenssl_libraries}
+#Requires: %{pnm_buildrequires_SUNWopenssl_libraries}
+Requires: %{pnm_requires_library_security_openssl}
+#BuildRequires: %{pnm_buildrequires_SUNWopenssl_libraries}
+BuildRequires: %{pnm_buildrequires_library_security_openssl}
 Requires: library/security/libntlm
 BuildRequires: library/security/libntlm
 %if %( expr %{osbuild} '=' 175 )

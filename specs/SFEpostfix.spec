@@ -122,7 +122,7 @@ CCARGS='-DDEF_CONFIG_DIR=\"%{postfix_etc_dir}\" \
  -DHAS_PCRE -I/usr/include/pcre \
  -DHAS_DB -I/usr/gnu/include \
  -DUSE_SASL_AUTH \
- -DUSE_CYRUS_SASL -I/usr/gnu/include/sasl \
+ -DUSE_CYRUS_SASL -I/usr/include/sasl \
 %if %{with_mysql}
  -DHAS_MYSQL -I/usr/mysql/include/mysql \
 %endif
@@ -135,7 +135,7 @@ AUXLIBS=' \
 %endif
  -L/usr/gnu/lib -R/usr/gnu/lib -ldb \
  -lpcre \
- -L/usr/gnu/lib/sasl2 -R/usr/gnu/lib/sasl2 -lsasl2 \
+ -L/usr/lib/sasl2 -R/usr/lib/sasl2 -lsasl2 \
  -lldap-2.4 -llber-2.4 \
 '
 make
@@ -261,6 +261,8 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 
 
 %changelog
+* Wed Jan 09 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- changed the Library path to sasl2
 * Mon Jan 07 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - build with gcc by default
 * Thu Dec 09 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>

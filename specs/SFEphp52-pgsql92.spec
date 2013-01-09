@@ -1,5 +1,5 @@
 #
-# spec file for package SFEphp52-pgsql90
+# spec file for package SFEphp52-pgsql92
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -26,11 +26,11 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: web/php-52
 BuildRequires: text/gnu-sed
-BuildRequires: database/postgres-90/library
-BuildRequires: database/postgres-90/developer
+BuildRequires: database/postgres-92/library
+BuildRequires: database/postgres-92/developer
 BuildRequires: SFEre2c
 
-Requires: database/postgres-90/library
+Requires: database/postgres-92/library
 Requires: web/php-52
 
 %description
@@ -123,5 +123,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.2/conf.d/*
 
 %changelog
+* Sun Jan 07 2013 TAKI, Yasushi <taki@justplayer.com>
+- fix to use postgres-90.
+- fix some version number
 * Sat Dec 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

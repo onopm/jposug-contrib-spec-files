@@ -5,6 +5,9 @@
 #
 %include Solaris.inc
 %include packagenamemacros.inc
+%define cc_is_gcc 1
+%define _gpp g++
+%include base.inc
 
 %define	src_name libntlm
 %define	src_url	http://www.nongnu.org/libntlm/releases
@@ -12,7 +15,7 @@
 Name:		SFElibntlm
 IPS_Package_Name:	library/security/libntlm
 SUNW_Copyright: %{name}.copyright
-Summary:	Microsoft's NTLM authentication library
+Summary:	Microsoft NTLM authentication library
 Version:	1.3
 Group:		System/Libraries
 License:	LGPLv2.1+
@@ -24,9 +27,11 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
+%define mimpure_text 
 %else
 BuildRequires: SFEgcc
 Requires:      SFEgccruntime
+%define mimpure_text -mimpure-text
 %endif
 
 %description
@@ -50,8 +55,9 @@ fi
 
 export CC=gcc
 export CXX=g++
-export CFLAGS="-fPIC -O3"
-export LDFLAGS="%_ldflags"
+export CFLAGS="%optflags -I%{gnu_inc} %{gnu_lib_path}"
+export CXXFLAGS="%cxx_optflags -I%{gnu_inc} %{gnu_lib_path}"
+export LDFLAGS="%_ldflags %gnu_lib_path %mimpure_text"
 
 ./configure --prefix=%{_prefix}			\
             --bindir=%{_bindir}			\
@@ -86,6 +92,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Jan  9 2013 - TAKI,Yasushi <taki@justplayer.com>
+- add minpuretext
+- add some gcc options
 * Tue Jan 08 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - fix linker option problem
 * Mon Jan 07 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>

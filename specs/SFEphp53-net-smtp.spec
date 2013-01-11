@@ -24,8 +24,7 @@ BuildRequires: web/php-53
 # BuildRequires: %{pnm_buildrequires_SUNWgsed_devel}
 
 Requires: web/php-53
-# "pear/Net_Socket"
-# "pear/Auth_SASL"
+Requires: web/php-53/extension/php-net-socket
 
 %description
 Provides an implementation of the SMTP protocol using PEAR's Net_Socket class.
@@ -60,5 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 %{pear_dir}/.registry/net_smtp.reg
 
 %changelog
+* Fri Jan 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requies
 * Sat Dec 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

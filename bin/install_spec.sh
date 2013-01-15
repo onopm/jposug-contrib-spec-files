@@ -40,6 +40,7 @@ if [ ! -z $PKGNAME ];then
 	echo Get info files ${INFONAME}
 	sudo pkg info ${PKGNAME} > ${INFONAME}
     fi
+    exit $RES
 else
     echo "PKGNAME is not found in $SPECNAME"
     exit 1

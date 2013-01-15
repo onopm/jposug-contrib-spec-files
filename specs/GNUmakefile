@@ -2,24 +2,25 @@
 -include common.mak
 -include target.mak
 
-all: ${TARGET}
-
-depend::
+predepend::
 	rm -f $(TARGETMAK)
 	if [ -z $${PKGBUILD_IPS_REPO} ];then \
 		echo REPOSITRY=localhost >> $(TARGETMAK);\
 	else \
 		echo REPOSITRY=$${PKGBUILD_IPS_REPO} >> $(TARGETMAK);\
 	fi
-	echo TARGET=$(patsubst %.spec,%.info,$(wildcard *.spec)) >> $(TARGETMAK)
+	printf "TARGET=">> $(TARGETMAK)
+	cat build.list | sed 's/^#.*//g;s/\.spec$$/.info/g;' |xargs >> $(TARGETMAK)
 	echo 'all : $$(TARGET)' >> $(TARGETMAK)
+
+depend:: predepend
 	$(SPECDEPEND) >> $(TARGETMAK)
 
-preinstall::
-	pkg install -v $(PRE_INSTALL)
+depend_accurately:: predepend
+	$(SPECDEPEND_ACCURATELY) >> $(TARGETMAK)
 
-check_install::
-	$(CHECK_INSTALL) $(wildcard *.spec)
+preinstall::
+	sudo pkg install -v $(PRE_INSTALL)
 
 clean::
-	rm -f $(TARGET) $(patsubst %.info,%.proto,$(TARGET))
+	rm -f $(TARGET) $(TARGETMAK) $(patsubst %.info,%.proto,$(TARGET))

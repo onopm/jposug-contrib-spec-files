@@ -13,13 +13,11 @@ Name:           SFEnetatalk
 IPS_package_name:       service/network/netatalk
 Summary:        Open Source Apple Filing Protocol (AFP) fileserver
 Group:		System/Services
-Version:        2.2.2
-Epoch:          1
-License:        MIT
-SUNW_Copyright:	netatalk.copyright
+Version:        2.2.3
+License:        GLPv2
 Source:         %{sf_download}/netatalk/netatalk-%{version}.tar.bz2
 URL:            http://netatalk.sourceforge.net/
-Group:          Network
+Group:          System/File System
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 
@@ -44,7 +42,7 @@ Requires: %name-root
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:            %{_basedir}
-SUNW_Copyright: %{name}.copyright
+SUNW_Copyright: netatalk.copyright
 
 # OpenSolaris IPS Manifest Fields
 Meta(info.upstream): http://netatalk.sourceforge.net/ 
@@ -70,7 +68,7 @@ rm -rf %name-%version
 
 %build
 export CFLAGS="%optflags -xc99=all "
-#export LDFLAGS="%_ldflags"
+export LIBS="-R/usr/gnu/lib"
 ./configure --prefix=%{_prefix}                  \
             --bindir=%{_bindir}                  \
             --mandir=%{_mandir}                  \
@@ -136,8 +134,10 @@ rm -rf %name-%version
 %defattr (-, root, sys)
 %attr (0755, root, sys) %dir %{_sysconfdir}
 %attr (0755, root, sys) %dir %{_sysconfdir}/init.d
+%attr (0755, root, sys) %dir %{_sysconfdir}/pam.d
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/netatalk/*
 %{_sysconfdir}/init.d/netatalk
+%{_sysconfdir}/pam.d/netatalk
 %defattr (-, root, bin)
 %dir %attr (0755, root, sys) %{_localstatedir}
 %dir %attr (0755, root, bin) %{_localstatedir}/spool
@@ -145,6 +145,11 @@ rm -rf %name-%version
 
 
 %changelog
+* Sun Jan  6 2013 - TAKI, Yasushi 
+- add /etc/pam.d directory.
+* Mon Jul 23 2012 - Milan Jurik
+- bump to 2.2.3
+- fix rpath for /usr/gnu/lib
 * Sun Jan 22 2012 - TAKI, Yasushi
 - bump to 2.2.2.
 - Add IPS_package_name service/network/netatalk like samba package.

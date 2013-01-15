@@ -11,7 +11,7 @@ SFElibgsm.spec
 SFElibyaml.spec
 SFEloqui.spec
 SFElv.spec
-SFElzma.spec
+# SFElzma.spec
 SFEmpg123.spec
 SFEnetatalk.spec
 SFEnkf.spec
@@ -28,9 +28,13 @@ SFEperl-version.spec
 SFEperl-yaml-libyaml.spec
 SFEperl-yaml-xs.spec
 SFEperl-yaml.spec
-SFEphp52-fileinfo.spec
+# SFEphp52-fileinfo.spec
 SFEphp52-pgsql90.spec
 SFEphp52-yaml.spec
+# postfix
+SFElibntlm.spec
+SFEcyrus-sasl.spec
+#SFEbdb.spec
 SFEpostfix.spec
 SFEpostgres-90.spec
 SFEpostgres-91.spec
@@ -39,3 +43,7 @@ SFEre2c.spec
 SFEwine.spec
 SFExz.spec
 SFEgob.spec
+# openvpn
+SFElzo.spec
+SFEtun.spec
+SFEopenvpn.spec

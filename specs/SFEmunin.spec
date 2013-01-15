@@ -21,24 +21,12 @@ Source2:	svc-munin-asyncd
 Source3:        SFEmunin-Makefile.config
 
 Patch1: SFEmunin-SyncDictFile.patch
-# Patch2: munin-1.4.2-fontfix.patch
-# Patch3: munin-1.4.5-uppercase.patch
 
-# Source1: munin-1.2.4-sendmail-config
-# Source2: munin-1.2.5-hddtemp_smartctl-config
-# Source3: munin-node.logrotate
-# Source4: munin.logrotate
-# Source6: munin-1.2.6-postfix-config
-
-BuildRequires: library/perl-5/module-build
-
-# needed for hostname for the defaut config
-# BuildRequires: net-tools
-
-BuildRequires: library/perl-5/log-log4perl
-BuildRequires: library/perl-5/net-server
+BuildRequires: library/perl-5/module-build-512
+BuildRequires: library/perl-5/log-log4perl-512
+BuildRequires: library/perl-5/net-server-512
 BuildRequires: library/perl-5/net-ssleay-512
-BuildRequires: library/perl-5/net-snmp
+BuildRequires: library/perl-5/net-snmp-512
 BuildRequires: library/perl-5/io-stringy-512
 BuildRequires: library/perl-5/test-differences-512
 BuildRequires: library/perl-5/test-longstring-512
@@ -52,11 +40,11 @@ BuildRequires: library/perl-5/test-longstring-512
 # %endif
 
 Requires: %{name}-common = %{version}
-Requires: library/perl-5/net-server
-Requires: library/perl-5/net-snmp
-Requires: library/perl-5/rrdtool
-Requires: library/perl-5/log-log4perl
-Requires: library/perl-5/html-template
+Requires: library/perl-5/net-server-512
+Requires: library/perl-5/net-snmp-512
+Requires: library/perl-5/rrdtool-512
+Requires: library/perl-5/log-log4perl-512
+Requires: library/perl-5/html-template-512
 Requires: library/perl-5/io-socket-inet6-512
 Requires: library/perl-5/uri-512
 Requires: library/perl-5/file-copy-recursive-512

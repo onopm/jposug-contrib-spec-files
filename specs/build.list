@@ -26,7 +26,7 @@ SFEperl-test-simple.spec
 SFEperl-unicode-japanese.spec
 SFEperl-version.spec
 SFEperl-yaml-libyaml.spec
-SFEperl-yaml-xs.spec
+# SFEperl-yaml-xs.spec
 SFEperl-yaml.spec
 # SFEphp52-fileinfo.spec
 SFEphp52-pgsql90.spec

@@ -91,11 +91,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, sys) %{_prefix}
 %dir %attr(0755, root, bin) %{_prefix}/php/%{php_version}/modules
-%{_prefix}/php/%{php_version}/modules/*
+%attr(0444, root, bin) /usr/php/5.3/modules/yaml.so
 %dir %attr(0755, root, sys) %{_sysconfdir}
 %{_sysconfdir}/php/%{php_version}/conf.d/*
 
 %changelog
+* Wed Jan 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify %files
 * Sat Dec 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - add BuildRequires

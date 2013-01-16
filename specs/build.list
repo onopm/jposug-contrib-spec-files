@@ -15,7 +15,7 @@ SFElv.spec
 SFEmpg123.spec
 SFEnetatalk.spec
 SFEnkf.spec
-#SFEopenal.spec
+SFEopenal.spec
 SFEperl-appconfig.spec
 SFEperl-dbd-pg90.spec
 SFEperl-image-metadata-jpeg.spec

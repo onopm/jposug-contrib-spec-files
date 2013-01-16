@@ -120,6 +120,7 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{name}-library
+Requires: SFEpostgres-common
 
 %package contrib
 IPS_package_name: database/postgres-90/contrib
@@ -304,9 +305,9 @@ cd $RPM_BUILD_ROOT/%{_prefix}/%{major_version}/bin/
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%actions server
-group groupname="postgres"
-user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" password=NP group="postgres"
+#%actions server
+#group groupname="postgres"
+#user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" password=NP group="postgres"
 
 %files
 %defattr (-, root, bin)

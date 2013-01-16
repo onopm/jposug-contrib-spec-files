@@ -2,10 +2,10 @@
 %include default-depend.inc
 
 %define gemname hiera-json
-%define gemdir18 %(/usr/ruby/1.8/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
 %define bindir18 /usr/ruby/1.8/bin
-%define gemdir19 %(/usr/ruby/1.9/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
 
@@ -91,6 +91,8 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Thu Jan 10 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix path in %define gemdir18 and gemdir19
 * Thu Dec 20 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use full path in %define gemdir18 and gemdir19
 * Sun Oct 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

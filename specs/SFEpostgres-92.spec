@@ -31,7 +31,7 @@ Source5:		 postgres-92-exec_attr
 Source6:		 postgres-92-user_attr
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
-SUNW_Basedir:            %{_basedir}
+SUNW_Basedir:            /usr
 SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
@@ -301,6 +301,79 @@ rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/amd64/libecpg_compat.a
 cd $RPM_BUILD_ROOT/%{_prefix}/%{major_version}/bin/
 [ -r 64 ] || ln -s amd64 64
 
+mkdir -p $RPM_BUILD_ROOT/usr/bin/amd64
+cd $RPM_BUILD_ROOT/usr/bin/
+ln -s ../postgres/%{major_version}/bin/clusterdb .
+ln -s ../postgres/%{major_version}/bin/createdb .
+ln -s ../postgres/%{major_version}/bin/createlang .
+ln -s ../postgres/%{major_version}/bin/createuser .
+ln -s ../postgres/%{major_version}/bin/dropdb .
+ln -s ../postgres/%{major_version}/bin/droplang .
+ln -s ../postgres/%{major_version}/bin/dropuser .
+ln -s ../postgres/%{major_version}/bin/ecpg .
+ln -s ../postgres/%{major_version}/bin/initdb .
+ln -s ../postgres/%{major_version}/bin/oid2name .
+ln -s ../postgres/%{major_version}/bin/pg_archivecleanup .
+ln -s ../postgres/%{major_version}/bin/pg_basebackup .
+ln -s ../postgres/%{major_version}/bin/pg_config .
+ln -s ../postgres/%{major_version}/bin/pg_controldata .
+ln -s ../postgres/%{major_version}/bin/pg_ctl .
+ln -s ../postgres/%{major_version}/bin/pg_dump .
+ln -s ../postgres/%{major_version}/bin/pg_dumpall .
+ln -s ../postgres/%{major_version}/bin/pg_resetxlog .
+ln -s ../postgres/%{major_version}/bin/pg_restore .
+ln -s ../postgres/%{major_version}/bin/pg_receivexlog .
+ln -s ../postgres/%{major_version}/bin/pg_standby .
+ln -s ../postgres/%{major_version}/bin/pg_test_fsync .
+ln -s ../postgres/%{major_version}/bin/pg_test_timing
+ln -s ../postgres/%{major_version}/bin/pg_upgrade .
+ln -s ../postgres/%{major_version}/bin/pgbench .
+ln -s ../postgres/%{major_version}/bin/pltcl_delmod .
+ln -s ../postgres/%{major_version}/bin/pltcl_listmod .
+ln -s ../postgres/%{major_version}/bin/pltcl_loadmod .
+ln -s ../postgres/%{major_version}/bin/postgres .
+ln -s ../postgres/%{major_version}/bin/postmaster .
+ln -s ../postgres/%{major_version}/bin/psql .
+ln -s ../postgres/%{major_version}/bin/reindexdb .
+ln -s ../postgres/%{major_version}/bin/vacuumdb .
+ln -s ../postgres/%{major_version}/bin/vacuumlo .
+
+cd $RPM_BUILD_ROOT/usr/bin/amd64
+ln -s ../postgres/%{major_version}/bin/amd64/clusterdb .
+ln -s ../postgres/%{major_version}/bin/amd64/createdb .
+ln -s ../postgres/%{major_version}/bin/amd64/createlang .
+ln -s ../postgres/%{major_version}/bin/amd64/createuser .
+ln -s ../postgres/%{major_version}/bin/amd64/dropdb .
+ln -s ../postgres/%{major_version}/bin/amd64/droplang .
+ln -s ../postgres/%{major_version}/bin/amd64/dropuser .
+ln -s ../postgres/%{major_version}/bin/amd64/ecpg .
+ln -s ../postgres/%{major_version}/bin/amd64/initdb .
+ln -s ../postgres/%{major_version}/bin/amd64/oid2name .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_archivecleanup .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_basebackup .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_config .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_controldata .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_ctl .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_dump .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_dumpall .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_resetxlog .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_restore .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_receivexlog .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_standby .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_test_fsync .
+ln -s ../postgres/%{major_version}/bin/amd64/pg_test_timing
+ln -s ../postgres/%{major_version}/bin/amd64/pg_upgrade .
+ln -s ../postgres/%{major_version}/bin/amd64/pgbench .
+ln -s ../postgres/%{major_version}/bin/amd64/pltcl_delmod .
+ln -s ../postgres/%{major_version}/bin/amd64/pltcl_listmod .
+ln -s ../postgres/%{major_version}/bin/amd64/pltcl_loadmod .
+ln -s ../postgres/%{major_version}/bin/amd64/postgres .
+ln -s ../postgres/%{major_version}/bin/amd64/postmaster .
+ln -s ../postgres/%{major_version}/bin/amd64/psql .
+ln -s ../postgres/%{major_version}/bin/amd64/reindexdb .
+ln -s ../postgres/%{major_version}/bin/amd64/vacuumdb .
+ln -s ../postgres/%{major_version}/bin/amd64/vacuumlo .
+
 # plpython is out in postgresql 9.2
 rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/plpython-%{major_version}.mo
 
@@ -353,6 +426,40 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_test_timing
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/reindexdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/vacuumdb
+
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/clusterdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/createdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/createlang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/createuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/dropdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/droplang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/dropuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_basebackup
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_dump
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_dumpall
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_restore
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_test_fsync
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_test_timing
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/reindexdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/psql
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/psql
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/clusterdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/createdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/createlang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/createuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/dropdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/droplang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/dropuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_basebackup
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_dump
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_dumpall
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_restore
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_test_fsync
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_test_timing
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/reindexdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/vacuumdb
+
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/psqlrc.sample
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/initdb-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_controldata-%{major_version}.mo
@@ -538,6 +645,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_config
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/ecpg
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_config
+
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/ecpg
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_config
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/ecpg
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_config
+
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config/install-sh
 %attr (0444, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/Makefile.global
 %attr (0444, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/Makefile.port
@@ -654,6 +767,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, sys) /etc/security/prof_attr.d/service\%2Fdatabase\%2Fpostgres-92
 %attr (0644, root, sys) /etc/user_attr.d/service\%2Fdatabase\%2Fpostgres-92
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/postgresql_92.xml
+
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/initdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_controldata
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_ctl
@@ -668,6 +782,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/postgres
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/postmaster
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_receivexlog
+
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/initdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_controldata
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_ctl
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_resetxlog
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/postgres
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/postmaster
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_receivexlog
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/initdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_controldata
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_ctl
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_resetxlog
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/postgres
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/postmaster
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_receivexlog
+
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/ascii_and_mic.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/cyrillic_and_mic.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/dict_snowball.so
@@ -997,7 +1127,22 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/bin/amd64/pgbench
 %{_prefix}/%{major_version}/bin/amd64/vacuumlo
 
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/oid2name
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_archivecleanup
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_standby
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_upgrade
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pgbench
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/vacuumlo
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/oid2name
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_archivecleanup
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_standby
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_upgrade
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pgbench
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
+
 %changelog
+* Thu Jan 17 PST 2013 TAKI, Yasushi <taki@justplayer.com>
+- support mediator.
 * Sun Jan  6 JST 2013 TAKI, Yasushi <taki@justplayer.com>
 - fix comment
 * Sat Dec 15 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

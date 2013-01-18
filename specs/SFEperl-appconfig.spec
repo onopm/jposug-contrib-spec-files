@@ -79,8 +79,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+%dir %{_prefix}/perl5
+#%attr(755,root,sys) %dir %{_datadir}
 %{_mandir}
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
@@ -94,6 +94,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Wed Jun 16 2013 - TAKI, Yasushi <taki@justplayer.com>
+- fix install problems because of conflict package files.
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for perl-512
 - add make test

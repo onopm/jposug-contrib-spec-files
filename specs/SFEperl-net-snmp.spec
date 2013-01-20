@@ -77,7 +77,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
 %{_mandir}
 %dir %{_bindir}
 %{_bindir}/snmpkey
@@ -91,5 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Jan 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %files
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512

@@ -30,6 +30,7 @@ BuildRequires: %{pnm_buildrequires_system_network_avahi}
 BuildRequires: %{pnm_buildrequires_SUNWavahi_bridge_dsd}
 BuildRequires: %{pnm_buildrequires_SUNWavahi_bridge_dsd_devel}
 BuildRequires: %{pnm_buildrequires_avahi_bridge_dsd}
+BuildRequires: %{pnm_buildrequires_developer_build_make}
 Requires: SFEbdb
 Requires: %{pnm_requires_SUNWlibgcrypt}
 Requires: %{pnm_requires_SUNWopenssl}
@@ -145,6 +146,8 @@ rm -rf %name-%version
 
 
 %changelog
+* Mon Jan 21 2013 - Fumihisa TONAKA
+- add BuildRequires
 * Sun Jan  6 2013 - TAKI, Yasushi 
 - add /etc/pam.d directory.
 * Mon Jul 23 2012 - Milan Jurik

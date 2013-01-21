@@ -101,7 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 
 # %files 584
@@ -113,6 +113,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
 * Sun Jan 06 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modifyl %files section because dbd-pg90 and dbd-pg90-512 included same file and conflicted
 * Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -73,7 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,bin)
 #%{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
@@ -89,5 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
 * Tue Jun 05 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

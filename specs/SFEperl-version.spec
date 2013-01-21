@@ -84,7 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr (-, root, bin)
 %defattr(-,root,bin)
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 
 %files version-584
@@ -99,6 +99,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
 * Mon Jun 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9901
 * Mon Jun 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

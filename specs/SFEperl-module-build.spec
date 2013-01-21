@@ -98,7 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,bin)
 #%{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
@@ -116,6 +116,8 @@ rm -rf $RPM_BUILD_ROOT
 # /usr/perl5/5.12/bin/*
 
 %changelog
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Tue Jun 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -84,6 +84,14 @@ make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
+if [ -f $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/ExtUtils/Manifest.pm ]
+then
+    rm $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/ExtUtils/Manifest.pm
+fi
+if [ -f $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/ExtUtils/Manifest.pm ]
+then
+    rm $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/ExtUtils/Manifest.pm
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -105,6 +113,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete Manifest.pm to avoid conflit with SFEperl-extutils-manifest
 * Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %attr
 * Tue Jun 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

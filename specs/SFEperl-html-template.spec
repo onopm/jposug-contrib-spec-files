@@ -83,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 
 %files 584
@@ -95,6 +95,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Wed Jan 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %files to avoid conflict
 * Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

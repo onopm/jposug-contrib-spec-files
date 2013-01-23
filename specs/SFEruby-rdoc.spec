@@ -24,9 +24,10 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 Requires: runtime/ruby-18
 Requires:	library/ruby-18/json
-BuildRequires: runtime/ruby-18
+BuildRequires:   runtime/ruby-18
 BuildRequires:	library/ruby-18/racc
 BuildRequires:	library/ruby-18/minitest
+BuildRequires:	library/ruby-18/rake
 BuildRequires:	library/ruby-18/json
 
 %description
@@ -108,6 +109,8 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Wed Jan 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Fri Oct 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - patches to fix hash-order-dependent tests https://github.com/rdoc/rdoc/commit/2d606b3c

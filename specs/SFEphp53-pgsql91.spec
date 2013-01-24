@@ -17,7 +17,7 @@ Summary:                 PHP 5.3 module for PostgreSQL 91
 Version:                 5.3.14
 License:		 PHP License
 Url:                     http://www.php.net/
-Source:			 http://museum.php.net/php5/%{tarball_name}-%{tarball_version}.tar.bz2
+Source:			 http://jp.php.net/distributions/%{tarball_name}-%{tarball_version}.tar.bz2
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Basedir:            /
@@ -28,7 +28,7 @@ BuildRequires: web/php-53
 BuildRequires: text/gnu-sed
 BuildRequires: database/postgres-91/library
 BuildRequires: database/postgres-91/developer
-BuildRequires: developer/parser/re2c
+BuildRequires: developer/lexer/re2c
 
 Requires: database/postgres-91/library
 Requires: web/php-53

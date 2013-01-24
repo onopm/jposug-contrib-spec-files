@@ -46,7 +46,6 @@ BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/json-pp-512
 Requires:	runtime/perl-512
 
-
 %prep
 %setup -q -n Template-Toolkit-%{version}
 

@@ -21,6 +21,7 @@ IPS_package_name:        database/postgres-90
 Summary:	         PostgreSQL client tools
 Version:                 9.0.11
 License:		 PostgreSQL
+Group:		System/Databases
 Url:                     http://www.postgresql.org/
 Source:                  http://ftp.postgresql.org/pub/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
 Source1:		 postgres-90-postgres_90
@@ -254,9 +255,9 @@ gmake install-world DESTDIR=$RPM_BUILD_ROOT
 
 #export OLD_PATH=`pwd`
 #cd $RPM_BUILD_ROOT%{_prefix}/%{major_version}/bin
-#ln -s %{_arch64} 64
+#ln -fs %{_arch64} 64
 #cd ../lib
-#ln -s %{_arch64} 64
+#ln -fs %{_arch64} 64
 #cd ${OLD_PATH}
 #cd ..
 %endif
@@ -298,72 +299,72 @@ rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/amd64/libecpg_compat.a
 # make symbolic link
 
 cd $RPM_BUILD_ROOT/%{_prefix}/%{major_version}/bin/
-[ -r 64 ] || ln -s amd64 64
+[ -r 64 ] || ln -fs amd64 64
 
 mkdir -p $RPM_BUILD_ROOT/usr/bin/amd64
 cd $RPM_BUILD_ROOT/usr/bin/
-ln -s ../postgres/%{major_version}/bin/clusterdb .
-ln -s ../postgres/%{major_version}/bin/createdb .
-ln -s ../postgres/%{major_version}/bin/createlang .
-ln -s ../postgres/%{major_version}/bin/createuser .
-ln -s ../postgres/%{major_version}/bin/dropdb .
-ln -s ../postgres/%{major_version}/bin/droplang .
-ln -s ../postgres/%{major_version}/bin/dropuser .
-ln -s ../postgres/%{major_version}/bin/ecpg .
-ln -s ../postgres/%{major_version}/bin/initdb .
-ln -s ../postgres/%{major_version}/bin/oid2name .
-ln -s ../postgres/%{major_version}/bin/pg_archivecleanup .
-ln -s ../postgres/%{major_version}/bin/pg_config .
-ln -s ../postgres/%{major_version}/bin/pg_controldata .
-ln -s ../postgres/%{major_version}/bin/pg_ctl .
-ln -s ../postgres/%{major_version}/bin/pg_dump .
-ln -s ../postgres/%{major_version}/bin/pg_dumpall .
-ln -s ../postgres/%{major_version}/bin/pg_resetxlog .
-ln -s ../postgres/%{major_version}/bin/pg_restore .
-ln -s ../postgres/%{major_version}/bin/pg_standby .
-ln -s ../postgres/%{major_version}/bin/pg_upgrade .
-ln -s ../postgres/%{major_version}/bin/pgbench .
-ln -s ../postgres/%{major_version}/bin/pltcl_delmod .
-ln -s ../postgres/%{major_version}/bin/pltcl_listmod .
-ln -s ../postgres/%{major_version}/bin/pltcl_loadmod .
-ln -s ../postgres/%{major_version}/bin/postgres .
-ln -s ../postgres/%{major_version}/bin/postmaster .
-ln -s ../postgres/%{major_version}/bin/psql .
-ln -s ../postgres/%{major_version}/bin/reindexdb .
-ln -s ../postgres/%{major_version}/bin/vacuumdb .
-ln -s ../postgres/%{major_version}/bin/vacuumlo .
+ln -fs ../postgres/%{major_version}/bin/clusterdb .
+ln -fs ../postgres/%{major_version}/bin/createdb .
+ln -fs ../postgres/%{major_version}/bin/createlang .
+ln -fs ../postgres/%{major_version}/bin/createuser .
+ln -fs ../postgres/%{major_version}/bin/dropdb .
+ln -fs ../postgres/%{major_version}/bin/droplang .
+ln -fs ../postgres/%{major_version}/bin/dropuser .
+ln -fs ../postgres/%{major_version}/bin/ecpg .
+ln -fs ../postgres/%{major_version}/bin/initdb .
+ln -fs ../postgres/%{major_version}/bin/oid2name .
+ln -fs ../postgres/%{major_version}/bin/pg_archivecleanup .
+ln -fs ../postgres/%{major_version}/bin/pg_config .
+ln -fs ../postgres/%{major_version}/bin/pg_controldata .
+ln -fs ../postgres/%{major_version}/bin/pg_ctl .
+ln -fs ../postgres/%{major_version}/bin/pg_dump .
+ln -fs ../postgres/%{major_version}/bin/pg_dumpall .
+ln -fs ../postgres/%{major_version}/bin/pg_resetxlog .
+ln -fs ../postgres/%{major_version}/bin/pg_restore .
+ln -fs ../postgres/%{major_version}/bin/pg_standby .
+ln -fs ../postgres/%{major_version}/bin/pg_upgrade .
+ln -fs ../postgres/%{major_version}/bin/pgbench .
+ln -fs ../postgres/%{major_version}/bin/pltcl_delmod .
+ln -fs ../postgres/%{major_version}/bin/pltcl_listmod .
+ln -fs ../postgres/%{major_version}/bin/pltcl_loadmod .
+ln -fs ../postgres/%{major_version}/bin/postgres .
+ln -fs ../postgres/%{major_version}/bin/postmaster .
+ln -fs ../postgres/%{major_version}/bin/psql .
+ln -fs ../postgres/%{major_version}/bin/reindexdb .
+ln -fs ../postgres/%{major_version}/bin/vacuumdb .
+ln -fs ../postgres/%{major_version}/bin/vacuumlo .
 
 cd $RPM_BUILD_ROOT/usr/bin/amd64
-ln -s ../postgres/%{major_version}/bin/amd64/clusterdb .
-ln -s ../postgres/%{major_version}/bin/amd64/createdb .
-ln -s ../postgres/%{major_version}/bin/amd64/createlang .
-ln -s ../postgres/%{major_version}/bin/amd64/createuser .
-ln -s ../postgres/%{major_version}/bin/amd64/dropdb .
-ln -s ../postgres/%{major_version}/bin/amd64/droplang .
-ln -s ../postgres/%{major_version}/bin/amd64/dropuser .
-ln -s ../postgres/%{major_version}/bin/amd64/ecpg .
-ln -s ../postgres/%{major_version}/bin/amd64/initdb .
-ln -s ../postgres/%{major_version}/bin/amd64/oid2name .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_archivecleanup .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_config .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_controldata .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_ctl .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_dump .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_dumpall .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_resetxlog .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_restore .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_standby .
-ln -s ../postgres/%{major_version}/bin/amd64/pg_upgrade .
-ln -s ../postgres/%{major_version}/bin/amd64/pgbench .
-ln -s ../postgres/%{major_version}/bin/amd64/pltcl_delmod .
-ln -s ../postgres/%{major_version}/bin/amd64/pltcl_listmod .
-ln -s ../postgres/%{major_version}/bin/amd64/pltcl_loadmod .
-ln -s ../postgres/%{major_version}/bin/amd64/postgres .
-ln -s ../postgres/%{major_version}/bin/amd64/postmaster .
-ln -s ../postgres/%{major_version}/bin/amd64/psql .
-ln -s ../postgres/%{major_version}/bin/amd64/reindexdb .
-ln -s ../postgres/%{major_version}/bin/amd64/vacuumdb .
-ln -s ../postgres/%{major_version}/bin/amd64/vacuumlo .
+ln -fs ../postgres/%{major_version}/bin/amd64/clusterdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/createdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/createlang .
+ln -fs ../postgres/%{major_version}/bin/amd64/createuser .
+ln -fs ../postgres/%{major_version}/bin/amd64/dropdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/droplang .
+ln -fs ../postgres/%{major_version}/bin/amd64/dropuser .
+ln -fs ../postgres/%{major_version}/bin/amd64/ecpg .
+ln -fs ../postgres/%{major_version}/bin/amd64/initdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/oid2name .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_archivecleanup .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_config .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_controldata .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_ctl .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_dump .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_dumpall .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_resetxlog .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_restore .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_standby .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_upgrade .
+ln -fs ../postgres/%{major_version}/bin/amd64/pgbench .
+ln -fs ../postgres/%{major_version}/bin/amd64/pltcl_delmod .
+ln -fs ../postgres/%{major_version}/bin/amd64/pltcl_listmod .
+ln -fs ../postgres/%{major_version}/bin/amd64/pltcl_loadmod .
+ln -fs ../postgres/%{major_version}/bin/amd64/postgres .
+ln -fs ../postgres/%{major_version}/bin/amd64/postmaster .
+ln -fs ../postgres/%{major_version}/bin/amd64/psql .
+ln -fs ../postgres/%{major_version}/bin/amd64/reindexdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/vacuumdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/vacuumlo .
 
 
 %clean
@@ -1700,12 +1701,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Thu Jan 23 JST 2013 TAKI, Yasushi <taki@justplayer.com>
+- merge SFE and jposug.
 * Thu Jan 17 PST 2013 TAKI, Yasushi <taki@justplayer.com>
 - support mediator.
 * Thu Dec 13 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.0.11
 * Thu Sep 27 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.0.10
+* Thu Aug 30 - Milan Jurik
+- redo packaging
+* Fri Aug 24 2012 Ken Mays <kmays2000@gmail.com>
+- Bump to 9.0.9
 * Mon Sep 10 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.0.9
 * Thu Jun 14 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

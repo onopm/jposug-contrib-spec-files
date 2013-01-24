@@ -34,12 +34,14 @@ IPS_package_name: library/perl-5/yaml-584
 Summary: YAML Ain't Markup Language (tm) for perl-584
 BuildRequires:	runtime/perl-584
 Requires:	runtime/perl-584
+Requires:	%{name}
 
 %package 512
 IPS_package_name: library/perl-5/yaml-512
 Summary: YAML Ain't Markup Language (tm) for perl-512
 BuildRequires:	runtime/perl-512
 Requires:	runtime/perl-512
+Requires:	%{name}
 
 
 %prep
@@ -89,6 +91,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Jan 20 2013 - TAKI,Yasushi <taki@justplayer.com>
 * Sun Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.81
 - generate packages for perl-584 and perl-512

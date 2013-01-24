@@ -13,7 +13,7 @@ Name:           SFEnetatalk
 IPS_package_name:       service/network/netatalk
 Summary:        Open Source Apple Filing Protocol (AFP) fileserver
 Group:		System/Services
-Version:        2.2.3
+Version:        2.2.4
 License:        GLPv2
 Source:         %{sf_download}/netatalk/netatalk-%{version}.tar.bz2
 URL:            http://netatalk.sourceforge.net/

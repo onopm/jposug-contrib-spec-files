@@ -21,6 +21,7 @@ IPS_package_name:        database/postgres-92
 Summary:	         PostgreSQL client tools
 Version:                 9.2.2
 License:		 PostgreSQL
+Group:		System/Databases
 Url:                     http://www.postgresql.org/
 Source:                  http://ftp.postgresql.org/pub/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
 Source1:		 postgres-92-postgres_92

@@ -21,6 +21,7 @@ IPS_package_name:        database/postgres-91
 Summary:	         PostgreSQL client tools
 Version:                 9.1.7
 License:		 PostgreSQL
+Group:		System/Databases
 Url:                     http://www.postgresql.org/
 Source:                  http://ftp.postgresql.org/pub/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
 Source1:		 postgres-91-postgres_91
@@ -1135,10 +1136,14 @@ rm -rf $RPM_BUILD_ROOT
 * Sat Dec 15 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 9.1.7
 - fix '%files developer'
+* Thu Nov 08 2012 - Milan Jurik
+- bump to 9.1.6
 * Thu Sep 27 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 9.1.6
 * Sun Aug 26 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 9.1.5
+* Sun Aug 19 2012 - Milan Jurik
+- fix packaging, bump to 9.1.5
 * Thu Jun 14 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 9.1.4
 - modify SOURCE url

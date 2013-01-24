@@ -21,6 +21,7 @@ IPS_package_name:        database/postgres-90
 Summary:	         PostgreSQL client tools
 Version:                 9.0.11
 License:		 PostgreSQL
+Group:		System/Databases
 Url:                     http://www.postgresql.org/
 Source:                  http://ftp.postgresql.org/pub/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
 Source1:		 postgres-90-postgres_90
@@ -1700,12 +1701,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Thu Jan 23 JST 2013 TAKI, Yasushi <taki@justplayer.com>
+- merge SFE and jposug.
 * Thu Jan 17 PST 2013 TAKI, Yasushi <taki@justplayer.com>
 - support mediator.
 * Thu Dec 13 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.0.11
 * Thu Sep 27 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.0.10
+* Thu Aug 30 - Milan Jurik
+- redo packaging
+* Fri Aug 24 2012 Ken Mays <kmays2000@gmail.com>
+- Bump to 9.0.9
 * Mon Sep 10 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.0.9
 * Thu Jun 14 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

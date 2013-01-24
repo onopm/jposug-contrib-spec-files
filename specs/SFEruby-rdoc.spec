@@ -63,13 +63,13 @@ pushd .%{gemdir18}/%{gemname}-%{version}
 %patch2 -p0
 %patch3 -p0
 
-LANG=ja_JP.UTF-8 /var/ruby/1.8/gem_home/bin/rake
+LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 /usr/ruby/1.8/bin/rake
 
 popd
 
 # ruby-19
 pushd .%{gemdir19}/%{gemname}-%{version}
-LANG=ja_JP.UTF-8 /usr/ruby/1.9/bin/rake
+LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 /usr/ruby/1.9/bin/rake
 
 %install
 rm -rf %{buildroot}
@@ -109,6 +109,8 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Thu Jan 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify to pass test
 * Wed Jan 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Fri Oct 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

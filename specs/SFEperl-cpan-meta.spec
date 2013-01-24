@@ -42,6 +42,7 @@ Summary: the distribution metadata for a CPAN dist for perl-584
 BuildRequires:	runtime/perl-584
 BuildRequires:	library/perl-5/cpan-meta-requirements-584
 BuildRequires:	library/perl-5/parse-cpan-meta-584
+BuildRequires:	library/perl-5/extutils-makemaker-584
 Requires:	runtime/perl-584
 
 %package 512
@@ -49,6 +50,7 @@ IPS_package_name: library/perl-5/cpan-meta-512
 Summary: the distribution metadata for a CPAN dist for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/cpan-meta-requirements-512
+BuildRequires:  library/perl-5/extutils-makemaker-512
 Requires:	runtime/perl-512
 
 
@@ -100,5 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Jan 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Tue Jun 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for perl-584 and perl-512

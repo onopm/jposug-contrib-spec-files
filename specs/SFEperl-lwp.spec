@@ -41,7 +41,9 @@ IPS_package_name: library/perl-5/lwp-584
 Summary: Libwww-perl for perl-584
 BuildRequires:	runtime/perl-584
 BuildRequires:  library/perl-5/http-message-584
+BuildRequires:	library/perl-5/net-http-512
 Requires:	runtime/perl-584
+Requires:       ${IPS_package_name}
 Requires:       library/perl-5/http-message-584
 Requires:       library/perl-5/http-date-584
 Requires:       library/perl-5/net-http-584
@@ -51,7 +53,9 @@ IPS_package_name: library/perl-5/lwp-512
 Summary: Libwww-perl for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:  library/perl-5/http-message-512
+BuildRequires:	library/perl-5/net-http-512
 Requires:	runtime/perl-512
+Requires:       ${IPS_package_name}
 Requires:       library/perl-5/http-message-512
 Requires:       library/perl-5/http-date-512
 Requires:       library/perl-5/net-http-512
@@ -103,6 +107,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Wed Jan 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Mon Dec 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Fri Sep 28 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

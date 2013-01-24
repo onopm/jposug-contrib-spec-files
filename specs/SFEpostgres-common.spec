@@ -50,9 +50,13 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %files
 %defattr (-, root, bin)
 %dir %attr (0755, root, sys) /usr
-%dir %attr (0755, postgres, postgres) %{_var_prefix}
 %dir %attr (0755, root, bin) %{_prefix}
+%dir %attr (0755, root, sys) /var
+%dir %attr (0755, postgres, postgres) %{_var_prefix}
+
 
 %changelog
+* Wed Jan 23 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %files to avoid conflict
 * Tue Jan 25 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Initial Revision

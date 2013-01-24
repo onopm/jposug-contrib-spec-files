@@ -24,9 +24,10 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 Requires: runtime/ruby-18
 Requires:	library/ruby-18/json
-BuildRequires: runtime/ruby-18
+BuildRequires:   runtime/ruby-18
 BuildRequires:	library/ruby-18/racc
 BuildRequires:	library/ruby-18/minitest
+BuildRequires:	library/ruby-18/rake
 BuildRequires:	library/ruby-18/json
 
 %description
@@ -62,13 +63,13 @@ pushd .%{gemdir18}/%{gemname}-%{version}
 %patch2 -p0
 %patch3 -p0
 
-LANG=ja_JP.UTF-8 /var/ruby/1.8/gem_home/bin/rake
+LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 /usr/ruby/1.8/bin/rake
 
 popd
 
 # ruby-19
 pushd .%{gemdir19}/%{gemname}-%{version}
-LANG=ja_JP.UTF-8 /usr/ruby/1.9/bin/rake
+LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 /usr/ruby/1.9/bin/rake
 
 %install
 rm -rf %{buildroot}
@@ -108,6 +109,10 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Thu Jan 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify to pass test
+* Wed Jan 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Fri Oct 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - patches to fix hash-order-dependent tests https://github.com/rdoc/rdoc/commit/2d606b3c

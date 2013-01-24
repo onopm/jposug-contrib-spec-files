@@ -145,7 +145,9 @@ done
 rm -rf %{buildroot}
 
 %files
-%defattr(-, root, bin)
+%defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_apt
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_breeze
@@ -225,17 +227,28 @@ rm -rf %{buildroot}
 
 %files dig
 %defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
+%dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_dig
 
 %files dns
 %defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
+%dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_dns
 
 %files fping
 %defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
+%dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
 * Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify Requires and BuildRequires
 * Tue Jul 17 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

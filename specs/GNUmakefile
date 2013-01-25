@@ -2,6 +2,8 @@
 -include common.mak
 -include target.mak
 
+BUILDLIST=build.list.`uname -v`
+
 predepend::
 	rm -f $(TARGETMAK)
 	if [ -z $${PKGBUILD_IPS_REPO} ];then \
@@ -10,11 +12,11 @@ predepend::
 		echo REPOSITRY=$${PKGBUILD_IPS_REPO} >> $(TARGETMAK);\
 	fi
 	printf "TARGET=">> $(TARGETMAK)
-	cat build.list | sed 's/^#.*//g;s/\.spec$$/.info/g;' |xargs >> $(TARGETMAK)
+	cat $(BUILDLIST) | sed 's/^#.*//g;s/\.spec$$/.info/g;' |xargs >> $(TARGETMAK)
 	echo 'all : $$(TARGET)' >> $(TARGETMAK)
 
 depend:: predepend
-	$(SPECDEPEND) >> $(TARGETMAK)
+	$(SPECDEPEND) $(BUILDLIST) >> $(TARGETMAK)
 
 depend_accurately:: predepend
 	$(SPECDEPEND_ACCURATELY) >> $(TARGETMAK)

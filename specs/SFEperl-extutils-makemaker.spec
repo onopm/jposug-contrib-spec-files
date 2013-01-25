@@ -109,6 +109,19 @@ then
     rm -f $RPM_BUILD_ROOT%{_datadir}/man/man3perl/File::Copy::Recursive.3
 fi
 
+# to avoid confilict with SFEperl-cpan-meta
+if [ -d $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/CPAN ]
+then
+    rm -rf $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/CPAN
+fi
+if [ -d $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/CPAN ]
+then
+    rm -rf $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/CPAN
+fi
+if [ -f $RPM_BUILD_ROOT%{_datadir}/man/man3perl/CPAN::Meta.3 ]
+then
+    rm -f $RPM_BUILD_ROOT%{_datadir}/man/man3perl/CPAN::Meta*
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -130,6 +143,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete some files to avoid confilict with SFEperl-cpan-meta
 * Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - delete Manifest.pm to avoid conflit with SFEperl-extutils-manifest
 - delete some files which conflict with SFEperl-file-copy-recursive

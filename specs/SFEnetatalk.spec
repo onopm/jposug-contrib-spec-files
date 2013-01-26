@@ -152,6 +152,7 @@ rm -rf %name-%version
 %changelog
 * Sat Jan 26 2013 - TAKI,Yasushi <taki@justplayer.com>
 - When Solaris 11.1, with /etc/pam.d/netatalk. when other, without /etc/pam.d/netatlk.
+- bump to 2.2.4
 * Mon Jan 21 2013 - Fumihisa TONAKA
 - add BuildRequires
 * Sun Jan  6 2013 - TAKI, Yasushi 

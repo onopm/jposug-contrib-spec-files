@@ -20,7 +20,7 @@
 Name:                    SFEloqui
 IPS_package_name:        desktop/irc/loqui
 Summary:	         Loqui IRC Client for Gtk2
-Version:                 0.5.3
+Version:                 0.5.4
 License:		 GPL
 Url:                     https://launchpad.net/%{tarball_name}
 Source:			 http://launchpad.net/%{tarball_name}/%{major_version}/%{tarball_version}/+download/%{tarball_name}-%{tarball_version}.tar.gz

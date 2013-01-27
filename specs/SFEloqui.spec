@@ -12,7 +12,7 @@
 %define _prefix	         /usr
 %define _var_prefix      /var
 %define tarball_name     loqui
-%define tarball_version  0.5.3
+%define tarball_version  0.5.4
 %define major_version    0.5
 
 %define _basedir         %{_prefix}

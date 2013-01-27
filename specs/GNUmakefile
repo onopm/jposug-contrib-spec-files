@@ -19,7 +19,7 @@ depend:: predepend
 	$(SPECDEPEND) $(BUILDLIST) >> $(TARGETMAK)
 
 depend_accurately:: predepend
-	$(SPECDEPEND_ACCURATELY) >> $(TARGETMAK)
+	$(SPECDEPEND_ACCURATELY) $(BUILDLIST) >> $(TARGETMAK)
 
 preinstall::
 	sudo pkg install -v $(PRE_INSTALL)

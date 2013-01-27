@@ -26,3 +26,10 @@ preinstall::
 
 clean::
 	rm -f $(TARGET) $(TARGETMAK) $(patsubst %.info,%.proto,$(TARGET))
+
+publish:: 
+	sudo $(PUBLISH_REPOSITORY) publish /var/pkglocal rpool/pkg
+
+release:: 
+	sudo $(PUBLISH_REPOSITORY) release /var/pkgrelease/root rpool/pkg
+

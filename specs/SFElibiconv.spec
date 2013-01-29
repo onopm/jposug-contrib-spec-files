@@ -40,7 +40,8 @@ this package if you want to convert some documet from one encoding to
 another or if you have installed some programs which use Generic
 Character Set Conversion Interface.
 
-%package devel
+%package developer
+IPS_Package_Name:	library/libiconv/developer 
 Summary:	%{summary} - development files
 SUNW_BaseDir:	%{_basedir}
 Requires:	%name
@@ -148,7 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_mandir}/man3
 %{_mandir}/man3/iconv*.3
 
-%files devel
+%files developer
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_includedir}
 %{_includedir}/*.h
@@ -168,6 +169,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- add IPS package name for developer
 * Thu 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - bump down to 1.13 for Japanese mobile phones
 * Thu Oct 06 2011 - Milan Jurik

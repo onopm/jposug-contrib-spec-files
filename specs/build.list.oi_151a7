@@ -1,7 +1,6 @@
 #
 # マスタリングビルドマシンで、ビルドをさせるためには、このファイルにspecファイルの名前を追加すること。
 #
-
 SFEbdb.spec
 SFEbzr.spec
 SFEeditline.spec
@@ -16,19 +15,19 @@ SFEmpg123.spec
 SFEnetatalk.spec
 SFEnkf.spec
 SFEopenal.spec
-SFEperl-appconfig.spec
-SFEperl-dbd-pg90.spec
-SFEperl-image-metadata-jpeg.spec
-SFEperl-mail-sendmail.spec
-SFEperl-proc-daemon.spec
-SFEperl-template-toolkit.spec
-SFEperl-test-simple.spec
-SFEperl-unicode-japanese.spec
-SFEperl-version.spec
-SFEperl-yaml-libyaml.spec
-# SFEperl-yaml-xs.spec
-SFEperl-yaml.spec
-# SFEphp52-fileinfo.spec
+#SFEperl-appconfig.spec
+#SFEperl-dbd-pg90.spec
+#SFEperl-image-metadata-jpeg.spec
+#SFEperl-mail-sendmail.spec
+#SFEperl-proc-daemon.spec
+#SFEperl-template-toolkit.spec
+#SFEperl-test-simple.spec
+#SFEperl-unicode-japanese.spec
+#SFEperl-version.spec
+#SFEperl-yaml-libyaml.spec
+#SFEperl-yaml-xs.spec
+#SFEperl-yaml.spec
+#SFEphp52-fileinfo.spec
 SFEphp52-pgsql90.spec
 SFEphp52-yaml.spec
 # postfix
@@ -49,3 +48,10 @@ SFEgob.spec
 SFElzo.spec
 SFEtun.spec
 SFEopenvpn.spec
+SFElibiconv.spec
+SFEbinutils.spec
+# gcc
+SFEgmp.spec
+SFEmpfr.spec
+SFElibmpc.spec
+SFEgcc.spec

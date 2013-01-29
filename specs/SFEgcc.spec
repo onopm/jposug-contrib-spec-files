@@ -182,8 +182,8 @@ Requires:      SFEgcc-%{majorminornumber},SFEgccruntime-%{majorminornumber}
 #cosmetic:
 Requires:      SFEgccruntime
 
-BuildRequires: SFElibiconv-devel
-Requires:      SFElibiconv
+BuildRequires: library/libiconv/developer
+Requires:      library/libiconv
 BuildRequires: SUNWbash
 
 %if %SFEgmp
@@ -587,6 +587,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Jan 29 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- Change dependency
 * Wed Jun 13 2012 - Osamu Tabata<cantimerny.g@gmail.com>
 - Sipport for Solaris11
 * Sat Mar 03 2012 - Milan Jurik

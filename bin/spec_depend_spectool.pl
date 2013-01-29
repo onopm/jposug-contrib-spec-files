@@ -32,7 +32,7 @@ sub search_depend_files($$) {
 sub get_build_requires($)
 {
     my ($spec) = @_;
-    my (%result, @package_names, $package_name, @ips_package_names);
+    my (%result, @package_names, $package_name, $ips_package_name, @ips_package_names);
 
     @package_names = spectool('get_packages', $spec);
     @ips_package_names = spectool('get_package_names', $spec);
@@ -40,7 +40,9 @@ sub get_build_requires($)
     for $package_name (@package_names) {
         $result{$package_name} = $spec if ($package_name !~ /^$spec$/);
     }
-    $result{shift(@ips_package_names)} = $spec;
+    for $ips_package_name (@ips_package_names) {
+    	$result{$ips_package_name} = $spec;
+    }
     %result;
 }
 

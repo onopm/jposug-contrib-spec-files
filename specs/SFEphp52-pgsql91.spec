@@ -1,5 +1,5 @@
 #
-# spec file for package SFEphp52-pgsql90
+# spec file for package SFEphp52-pgsql91
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -27,11 +27,11 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: web/php-52
 BuildRequires: text/gnu-sed
-BuildRequires: database/postgres-90/library
-BuildRequires: database/postgres-90/developer
+BuildRequires: database/postgres-91/library
+BuildRequires: database/postgres-91/developer
 BuildRequires: SFEre2c
 
-Requires: database/postgres-90/library
+Requires: database/postgres-91/library
 Requires: web/php-52
 
 %description
@@ -138,6 +138,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) %{_sysconfdir}/php/5.2/conf.d/pgsql.ini
 
 %changelog
+* Tue Jan 29 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- correct dependency mistakes 
 * Sun Jan 27 2013 TAKI, Yasushi <taki@justplayer.com>
 - add mediator
 - add config

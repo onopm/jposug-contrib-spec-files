@@ -11,6 +11,9 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 %include default-depend.inc
+%define cc_is_gcc 1
+%define _gpp g++
+%include base.inc
 
 Name: SFEruby-19
 IPS_Package_Name:	runtime/ruby-19
@@ -21,8 +24,14 @@ License: GPL
 Source: http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-%{version}-p%{patchlevel}.tar.gz
 Url: http://www.ruby-lang.org/
 
+%if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
+%define mimpure_text
+%else
+BuildRequires: sfe/developer/gcc-46
+Requires:      sfe/system/library/gcc-runtime
+%endif
 
 %description
 
@@ -30,7 +39,19 @@ Requires:      system/library/gcc-45-runtime
 # %setup -c -n ruby-%{version}-p%{patchlevel}
 %setup -n ruby-%{version}-p%{patchlevel}
 %build
-./configure --prefix=/usr/ruby/1.9 \
+export CXXFLAGS="%cxx_optflags"
+export LDFLAGS="%_ldflags %gnu_lib_path"
+export CFLAGS="%optflags"
+CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
+if test "x$CPUS" = "x" -o $CPUS = 0; then
+    CPUS=1
+fi
+./configure \
+%if %( expr %{osbuild} '=' 175 )
+%else
+ac_cv_func_dl_iterate_phdr=no \
+%endif
+    --prefix=/usr/ruby/1.9 \
     --bindir=/usr/ruby/1.9/bin \
     --libdir=/usr/ruby/1.9/lib \
     --sbindir=/usr/ruby/1.9/sbin \
@@ -43,8 +64,7 @@ Requires:      system/library/gcc-45-runtime
     --with-curses-dir=/usr \
     CC=/usr/bin/gcc \
     CXX=/usr/bin/g++
-
-make
+make -j$CPUS
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -69,6 +89,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/1.9
 
 %changelog
+* Tue Jan 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Support for OpenIndiana
 * Fri Dec 20 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add symbolic link from /usr/ruby/1.9/bin/ruby to /usr/bin/ruby19 and so on.
 * Mon Nov 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

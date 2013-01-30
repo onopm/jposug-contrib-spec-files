@@ -24,8 +24,8 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
 %else
-BuildRequires: sfe/system/library/gcc-runtime
-Requires:      sfe/developer/gcc-46
+BuildRequires: sfe/developer/gcc-46
+Requires:      sfe/system/library/gcc-runtime
 %endif
 
 %include default-depend.inc

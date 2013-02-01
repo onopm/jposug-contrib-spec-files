@@ -23,7 +23,7 @@ IPS_Package_Name:	library/libiconv
 Summary:	GNU iconv - Code set conversion
 Group:		System/Libraries
 License:	LGPLv2
-SUNW_Copyright:	libiconv.copyright
+SUNW_Copyright:	%{name}.copyright
 URL:		http://www.gnu.org/s/libiconv/
 Version:	%{major_version}
 Source:		http://ftp.gnu.org/pub/gnu/libiconv/%{tarball_name}-%{version}.tar.gz

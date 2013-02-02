@@ -40,7 +40,7 @@ Requires:         system/fluentd/fluent-agent-lite
 Log transfer agent service over fluentd protocol.
 
 %prep
-%setup -n %{name}-%{version}
+%setup -n fluent-agent-lite-%{version}
 
 %build
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
@@ -51,7 +51,7 @@ make
 # make test
 
 %install
-# rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 make pure_install
 # mkdir -p $RPM_BUILD_ROOT%{_datadir}
 # mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
@@ -66,7 +66,7 @@ rm -rf $RPM_BUILD_ROOT
 # %config %{_sysconfdir}/fluent-agent.servers.primary
 # %config %{_sysconfdir}/fluent-agent.servers.secondary
 # %{_sysconfdir}/init.d/fluent-agent-lite
-%attr(0755,root,sys) %dir %{_datadir}
+# %attr(0755,root,sys) %dir %{_datadir}
 # %{_mandir}
 
 %files 512
@@ -76,3 +76,4 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sun Feb 03 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- modify %setup, %install and %files

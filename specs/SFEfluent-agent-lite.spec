@@ -71,9 +71,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files 512
 %defattr (-, root, bin)
+%attr(0755, root, sys) %dir %{_prefix}
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
 * Sun Feb 03 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - modify %setup, %install and %files
+- fix %attr

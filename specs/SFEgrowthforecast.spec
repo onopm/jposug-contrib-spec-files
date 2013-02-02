@@ -10,16 +10,17 @@
 %include packagenamemacros.inc
 
 %define tarball_name    GrowthForecast
-%define tarball_version 0.33
+%define tarball_version 0.38
 
 Name:		growthforecast
 IPS_package_name:        diagnostic/growthforecast
-Version:	0.33
+Version:	0.38
 Summary:	GrowthForecast - Lightning Fast Graphing/Visualization
 Group:		Applications/System
 License:	Perl5
 URL:		http://kazeburo.github.com/GrowthForecast/
-Source:		http://nomadscafe.jp/pub/%{tarball_name}/%{tarball_name}-%{tarball_version}.tar.gz
+# Source:		http://nomadscafe.jp/pub/%{tarball_name}/%{tarball_name}-%{tarball_version}.tar.gz
+Source:         http://cpan.metacpan.org/authors/id/K/KA/KAZEBURO/%{tarball_name}-%{tarball_version}.tar.gz
 Source1:        svc-growthforecast
 Source2:        growthforecast.xml
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -116,6 +117,9 @@ user ftpuser=false gcos-field="GrowthForecast Reserved UID" username="growthfore
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/site/growthforecast.xml
 
 %changelog
+* Sat Feb 02 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.38
+- update source url
 * Fri Dec 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.33
 - update source url

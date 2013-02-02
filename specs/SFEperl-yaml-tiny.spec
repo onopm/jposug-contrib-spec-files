@@ -15,7 +15,7 @@ Name:		SFEperl-yaml-tiny
 IPS_package_name: library/perl-5/yaml-tiny
 Version:	1.51
 IPS_component_version: 1.51
-Summary:	
+Summary:	Read/Write YAML files with as little code as possible
 License:	Artistic
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
@@ -37,13 +37,13 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %package 584
 IPS_package_name: library/perl-5/yaml-tiny-584
-Summary:  for perl-584
+Summary: Read/Write YAML files with as little code as possible for perl-584
 BuildRequires:	runtime/perl-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/yaml-tiny-512
-Summary:  for perl-512
+Summary: Read/Write YAML files with as little code as possible for perl-512
 BuildRequires:	runtime/perl-512
 Requires:	runtime/perl-512
 
@@ -95,5 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Feb 03 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add summary
 * Sun Jun 10 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

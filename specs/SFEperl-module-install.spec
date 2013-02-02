@@ -43,6 +43,8 @@ BuildRequires:	runtime/perl-584
 BuildRequires:	library/perl-5/yaml-tiny-584
 BuildRequires:	library/perl-5/module-corelist-584
 BuildRequires:	library/perl-5/module-scandeps-584
+BuildRequires:	library/perl-5/file-remove-584
+BuildRequires:	library/perl-5/lwp-584
 Requires:	runtime/perl-584
 Requires:       %{IPS_package_name}
 Requires:	library/perl-5/yaml-tiny-584
@@ -56,6 +58,8 @@ BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/yaml-tiny-512
 BuildRequires:	library/perl-5/module-corelist-512
 BuildRequires:	library/perl-5/module-scandeps-512
+BuildRequires:	library/perl-5/file-remove-512
+BuildRequires:	library/perl-5/lwp-512
 Requires:	runtime/perl-512
 Requires:       %{IPS_package_name}
 Requires:	library/perl-5/yaml-tiny-512
@@ -113,3 +117,4 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sun Feb 03 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- add BuildRequires

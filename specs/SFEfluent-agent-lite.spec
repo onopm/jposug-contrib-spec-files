@@ -36,6 +36,8 @@ BuildRequires:    runtime/perl-512
 Requires:         runtime/perl-512
 Requires:         system/fluentd/fluent-agent-lite
 Requires:         library/perl-5/log-minimal-512
+Requires:         library/perl-5/json-xs-512
+Requires:         library/perl-5/data-messagepack-512
 
 %description
 Log transfer agent service over fluentd protocol.
@@ -81,6 +83,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Feb 04 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Sun Feb 03 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - modify %setup, %install and %files

@@ -9,33 +9,58 @@ use warnings;
 use Pod::Usage;
 # Debug (dumper
 use Data::Dumper;
+use Digest::MD5 qw/md5_hex/;
+use Storable;
+use constant CACHEDIR => "./cahce_spec_depend";
 sub p { print Dumper shift }
-
 
 sub spectool($$)
 {
     my ($command, $spec) = @_;
-    my (@retval);
+    my (@retval, $res, $line, @lines, $md5, $md5_cached, @cache, $cache_ar, $fh);
     @retval = ();
-    if ($command =~ /get_copyright/) {
-        open my $fh, "<", $spec;
-        if(!$fh){
-            warn "SKIP: spec-file open error [$spec]: $!";
-        } else {
-            while(my $line = <$fh>) {
-                $line =~ s/\r?\n//g;
-                if( $line =~ /^SUNW_Copyright\s*:\s*([\/\w\-%\.{}\(\)]+)/i ){
-                    @retval = (@retval, split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips eval '$1' $spec`));
-                    #print STDERR "found: SUNW_Copyright\n";
-                }
-            } 
-            if ($#retval < 0) {
-                @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips eval '%{name}.copyright' $spec`);
-                #print STDERR "not found: SUNW_Copyright\n";
-            } 
+    $res = open $fh, "<", "$spec";
+    if(!$res){
+        die "ERROR: spec-file open error [$spec]: $!";
+    } else {
+        @lines = <$fh>;
+        close $fh;
+    }
+    $md5 = md5_hex(@lines);
+    $res = open $fh, "<", CACHEDIR."/$spec.$command";
+    if($res) {
+        $cache_ar = Storable::fd_retrieve($fh);
+        close $fh;
+        @cache = @$cache_ar;   
+        $md5_cached = shift(@cache);
+        if ($md5 eq $md5_cached) {
+            print STDERR "$spec.$command (cached)\n";
+            return @cache; 
         }
+    }
+    if ($command =~ /get_copyright/) {
+        for $line (@lines) { 
+            $line =~ s/\r?\n//g;
+            if( $line =~ /^SUNW_Copyright\s*:\s*([\/\w\-%\.{}\(\)]+)/i ){
+                @retval = (@retval, split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips eval '$1' $spec`));
+                #print STDERR "found: SUNW_Copyright\n";
+            }
+        } 
+        if ($#retval < 0) {
+            @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips eval '%{name}.copyright' $spec`);
+            #print STDERR "not found: SUNW_Copyright\n";
+        } 
     } else {
         @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips $command $spec`);
+    }
+    mkdir CACHEDIR if (! -d CACHEDIR);
+    $res = open $fh, ">", CACHEDIR."/$spec.$command";
+    if(!$res){
+        die "ERROR: cache-file open error [$spec.$command]: $!";
+    } else {
+        @cache = ($md5, @retval);
+        Storable::store_fd \@cache, $fh;
+        close $fh;
     }
     @retval; 
 }

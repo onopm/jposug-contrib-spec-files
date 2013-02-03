@@ -10,7 +10,7 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  20100424-3.0
+%define tarball_version  20121213-3.0
 %define tarball_name	 libedit
 
 Name:                    SFEeditline
@@ -20,6 +20,8 @@ Version:                 3.0
 License:		 BSDL
 Url:                     http://www.thrysoee.dk/editline/
 Source:                  http://www.thrysoee.dk/editline/%{tarball_name}-%{tarball_version}.tar.gz
+Patch0:                  editline_sys.h.patch
+Patch1:                  editline_terminal.h.patch
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Basedir:            %{_basedir}
@@ -55,6 +57,8 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
 fi
 
 cd %{tarball_name}-%{tarball_version}
+%patch0 -p0
+%patch1 -p0
 %ifarch sparc
 %define target sparc-sun-solaris
 %else
@@ -78,6 +82,8 @@ gmake -j$CPUS
 %ifarch amd64 sparcv9
 export CFLAGS
 cd ../%{tarball_name}-%{tarball_version}-64
+%patch0 -p0
+%patch1 -p0
 
 export CFLAGS="-m64 -i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xc99=none -xCC"
 export CXXFLAGS="-m64 -i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xc99=none -xCC"
@@ -133,6 +139,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/include/*
 
 %changelog
+* Wed Jan 09 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Fix error "identifier redeclared: tgetent" for OI
+* Sat Dec 15 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 20121213-3.0
+* Wed Dec 05 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 20120601-3.0
 * Sun Jun  5 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Fix dependency using pnm.
 * Sat Mar 26 JST 2011 TAKI, Yasushi <taki@justplayer.com>

@@ -1,0 +1,20 @@
+--- src/terminal.h.orig	2013-01-09 16:03:35.643742613 +0900
++++ src/terminal.h	2013-01-09 16:04:24.690141651 +0900
+@@ -82,12 +82,14 @@
+ #define	A_K_DE		6
+ #define	A_K_NKEYS	7
+ 
+-#ifdef __sun
++#ifndef HAVE_TERMCAP_H
+ extern int tgetent(char *, const char *);
+-extern int tgetflag(char *);
+-extern int tgetnum(char *);
+ extern int tputs(const char *, int, int (*)(int));
+ extern char* tgoto(const char*, int, int);
++#endif
++#ifdef __sun
++extern int tgetflag(char *);
++extern int tgetnum(char *);
+ extern char* tgetstr(char*, char**);
+ #endif
+ 

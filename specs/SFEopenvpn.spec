@@ -8,21 +8,26 @@
 %define srcname openvpn
 
 Name:		SFEopenvpn
+IPS_Package_Name:       system/network/openvpn
 Summary:	Open source, full-featured SSL VPN package
 Group:		System/Security
 URL:		http://openvpn.net
 License:	GPLv2
-SUNW_copyright:	openvpn.copyright
-Version:	2.2.1
+Version:	2.2.2
 Source:		http://swupdate.openvpn.net/community/releases/%srcname-%version.tar.gz
+Source1:        SFEopenvpn-openvpn.xml
+Source2:        SFEopenvpn-openvpn 
+# http://comments.gmane.org/gmane.os.solaris.opensolaris.pkg.sfe/28
+%define _basedir  /
 SUNW_BaseDir:   %{_basedir}
+SUNW_Copyright: %{name}.copyright
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
 
 BuildRequires: library/lzo
 Requires: library/lzo
-BuildRequires: system/network/tuntap
-Requires: system/network/tuntap
+BuildRequires: driver/network/tuntap
+Requires: driver/network/tuntap
 BuildRequires: %{pnm_buildrequires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWopenssl}
 
@@ -41,24 +46,83 @@ export LDFLAGS="%_ldflags"
 make -j$CPUS
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+rm -rf %{buildroot}
+make install DESTDIR=%{buildroot}
+mkdir -p %{buildroot}/var/svc/manifest/network/
+cp %{SOURCE1} %{buildroot}/var/svc/manifest/network/openvpn.xml
+mkdir -p %{buildroot}/lib/svc/method/
+cp %{SOURCE2} %{buildroot}/lib/svc/method/openvpn
+chmod +x %{buildroot}/lib/svc/method/openvpn
+mkdir -p %{buildroot}/var/run/openvpn
+mkdir -p %{buildroot}/var/openvpn
+mkdir -p %{buildroot}/%{_prefix}/etc/openvpn/ccd
+mkdir -p %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa
+install -m 0644 easy-rsa/2.0/* %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa
+install -m 0644 easy-rsa/2.0/openssl-0.9.8.cnf %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa/openssl.cnf
+install -m 0644 sample-scripts/bridge-start %{buildroot}/%{_prefix}/etc/openvpn
+install -m 0644 sample-scripts/bridge-stop %{buildroot}/%{_prefix}/etc/openvpn
+install -m 0644 sample-scripts/openvpn.init %{buildroot}/%{_prefix}/etc/openvpn
+install -m 0644 sample-config-files/static-home.conf %{buildroot}/%{_prefix}/etc/openvpn/static-home.conf.sample
+install -m 0644 sample-config-files/static-office.conf %{buildroot}/%{_prefix}/etc/openvpn/static-office.conf.sample
+install -m 0644 sample-config-files/tls-office.conf %{buildroot}/%{_prefix}/etc/openvpn/tls-office.conf.sample
+install -m 0644 sample-config-files/tls-home.conf %{buildroot}/%{_prefix}/etc/openvpn/tls-home.conf.sample
+install -m 0644 sample-config-files/client.conf %{buildroot}/%{_prefix}/etc/openvpn/client.conf.sample
+install -m 0644 sample-config-files/server.conf %{buildroot}/%{_prefix}/etc/openvpn
+install -m 0644 sample-config-files/README %{buildroot}/%{_prefix}/etc/openvpn
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr (-, root, bin)
-%dir %attr (0755, root, bin) %{_sbindir}
+%dir %attr (0755, root, sys) %{_sbindir}
 %{_sbindir}/openvpn
+%dir %attr (0755, root, sys) %{_prefix}/etc
+%dir %attr (0755, root, sys) %{_prefix}/etc/openvpn
+%dir %attr (0755, root, sys) %{_prefix}/etc/openvpn/easy-rsa
+%dir %attr (0755, root, sys) %{_prefix}/etc/openvpn/ccd
+%attr (0755, root, sys) %{_prefix}/etc/openvpn/easy-rsa/build*
+%attr (0755, root, sys) %{_prefix}/etc/openvpn/easy-rsa/clean-all
+%attr (0755, root, sys) %{_prefix}/etc/openvpn/easy-rsa/inherit-inter
+%attr (0755, root, sys) %{_prefix}/etc/openvpn/easy-rsa/list-crl
+%attr (0755, root, sys) %{_prefix}/etc/openvpn/easy-rsa/pkitool
+%attr (0755, root, sys) %{_prefix}/etc/openvpn/easy-rsa/revoke-full
+%attr (0755, root, sys) %{_prefix}/etc/openvpn/easy-rsa/sign-req
+%attr (0755, root, sys) %{_prefix}/etc/openvpn/easy-rsa/whichopensslcnf
+%attr (0664, root, sys) %{_prefix}/etc/openvpn/easy-rsa/Makefile
+%attr (0664, root, sys) %{_prefix}/etc/openvpn/easy-rsa/openssl*
+%attr (0664, root, sys) %{_prefix}/etc/openvpn/easy-rsa/README
+%attr (0664, root, sys) %config(noreplace) %{_prefix}/etc/openvpn/easy-rsa/vars
+%attr (0664, root, sys) %config(noreplace) %{_prefix}/etc/openvpn/*.conf*
+%attr (0664, root, sys) %{_prefix}/etc/openvpn/README
+%attr (0664, root, sys) %{_prefix}/etc/openvpn/bridge-*
+%attr (0664, root, sys) %{_prefix}/etc/openvpn/openvpn.init
 %dir %attr (0755, root, sys) %{_datadir}
 %dir %attr (0755, root, bin) %{_mandir}
 %dir %attr (0755, root, bin) %{_mandir}/man8
 %{_mandir}/man8/openvpn.8
 %dir %attr (0755, root, other) %dir %_docdir
 %_docdir/%srcname
+%dir %attr (0755, root, bin) /lib
+%dir %attr (0755, root, bin) /lib/svc
+%dir %attr (0755, root, bin) /lib/svc/method
+%attr (0555, root, bin) /lib/svc/method/openvpn
+%dir %attr (0755, root, sys) /var
+%dir %attr (0755, root, sys) /var/svc
+%dir %attr (0755, root, sys) /var/svc/manifest
+%dir %attr (0755, root, sys) /var/svc/manifest/network
+%class(manifest) %attr (0444, root, sys) /var/svc/manifest/network/openvpn.xml
+%dir %attr (0555, root, root) /var/openvpn
+%dir %attr (0755, root, sys) /var/run
+%dir %attr (0555, root, root) /var/run/openvpn
 
 %changelog
+* Tue Dec 10 2012 - YAMAMOTO Takashi
+- Corrected dependency.
+* Tue Nov 20 2012 - YAMAMOTO Takashi
+- Bump to 2.2.2. Fix some problems.
+* Fri Nov 16 2012 - YAMAMOTO Takashi
+- Added a manifest file
 * Tue Mar 20 2012 - YAMAMOTO Takashi
 - Initial, fix dependency using for pnm.
 * Wed Sep 28 2011 - Alex Viskovatoff

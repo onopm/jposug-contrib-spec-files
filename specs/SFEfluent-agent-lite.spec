@@ -35,6 +35,7 @@ Summary:          Log transfer agent service over fluentd protocol
 BuildRequires:    runtime/perl-512
 Requires:         runtime/perl-512
 Requires:         system/fluentd/fluent-agent-lite
+Requires:         library/perl-5/log-minimal-512
 
 %description
 Log transfer agent service over fluentd protocol.
@@ -85,3 +86,4 @@ rm -rf $RPM_BUILD_ROOT
 - modify %setup, %install and %files
 - fix %attr
 - add /usr/bin/fluent-agent-lite to %files
+- add Requires

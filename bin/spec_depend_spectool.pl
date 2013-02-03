@@ -11,7 +11,7 @@ use Pod::Usage;
 use Data::Dumper;
 use Digest::MD5 qw/md5_hex/;
 use Storable;
-use constant CACHEDIR => "./cahce_spec_depend";
+use constant CACHEDIR => "./cache_spec_depend";
 sub p { print Dumper shift }
 
 sub spectool($$)

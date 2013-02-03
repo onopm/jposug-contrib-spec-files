@@ -56,6 +56,8 @@ make pure_install
 # mkdir -p $RPM_BUILD_ROOT%{_datadir}
 # mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 # mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
+mkdir -p $RPM_BUILD_ROOT/%{_bindir}
+cp bin/fluent-agent-lite $RPM_BUILD_ROOT/%{_bindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -68,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 # %{_sysconfdir}/init.d/fluent-agent-lite
 # %attr(0755,root,sys) %dir %{_datadir}
 # %{_mandir}
+%attr(0755,root,bin) %dir %{_bindir}
+%{_bindir}/*
+
 
 %files 512
 %defattr (-, root, bin)
@@ -79,3 +84,4 @@ rm -rf $RPM_BUILD_ROOT
 - initial commit
 - modify %setup, %install and %files
 - fix %attr
+- add /usr/bin/fluent-agent-lite to %files

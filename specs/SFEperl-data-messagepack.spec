@@ -39,12 +39,14 @@ Data::MessagePack
 IPS_package_name: library/perl-5/data-messagepack-584
 Summary: Data::MessagePack for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/test-requires-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/data-messagepack-512
 Summary: Data::MessagePack for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/test-requires-512
 Requires:	runtime/perl-512
 
 
@@ -95,5 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Feb 03 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

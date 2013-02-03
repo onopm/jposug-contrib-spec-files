@@ -15,7 +15,29 @@ sub p { print Dumper shift }
 sub spectool($$)
 {
     my ($command, $spec) = @_;
-    split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips $command $spec`);
+    my (@retval);
+    @retval = ();
+    if ($command =~ /get_copyright/) {
+        open my $fh, "<", $spec;
+        if(!$fh){
+            warn "SKIP: spec-file open error [$spec]: $!";
+        } else {
+            while(my $line = <$fh>) {
+                $line =~ s/\r?\n//g;
+                if( $line =~ /^SUNW_Copyright\s*:\s*([\/\w\-%\.{}\(\)]+)/i ){
+                    @retval = (@retval, split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips eval '$1' $spec`));
+                    #print STDERR "found: SUNW_Copyright\n";
+                }
+            } 
+            if ($#retval < 0) {
+                @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips eval '%{name}.copyright' $spec`);
+                #print STDERR "not found: SUNW_Copyright\n";
+            } 
+        }
+    } else {
+        @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips $command $spec`);
+    }
+    @retval; 
 }
 
 sub search_depend_files($$) {
@@ -23,7 +45,7 @@ sub search_depend_files($$) {
     my (@files, $key);
     return if ! -r $spec;
 
-    for $key ('buildrequires', 'patches', 'sources') {
+    for $key ('buildrequires', 'patches', 'sources', 'copyright') {
 	@files = spectool("get_$key", $spec);
 	@{$requires->{$key}} = @files if ($#files >= 0);
     }
@@ -127,6 +149,15 @@ foreach my $spec_file (@spec_file_lines){
 	    foreach (@{$requires{'sources'}}){
 		if(! /^(http|https|ftp):\/\//){
 		    $sources.='ext-sources/'.$_.' ';
+		}
+	    }
+	    $depend_sources.=' '.${sources} if(${sources});
+	}
+        if(defined($requires{'copyright'})){
+	    my $sources='';
+	    foreach (@{$requires{'copyright'}}){
+		if(! /^(http|https|ftp):\/\//){
+		    $sources.='copyright/'.$_.' ';
 		}
 	    }
 	    $depend_sources.=' '.${sources} if(${sources});

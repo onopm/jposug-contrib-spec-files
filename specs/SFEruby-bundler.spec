@@ -1,19 +1,19 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define gemname jeweler
-%define gemdir18 %(ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemname bundler
+%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-%define gemdir19 %(ruby19 -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
-%define tarball_name    jeweler
-%define tarball_version 1.8.4
+%define tarball_name    bundler
+%define tarball_version 1.2.3
 
-Summary: jeweler
-Name: SFEruby-jeweler
-IPS_package_name:        library/ruby-18/jeweler
-Version: 1.8.4
+Summary: bundler
+Name: SFEruby-bundler
+IPS_package_name:        library/ruby-18/bundler
+Version: 1.2.3
 License: MIT
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
@@ -21,21 +21,15 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: runtime/ruby-18
 Requires: runtime/ruby-18
-Requires: library/ruby-18/bundler
-Requires: library/ruby-18/git
-Requires: library/ruby-18/rake
-Requires: library/ruby-18/rdoc
 
 %description
 Simple and opinionated helper for creating Rubygem projects on GitHub
 
 %package 19
-IPS_package_name: library/ruby-19/jeweler
-Summary: jeweler
+IPS_package_name: library/ruby-19/bundler
+Summary: bundler
 BuildRequires:	runtime/ruby-19
 Requires:	runtime/ruby-19
-Requires: library/ruby-19/bundler
-Requires: library/ruby-19/git
 
 %prep
 %setup -q -c -T
@@ -99,5 +93,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Mon Feb 04 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify to success building packages
 * Thu Nov 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

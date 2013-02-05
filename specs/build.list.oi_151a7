@@ -48,7 +48,7 @@ SFEgob.spec
 SFElzo.spec
 SFEtun.spec
 SFEopenvpn.spec
-SFElibiconv.spec
+SFEgnuiconv.spec
 # gcc
 SFEgmp.spec
 SFEmpfr.spec

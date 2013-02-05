@@ -40,8 +40,10 @@ Converts Perl XS code into C code
 # IPS_package_name: library/perl-5/extutils-parsexs-584
 # Summary: Converts Perl XS code into C code for perl-584
 # BuildRequires:	runtime/perl-584
-# BuildRequires:	library/perl-5/json-pp-584 # not builded yet
+# BuildRequires:	library/perl-5/json-pp-584
+# # BuildRequires:	library/perl-5/extutils-cbuilder-584
 # Requires:	runtime/perl-584
+# Requires:	%{IPS_package_name}
 
 %package 512
 IPS_package_name: library/perl-5/extutils-parsexs-512
@@ -95,6 +97,8 @@ rm -rf $RPM_BUILD_ROOT
 # %files 584
 # %defattr (-, root, bin)
 # %{_prefix}/perl5/vendor_perl/5.8.4
+# %attr(0755,root,bin) %dir /usr/perl5/5.8.4/bin
+# /usr/perl5/5.8.4/bin/*
 
 %files 512
 %defattr (-, root, bin)
@@ -103,5 +107,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/perl5/5.12/bin/*
 
 %changelog
+* Tue Feb 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequire to %package 584
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

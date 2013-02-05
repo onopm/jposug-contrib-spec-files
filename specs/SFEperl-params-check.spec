@@ -36,12 +36,12 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 %description
 Params::Check - A generic input parsing/checking mechanism.
 
-# %package 584
-# IPS_package_name: library/perl-5/params-check-584
-# Summary: Params::Check - A generic input parsing/checking mechanism for perl-584
-# BuildRequires:  runtime/perl-584
+%package 584
+IPS_package_name: library/perl-5/params-check-584
+Summary: Params::Check - A generic input parsing/checking mechanism for perl-584
+BuildRequires:  runtime/perl-584
 # BuildRequires:  library/perl-5/locale-maketext-simple #  Locale/Maketext/Simple.pm
-# Requires:	runtime/perl-584
+Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/params-check-512
@@ -54,16 +54,16 @@ Requires:	runtime/perl-512
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-# export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
-# /usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
-#   DESTDIR=$RPM_BUILD_ROOT \
-#   LIB=/usr/perl5/vendor_perl/5.8.4
-# make
+export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+/usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.8.4
+make
 # make test
 
-# rm -rf $RPM_BUILD_ROOT
-# make pure_install
-# make clean
+rm -rf $RPM_BUILD_ROOT
+make pure_install
+make clean
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
@@ -74,7 +74,7 @@ make test
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
+# rm -rf $RPM_BUILD_ROOT
 make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
@@ -91,14 +91,17 @@ rm -rf $RPM_BUILD_ROOT
 #%attr(0755,root,bin) %dir %{_bindir}
 #%{_bindir}/*
 
-# %files 584
-# %defattr (-, root, bin)
-# %{_prefix}/perl5/vendor_perl/5.8.4
+%files 584
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.8.4
 
 %files 512
 %defattr (-, root, bin)
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Feb 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for perl-584
+- comment out "make test" for perl-584 because "make test" requires Locale/Maketext/Simple.pm and Locale/Maketext/Simple.pm is not builded yet
 * Sat Jun 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -11,13 +11,17 @@ use Pod::Usage;
 use Data::Dumper;
 use Digest::MD5 qw/md5_hex/;
 use Storable;
+use File::Basename;
 use constant CACHEDIR => "./cache_spec_depend";
+use constant SPEC2IPSNAME => "spec2ipsname.list";
+
 sub p { print Dumper shift }
 
 sub spectool($$)
 {
     my ($command, $spec) = @_;
-    my (@retval, $res, $line, @lines, $md5, $md5_cached, @cache, $cache_ar, $fh);
+    my (@retval, $res, $line, @lines, $md5, $md5_cached, @cache, $cache_ar, $fh, $spec_base, $ext);
+    $spec_base = basename($spec, ('.spec'));
     @retval = ();
     $res = open $fh, "<", "$spec";
     if(!$res){
@@ -27,14 +31,14 @@ sub spectool($$)
         close $fh;
     }
     $md5 = md5_hex(@lines);
-    $res = open $fh, "<", CACHEDIR."/$spec.$command";
+    $res = open $fh, "<", CACHEDIR."/$spec_base.$command";
     if($res) {
         $cache_ar = Storable::fd_retrieve($fh);
         close $fh;
         @cache = @$cache_ar;   
         $md5_cached = shift(@cache);
         if ($md5 eq $md5_cached) {
-            print STDERR "$spec.$command (cached)\n";
+            print STDERR "$spec_base.$command (cached)\n";
             return @cache; 
         }
     }
@@ -54,13 +58,19 @@ sub spectool($$)
         @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips $command $spec`);
     }
     mkdir CACHEDIR if (! -d CACHEDIR);
-    $res = open $fh, ">", CACHEDIR."/$spec.$command";
+    $res = open $fh, ">", CACHEDIR."/$spec_base.$command";
     if(!$res){
-        die "ERROR: cache-file open error [$spec.$command]: $!";
+        die "ERROR: cache-file open error [$spec_base.$command]: $!";
     } else {
         @cache = ($md5, @retval);
         Storable::store_fd \@cache, $fh;
         close $fh;
+        for $ext ('info', 'proto') {
+            if (-f "$spec_base.$ext") {
+	        print STDERR "/bin/rm -rf $spec_base.$ext\n";
+	        `/bin/rm -rf $spec_base.$ext`;
+            }
+        }
     }
     @retval; 
 }
@@ -119,7 +129,7 @@ foreach (@spec_file_lines){
     $sfe_pkg_list{$spec}=1;
 }
 # このファイルは、install_spec.shでspecファイルからipsの名前でインストールするのに使う。
-open my $s2ifh, ">./spec2ipsname.list" or die("file write error");
+open my $s2ifh, ">./".SPEC2IPSNAME or die("file write error");
 for my $key (keys(%ips_spec_name)) {
     print $s2ifh "$ips_spec_name{$key}.spec:$key\n" if ($key !~ /^SFE/);
 }

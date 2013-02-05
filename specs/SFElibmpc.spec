@@ -1,4 +1,4 @@
-#
+
 # spec file for package SFElibmpc
 #
 # includes module(s): GNU mpc
@@ -26,7 +26,7 @@
 %define SFEmpfr	1
 
 Name:		SFElibmpc
-IPS_Package_Name:	sfe/library/mpc
+IPS_Package_Name:	library/mpc
 Summary:	%{libmpc.summary}
 Group:		Development/Libraries
 URL:		%{libmpc.url}
@@ -136,6 +136,8 @@ rm -rf %{buildroot}
 %{_includedir}
 
 %changelog
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- delete sfe prefix from IPS package name
 * Thu 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - use pnm macros
 * Mon Dec 17 2012 - Logan Bruns <logan@gedanken.org>

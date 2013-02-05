@@ -12,7 +12,7 @@
 
 Name:           puppet3
 IPS_package_name:        system/management/puppet3
-Version:        3.0.1
+Version:        3.1.0
 #Release:        0.1rc1%{?dist}
 Release:        1%{?dist}
 Summary:        A network tool for managing many disparate systems
@@ -100,7 +100,7 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 
 %files
 %defattr(-, root, bin, 0755)
-%doc LICENSE README.md README_DEVELOPER.md README_HIERA.md CONTRIBUTING.md
+%doc LICENSE COMMITTERS.md README.md CONTRIBUTING.md README_DEVELOPER.md
 /usr/bin/puppet
 /usr/bin/extlookup2hiera
 %{_bindir}/extlookup2hiera
@@ -135,6 +135,7 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 %{_mandir}/man8/puppet-describe.8.gz
 %{_mandir}/man8/puppet-device.8.gz
 %{_mandir}/man8/puppet-doc.8.gz
+%{_mandir}/man8/extlookup2hiera.8.gz
 %{_mandir}/man8/puppet-facts.8.gz
 %{_mandir}/man8/puppet-file.8.gz
 %{_mandir}/man8/puppet-filebucket.8.gz
@@ -182,6 +183,8 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
+* Tue Feb 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.1.0
 * Fri Nov 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Tue Nov 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

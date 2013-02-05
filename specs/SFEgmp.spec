@@ -24,7 +24,7 @@
 
 
 Name:		SFEgmp
-IPS_Package_Name:	library/gmp5
+IPS_Package_Name:	library/gmp-5
 Summary:	GNU Multiple Precision Arithmetic Library
 Group:		Development/Libraries
 Version:	%{gmp.version}

@@ -26,7 +26,7 @@
 
 
 Name:		SFEmpfr
-IPS_Package_Name:	library/mpfr3
+IPS_Package_Name:	library/mpfr-3
 Summary:	C library for multiple-precision floating-point computations
 Group:		Development/Libraries
 License:	GPLv3

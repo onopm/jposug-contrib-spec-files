@@ -39,7 +39,8 @@ Params::Check - A generic input parsing/checking mechanism.
 # %package 584
 # IPS_package_name: library/perl-5/params-check-584
 # Summary: Params::Check - A generic input parsing/checking mechanism for perl-584
-# BuildRequires:	runtime/perl-584
+# BuildRequires:  runtime/perl-584
+# BuildRequires:  library/perl-5/locale-maketext-simple #  Locale/Maketext/Simple.pm
 # Requires:	runtime/perl-584
 
 %package 512

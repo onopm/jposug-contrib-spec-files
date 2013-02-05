@@ -26,7 +26,7 @@
 
 
 Name:		SFEmpfr
-IPS_Package_Name:	sfe/library/mpfr
+IPS_Package_Name:	library/mpfr3
 Summary:	C library for multiple-precision floating-point computations
 Group:		Development/Libraries
 License:	GPLv3
@@ -189,7 +189,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/*
 
 %changelog
-* Thu 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- delete sfe prefix from IPS package name
+* Thu Dec 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - use pnm macros
 * Sun Jul 22 2012 - Milan Jurik
 - bump to 3.1.1

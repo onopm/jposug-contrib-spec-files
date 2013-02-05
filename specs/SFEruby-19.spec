@@ -29,8 +29,8 @@ BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
 %define mimpure_text
 %else
-BuildRequires: sfe/developer/gcc-46
-Requires:      sfe/system/library/gcc-runtime
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
 %endif
 
 %description
@@ -89,6 +89,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/1.9
 
 %changelog
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change BuildRequires that refer to gcc at OI
 * Tue Jan 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Support for OpenIndiana
 * Fri Dec 20 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -36,8 +36,8 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
 %else
-BuildRequires: sfe/developer/gcc-46
-Requires:      sfe/system/library/gcc-runtime
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
 %endif
 BuildRequires: SFEgob
 Requires: SFEgob
@@ -148,6 +148,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, other) %{_prefix}/share/*
 
 %changelog
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change BuildRequires that refer to gcc at OI
 * Tue Jan 19 JST 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Support for OpenIndiana
 * Sat Jan  5 JST 2013 TAKI, Yasushi <taki@justplayer.com>

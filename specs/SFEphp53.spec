@@ -115,6 +115,7 @@ BuildRequires:  database/berkeleydb-48
 BuildRequires:  %pnm_buildrequires_library_spell_checking_enchant
 BuildRequires:  developer/build/autoconf259
 BuildRequires:  library/text/gnu-iconv/developer
+BuildRequires:  %{pnm_buildrequires_developer_icu}
 #BuildRequires: bzip2-devel, curl-devel >= 7.9, db4-devel, gmp-devel
 #BuildRequires: httpd-devel >= 2.0.46-1, pam-devel
 #BuildRequires: libstdc++-devel, openssl-devel, sqlite-devel >= 3.6.0
@@ -131,6 +132,7 @@ BuildRequires:  library/text/gnu-iconv/developer
 Requires:       database/berkeleydb-48
 Requires:  %pnm_requires_library_spell_checking_enchant
 Requires:  library/text/gnu-iconv
+Requires:  %{pnm_requires_developer_icu}
 
 %description
 PHP is an HTML-embedded scripting language. PHP attempts to make it
@@ -1134,6 +1136,9 @@ rm files.*
 %files enchant -f files.enchant
 
 %changelog
+* Feb 07 2013 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
+- add Buildrequires and Requires
+
 * Feb 07 2013 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
 - Bump to 5.3.20
 - work with CBE 

@@ -24,7 +24,7 @@ Vendor:         OpenSolaris Community
 %include default-depend.inc
 
 BuildRequires: SFEbdb
-BuildRequires: %{pnm_buildrequires_SUNWlibgcrypt}
+BuildRequires: %{pnm_requires_system_library_security_libgcrypt}
 BuildRequires: %{pnm_buildrequires_SUNWopenssl}
 BuildRequires: %{pnm_buildrequires_system_network_avahi}
 BuildRequires: %{pnm_buildrequires_SUNWavahi_bridge_dsd}
@@ -32,7 +32,7 @@ BuildRequires: %{pnm_buildrequires_SUNWavahi_bridge_dsd_devel}
 BuildRequires: %{pnm_buildrequires_avahi_bridge_dsd}
 BuildRequires: %{pnm_buildrequires_developer_build_make}
 Requires: SFEbdb
-Requires: %{pnm_requires_SUNWlibgcrypt}
+Requires: %{pnm_requires_system_library_security_libgcrypt}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_system_network_avahi}
 Requires: %{pnm_requires_SUNWavahi_bridge_dsd}
@@ -150,6 +150,8 @@ rm -rf %name-%version
 
 
 %changelog
+* Tue Jan 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Support for OpenIndiana
 * Sat Jan 26 2013 - TAKI,Yasushi <taki@justplayer.com>
 - When Solaris 11.1, with /etc/pam.d/netatalk. when other, without /etc/pam.d/netatlk.
 - bump to 2.2.4

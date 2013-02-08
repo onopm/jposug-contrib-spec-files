@@ -8,6 +8,7 @@
 %include Solaris.inc
 %define cc_is_gcc 1
 %include packagenamemacros.inc
+%include base.inc
 
 %define _prefix	         /usr
 %define _var_prefix      /var
@@ -31,9 +32,14 @@ SUNW_Basedir:            %{_basedir}
 SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
+%if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
+%endif
 BuildRequires: SFEgob
-Requires: system/library/gcc-45-runtime
 Requires: SFEgob
 
 # OpenSolaris IPS Package Manifest Fields
@@ -142,6 +148,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, other) %{_prefix}/share/*
 
 %changelog
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change BuildRequires that refer to gcc at OI
+* Tue Jan 19 JST 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Support for OpenIndiana
 * Sat Jan  5 JST 2013 TAKI, Yasushi <taki@justplayer.com>
 - bump to 0.5.3
 - add build requires gcc-45

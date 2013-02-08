@@ -35,10 +35,10 @@ including 'rplay', but has never been packaged as a stand-alone shared
 library. GSM encoding has specific uses in transmission of packetized
 audio over the Internet.
 
-%package devel
+%package developer
 Summary:                 %{summary} - development files
 SUNW_BaseDir:            %{_basedir}
-#IPS_package_name:  library/media/header-gsm
+IPS_package_name:   library/media/gsm/developer
 %include default-depend.inc
 #Requires: %name
 
@@ -104,7 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_mandir}
 %{_mandir}/man1
 
-%files devel
+%files developer
 %defattr (-, root, bin)
 %{_includedir}
 %dir %attr (0755, root, sys) %{_datadir}
@@ -112,6 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3
 
 %changelog
+* Tue Jan 29 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change IPS package name
 * Thu Mar  3 2011 - Satoru MIYAZAKI<s.miyaza@gmail.com>
 - Support for Solaris11 Express.
 * Sun Nov 28 2010 - Milan Jurik

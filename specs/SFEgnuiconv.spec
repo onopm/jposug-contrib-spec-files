@@ -18,12 +18,12 @@
 %define workaround_gnu_share_doc_group %( /usr/bin/ls -dl /usr/gnu/share/doc | grep " root.*bin " > /dev/null 2>&1 && echo bin || echo other )
 
 
-Name:		SFElibiconv
-IPS_Package_Name:	library/libiconv 
+Name:		SFEgnuiconv
+IPS_Package_Name:	library/text/gnu-iconv
 Summary:	GNU iconv - Code set conversion
 Group:		System/Libraries
 License:	LGPLv2
-SUNW_Copyright:	libiconv.copyright
+SUNW_Copyright:	%{name}.copyright
 URL:		http://www.gnu.org/s/libiconv/
 Version:	%{major_version}
 Source:		http://ftp.gnu.org/pub/gnu/libiconv/%{tarball_name}-%{version}.tar.gz
@@ -40,7 +40,8 @@ this package if you want to convert some documet from one encoding to
 another or if you have installed some programs which use Generic
 Character Set Conversion Interface.
 
-%package devel
+%package developer
+IPS_Package_Name:	library/text/gnu-iconv/developer 
 Summary:	%{summary} - development files
 SUNW_BaseDir:	%{_basedir}
 Requires:	%name
@@ -148,7 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_mandir}/man3
 %{_mandir}/man3/iconv*.3
 
-%files devel
+%files developer
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_includedir}
 %{_includedir}/*.h
@@ -168,6 +169,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change IPS package name
+* Tue 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- add IPS package name for developer
 * Thu 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - bump down to 1.13 for Japanese mobile phones
 * Thu Oct 06 2011 - Milan Jurik

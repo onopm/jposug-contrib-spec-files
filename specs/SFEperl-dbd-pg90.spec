@@ -27,10 +27,10 @@ Requires:  	%{pnm_requires_perl_default}
 BuildRequires:	SFEperl-version
 BuildRequires:	SFEperl-test-simple
 BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
-BuildRequires:	SFEpostgres-90-library
-BuildRequires:	SFEpostgres-90-developer
+BuildRequires:	SFEpostgres-90-libs
+BuildRequires:	SFEpostgres-90-devel
 Requires:	%{pnm_requires_SUNWpmdbi}
-Requires:	SFEpostgres-90-library
+Requires:	SFEpostgres-90-libs
 
 Meta(info.maintainer):          taki@justplayer.com
 Meta(info.upstream):            Greg Sabino Mullane <greg@turnstep.com>
@@ -48,8 +48,8 @@ Postgres Driver for DBI
 # BuildRequires:	library/perl-5/test-simple-584
 # BuildRequires:	library/perl-5/json-pp-584 # not builded yet
 # BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
-# BuildRequires:	SFEpostgres-90-library
-# BuildRequires:	SFEpostgres-90-developer
+# BuildRequires:	SFEpostgres-90-libs
+# BuildRequires:	SFEpostgres-90-devel
 # Requires:	runtime/perl-584
 
 %package 512
@@ -60,8 +60,8 @@ BuildRequires:	library/perl-5/version-512
 BuildRequires:	library/perl-5/test-simple-512
 BuildRequires:	library/perl-5/json-pp-512
 BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
-BuildRequires:	SFEpostgres-90-library
-BuildRequires:	SFEpostgres-90-developer
+BuildRequires:	SFEpostgres-90-libs
+BuildRequires:	SFEpostgres-90-devel
 Requires:	runtime/perl-512
 
 

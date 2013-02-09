@@ -20,6 +20,7 @@ Requires:                runtime/python-26
 Requires:                library/python-2/funcparserlib-26
 Requires:                library/python-2/ordereddict-26
 Requires:                library/python-2/pil-26
+Requires:                library/python-2/webcolors-26
 
 %description
 blockdiag generate block-diagram image file from spec-text file.
@@ -62,6 +63,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Sat Feb 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Sun Oct 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

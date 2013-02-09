@@ -22,6 +22,7 @@ Source:         %{sf_download}/smartmontools/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %include default-depend.inc
+Requires: system/library/gcc-45-runtime
 
 %description
 The smartmontools package contains two utility programs (smartctl and smartd) to control and monitor storage systems using the Self-Monitoring, Analysis and Reporting Technology System (SMART) built into most modern ATA and SCSI harddisks. In many cases, these utilities will provide advanced warning of disk degradation and failure.
@@ -83,3 +84,4 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sat Feb 09 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- add Requires

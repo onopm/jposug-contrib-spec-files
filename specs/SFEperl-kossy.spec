@@ -47,6 +47,7 @@ IPS_package_name: library/perl-5/kossy-512
 Summary: Kossy for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/plack-512
+BuildRequires:	library/perl-5/router-simple-512
 Requires:	runtime/perl-512
 
 

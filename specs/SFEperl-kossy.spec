@@ -46,6 +46,7 @@ Kossy
 IPS_package_name: library/perl-5/kossy-512
 Summary: Kossy for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/plack-512
 Requires:	runtime/perl-512
 
 
@@ -101,6 +102,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/perl5/5.12/bin/*
 
 %changelog
+* Sun Feb 10 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 0.10
 * Sat Jun 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

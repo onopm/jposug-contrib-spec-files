@@ -48,6 +48,7 @@ Summary: Parallel-Prefork for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/test-sharedfork-512
 BuildRequires:	library/perl-5/proc-wait3-512
+BuildRequires:	library/perl-5/scope-guard
 Requires:	runtime/perl-512
 
 

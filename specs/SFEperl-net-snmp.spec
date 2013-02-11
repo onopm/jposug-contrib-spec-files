@@ -13,8 +13,8 @@
 
 Name:		SFEperl-net-snmp
 IPS_package_name: library/perl-5/net-snmp
-Version:	v6.0.1
-IPS_component_version: 0.0.1
+Version:	6.0.1
+IPS_component_version: 6.0.1
 Summary:	Object oriented interface to SNMP
 License:	Artistic
 Distribution:   OpenSolaris
@@ -93,6 +93,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix version
 * Sun Feb 10 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

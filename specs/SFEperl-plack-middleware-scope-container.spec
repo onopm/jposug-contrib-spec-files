@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 0.02
+%define tarball_version 0.03
 %define tarball_name    Plack-Middleware-Scope-Container
 
 Name:		SFEperl-plack-mw-scp-cntnr
 IPS_package_name: library/perl-5/plack-middleware-scope-container
-Version:	0.02
-IPS_component_version: 0.2
+Version:	0.03
+IPS_component_version: 0.3
 Summary:	Plack::Middleware::Scope::Container
 License:	Artistic
 Distribution:   OpenSolaris
@@ -101,5 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.03
 * Sat Jun 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 0.14
+%define tarball_version 0.16
 %define tarball_name    Starlet
 
 Name:		SFEperl-starlet
 IPS_package_name: library/perl-5/starlet
-Version:	0.14
-IPS_component_version: 0.14
+Version:	0.16
+IPS_component_version: 0.16
 Summary:	Starlet
 License:	Artistic
 Distribution:   OpenSolaris
@@ -48,6 +48,7 @@ IPS_package_name: library/perl-5/starlet-512
 Summary: Starlet for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/json-pp-512
+BuildRequires:	library/perl-5/server-starter
 Requires:	runtime/perl-512
 
 
@@ -99,5 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Feb 11 2011 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.16 and add BuildRequires
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

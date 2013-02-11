@@ -49,6 +49,7 @@ BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/plack-512
 BuildRequires:	library/perl-5/router-simple-512
 BuildRequires:	library/perl-5/text-xslate
+BuildRequires:	library/perl-5/html-fillinform-lite
 Requires:	runtime/perl-512
 
 
@@ -104,6 +105,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/perl5/5.12/bin/*
 
 %changelog
+* Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sun Feb 10 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

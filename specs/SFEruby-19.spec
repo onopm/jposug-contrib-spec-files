@@ -6,7 +6,7 @@
 %define _name ruby
 %define version 1.9.3
 %define unmangled_version 1.9.3
-%define patchlevel 286
+%define patchlevel 385
 
 %include Solaris.inc
 %include packagenamemacros.inc
@@ -20,6 +20,7 @@ IPS_Package_Name:	runtime/ruby-19
 Summary: An interpreter of object-oriented scripting language
 Version: %{version}
 Release: %{patchlevel}
+IPS_component_version: %{version}.%{patchlevel}
 License: GPL
 Source: http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-%{version}-p%{patchlevel}.tar.gz
 Url: http://www.ruby-lang.org/
@@ -89,6 +90,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/1.9
 
 %changelog
+* Mon Feb 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to patch level 385
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - change BuildRequires that refer to gcc at OI
 * Tue Jan 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>

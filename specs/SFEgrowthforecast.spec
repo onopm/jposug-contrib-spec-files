@@ -10,11 +10,11 @@
 %include packagenamemacros.inc
 
 %define tarball_name    GrowthForecast
-%define tarball_version 0.38
+%define tarball_version 0.39
 
 Name:		growthforecast
 IPS_package_name:        diagnostic/growthforecast
-Version:	0.38
+Version:	0.39
 Summary:	GrowthForecast - Lightning Fast Graphing/Visualization
 Group:		Applications/System
 License:	Perl5
@@ -117,6 +117,8 @@ user ftpuser=false gcos-field="GrowthForecast Reserved UID" username="growthfore
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/site/growthforecast.xml
 
 %changelog
+* Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.39
 * Sat Feb 02 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.38
 - update source url

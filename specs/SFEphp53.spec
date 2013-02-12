@@ -1019,7 +1019,6 @@ popd
 %clean
 %if %{skip_prep}
    cd php-%{version}
-%define name php
 %endif
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 rm files.*
@@ -1030,6 +1029,9 @@ rm files.*
 #%post embedded -p /sbin/ldconfig
 #%postun embedded -p /sbin/ldconfig
 
+%if %{skip_prep}
+%define name php
+%endif
 %files
 %defattr(-,root,bin)
 %{_prefix}/apache2/2.2/libexec/libphp5.so
@@ -1136,6 +1138,9 @@ rm files.*
 %files enchant -f files.enchant
 
 %changelog
+* Feb 07 2013 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
+- Fix that spec does not make the file .proto.
+
 * Feb 07 2013 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
 - add Buildrequires and Requires
 

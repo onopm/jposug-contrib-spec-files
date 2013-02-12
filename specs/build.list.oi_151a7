@@ -54,3 +54,7 @@ SFEgmp.spec
 SFEmpfr.spec
 SFElibmpc.spec
 SFEgcc.spec
+# php53
+SFEautoconf259.spec
+SFEphp53.spec
+SFEphp53-pear.spec

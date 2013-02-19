@@ -80,7 +80,7 @@ Group: System Environment/Daemons
 Summary: Network-wide graphing framework (node)
 BuildArchitectures: noarch
 Requires: %{name}-common = %{version}
-Requires: library/perl-5/net-server
+Requires: library/perl-5/net-server-512
 Requires: library/perl-5/lwp-512
 Requires: library/perl-5/net-cidr-512
 # Requires: procps >= 2.0.7
@@ -135,6 +135,7 @@ Summary: Network-wide graphing framework (async)
 BuildArchitectures: noarch
 Requires: %{name}-common = %{version}
 Requires: library/perl-5/db-file-512
+Requires: library/perl-5/net-server-512
 
 %description async
 munin-async
@@ -411,6 +412,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Tue Feb 19 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix & add BuildRequires
+
 * Wed Jan 16 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 2.0.11.1
 

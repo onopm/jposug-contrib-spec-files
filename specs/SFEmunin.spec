@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.9
+Version:   2.0.11.1
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -80,9 +80,11 @@ Group: System Environment/Daemons
 Summary: Network-wide graphing framework (node)
 BuildArchitectures: noarch
 Requires: %{name}-common = %{version}
-Requires: library/perl-5/net-server
+Requires: library/perl-5/net-server-512
 Requires: library/perl-5/lwp-512
 Requires: library/perl-5/net-cidr-512
+# memcache plugin requires library/perl-5/cache-memcached-512
+Requires: library/perl-5/cache-memcached-512
 # Requires: procps >= 2.0.7
 # Requires: sysstat, /usr/bin/which, hdparm
 # Requires(pre): shadow-utils
@@ -135,6 +137,7 @@ Summary: Network-wide graphing framework (async)
 BuildArchitectures: noarch
 Requires: %{name}-common = %{version}
 Requires: library/perl-5/db-file-512
+Requires: library/perl-5/net-server-512
 
 %description async
 munin-async
@@ -411,6 +414,18 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Wed Feb 20 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
+
+* Tue Feb 19 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix & add BuildRequires
+
+* Wed Jan 16 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.0.11.1
+
+* Wed Jan 16 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.0.10
+
 * Sat Dec 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix attr
 

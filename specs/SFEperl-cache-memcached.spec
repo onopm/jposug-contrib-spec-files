@@ -40,6 +40,7 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 IPS_package_name: library/perl-5/cache-memcached-584
 Summary: client library for memcached (memory cache daemon) for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/string-crc32-584
 Requires:	runtime/perl-584
 Requires:       perl-5/string-crc32-584
 
@@ -47,6 +48,7 @@ Requires:       perl-5/string-crc32-584
 IPS_package_name: library/perl-5/cache-memcached-512
 Summary: client library for memcached (memory cache daemon) for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/string-crc32-512
 Requires:	runtime/perl-512
 Requires:       perl-5/string-crc32-512
 
@@ -100,6 +102,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Wed Feb 20 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Wed Sep 26 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - add Requires

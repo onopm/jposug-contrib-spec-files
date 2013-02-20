@@ -83,6 +83,8 @@ Requires: %{name}-common = %{version}
 Requires: library/perl-5/net-server-512
 Requires: library/perl-5/lwp-512
 Requires: library/perl-5/net-cidr-512
+# memcache plugin requires library/perl-5/cache-memcached-512
+Requires: library/perl-5/cache-memcached-512
 # Requires: procps >= 2.0.7
 # Requires: sysstat, /usr/bin/which, hdparm
 # Requires(pre): shadow-utils
@@ -412,6 +414,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Wed Feb 20 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
+
 * Tue Feb 19 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix & add BuildRequires
 

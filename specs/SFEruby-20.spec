@@ -25,6 +25,9 @@ License: GPL
 Source: http://ftp.ruby-lang.org/pub/ruby/2.0/ruby-%{version}-p%{patchlevel}.tar.gz
 Url: http://www.ruby-lang.org/
 
+BuildRequires: library/text/yaml
+Requires:      library/text/yaml
+
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
@@ -90,5 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/2.0
 
 %changelog
+* Sat Mar 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires and Requires because gem command requires library/text/yaml
 * Thu Mar 07 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

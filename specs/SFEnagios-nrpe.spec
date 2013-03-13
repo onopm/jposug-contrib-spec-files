@@ -10,12 +10,12 @@
 %include packagenamemacros.inc
 
 %define tarball_name    nrpe
-%define tarball_version 2.13
+%define tarball_version 2.14
 
 
 Name:		SFEnagios-nrpe
 IPS_package_name:        diagnostic/nagios/nrpe
-Version:	2.13
+Version:	2.14
 Summary:	NRPE - Nagios Remote Plugin Executor 
 Group:		Applications/System
 License:	GPL
@@ -98,5 +98,7 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Mar 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.14
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

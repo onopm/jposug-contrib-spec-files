@@ -13,7 +13,7 @@ Name:                    %{prefix_name}
 IPS_package_name:        database/mysql-56
 Summary:	         MySQL 5.6
 Version:                 5.6.10
-License:		 PostgreSQL
+License:		 GPL v2
 Group:		System/Databases
 Url:                     http://www.mysql.com/
 # Source:                  http://dev.mysql.com/get/Downloads/MySQL-%{major_version}/mysql-%{version}.tar.gz/from/http://cdn.mysql.com/

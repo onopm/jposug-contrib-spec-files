@@ -5,6 +5,9 @@
 #
 %include Solaris.inc
 %include packagenamemacros.inc
+%define cc_is_gcc 1
+%define _gpp g++
+%include base.inc
 %define srcname openvpn
 
 Name:		SFEopenvpn
@@ -13,7 +16,7 @@ Summary:	Open source, full-featured SSL VPN package
 Group:		System/Security
 URL:		http://openvpn.net
 License:	GPLv2
-Version:	2.2.2
+Version:	2.1.4
 Source:		http://swupdate.openvpn.net/community/releases/%srcname-%version.tar.gz
 Source1:        SFEopenvpn-openvpn.xml
 Source2:        SFEopenvpn-openvpn 
@@ -22,6 +25,13 @@ Source2:        SFEopenvpn-openvpn
 SUNW_BaseDir:   %{_basedir}
 SUNW_Copyright: %{name}.copyright
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
+%endif
 %include default-depend.inc
 
 BuildRequires: library/lzo
@@ -36,8 +46,14 @@ Requires: %{pnm_requires_SUNWopenssl}
 
 %build
 CPUS=$(psrinfo | awk '$2=="on-line"{cpus++}END{print (cpus==0)?1:cpus}')
-
-export CFLAGS="%optflags"
+#export CFLAGS
+%if %{cc_is_gcc}
+    export CC=gcc
+    export CXX=g++
+    export CFLAGS="%optflags -fno-strict-aliasing -Wno-pointer-sign"
+%else
+    export CFLAGS="%optflags"
+%endif
 export LDFLAGS="%_ldflags"
 
 ./configure --prefix=%{_prefix}  \
@@ -58,7 +74,7 @@ mkdir -p %{buildroot}/var/openvpn
 mkdir -p %{buildroot}/%{_prefix}/etc/openvpn/ccd
 mkdir -p %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa
 install -m 0644 easy-rsa/2.0/* %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa
-install -m 0644 easy-rsa/2.0/openssl-0.9.8.cnf %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa/openssl.cnf
+#install -m 0644 easy-rsa/2.0/openssl-0.9.8.cnf %{buildroot}/%{_prefix}/etc/openvpn/easy-rsa/openssl.cnf
 install -m 0644 sample-scripts/bridge-start %{buildroot}/%{_prefix}/etc/openvpn
 install -m 0644 sample-scripts/bridge-stop %{buildroot}/%{_prefix}/etc/openvpn
 install -m 0644 sample-scripts/openvpn.init %{buildroot}/%{_prefix}/etc/openvpn
@@ -117,6 +133,9 @@ rm -rf %{buildroot}
 %dir %attr (0555, root, root) /var/run/openvpn
 
 %changelog
+* Wed Mar 20 2013 - YAMAMOTO Takashi
+- degrade the version to 2.1.14
+- build with gcc by default
 * Tue Dec 10 2012 - YAMAMOTO Takashi
 - Corrected dependency.
 * Tue Nov 20 2012 - YAMAMOTO Takashi

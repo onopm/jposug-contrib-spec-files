@@ -10,7 +10,7 @@
 
 Name:		SFEnagios
 IPS_package_name:        diagnostic/nagios
-Version:	3.4.3
+Version:	3.5.0
 Summary:	Host/service/network monitoring program
 Group:		Applications/System
 License:	GPLv2
@@ -235,10 +235,13 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_includedir}/nagios
 
 %changelog
-* Sat Dev 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Thu Mar 21 2013 umihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.5.0
+
+* Sat Dec 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix attr
 
-* Wed Dev 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Wed Dec 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.4.3
 
 * Wed Nov 14 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

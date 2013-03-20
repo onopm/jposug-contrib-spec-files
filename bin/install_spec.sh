@@ -34,11 +34,11 @@ PKGNAME=`cat ${S2I} | awk -F: '
 
 echo "Install packages : ${PKGNAME}"
 if [ ! -z $PKGNAME ];then
-    ${SUPERCMD} pkg install -v ${PKGNAME}
+    sudo pkg install -v ${PKGNAME}
     RES=$?
     if [ ${RES} = 0 -o ${RES} = 4 ] ; then
 	echo Get info files ${INFONAME}
-	${SUPERCMD} pkg info ${PKGNAME} > ${INFONAME}
+	sudo pkg info ${PKGNAME} > ${INFONAME}
     fi
     exit $RES
 else

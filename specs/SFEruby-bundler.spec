@@ -8,7 +8,7 @@
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
 %define tarball_name    bundler
-%define tarball_version 1.2.3
+%define tarball_version 1.3.4
 
 Summary: bundler
 Name: SFEruby-bundler
@@ -93,6 +93,8 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Sat Mar 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.3.4
 * Mon Feb 04 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify to success building packages
 * Thu Nov 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

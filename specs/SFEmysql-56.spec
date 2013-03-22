@@ -17,7 +17,7 @@ License:		 GPL v2
 Group:		System/Databases
 Url:                     http://www.mysql.com/
 # Source:                  http://dev.mysql.com/get/Downloads/MySQL-%{major_version}/mysql-%{version}.tar.gz/from/http://cdn.mysql.com/
-Source:                  http://dev.mysql.com/get/Downloads/MySQL-%{major_version}/mysql-%{version}.tar.gz
+Source:                  http://cdn.mysql.com/Downloads/MySQL-%{major_version}/mysql-%{version}.tar.gz
 Source1:                 mysql_56
 Source2:                 mysql_56.xml
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
@@ -51,7 +51,6 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
     CPUS=1
 fi
 
-cmake .
 cmake . -DBUILD_CONFIG=mysql_release \
     -DFEATURE_SET="community" \
     -DCMAKE_INSTALL_PREFIX="%{_prefix}/%{major_version}" \
@@ -62,7 +61,6 @@ cmake . -DBUILD_CONFIG=mysql_release \
     -DENABLE_DTRACE=ON \
     -DWITH_EMBEDDED_SERVER=ON \
     -DWITH_READLINE=ON
-
 
 gmake -j$CPUS
 gmake -j$CPUS test
@@ -77,8 +75,6 @@ mkdir -p $RPM_BUILD_ROOT/lib/svc/method
 install -m 0555 %{SOURCE1} $RPM_BUILD_ROOT/lib/svc/method
 mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/application/database
 install -m 0444 %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application/database
-
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -133,5 +129,7 @@ user ftpuser=false gcos-field="MySQL Reserved UID" username="mysql" password=NP 
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Sat Mar 23 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix source url
 * Fri Mar 15 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

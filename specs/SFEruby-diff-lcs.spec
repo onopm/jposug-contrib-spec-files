@@ -2,20 +2,20 @@
 %include default-depend.inc
 
 %define gemname diff-lcs
-%define gemdir18 %(ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
 %define bindir18 /usr/ruby/1.8/bin
-%define gemdir19 %(ruby19 -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
 
 %define tarball_name    diff-lcs
-%define tarball_version 1.1.3
+%define tarball_version 1.2.1
 
 Summary: %{gemname}
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/diff-lcs
-Version: 1.1.3
+Version: 1.2.1
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
@@ -88,5 +88,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Sun Mar 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2.1
 * Wed Nov 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

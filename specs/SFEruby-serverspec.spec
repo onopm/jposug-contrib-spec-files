@@ -12,7 +12,7 @@
 Summary: RSpec tests for your provisioned servers
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/serverspec
-Version: 0.2.3
+Version: 0.2.7
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -21,6 +21,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildRequires:  runtime/ruby-18
 Requires:       runtime/ruby-18
 Requires:       library/ruby-18/net-ssh
+Requires:       library/ruby-18/rspec
+Requires:       library/ruby-18/rake
 
 %description
 RSpec tests for your provisioned servers
@@ -31,6 +33,7 @@ Summary: RSpec tests for your provisioned servers
 BuildRequires:  runtime/ruby-19
 Requires:       runtime/ruby-19
 Requires:       library/ruby-19/net-ssh
+Requires:       library/ruby-19/rspec
 
 %description 19
 RSpec tests for your provisioned servers
@@ -112,6 +115,8 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Fri Apr 12 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.2.7 and add Requires
 * Thu Apr  9 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.2.3
 * Thu Apr  4 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

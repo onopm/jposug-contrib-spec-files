@@ -7,7 +7,7 @@
 Summary: Ruby module for collecting simple facts about a host operating system
 Name: facter
 IPS_package_name:        runtime/ruby-18/facter
-Version: 1.6.18
+Version: 1.7.0
 License: ASL 2.0
 Group: System Environment/Base
 URL: http://www.puppetlabs.com/puppet/related-projects/%{name}/
@@ -56,6 +56,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Apr 16 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update to 1.7.0
+
 * Thu Mar 14 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update to 1.6.18
 

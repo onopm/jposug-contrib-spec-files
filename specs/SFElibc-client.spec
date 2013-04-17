@@ -1,3 +1,6 @@
+#
+# spec file for package SFElibc-client-2007
+#
 %include Solaris.inc
 %include packagenamemacros.inc
 %define cc_is_gcc 1
@@ -19,7 +22,7 @@ IPS_Package_Name:       library/mail/lib%{soname}-%{somajver}
 License: ASL 2.0 
 Group: 	 System Environment/Daemons
 URL:	 http://www.washington.edu/imap/
-#SUNW_Copyright:      SFElibc-client.copyright
+SUNW_Copyright:      %{name}.copyright
 # Old (non-latest) releases live at  ftp://ftp.cac.washington.edu/imap/old/
 Source0: ftp://ftp.cac.washington.edu/imap/imap-%{somajver}%{sominver}.tar.gz
 #BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -28,9 +31,15 @@ Patch1: imap-2007-paths.patch
 Patch5: imap-2007e-overflow.patch
 Patch9: imap-2007e-shared.patch
 Patch10: imap-2007e-authmd5.patch
+Patch20: imap-2007e-solaris.patch
+Patch21: imap-2007e-solaris2.patch
 #BuildRequires: krb5-devel, openssl-devel, pam-devel
 BuildRequires: %{pnm_buildrequires_krb}
+Requires: %{pnm_requires_krb}
 BuildRequires: %{pnm_buildrequires_library_security_openssl}
+Requires: %{pnm_requires_library_security_openssl}
+BuildRequires: %{pnm_buildrequires_gss}
+Requires: %{pnm_requires_gss}
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
@@ -44,10 +53,10 @@ the popular PINE mail reader, the University of Washington's IMAP server
 and PHP.
 
 %package devel
-IPS_Package_Name:       library/mail/libc-client-2007/developer
+IPS_Package_Name:       library/mail/lib%{soname}-%{somajver}/developer
 Summary: Development tools for programs which will use the IMAP library.
 Group: Development/Libraries
-Requires: libc-client = %{version}-%{release}
+Requires: library/mail/lib%{soname}-%{somajver}
 
 %description devel
 The c-client-devel package contains the header files and static libraries
@@ -62,7 +71,8 @@ chmod -R u+w .
 
 %patch9 -p1 -b .shared
 %patch10 -p1 -b .authmd5
-
+%patch20 -p0
+%patch21 -p0
 
 %build
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
@@ -90,7 +100,7 @@ export EXTRACFLAGS="$EXTRACFLAGS -fno-strict-aliasing"
 echo -e "y\ny" | \
 #make %{?_smp_mflags} lnp \
 #SPECIALS="GSSDIR=${GSSDIR} LOCKPGM=%{_sbindir}/mlock SSLCERTS=/etc/openssl/certs SSLDIR=%{ssldir} SSLINCLUDE=%{_includedir}/openssl SSLKEYS=%{ssldir}/private SSLLIB=%{_libdir}" \
-make -j$CPUS lnp \
+make -j$CPUS gso \
 IP=6 \
 EXTRACFLAGS="$EXTRACFLAGS" \
 EXTRALDFLAGS="$EXTRALDFLAGS" \
@@ -135,15 +145,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc LICENSE.txt NOTICE SUPPORT 
 %doc docs/RELNOTES docs/*.txt
-%ghost %config(missingok,noreplace) %{_sysconfdir}/c-client.cf
+#%ghost %config(missingok,noreplace) %{_sysconfdir}/c-client.cf
+%config(noreplace) %{_sysconfdir}/c-client.cf
 %{_libdir}/lib%{soname}.so.*
 
 %files devel
-%defattr(-,root,root)
+%defattr (-, root, bin)
 %{_includedir}/imap
 %{_libdir}/lib%{soname}.so
 
 %changelog
+* Tue 16 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Initial commit for Openindiana
+
 * Wed May  5 2010 Joe Orton <jorton@redhat.com> - 2007e-11
 - update to 2007e, merge with Fedora uw-imap spec (#586875)
 
@@ -234,4 +248,3 @@ rm -rf $RPM_BUILD_ROOT
 * Sat Feb 14 2004 Kaj J. Niemi <kajtzu@fi.basen.net> 0:2002e-0.1
 - c-client 2002e is based on imap-2002d
 - Build shared version, build logic is copied from FreeBSD net/cclient
-

@@ -7,7 +7,7 @@
 %define _gpp g++
 %include base.inc
 
-%define with_cclient 0
+%define with_cclient 1
 %define with_pgsql 0
 %define with_mysql 1
 %define with_unixodbc 1
@@ -22,7 +22,7 @@
 %define build_rpm_macros 0
 %define skip_prep 0
 %define skip_build 0
-%define skip_check 0
+%define skip_check 1
 
 %define contentdir  /var/apache2/2.2/htdocs
 # API/ABI check
@@ -214,6 +214,10 @@ Group: Development/Languages
 #Requires: php-common = %{version}-%{release}
 #Obsoletes: mod_php3-imap, stronghold-php-imap
 Requires: web/php-53
+Requires: library/mail/libc-client-2007
+Requires: library/mail/libc-client-2007/developer
+BuildRequires: library/mail/libc-client-2007
+BuildRequires: library/mail/libc-client-2007/developer
 
 %description imap
 The php-imap package contains a dynamic shared object that will
@@ -224,7 +228,7 @@ add support for the IMAP protocol to PHP.
 # standard package of php-53
 Summary: A module for PHP applications that use LDAP
 Group: Development/Languages
-Requires: php-common = %{version}-%{release}
+#Requires: php-common = %{version}-%{release}
 #Obsoletes: mod_php3-ldap, stronghold-php-ldap
 #BuildRequires: cyrus-sasl-devel, openldap-devel, openssl-devel
 Requires: web/php-53
@@ -507,7 +511,7 @@ support for using the ICU library to PHP.
 IPS_package_name: web/php-53/extension/php-enchant
 Summary: Human Language and Character Encoding Support
 Group: System Environment/Libraries
-Requires: php-common = %{version}-%{release}
+#Requires: php-common = %{version}-%{release}
 #BuildRequires: enchant-devel >= 1.2.4
 BuildRequires: %{pnm_buildrequires_library_spell_checking_enchant}
 Requires: web/php-53
@@ -1138,6 +1142,9 @@ rm files.*
 %files enchant -f files.enchant
 
 %changelog
+* Thr Apr 18 2013 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
+- Ready for imap
+
 * Feb 07 2013 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
 - Fix that spec does not make the file .proto.
 

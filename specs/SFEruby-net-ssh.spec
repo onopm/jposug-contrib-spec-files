@@ -12,7 +12,7 @@
 Summary: Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. 
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/net-ssh
-Version: 2.6.6
+Version: 2.6.7
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -88,5 +88,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Fri Apr 19 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.6.7
 * Tue Mar 26 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

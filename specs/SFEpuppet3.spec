@@ -31,6 +31,7 @@ Requires:      library/ruby-18/hiera
 Requires:      library/ruby-18/hiera/puppet
 Requires:      library/ruby-18/hiera/json
 Requires:      archiver/gnu-tar
+Requires:      system/management/puppet3/common = %{version}
 
 %description
 Puppet lets you centrally manage every important aspect of your system using a
@@ -46,6 +47,16 @@ Requires:         system/management/puppet3 = %{version}
 Requires:         library/ruby-18/hiera
 Requires:         library/ruby-18/hiera/puppet
 Requires:         library/ruby-18/hiera/json
+Requires:         system/management/puppet3/common = %{version}
+
+%description master
+Provides the central puppet server daemon which provides manifests to clients.
+The server can also function as a certificate authority and file server.
+
+%package common
+IPS_package_name: system/management/puppet3/common
+Group:		  Applications/System
+Summary:          the puppet system management tool
 
 %description master
 Provides the central puppet server daemon which provides manifests to clients.
@@ -94,7 +105,7 @@ cd %{buildroot}/usr/bin
 ln -s ../../%{_bindir}/extlookup2hiera .
 ln -s ../../%{_bindir}/puppet .
 
-%actions master
+%actions common
 group groupname="puppet"
 user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=NP group="puppet"
 
@@ -179,10 +190,15 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 %class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/system/management/puppetmaster.xml
 %attr (0555, root, bin) /lib/svc/method/puppet-master
 
+%files master
+%defattr(-, root, bin, 0755)
+
 %clean
 rm -rf %{buildroot}
 
 %changelog
+* Fri Apr 19 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add package system/management/puppet3/common
 * Wed Mar 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.1.1
 * Tue Feb 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

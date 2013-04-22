@@ -1,12 +1,10 @@
 #
-# spec file for package SFEpython3
+# spec file for package SFEruby-19
 #
 #
-
 %define _name ruby
 %define version 1.9.3
-%define unmangled_version 1.9.3
-%define patchlevel 385
+%define patchlevel 392
 
 %include Solaris.inc
 %include packagenamemacros.inc
@@ -24,17 +22,39 @@ IPS_component_version: %{version}.%{patchlevel}
 License: GPL
 Source: http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-%{version}-p%{patchlevel}.tar.gz
 Url: http://www.ruby-lang.org/
+Requires: %{pnm_requires_gnu_dbm}
+BuildRequires: %{pnm_buildrequires_gnu_dbm}
+Requires: %{pnm_requires_library_libffi}
+BuildRequires: %{pnm_buildrequires_library_libffi}
+Requires: %{pnm_requires_library_ncurses}
+BuildRequires: %{pnm_buildrequires_library_ncurses}
+Requires: %{pnm_requires_library_readline}
+BuildRequires: %{pnm_buildrequires_library_readline}
+Requires: %{pnm_requires_library_security_openssl}
+BuildRequires: %{pnm_buildrequires_library_security_openssl}
+Requires: library/text/yaml 
+BuildRequires: library/text/yaml
+Requires:       %{pnm_requires_library_zlib}
+BuildRequires:  %{pnm_buildrequires_library_zlib}
+Requires:      system/library/math/header-math
+BuildRequires: system/library/math/header-math
 
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
-%define mimpure_text
 %else
 BuildRequires: developer/gcc-46
 Requires:      system/library/gcc-runtime
 %endif
 
+# OpenSolaris IPS Manifest Fields
+#Meta(pkg.depend.runpath):usr/gnu/lib/
+
 %description
+Ruby is the interpreted scripting language for quick and easy
+object-oriented programming.  It has many features to process text
+files and to do system management tasks (as in Perl).  It is simple,
+straight-forward, and extensible.
 
 %prep
 # %setup -c -n ruby-%{version}-p%{patchlevel}
@@ -43,6 +63,8 @@ Requires:      system/library/gcc-runtime
 export CXXFLAGS="%cxx_optflags"
 export LDFLAGS="%_ldflags %gnu_lib_path"
 export CFLAGS="%optflags"
+export CC=/usr/bin/gcc
+export CXX=/usr/bin/g++
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
     CPUS=1
@@ -62,9 +84,7 @@ ac_cv_func_dl_iterate_phdr=no \
     --disable-option-checking \
     --with-openssl \
     --with-tk-dir=/usr \
-    --with-curses-dir=/usr \
-    CC=/usr/bin/gcc \
-    CXX=/usr/bin/g++
+    --with-curses-dir=/usr
 make -j$CPUS
 
 %install
@@ -90,6 +110,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/1.9
 
 %changelog
+* Mon Apr 22 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- bump to patch level 392
 * Mon Feb 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to patch level 385
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>

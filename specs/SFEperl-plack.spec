@@ -75,6 +75,8 @@ Requires:	library/perl-5/file-sharedir-512
 Requires:       library/perl-5/stream-buffered-512
 Requires:       library/perl-5/hash-multivalue-512
 Requires:       library/perl-5/LWP-512
+Requires:	library/perl-5/devel-stacktrace-512
+Requires:	library/perl-5/devel-stacktrace-ashtml-512
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -128,6 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Apr 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Sun Oct 28 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0009
 - add BuildRequires: library/perl-5/stream-buffered

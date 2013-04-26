@@ -9,20 +9,20 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 3.5
+%define tarball_version 3.6
 %define tarball_name    common-sense
 
 Name:		SFEperl-common-sense
 IPS_package_name: library/perl-5/common-sense
-Version:	3.5
-IPS_component_version: 3.5
+Version:	3.6
+IPS_component_version: 3.6
 Summary:	common sense
 License:	Artistic
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 Url:		http://search.cpan.org/~mlehmann/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
-SUNW_Copyright: %{name}.copyright
+# SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/M/ML/MLEHMANN/common-sense-%{tarball_version}.tar.gz
 
 BuildRequires:	runtime/perl-584
@@ -96,5 +96,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Fri Apr 26 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.6
 * Sun Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

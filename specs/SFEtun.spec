@@ -7,9 +7,8 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define src_name tuntap
-%define src_url http://www.whiteboard.ne.jp/~admin2/tuntap/source/%{src_name}
-
+%define src_name master
+%define src_url http://github.com/kaizawa/tuntap/archive
 %define usr_kernel /usr/kernel
 %define drv_base %{usr_kernel}/drv
 
@@ -20,7 +19,7 @@ URL:		http://www.whiteboard.ne.jp/~admin2/tuntap/
 License:        GPLv2
 SUNW_Copyright:	tuntap.copyright
 Meta(info.upstream): Kazuyoshi Aizawa <admin2@whiteboard.ne.jp>
-Version:	1.3.0
+Version:	1.4.201207
 Source:		%{src_url}/%{src_name}.tar.gz
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
@@ -41,7 +40,7 @@ SUNW_BaseDir:            %{_basedir}
 Requires:                %{name}
 
 %prep
-%setup -q -n %{src_name}
+%setup -q -n tuntap-%{src_name}
 
 %build
 autoconf -f
@@ -106,6 +105,8 @@ driver name=tap
 %endif
 
 %changelog
+* Sun Apr 28 2013 - YAMAMOTO Takashi
+- Bump to 1.4 (2012/7)
 * Thu Nov 27 2012 - YAMAMOTO Takashi
 - changed package name
 * Thu Oct 06 2011 - Milan Jurik

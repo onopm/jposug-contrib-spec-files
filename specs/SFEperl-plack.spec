@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 1.0009
+%define tarball_version 1.0024
 %define tarball_name    Plack
 
 Name:		SFEperl-plack
 IPS_package_name: library/perl-5/plack
-Version:	1.0009
-IPS_component_version: 1.9
+Version:	1.0024
+IPS_component_version: 1.24
 Summary:	Plack
 License:	Artistic
 Distribution:   OpenSolaris
@@ -68,6 +68,7 @@ BuildRequires:	library/perl-5/hash-multivalue-512
 BuildRequires:	library/perl-5/devel-stacktrace-512
 BuildRequires:	library/perl-5/devel-stacktrace-ashtml-512
 BuildRequires:  library/perl-5/stream-buffered-512
+BuildRequires:  library/perl-5/file-sharedir-install-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/test-tiny-512
 Requires:	library/perl-5/http-body-512
@@ -77,6 +78,7 @@ Requires:       library/perl-5/hash-multivalue-512
 Requires:       library/perl-5/LWP-512
 Requires:	library/perl-5/devel-stacktrace-512
 Requires:	library/perl-5/devel-stacktrace-ashtml-512
+Requires:	library/perl-5/apache-logformat-compiler-512
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -130,6 +132,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu May 02 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0024
 * Mon Apr 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Sun Oct 28 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

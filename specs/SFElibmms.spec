@@ -13,9 +13,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 %define cc_is_gcc 0
-%define _gpp g++
-%include base.inc
 %define _prefix /usr
+
+%ifarch amd64 sparcv9
+%include arch64.inc
+%use libmms_64 = libmms.spec
+%endif
+%include base.inc
 %use libmms = libmms.spec
 
 Name:		SFElibmms
@@ -40,6 +44,7 @@ Requires:       %{pnm_requires_system_library}
 BuildRequires:  %{pnm_buildrequires_system_library}
 
 %package devel
+IPS_Package_Name:	library/video/libmms/developer
 Summary:	%{summary} - development files
 SUNW_BaseDir:	%{_basedir}
 %include default-depend.inc
@@ -48,16 +53,28 @@ Requires:	%{name}
 %prep
 rm -rf %name-%version
 mkdir -p %name-%version
-%libmms.prep -d %name-%version
+
+%ifarch amd64 sparcv9
+mkdir %name-%version/%_arch64
+%libmms_64.prep -d %name-%version/%_arch64
+%endif
+
+mkdir %name-%version/%{base_arch}
+%libmms.prep -d %name-%version/%{base_arch}
 
 %build
-#export CFLAGS="%optflags"
-#export RPM_OPT_FLAGS="$CFLAGS"
-%libmms.build -d %name-%version
+%ifarch amd64 sparcv9
+%libmms_64.build -d %name-%version/%_arch64
+%endif
+
+%libmms.build -d %name-%version/%{base_arch}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%libmms.install -d %name-%version
+%ifarch amd64 sparcv9
+%libmms_64.install -d %name-%version/%_arch64
+%endif
+%libmms.install -d %name-%version/%{base_arch}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -84,6 +101,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat May 03 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- to use same spec file
 * Thr May 01 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - 64 bit ready
 * Wed Jul 20 2011 - Alex Viskovatoff

@@ -53,7 +53,7 @@ esac
 
 
 LC_ALL=C ${PKGTOOL} build-only \
-  --autodeps --nonotify --specdirs=`pwd`:`pwd`/include\
+  --autodeps --nonotify --specdirs=`pwd`:`pwd`/include:`pwd`/base-specs \
   --patchdirs=`pwd`/patches \
   --sourcedirs=`pwd`/ext-sources:`pwd`/copyright:`pwd`/include \
   ${REPTYPE} \

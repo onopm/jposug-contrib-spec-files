@@ -10,7 +10,7 @@
 %define _prefix /usr/mysql
 %define _var_prefix /var/mysql
 %define tarball_name     mysql
-%define tarball_version  5.6.10
+%define tarball_version  5.6.11
 %define major_version	 5.6
 %define prefix_name      SFEmysql-56
 %define _basedir         %{_prefix}/%{major_version}
@@ -18,7 +18,7 @@
 Name:                    %{prefix_name}
 IPS_package_name:        database/mysql-56
 Summary:	         MySQL 5.6
-Version:                 5.6.10
+Version:                 5.6.11
 License:		 GPL v2
 Group:		System/Databases
 Url:                     http://www.mysql.com/
@@ -98,7 +98,8 @@ cmake . -DBUILD_CONFIG=mysql_release \
     -DENABLED_LOCAL_INFILE=ON \
     -DENABLE_DTRACE=ON \
     -DWITH_EMBEDDED_SERVER=ON \
-    -DWITH_READLINE=ON
+    -DWITH_READLINE=ON \
+    -DSYSCONFDIR=/etc/mysql
 
 gmake -j$CPUS
 gmake -j$CPUS test
@@ -113,6 +114,8 @@ mkdir -p $RPM_BUILD_ROOT/lib/svc/method
 install -m 0555 %{SOURCE1} $RPM_BUILD_ROOT/lib/svc/method
 mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/application/database
 install -m 0444 %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application/database
+mkdir -p $RPM_BUILD_ROOT/etc/mysql/5.6
+install support-files/my-default.cnf $RPM_BUILD_ROOT/etc/mysql/5.6/my.cnf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -150,6 +153,11 @@ user ftpuser=false gcos-field="MySQL Reserved UID" username="mysql" password=NP 
 %dir %attr (0755, root, sys) /var/svc/manifest/application/database
 %attr (0444, root, sys) /var/svc/manifest/application/database/mysql_56.xml
 
+%dir %attr (0755, root, sys) /etc
+%dir %attr (0755, root, bin) /etc/mysql
+%dir %attr (0755, root, bin) /etc/mysql/5.6
+%attr (0755, root, bin) /etc/mysql/5.6/my.cnf
+
 %files library
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
@@ -167,6 +175,9 @@ user ftpuser=false gcos-field="MySQL Reserved UID" username="mysql" password=NP 
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Sat Mar 23 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.6.11
+- add -DSYSCONFDIR to specify my.cnf directory
 * Mon Apr 15 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - build with gcc by default
 * Sat Mar 23 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

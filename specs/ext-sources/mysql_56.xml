@@ -15,7 +15,7 @@
 <service_bundle type='manifest' name='mysql'>
 
 <service
-        name='application/database/mysql'
+        name='application/database/mysql_56'
         type='service'
         version='1'>
 

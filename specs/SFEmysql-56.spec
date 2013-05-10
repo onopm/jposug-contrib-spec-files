@@ -36,6 +36,7 @@ BuildRequires: developer/gcc-46
 Requires:      system/library/gcc-runtime
 %endif
 %include default-depend.inc
+Requires:      database/mysql-common
 
 %description
 The MySQL(TM) software delivers a very fast, multi-threaded, multi-user,
@@ -120,10 +121,6 @@ install support-files/my-default.cnf $RPM_BUILD_ROOT/etc/mysql/5.6/my.cnf
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%actions
-group groupname="mysql"
-user ftpuser=false gcos-field="MySQL Reserved UID" username="mysql" password=NP group="mysql"
-
 %files
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) /lib/svc
@@ -178,6 +175,8 @@ user ftpuser=false gcos-field="MySQL Reserved UID" username="mysql" password=NP 
 * Sat Mar 23 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.11
 - add -DSYSCONFDIR to specify my.cnf directory
+- delete %actions to avoid conflict with database/mysql-common
+- add Requires
 * Mon Apr 15 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - build with gcc by default
 * Sat Mar 23 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

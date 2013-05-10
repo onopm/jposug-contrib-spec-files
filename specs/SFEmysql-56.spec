@@ -27,7 +27,7 @@ Source:                  http://cdn.mysql.com/Downloads/MySQL-%{major_version}/m
 Source1:                 mysql_56
 Source2:                 mysql_56.xml
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
-BuildRequires: cmake
+BuildRequires: developer/build/cmake
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
@@ -283,6 +283,7 @@ rm -rf $RPM_BUILD_ROOT
 - delete %actions to avoid conflict with database/mysql-common
 - add Requires
 - support mediator
+- modify BuildRequires. cmake -> developer/build/cmake
 * Mon Apr 15 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - build with gcc by default
 * Sat Mar 23 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -277,7 +277,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
-* Sat Mar 23 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Fri May 10 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.11
 - add -DSYSCONFDIR to specify my.cnf directory
 - delete %actions to avoid conflict with database/mysql-common

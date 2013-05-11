@@ -20,14 +20,13 @@ Name:                   SFEpython27-setuptools
 IPS_package_name:       library/python-2/SFEsetuptools-27
 Summary:                Distribute (fork of Setuptools) is a collection of extensions to Distutils
 URL:                    http://pypi.python.org/pypi/distribute
-Version:                0.6.21
+Version:                0.6.24
 Source:                 %{src_url}/%{src_name}-%{version}.tar.gz
 SUNW_BaseDir:           %{_basedir}
 BuildRoot:              %{_tmppath}/%{name}-%{version}-build
 License:                PSF-2 license
 SUNW_Copyright:         SFEpython27-setuptools.copyright
 
-BuildRequires:          SFEpython27
 Requires:               SFEpython27
 
 %prep
@@ -50,7 +49,6 @@ cd ../%{src_name}-%{version}-64
 %install
 cd %{src_name}-%{version}
 %{execpython} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{pyprefix}
-
 %ifarch amd64 sparcv9
 cd ../%{src_name}-%{version}-64
 %{execpython64} setup.py install --root=$RPM_BUILD_ROOT --prefix=%{pyprefix}
@@ -91,6 +89,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat May 11 2013 - Osamu Tabata<cantimerny.g@gmail.com>
+- Bump up to 0.6.24
 * Sun Sep 21 2012 - Osamu Tabata<cantimerny.g@gmail.com>
 - Support for Solaris11
 * Sun May 11 2012 - Osamu Tabata<cantimerny.g@gmail.com>

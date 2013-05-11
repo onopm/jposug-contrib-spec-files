@@ -87,11 +87,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
-# %attr(755,root,bin) %dir %{_bindir}
-#%attr (555, root, bin) %{_bindir}/l4p-tmpl
 
 %files 584
 %defattr (-, root, bin)
@@ -104,6 +101,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/5.12/bin
 
 %changelog
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
+* Sun Jan 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %files
 * Sun Jun 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512
 * Sun May 06 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -4,6 +4,7 @@
 # includes module(s): ldns
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define src_name	ldns
 
@@ -19,8 +20,8 @@ Source:		http://www.nlnetlabs.nl/downloads/%{src_name}/%{src_name}-%{version}.ta
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
-BuildRequires:	SUNWopenssl-include
-Requires:	SUNWopenssl-libraries
+BuildRequires:	%{pnm_buildrequires_SUNWopenssl_include}
+Requires:	%{pnm_requires_SUNWopenssl_libraries}
 
 %description
 The goal of ldns is to simplify DNS programming, it supports recent RFCs like the DNSSEC documents, and allows developers to easily create software conforming to current RFCs, and experimental software for current Internet Drafts.
@@ -65,6 +66,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}
 
 %changelog
+* Sun Dec 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- ues pnmacro
 * Wed Jun 06 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.6.13
 - add --disable-ecdsa because ecdsa is enabled by default

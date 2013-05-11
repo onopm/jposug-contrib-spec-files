@@ -17,7 +17,7 @@
 %define _lib64  lib64
 
 Name:                SFEpython27
-IPS_Package_Name:    runtime/SFEpython-273
+IPS_Package_Name:    runtime/SFEpython27
 Summary:             The Python interpreter, libraries and utilities
 Group:               Development/Python
 Version:             %{version}
@@ -176,6 +176,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat May 11 2013 -  Osamu Tabata<cantimerny.g@gmail.com>
+- Modified IPS_Package_Name
 * Wed Sep 17 2012 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Add pyconfig.h
 * Wed Sep 17 2012 -  Osamu Tabata<cantimerny.g@gmail.com>

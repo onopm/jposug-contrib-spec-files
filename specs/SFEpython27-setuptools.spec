@@ -27,6 +27,7 @@ BuildRoot:              %{_tmppath}/%{name}-%{version}-build
 License:                PSF-2 license
 SUNW_Copyright:         SFEpython27-setuptools.copyright
 
+BuildRequires:          SFEpython27
 Requires:               SFEpython27
 
 %prep
@@ -89,6 +90,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat May 11 2013 - Osamu Tabata<cantimerny.g@gmail.com>
+- Add BuildRequire
 * Sat May 11 2013 - Osamu Tabata<cantimerny.g@gmail.com>
 - Bump up to 0.6.24
 * Sun Sep 21 2012 - Osamu Tabata<cantimerny.g@gmail.com>

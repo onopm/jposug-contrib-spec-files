@@ -12,7 +12,7 @@
 Summary: Capistrano is a utility and framework for executing commands in parallel on multiple remote machines, via SSH.
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/capistrano
-Version: 2.14.2
+Version: 2.15.4
 License: as is
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -107,5 +107,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Mon May 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.15.4
 * Tue Apr 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

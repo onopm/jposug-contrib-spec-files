@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.12
+Version:   2.0.14
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -92,6 +92,8 @@ Requires: library/perl-5/cache-memcached-512
 # Requires(preun): /sbin/chkconfig
 # Requires(preun): /sbin/service
 # Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+# mysql plugin requires Cache::Cache
+Requires: library/perl-5/cache-cache-512
 
 %description node
 Munin is a highly flexible and powerful solution used to create graphs of
@@ -414,6 +416,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Mon May 13 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.14
+- add Requires
 * Sat Mar 23 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.12
 * Wed Feb 20 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

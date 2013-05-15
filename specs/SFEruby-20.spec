@@ -1,12 +1,11 @@
 #
-# spec file for package SFEpython3
-#
+# spec file for package SFEruby-20
 #
 
 %define _name ruby
 %define version 2.0.0
 %define unmangled_version 2.0.0
-%define patchlevel 0
+%define patchlevel 195
 
 %include Solaris.inc
 %include packagenamemacros.inc
@@ -93,6 +92,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/2.0
 
 %changelog
+* Wed May 15 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to patchlevel 195
 * Sat Mar 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires and Requires because gem command requires library/text/yaml
 * Thu Mar 07 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

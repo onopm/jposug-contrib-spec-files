@@ -4,7 +4,7 @@
 #
 %define _name ruby
 %define version 1.9.3
-%define patchlevel 392
+%define patchlevel 429
 
 %include Solaris.inc
 %include packagenamemacros.inc
@@ -36,14 +36,16 @@ Requires: library/text/yaml
 BuildRequires: library/text/yaml
 Requires:       %{pnm_requires_library_zlib}
 BuildRequires:  %{pnm_buildrequires_library_zlib}
-Requires:      system/library/math/header-math
-BuildRequires: system/library/math/header-math
 
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
+BuildRequires: system/library/math
+Requires:      system/library/math
 Requires:      system/library/gcc-45-runtime
 %else
 BuildRequires: developer/gcc-46
+BuildRequires: system/library/math/header-math
+Requires:      system/library/math/header-math
 Requires:      system/library/gcc-runtime
 %endif
 
@@ -110,6 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/1.9
 
 %changelog
+* Wed May 15 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to patchlevel 429 and modify BuildRequires/Requires for Solaris 11
 * Mon Apr 22 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - bump to patch level 392
 * Mon Feb 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

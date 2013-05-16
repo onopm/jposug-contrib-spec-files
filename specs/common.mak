@@ -20,5 +20,5 @@ PUBLISH_REPOSITORY=../bin/publish_repository.sh
 	cat ~/packages/PKGMAPS/proto/$@ > $@
 
 .proto.info:
-	${SUPERCMD} pkg refresh $(REPOSITRY)
+	sudo pkg refresh $(REPOSITRY)
 	$(INSTALL_SPEC) $<

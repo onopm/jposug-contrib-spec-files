@@ -22,14 +22,14 @@ depend_accurately:: predepend
 	$(SPECDEPEND_ACCURATELY) $(BUILDLIST) >> $(TARGETMAK)
 
 preinstall::
-	${SUPERCMD} pkg install -v $(PRE_INSTALL)
+	sudo pkg install -v $(PRE_INSTALL)
 
 clean::
 	rm -f $(TARGET) $(TARGETMAK) $(patsubst %.info,%.proto,$(TARGET))
 
 publish:: 
-	${SUPERCMD} $(PUBLISH_REPOSITORY) publish /var/pkglocal rpool/pkg
+	sudo $(PUBLISH_REPOSITORY) publish /var/pkglocal rpool/pkg
 
 release:: 
-	${SUPERCMD} $(PUBLISH_REPOSITORY) release /var/pkgrelease/root rpool/pkg
+	sudo $(PUBLISH_REPOSITORY) release /var/pkgrelease/root rpool/pkg
 

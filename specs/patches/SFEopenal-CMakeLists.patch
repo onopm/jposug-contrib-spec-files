@@ -1,0 +1,11 @@
+--- CMakeLists.txt.orig	2013-05-11 20:33:59.140531445 +0900
++++ CMakeLists.txt	2013-05-11 20:34:17.813551544 +0900
+@@ -751,7 +751,7 @@
+     ENDIF()
+ 
+     INSTALL(TARGETS openal-info makehrtf
+-            RUNTIME DESTINATION bin
++            RUNTIME DESTINATION "bin${LIB_SUFFIX}"
+             LIBRARY DESTINATION "lib${LIB_SUFFIX}"
+             ARCHIVE DESTINATION "lib${LIB_SUFFIX}"
+     )

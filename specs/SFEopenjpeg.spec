@@ -35,7 +35,7 @@ BuildRequires: %{pnm_buildrequires_image_library_libpng}
 Requires: %{pnm_requires_image_library_libpng}
 BuildRequires: %{pnm_buildrequires_image_library_libtiff}
 Requires: %{pnm_requires_image_library_libtiff}
-BuildRequires: SFEcmake
+BuildRequires: sfe/developer/build/cmake
 
 %package devel
 Summary:         %{summary} - development files
@@ -137,6 +137,8 @@ rm -rf %{buildroot}
 #%{_datadir}/pkgconfig/*.pc
 
 %changelog
+* Sun May 19 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- rewrite dependency to use sfe's cmake
 * Sat May 04 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial revision for the jposug
 - bump to 1.5.1

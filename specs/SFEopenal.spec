@@ -44,7 +44,7 @@ BuildRequires: SFElibaudioio-devel
 Requires: SFElibaudioio
 %endif
 
-BuildRequires: developer/build/cmake
+BuildRequires: sfe/developer/build/cmake
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
@@ -136,6 +136,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- rewrite dependency to use sfe's cmake
 * Wed May 16 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Added 64bit build
 * Sun Aug 19 2012 - Thomas Wagner

@@ -35,7 +35,7 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 Requires: %{pnm_requires_SUNWzlib}
 Requires: SUNWlibC
 Requires: %{pnm_buildrequires_SUNWlibms}
-BuildRequires: developer/build/cmake
+BuildRequires: sfe/developer/build/cmake
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
@@ -120,6 +120,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/*
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- change dependency
+* Fri May 03 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Initial revision for the jposug
 * Fri May 03 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial revision for the jposug
 * Sun Jun 24 2012 - Thomas Wagner

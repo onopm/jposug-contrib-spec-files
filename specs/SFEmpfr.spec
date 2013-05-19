@@ -39,8 +39,8 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
 
 %if %SFEgmp
-BuildRequires: SFEgmp-devel
-Requires: SFEgmp
+BuildRequires: library/gmp-5/developer
+Requires: library/gmp-5
 #IPS doesn't honour SUNW_BaseDir 
 ##TODO## ##FIXME##
 #%define SFEgmpbasedir %(pkgparam SFEgmp BASEDIR)
@@ -190,6 +190,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/*
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change dependency
 * Sun May 19 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - added suffix "developer" to IPS package name
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>

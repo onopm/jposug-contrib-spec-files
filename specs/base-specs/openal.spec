@@ -28,7 +28,7 @@ bzcat %{SOURCE} | gtar xf -
 cd openal-soft*
 #%patch1 -p1
 %patch2 -p1
-%patch3 -p0
+%patch3 -p0 -b .sfe.orig
 cd ..
 
 %build
@@ -63,6 +63,7 @@ make install
 %changelog
 * Wed May 16 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Added 64bit build
+- If the ffmpeg-1.2.1 was installed and the OPTION "Build and install example programs" is on, cmake will crash.
 * Sun Aug 19 2012 - Thomas Wagner
 - change to BuildRequires to %{pnm_buildrequires_SUNWaudh}, %include packagenamacros.inc
 - add standard CFLAGS, LDFLAGS

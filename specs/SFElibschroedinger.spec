@@ -42,7 +42,7 @@ BuildRequires:  SFEorc-devel
 Requires:       SFEorc
 BuildRequires:  %{pnm_buildrequires_SUNWgtk_doc}
 BuildRequires:  %{pnm_buildrequires_SUNWliboil}
-BuildRequires:  SUNWgnome-media-devel
+BuildRequires:  %{pnm_buildrequires_SUNWgnome_media_devel}
 
 %package devel
 Summary:                 %{summary} - development files
@@ -141,6 +141,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gtk-doc/html/schroedinger
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Use pnm macros
 * Thr May 16 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial revision for the jposug
 - Use pnm macros

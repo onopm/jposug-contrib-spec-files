@@ -38,8 +38,8 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
 
 %if %SFEgmp
-BuildRequires: SFEgmp-devel
-Requires: SFEgmp
+BuildRequires: library/gmp-5/developer
+Requires: library/gmp-5
 #IPS doesn't honour SUNW_BaseDir
 ##TODO## ##FIXME##
 #%define SFEgmpbasedir %(pkgparam SFEgmp BASEDIR)
@@ -136,6 +136,8 @@ rm -rf %{buildroot}
 %{_includedir}
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change dependency
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - delete sfe prefix from IPS package name
 * Thu 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>

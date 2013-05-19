@@ -270,8 +270,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}
 
 %changelog
-* Sun May 12 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
+* Sun May 19 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial revision for the jposug
+- Added 64bit build except sparcv9
 * Sun Sep 30 2012 - Milan Jurik
 - bump to 1.0
 * Sun Jun 24 2012 - Thomas Wagner

@@ -31,8 +31,13 @@ SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 
 %include default-depend.inc
-BuildRequires: SFEgcc
-Requires: SFEgccruntime
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
+%endif
 BuildRequires: SFEyasm
 
 %package devel
@@ -89,6 +94,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- change dependency
 * Thr May 16 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial revision for the jposug
 * Tue Nov  1 2011 - Alex Viskovatoff

@@ -53,6 +53,7 @@ Requires: SUNWgnu-mp
 Requires: %{pnm_requires_SUNWpostrun}
 
 %package devel
+IPS_Package_Name:	library/mpfr-3/developer
 Summary:	%{summary} - developer files
 SUNW_BaseDir:	%{_basedir}/%{_subdir}
 %include default-depend.inc
@@ -189,6 +190,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/*
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- added suffix "developer" to IPS package name
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - delete sfe prefix from IPS package name
 * Thu Dec 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>

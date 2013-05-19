@@ -48,8 +48,8 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 %define SFEmpfr         %(/usr/bin/pkginfo -q SFEmpfr 2>/dev/null  && echo 1 || echo 0)
 
 %if %SFEmpfr
-BuildRequires: SFEmpfr-devel
-Requires: SFEmpfr
+BuildRequires: library/mpfr-3/developer
+Requires: library/mpfr-3
 #workaround on IPS which is wrong with BASEdir as "/" -> then assume /usr/gnu
 %define SFEmpfrbasedir %(pkgparam SFEmpfr BASEDIR 2>/dev/null | sed -e 's+^/$+/usr/gnu+')
 %else
@@ -171,6 +171,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- change dependency
 * Fri May 03 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial revision for the jposug
 * Thu Jun 21 2012 - Logan Bruns <logan@gedanken.org>

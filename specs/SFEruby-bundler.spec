@@ -4,19 +4,20 @@
 %define gemname bundler
 %define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
+
 %define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
-%define tarball_name    bundler
-%define tarball_version 1.3.4
+%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 
 Summary: bundler
-Name: SFEruby-bundler
+Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/bundler
-Version: 1.2.3
+Version: 1.3.5
 License: MIT
 URL: http://rubygems.org/gems/%{gemname}
-Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
+Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: runtime/ruby-18
@@ -31,29 +32,45 @@ Summary: bundler
 BuildRequires:	runtime/ruby-19
 Requires:	runtime/ruby-19
 
+%package 20
+IPS_package_name: library/ruby-20/bundler
+Summary: bundler
+BuildRequires:	runtime/ruby-20
+Requires:	runtime/ruby-20
+
 %prep
 %setup -q -c -T
-
-tar xvf %{SOURCE0}
-tar zxvf data.tar.gz
-
 
 # ruby 1.8
 mkdir -p .%{gemdir18}
 mkdir -p ./usr/ruby/1.8/bin
 
-gem install --local --install-dir .%{gemdir18} \
-            --bindir ./usr/ruby/1.8/bin \
-            --force %{SOURCE0}
-
-mkdir -p .%{gemdir18}
+mkdir -p .%{gemdir19}
 mkdir -p ./usr/ruby/1.9/bin
 
-gem19 install --local --install-dir .%{gemdir19} \
-            --bindir ./usr/ruby/1.9/bin \
-            --force %{SOURCE0}
+mkdir -p .%{gemdir20}
+mkdir -p ./usr/ruby/2.0/bin
 
 %build
+
+/usr/ruby/1.8/bin/gem install --local --install-dir .%{gemdir18} \
+    --bindir ./usr/ruby/1.8/bin \
+    --no-ri \
+    --no-rdoc \
+    --force %{SOURCE0}
+
+/usr/ruby/1.9/bin/gem install --local --install-dir .%{gemdir19} \
+    --bindir ./usr/ruby/1.9/bin \
+    --no-ri \
+    --no-rdoc \
+    --force %{SOURCE0}
+
+/usr/ruby/2.0/bin/gem install --local --install-dir .%{gemdir20} \
+    --bindir ./usr/ruby/2.0/bin \
+    --no-ri \
+    --no-rdoc \
+    --force %{SOURCE0}
+
 
 %install
 rm -rf %{buildroot}
@@ -76,6 +93,15 @@ cp -a .%{gemdir19}/* \
 rm -rf %{buildroot}%{geminstdir19}/.yardoc/
 rm -rf %{buildroot}%{gemdir19}/doc
 
+# 2.0
+mkdir -p %{buildroot}%{gemdir20}
+mkdir -p %{buildroot}/usr/ruby/2.0/bin
+cp -a .%{gemdir20}/* \
+        %{buildroot}%{gemdir20}/
+
+rm -rf %{buildroot}%{geminstdir20}/.yardoc/
+rm -rf %{buildroot}%{gemdir20}/doc
+
 %clean
 rm -rf %{buildroot}
 
@@ -92,7 +118,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
 
+%files 20
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.0
+
 %changelog
+* Mon May 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.3.5
 * Sat Mar 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.3.4
 * Mon Feb 04 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

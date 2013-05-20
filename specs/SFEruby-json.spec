@@ -2,23 +2,26 @@
 %include default-depend.inc
 
 %define gemname json
-%define gemdir18 %(ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
 %define bindir18 /usr/ruby/1.8/bin
-%define gemdir19 %(ruby19 -rubygems -e 'puts Gem::dir' 2>/dev/null)
+
+%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
 
-%define tarball_name    json
-%define tarball_version 1.7.5
+%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+%define bindir20 /usr/ruby/2.0/bin
 
-Summary: %{gemname}
+
+Summary: This is a JSON implementation as a Ruby extension in C.
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/json
-Version: 1.7.5
+Version: 1.8.0
 License: Ruby License
 URL: http://rubygems.org/gems/%{gemname}
-Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
+Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	runtime/ruby-18
@@ -29,11 +32,20 @@ This is a JSON implementation as a Ruby extension in C.
 
 %package 19
 IPS_package_name: library/ruby-19/json
-Summary: %{gemname}
+Summary: This is a JSON implementation as a Ruby extension in C.
 BuildRequires:	runtime/ruby-19
 Requires:	runtime/ruby-19
 
 %description 19
+This is a JSON implementation as a Ruby extension in C.
+
+%package 20
+IPS_package_name: library/ruby-20/json
+Summary: This is a JSON implementation as a Ruby extension in C.
+BuildRequires:	runtime/ruby-20
+Requires:	runtime/ruby-20
+
+%description 20
 This is a JSON implementation as a Ruby extension in C.
 
 %prep
@@ -42,6 +54,8 @@ mkdir -p .%{gemdir18}
 mkdir -p .%{bindir18}
 mkdir -p .%{gemdir19}
 mkdir -p .%{bindir19}
+mkdir -p .%{gemdir20}
+mkdir -p .%{bindir20}
 
 %build
 # export CONFIGURE_ARGS="--with-cflags='%{optflags}'"
@@ -50,6 +64,8 @@ mkdir -p .%{bindir19}
 /usr/ruby/1.8/bin/gem install --local \
     --install-dir .%{gemdir18} \
     --bindir .%{bindir18} \
+    --no-ri \
+    --no-rdoc \
     -V \
     --force %{SOURCE0}
 
@@ -57,6 +73,17 @@ mkdir -p .%{bindir19}
 /usr/ruby/1.9/bin/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
+    --no-ri \
+    --no-rdoc \
+    -V \
+    --force %{SOURCE0}
+
+# ruby-20
+/usr/ruby/2.0/bin/gem install --local \
+    --install-dir .%{gemdir20} \
+    --bindir .%{bindir20} \
+    --no-ri \
+    --no-rdoc \
     -V \
     --force %{SOURCE0}
 
@@ -73,7 +100,10 @@ mkdir -p %{buildroot}/%{gemdir19}
 cp -a .%{gemdir19}/* \
     %{buildroot}/%{gemdir19}/
 
-rm -rf %{buildroot}%{geminstdir}/.yardoc/
+# ruby-20
+mkdir -p %{buildroot}/%{gemdir20}
+cp -a .%{gemdir20}/* \
+    %{buildroot}/%{gemdir20}/
 
 %clean
 rm -rf %{buildroot}
@@ -89,6 +119,13 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
 
+%files 20
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.0
+
 %changelog
+* Mon May 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.8.0
 * Fri Oct 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

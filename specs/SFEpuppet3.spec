@@ -10,28 +10,27 @@
 %{!?ruby_sitelibdir: %define ruby_sitelibdir %(ruby -rrbconfig -e 'puts Config::CONFIG["sitelibdir"]')}
 %define confdir conf/solaris
 
-Name:           puppet3
-IPS_package_name:        system/management/puppet3
-Version:        3.1.1
-#Release:        0.1rc1%{?dist}
-Release:        1%{?dist}
-Summary:        A network tool for managing many disparate systems
-Group:		Applications/System
-License:        ASL 2.0
-URL:            http://puppetlabs.com
-Source0:        http://puppetlabs.com/downloads/puppet/puppet-%{version}.tar.gz
+Name:             puppet3
+IPS_package_name: system/management/puppet3
+Version:          3.2.1
+Summary:          A network tool for managing many disparate systems
+Group:		  Applications/System
+License:          ASL 2.0
+URL:              http://puppetlabs.com
+Source0:          http://puppetlabs.com/downloads/puppet/puppet-%{version}.tar.gz
 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires: runtime/ruby-18
-BuildRequires: runtime/ruby-18/facter
-Requires:      runtime/ruby-18
-Requires:      runtime/ruby-18/facter
-Requires:      library/ruby-18/hiera
-Requires:      library/ruby-18/hiera/puppet
-Requires:      library/ruby-18/hiera/json
-Requires:      archiver/gnu-tar
-Requires:      system/management/puppet3/common = %{version}
+BuildRequires:    runtime/ruby-18
+BuildRequires:    runtime/ruby-18/facter
+Requires:         runtime/ruby-18
+Requires:         runtime/ruby-18/facter
+Requires:         library/ruby-18/hiera
+Requires:         library/ruby-18/hiera/puppet
+Requires:         library/ruby-18/hiera/json
+Requires:         library/ruby-18/rgen
+Requires:         archiver/gnu-tar
+Requires:         system/management/puppet3/common = %{version}
 
 %description
 Puppet lets you centrally manage every important aspect of your system using a
@@ -47,6 +46,7 @@ Requires:         system/management/puppet3 = %{version}
 Requires:         library/ruby-18/hiera
 Requires:         library/ruby-18/hiera/puppet
 Requires:         library/ruby-18/hiera/json
+Requires:         library/ruby-18/rgen
 Requires:         system/management/puppet3/common = %{version}
 
 %description master
@@ -197,6 +197,9 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
+* Tue May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.2.1
+- add Requires
 * Fri Apr 19 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add package system/management/puppet3/common
 * Wed Mar 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

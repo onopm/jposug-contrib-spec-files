@@ -123,7 +123,11 @@ cd $RPM_BUILD_ROOT/etc/mysql
 ln -s 5.6/my.cnf .
 
 cd $RPM_BUILD_ROOT/usr/mysql
-ln -s 5.6/lib .
+# mysql-51/lib is required by some packages
+# like apr-util-13/dbd-mysql which is required by apache-22
+# and is not mediator ready.
+# then can not create symbolic link to /usr/mysql/lib 
+# ln -s 5.6/lib .
 
 mkdir -p $RPM_BUILD_ROOT/usr/bin
 cd $RPM_BUILD_ROOT/usr/bin
@@ -263,7 +267,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) %{_prefix}/lib
+# mysql-51/lib is required by some packages
+# like apr-util-13/dbd-mysql which is required by apache-22
+# and is not mediator ready.
+# then can not create symbolic link to /usr/mysql/lib 
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) %{_prefix}/lib
 
 %files tests
 %defattr (-, root, bin)
@@ -277,6 +285,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Mon May 27 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- exclude symbolic link to /usr/mysql/lib because mysql-51/library is not mediator ready and conflicts
 * Fri May 10 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.11
 - add -DSYSCONFDIR to specify my.cnf directory

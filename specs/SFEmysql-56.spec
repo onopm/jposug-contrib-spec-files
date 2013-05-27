@@ -276,12 +276,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files tests
 %defattr (-, root, bin)
+%dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
 %attr (0755, root, bin) %{_prefix}/%{major_version}/mysql-test
 %attr (0755, root, bin) %{_prefix}/%{major_version}/sql-bench
 
 %files devel
 %defattr (-, root, bin)
+%dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 

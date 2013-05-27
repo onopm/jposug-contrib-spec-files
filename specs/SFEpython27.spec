@@ -34,10 +34,10 @@ SUNW_Basedir:        %{_basedir}
 SUNW_Copyright:	     Python27.copyright
 
 # OpenSolaris IPS Manifest Fields
-Meta(info.maintainer): A Hettinger <ahettinger@prominic.net>
+Meta(info.maintainer): Osamu Tabata <cantimerny.g@gmail.com>
 Meta(info.upstream):  Guido van Rossum and the Python community <python-dev@python.org>
-Meta(info.repository_url): http://svn.python.org/projects/python/branches/release32-maint
-Meta(info.classification): org.opensolaris.category.2008:Development/Python
+#Meta(info.repository_url): http://svn.python.org/projects/python/branches/release32-maint
+Meta(info.classification): Development Python
 
 
 %description
@@ -67,10 +67,12 @@ cp -rp %{_name}-%{unmangled_version} %{_name}-%{unmangled_version}-64
 %endif
 
 %build
+export CCAS=/usr/bin/cc
+export CC=cc
 
 cd %{_name}-%{unmangled_version}
 CPUS=$(psrinfo | awk '$2=="on-line"{cpus++}END{if(cpus==0){print 1}else{print cpus }}')
-export CFLAGS="-i -xO4 -xspace -xstrconst -mr -mt=yes -I/usr/include"
+export CFLAGS="-i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC -I/usr/include"
 export LDFLAGS="-R%{_prefix}/lib:/usr/lib/ -L%{_prefix}/lib:/usr/lib"
 export LD_OPTIONS="-R%{_prefix}/lib:/usr/lib/ -L%{_prefix}/lib:/usr/lib"
 env CFLAGS="$CFLAGS" ./configure --prefix=%{_prefix} \
@@ -92,7 +94,7 @@ make -j$CPUS
 %ifarch amd64 sparcv9
 cd ../%{_name}-%{unmangled_version}-64
 %patch1 -p0
-export CFLAGS="-i -xO4 -xspace -xstrconst -mr -mt=yes -m64 -I/usr/include"
+export CFLAGS="-i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC -m64 -I/usr/include"
 export LDFLAGS="-m64 -R%{_prefix}/lib64:/usr/lib/%{_arch64}:%{_prefix}/lib -L%{_prefix}/lib64:/usr/lib/%{_arch64}"
 export LD_OPTIONS="-R%{_prefix}/lib64:/usr/lib/%{_arch64}:/usr/sfw/lib/%{_arch64} -L/usr/lib/%{_arch64}:/usr/sfw/lib/%{_arch64}"
 env CFLAGS="$CFLAGS" ./configure --prefix=%{_prefix} \
@@ -176,6 +178,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon May 27 2013 -  Osamu Tabata<cantimerny.g@gmail.com>
+- Compile option modify
 * Sat May 11 2013 -  Osamu Tabata<cantimerny.g@gmail.com>
 - Modified IPS_Package_Name
 * Wed Sep 17 2012 -  Osamu Tabata<cantimerny.g@gmail.com>

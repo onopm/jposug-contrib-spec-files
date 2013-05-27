@@ -265,6 +265,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files library
 %defattr (-, root, bin)
+%dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
 # mysql-51/lib is required by some packages
@@ -287,6 +288,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon May 27 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - exclude symbolic link to /usr/mysql/lib because mysql-51/library is not mediator ready and conflicts
+- modify %attr
 * Fri May 10 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.11
 - add -DSYSCONFDIR to specify my.cnf directory

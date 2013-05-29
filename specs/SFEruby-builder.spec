@@ -19,7 +19,7 @@
 Summary:          Builder provides a number of builder objects that make creating structured data simple to do. 
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/%{gemname}
-Version:          3.2.0
+Version:          3.0.4
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -146,5 +146,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed May 29 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- version down to 3.0.4 because kaminari requires builder ~> 3.0.0
 * Thu May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

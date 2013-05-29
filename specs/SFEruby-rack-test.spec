@@ -27,7 +27,7 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-18
 Requires:         runtime/ruby-18
-Requires:         library/ruby-18/rack
+Requires:         library/ruby-18/rack >= 1.0
 
 %description
 Rack::Test is a small, simple testing API for Rack apps. It can be used on its own or as a reusable starting point for Web frameworks and testing libraries to build on. Most of its initial functionality is an extraction of Merb 1.0's request helpers feature.
@@ -37,7 +37,7 @@ IPS_package_name: library/ruby-19/%{gemname}
 Summary:          Rack::Test is a small, simple testing API for Rack apps.
 BuildRequires:	  runtime/ruby-19
 Requires:	  runtime/ruby-19
-Requires:         library/ruby-19/rack
+Requires:         library/ruby-19/rack >= 1.0
 
 %description 19
 Rack::Test is a small, simple testing API for Rack apps. It can be used on its own or as a reusable starting point for Web frameworks and testing libraries to build on. Most of its initial functionality is an extraction of Merb 1.0's request helpers feature.
@@ -47,7 +47,7 @@ IPS_package_name: library/ruby-20/%{gemname}
 Summary:          Rack::Test is a small, simple testing API for Rack apps.
 BuildRequires:	  runtime/ruby-20
 Requires:	  runtime/ruby-20
-Requires:         library/ruby-20/rack
+Requires:         library/ruby-20/rack >= 1.0
 
 %description 20
 Rack::Test is a small, simple testing API for Rack apps. It can be used on its own or as a reusable starting point for Web frameworks and testing libraries to build on. Most of its initial functionality is an extraction of Merb 1.0's request helpers feature.
@@ -149,5 +149,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed May 29 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify minimum version of required packages
 * Thu May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

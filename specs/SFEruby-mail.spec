@@ -19,7 +19,7 @@
 Summary: A really Ruby Mail handler.
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/%{gemname}
-Version: 2.4.4
+Version: 2.5.4
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -142,5 +142,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed May 29 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.5.4
 * Tue May 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

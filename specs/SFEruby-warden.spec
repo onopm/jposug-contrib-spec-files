@@ -27,7 +27,7 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-18
 Requires:         runtime/ruby-18
-Requires:         library/ruby-18/rack
+Requires:         library/ruby-18/rack >= 1.0
 
 %description
 Rack middleware that provides authentication for rack applications
@@ -37,7 +37,7 @@ IPS_package_name: library/ruby-19/%{gemname}
 Summary:          Rack middleware that provides authentication for rack applications
 BuildRequires:	  runtime/ruby-19
 Requires:	  runtime/ruby-19
-Requires:         library/ruby-19/rack
+Requires:         library/ruby-19/rack >= 1.0
 
 %description 19
 Rack middleware that provides authentication for rack applications
@@ -47,7 +47,7 @@ IPS_package_name: library/ruby-20/%{gemname}
 Summary:          Rack middleware that provides authentication for rack applications
 BuildRequires:	  runtime/ruby-20
 Requires:	  runtime/ruby-20
-Requires:         library/ruby-20/rack
+Requires:         library/ruby-20/rack >= 1.0
 
 %description 20
 Rack middleware that provides authentication for rack applications
@@ -149,5 +149,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify version of required packages
 * Thu May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

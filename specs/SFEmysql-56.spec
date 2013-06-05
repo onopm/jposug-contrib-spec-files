@@ -10,7 +10,7 @@
 %define _prefix /usr/mysql
 %define _var_prefix /var/mysql
 %define tarball_name     mysql
-%define tarball_version  5.6.11
+%define tarball_version  5.6.12
 %define major_version	 5.6
 %define prefix_name      SFEmysql-56
 %define _basedir         %{_prefix}/%{major_version}
@@ -18,7 +18,7 @@
 Name:                    %{prefix_name}
 IPS_package_name:        database/mysql-56
 Summary:	         MySQL 5.6
-Version:                 5.6.11
+Version:                 5.6.12
 License:		 GPL v2
 Group:		System/Databases
 Url:                     http://www.mysql.com/
@@ -288,6 +288,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Thu Jun 06 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.6.12
 * Mon May 27 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - exclude symbolic link to /usr/mysql/lib because mysql-51/library is not mediator ready and conflicts
 - modify %attr

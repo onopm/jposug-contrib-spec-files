@@ -19,6 +19,8 @@ Source0: http://downloads.sourceforge.net/sourceforge/munin/%{tarball_name}-%{ve
 Source1:	munin-asyncd.xml
 Source2:	svc-munin-asyncd
 Source3:        SFEmunin-Makefile.config
+Source4:        munin.logadm.conf
+Source5:        munin-node.logadm.conf
 
 Patch1: SFEmunin-SyncDictFile.patch
 
@@ -250,6 +252,11 @@ install -m 0644 %{SOURCE1} %{buildroot}%/var/svc/manifest/site
 install -d 0755 %{buildroot}%/lib/svc/method
 install -m 0555 %{SOURCE2} %{buildroot}%/lib/svc/method
 
+# install logadm config files
+mkdir -p $RPM_BUILD_ROOT/etc/logadm.d
+install -m 0444 %{SOURCE4} $RPM_BUILD_ROOT/etc/logadm.d
+install -m 0444 %{SOURCE5} $RPM_BUILD_ROOT/etc/logadm.d
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -303,6 +310,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %{_datadir}/munin/munin-update
 %{perl_vendorlib}/Munin/Master
 %dir %attr(0755, root, sys) /etc
+%dir %attr(0755, root, sys) /etc/logadm.d
+%attr(0444, root, sys) /etc/logadm.d/munin.logadm.conf
 %dir %attr(0755, root, sys) /etc/munin
 %dir %attr(0755, root, sys) /etc/munin/conf.d
 %dir %attr(0755, root, sys) /etc/munin/munin-conf.d
@@ -330,6 +339,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %files node
 %defattr(-, root, bin)
 %dir %attr(0755, root, sys) /etc
+%dir %attr(0755, root, sys) /etc/logadm.d
+%attr(0444, root, sys) /etc/logadm.d/munin-node.logadm.conf
 %dir %attr(0755, root, sys) /etc/munin
 %dir %attr(0755, root, sys) /etc/munin/plugin-conf.d
 %dir %attr(0755, root, sys) /etc/munin/node.d
@@ -416,6 +427,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Thu Jun 06 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add logadm config files
 * Mon May 13 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.14
 - add Requires

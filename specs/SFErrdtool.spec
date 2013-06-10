@@ -26,7 +26,7 @@ Name:                    rrdtool
 IPS_package_name:        image/jposug-rrdtool
 Summary:                 rrdtool - data logging and graphing system for time series data.
 URL:                     http://oss.oetiker.ch/rrdtool/
-Version:                 1.4.7
+Version:                 1.4.8
 Source:                  http://oss.oetiker.ch/rrdtool/pub/rrdtool-%{version}.tar.gz
 
 # SUNW_BaseDir:            %{_basedir}
@@ -142,6 +142,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jun 10 2013 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
+- bump to 1.4.8
 * Fri Jun 22 2012 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
 - modify IPS_package_name
 - bump to 1.4.7

@@ -118,9 +118,9 @@ install -m 0444 %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application/database
 mkdir -p $RPM_BUILD_ROOT/etc/mysql/5.6
 install support-files/my-default.cnf $RPM_BUILD_ROOT/etc/mysql/5.6/my.cnf
 
-# make symbolic links for mediator
-cd $RPM_BUILD_ROOT/etc/mysql
-ln -s 5.6/my.cnf .
+# # make symbolic links for mediator
+# cd $RPM_BUILD_ROOT/etc/mysql
+# ln -s 5.6/my.cnf .
 
 cd $RPM_BUILD_ROOT/usr/mysql
 # mysql-51/lib is required by some packages
@@ -129,52 +129,52 @@ cd $RPM_BUILD_ROOT/usr/mysql
 # then can not create symbolic link to /usr/mysql/lib 
 # ln -s 5.6/lib .
 
-mkdir -p $RPM_BUILD_ROOT/usr/bin
-cd $RPM_BUILD_ROOT/usr/bin
-ln -s ../mysql/%{major_version}/bin/innochecksum .
-ln -s ../mysql/%{major_version}/bin/msql2mysql .
-ln -s ../mysql/%{major_version}/bin/my_print_defaults .
-ln -s ../mysql/%{major_version}/bin/myisam_ftdump .
-ln -s ../mysql/%{major_version}/bin/myisamchk .
-ln -s ../mysql/%{major_version}/bin/myisamlog .
-ln -s ../mysql/%{major_version}/bin/myisampack .
-ln -s ../mysql/%{major_version}/bin/mysql .
-ln -s ../mysql/%{major_version}/bin/mysql_client_test .
-ln -s ../mysql/%{major_version}/bin/mysql_client_test_embedded .
-ln -s ../mysql/%{major_version}/bin/mysql_config .
-ln -s ../mysql/%{major_version}/bin/mysql_config_editor .
-ln -s ../mysql/%{major_version}/bin/mysql_convert_table_format .
-ln -s ../mysql/%{major_version}/bin/mysql_embedded .
-ln -s ../mysql/%{major_version}/bin/mysql_find_rows .
-ln -s ../mysql/%{major_version}/bin/mysql_fix_extensions .
-ln -s ../mysql/%{major_version}/bin/mysql_plugin .
-ln -s ../mysql/%{major_version}/bin/mysql_secure_installation .
-ln -s ../mysql/%{major_version}/bin/mysql_setpermission .
-ln -s ../mysql/%{major_version}/bin/mysql_tzinfo_to_sql .
-ln -s ../mysql/%{major_version}/bin/mysql_upgrade .
-ln -s ../mysql/%{major_version}/bin/mysql_waitpid .
-ln -s ../mysql/%{major_version}/bin/mysql_zap .
-ln -s ../mysql/%{major_version}/bin/mysqlaccess .
-ln -s ../mysql/%{major_version}/bin/mysqlaccess.conf .
-ln -s ../mysql/%{major_version}/bin/mysqladmin .
-ln -s ../mysql/%{major_version}/bin/mysqlbinlog .
-ln -s ../mysql/%{major_version}/bin/mysqlbug .
-ln -s ../mysql/%{major_version}/bin/mysqlcheck .
-ln -s ../mysql/%{major_version}/bin/mysqld .
-ln -s ../mysql/%{major_version}/bin/mysqld_multi .
-ln -s ../mysql/%{major_version}/bin/mysqld_safe .
-ln -s ../mysql/%{major_version}/bin/mysqldump .
-ln -s ../mysql/%{major_version}/bin/mysqldumpslow .
-ln -s ../mysql/%{major_version}/bin/mysqlhotcopy .
-ln -s ../mysql/%{major_version}/bin/mysqlimport .
-ln -s ../mysql/%{major_version}/bin/mysqlshow .
-ln -s ../mysql/%{major_version}/bin/mysqlslap .
-ln -s ../mysql/%{major_version}/bin/mysqltest .
-ln -s ../mysql/%{major_version}/bin/mysqltest_embedded .
-ln -s ../mysql/%{major_version}/bin/perror .
-ln -s ../mysql/%{major_version}/bin/replace .
-ln -s ../mysql/%{major_version}/bin/resolve_stack_dump .
-ln -s ../mysql/%{major_version}/bin/resolveip .
+# mkdir -p $RPM_BUILD_ROOT/usr/bin
+# cd $RPM_BUILD_ROOT/usr/bin
+# ln -s ../mysql/%{major_version}/bin/innochecksum .
+# ln -s ../mysql/%{major_version}/bin/msql2mysql .
+# ln -s ../mysql/%{major_version}/bin/my_print_defaults .
+# ln -s ../mysql/%{major_version}/bin/myisam_ftdump .
+# ln -s ../mysql/%{major_version}/bin/myisamchk .
+# ln -s ../mysql/%{major_version}/bin/myisamlog .
+# ln -s ../mysql/%{major_version}/bin/myisampack .
+# ln -s ../mysql/%{major_version}/bin/mysql .
+# ln -s ../mysql/%{major_version}/bin/mysql_client_test .
+# ln -s ../mysql/%{major_version}/bin/mysql_client_test_embedded .
+# ln -s ../mysql/%{major_version}/bin/mysql_config .
+# ln -s ../mysql/%{major_version}/bin/mysql_config_editor .
+# ln -s ../mysql/%{major_version}/bin/mysql_convert_table_format .
+# ln -s ../mysql/%{major_version}/bin/mysql_embedded .
+# ln -s ../mysql/%{major_version}/bin/mysql_find_rows .
+# ln -s ../mysql/%{major_version}/bin/mysql_fix_extensions .
+# ln -s ../mysql/%{major_version}/bin/mysql_plugin .
+# ln -s ../mysql/%{major_version}/bin/mysql_secure_installation .
+# ln -s ../mysql/%{major_version}/bin/mysql_setpermission .
+# ln -s ../mysql/%{major_version}/bin/mysql_tzinfo_to_sql .
+# ln -s ../mysql/%{major_version}/bin/mysql_upgrade .
+# ln -s ../mysql/%{major_version}/bin/mysql_waitpid .
+# ln -s ../mysql/%{major_version}/bin/mysql_zap .
+# ln -s ../mysql/%{major_version}/bin/mysqlaccess .
+# ln -s ../mysql/%{major_version}/bin/mysqlaccess.conf .
+# ln -s ../mysql/%{major_version}/bin/mysqladmin .
+# ln -s ../mysql/%{major_version}/bin/mysqlbinlog .
+# ln -s ../mysql/%{major_version}/bin/mysqlbug .
+# ln -s ../mysql/%{major_version}/bin/mysqlcheck .
+# ln -s ../mysql/%{major_version}/bin/mysqld .
+# ln -s ../mysql/%{major_version}/bin/mysqld_multi .
+# ln -s ../mysql/%{major_version}/bin/mysqld_safe .
+# ln -s ../mysql/%{major_version}/bin/mysqldump .
+# ln -s ../mysql/%{major_version}/bin/mysqldumpslow .
+# ln -s ../mysql/%{major_version}/bin/mysqlhotcopy .
+# ln -s ../mysql/%{major_version}/bin/mysqlimport .
+# ln -s ../mysql/%{major_version}/bin/mysqlshow .
+# ln -s ../mysql/%{major_version}/bin/mysqlslap .
+# ln -s ../mysql/%{major_version}/bin/mysqltest .
+# ln -s ../mysql/%{major_version}/bin/mysqltest_embedded .
+# ln -s ../mysql/%{major_version}/bin/perror .
+# ln -s ../mysql/%{major_version}/bin/replace .
+# ln -s ../mysql/%{major_version}/bin/resolve_stack_dump .
+# ln -s ../mysql/%{major_version}/bin/resolveip .
 
 
 %clean
@@ -214,54 +214,54 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) /etc/mysql
 %dir %attr (0755, root, bin) /etc/mysql/5.6
 %attr (0755, root, bin) /etc/mysql/5.6/my.cnf
-%attr (0555, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /etc/mysql/my.cnf
+# %attr (0555, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /etc/mysql/my.cnf
 
 # /usr/bin
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/innochecksum
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/msql2mysql
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/my_print_defaults
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/myisam_ftdump
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/myisamchk
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/myisamlog
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/myisampack
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_client_test
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_client_test_embedded
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_config
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_config_editor
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_convert_table_format
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_embedded
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_find_rows
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_fix_extensions
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_plugin
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_secure_installation
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_setpermission
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_tzinfo_to_sql
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_upgrade
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_waitpid
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_zap
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlaccess
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlaccess.conf
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqladmin
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlbinlog
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlbug
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlcheck
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqld
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqld_multi
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqld_safe
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqldump
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqldumpslow
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlhotcopy
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlimport
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlshow
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlslap
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqltest
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqltest_embedded
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/perror
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/replace
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/resolve_stack_dump
-%attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/resolveip
+# %dir %attr (0755, root, bin) /usr/bin
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/innochecksum
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/msql2mysql
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/my_print_defaults
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/myisam_ftdump
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/myisamchk
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/myisamlog
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/myisampack
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_client_test
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_client_test_embedded
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_config
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_config_editor
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_convert_table_format
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_embedded
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_find_rows
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_fix_extensions
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_plugin
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_secure_installation
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_setpermission
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_tzinfo_to_sql
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_upgrade
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_waitpid
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysql_zap
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlaccess
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlaccess.conf
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqladmin
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlbinlog
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlbug
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlcheck
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqld
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqld_multi
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqld_safe
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqldump
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqldumpslow
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlhotcopy
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlimport
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlshow
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqlslap
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqltest
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/mysqltest_embedded
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/perror
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/replace
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/resolve_stack_dump
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/resolveip
 
 %files library
 %defattr (-, root, bin)
@@ -288,6 +288,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Mon Jun 10 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- exclude some symbolic links because mysql-51 is not mediator ready and conflicts
 * Thu Jun 06 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.12
 * Mon May 27 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

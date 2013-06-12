@@ -5,9 +5,14 @@
 %define bindir18 /usr/ruby/1.8/bin
 %define gemdir18 %(%{bindir18}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
+
 %define bindir19 /usr/ruby/1.9/bin
 %define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
+
+%define bindir20 /usr/ruby/2.0/bin
+%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 
 Summary: Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. 
 Name: SFEruby-%{gemname}
@@ -33,12 +38,23 @@ Requires:       runtime/ruby-19
 %description 19
 Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
 
+%package 20
+IPS_package_name: library/ruby-20/net-ssh
+Summary: Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. 
+BuildRequires:  runtime/ruby-20
+Requires:       runtime/ruby-20
+
+%description 20
+Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+
 %prep
 %setup -q -c -T
 mkdir -p .%{gemdir18}
 mkdir -p .%{bindir18}
 mkdir -p .%{gemdir19}
 mkdir -p .%{bindir19}
+mkdir -p .%{gemdir20}
+mkdir -p .%{bindir20}
 
 %build
 # export CONFIGURE_ARGS="--with-cflags='%{optflags}'"
@@ -57,6 +73,13 @@ mkdir -p .%{bindir19}
     -V \
     --force %{SOURCE0}
 
+# ruby-20
+/usr/ruby/2.0/bin/gem install --local \
+    --install-dir .%{gemdir20} \
+    --bindir .%{bindir20} \
+    -V \
+    --force %{SOURCE0}
+
 %install
 rm -rf %{buildroot}
 
@@ -70,7 +93,10 @@ mkdir -p %{buildroot}/%{gemdir19}
 cp -a .%{gemdir19}/* \
     %{buildroot}/%{gemdir19}/
 
-rm -rf %{buildroot}%{geminstdir}/.yardoc/
+# ruby-20
+mkdir -p %{buildroot}/%{gemdir20}
+cp -a .%{gemdir20}/* \
+    %{buildroot}/%{gemdir20}/
 
 %clean
 rm -rf %{buildroot}
@@ -87,7 +113,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
 
+%files 20
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.0
+
 %changelog
+* Wed Jun 12 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for ruby-20
 * Fri Apr 19 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.6.7
 * Tue Mar 26 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

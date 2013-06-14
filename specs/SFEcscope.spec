@@ -7,23 +7,23 @@
 %include usr-gnu.inc
 %include base.inc
 
-%define tarball_version 15.7a
+%define tarball_version  15.8a
 Name:                    SFEcscope
-IPS_Package_Name:	developer/cscope
+IPS_Package_Name:	 developer/cscope
 License:                 BSD
 Summary:                 interactive source code examiner
-Version:                 15.7
-Source:                  %{sf_download}/cscope/cscope-%{tarball_version}.tar.bz2
+Version:                 15.8
+Source:                  %{sf_download}/cscope/cscope-%{tarball_version}.tar.gz
 URL:                     http://cscope.sourceforge.net/
 SUNW_BaseDir:            %{_basedir}
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 SUNW_Copyright:	         cscope.copyright
 %include default-depend.inc
-# BuildConflicts:      SPROsslnk
-BuildRequires:       SUNWbison
-BuildRequires:       SUNWncurses-devel
-Requires:            SUNWncurses
-Requires:            SUNWtoo
+# BuildConflicts:        SPROsslnk
+BuildRequires:           SUNWbison
+BuildRequires:           SUNWncurses-devel
+Requires:                SUNWncurses
+Requires:                SUNWtoo
 
 %prep
 %setup -q -n cscope-%{tarball_version}
@@ -58,6 +58,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/*/*
 
 %changelog
+* Fri Jun 14 2013 - Osamu Tabata
+- Support for Solaris11 and bump up to 15.8a
 * Fri Jun 1 2012 - Osamu Tabata
 - Support for openindiana
 * Thu Mar 17 2011 - Thomas Wagner

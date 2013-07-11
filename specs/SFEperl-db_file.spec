@@ -9,7 +9,7 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 1.827
+%define tarball_version 1.829
 %define tarball_name    DB_File
 
 Name:		SFEperl-db-file
@@ -62,7 +62,7 @@ make test
 
 rm -rf $RPM_BUILD_ROOT
 make pure_install
-make clean
+make realclean
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
@@ -70,7 +70,6 @@ export PERL5LIB=/usr/perl5/vendor_perl/5.12
   LIB=/usr/perl5/vendor_perl/5.12
 make
 make test
-
 
 %install
 make pure_install
@@ -98,5 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Jul 11 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.829
 * Thu Sep 27 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

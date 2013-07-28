@@ -319,6 +319,10 @@ ln -s ../php/5.4/bin/php .
 ln -s ../php/5.4/bin/php-config .
 ln -s ../php/5.4/bin/phpize .
 
+mkdir $RPM_BUILD_ROOT/usr/sbin
+cd $RPM_BUILD_ROOT/usr/sbin
+ln -s ../php/5.4/sbin/php-fpm .
+
 rm -rf $RPM_BUILD_ROOT/usr/php/share/
 rm -rf $RPM_BUILD_ROOT/etc/logrotate.d
 rm -rf $RPM_BUILD_ROOT/etc/tmpfiles.d
@@ -346,6 +350,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/bin/php
 %attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/bin/php-config
 %attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/bin/phpize
+%dir %attr (0755, root, bin) /usr/sbin
+%attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/sbin/php-fpm
 %dir %attr (0755, root, sys)/var
 %attr (0755, root, bin) /var/php/5.4/include
 %attr (0755, root, bin) /var/php/5.4/modules
@@ -361,5 +367,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.4.so
 
 %changelog
+* Sun Jul 28 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add symbolic link for php-fpm
 * Sat Jul 27 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

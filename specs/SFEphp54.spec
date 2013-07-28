@@ -364,10 +364,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) /usr/apache2
 %dir %attr (0755, root, bin) /usr/apache2/2.2
 %dir %attr (0755, root, bin) /usr/apache2/2.2/libexec
-%attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.4.so
+%attr (0444, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/apache2/2.2/libexec/mod_php5.4.so
 
 %changelog
 * Sun Jul 28 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add symbolic link for php-fpm
+- add %ips_tag to mod_php5.4.so
 * Sat Jul 27 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

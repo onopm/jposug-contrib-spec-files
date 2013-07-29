@@ -15,6 +15,7 @@ Version:                 5.4.17
 License:		 PHP
 Url:                     http://php.net/
 Source:                  http://jp1.php.net/distributions/php-%{version}.tar.bz2
+Source1:                 php5.4.conf
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
@@ -323,6 +324,12 @@ mkdir $RPM_BUILD_ROOT/usr/sbin
 cd $RPM_BUILD_ROOT/usr/sbin
 ln -s ../php/5.4/sbin/php-fpm .
 
+mkdir -p $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php
+install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php/php5.4.conf
+cd $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php
+ln -s php5.4.conf php.conf
+
+
 rm -rf $RPM_BUILD_ROOT/usr/php/share/
 rm -rf $RPM_BUILD_ROOT/etc/logrotate.d
 rm -rf $RPM_BUILD_ROOT/etc/tmpfiles.d
@@ -344,6 +351,12 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, sys) /etc
 %dir %attr (0755, root, bin) /etc/php
 %attr (0755, root, bin) /etc/php/5.4
+%dir %attr (0755, root, bin) /etc/apache2
+%dir %attr (0755, root, bin) /etc/apache2/2.2
+%dir %attr (0755, root, bin) /etc/apache2/2.2/conf.d
+%dir %attr (0755, root, bin) /etc/apache2/2.2/conf.d/php
+%attr (0644, root, bin) /etc/apache2/2.2/conf.d/php/php5.4.conf
+%attr (0755, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /etc/apache2/2.2/conf.d/php/php.conf
 %dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) /usr/bin
 %attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/bin/phar
@@ -367,6 +380,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/apache2/2.2/libexec/mod_php5.4.so
 
 %changelog
+* Mon Jul 29 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add php5.4.conf for Apache
 * Sun Jul 28 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add symbolic link for php-fpm
 - add %ips_tag to mod_php5.4.so

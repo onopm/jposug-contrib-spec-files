@@ -101,7 +101,7 @@ Requires:	         %{pnm_requires_database_mysql_51_library}
 
 
 %prep
-%setup -c -n %taball_name-%taball_version
+%setup -c -n %{tarball_name}-%{tarball_version}
 gzcat %{SOURCE10} | tar xf -
 
 %build
@@ -271,6 +271,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Aug 08 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix typo
 * Wed May  6 2009 TAKI, Yasushi <taki@justplayer.com>
 - Initial Revision
 * Tue Jan 12 2010 TAKI, Yasushi <taki@justplayer.com>

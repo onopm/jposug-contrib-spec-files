@@ -21,6 +21,8 @@ Vendor:		         OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
+BuildRequires: library/spell-checking/enchant
+
 %description
 PHP
 
@@ -380,6 +382,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/apache2/2.2/libexec/mod_php5.4.so
 
 %changelog
+* Fri Aug 09 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Mon Jul 29 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add php5.4.conf for Apache
 * Sun Jul 28 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

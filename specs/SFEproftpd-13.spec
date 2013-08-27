@@ -99,6 +99,12 @@ Requires:                %{name}
 Requires:                %{name}-sql
 Requires:	         %{pnm_requires_database_mysql_51_library}
 
+%package tls
+IPS_package_name:	 service/network/proftpd-13/module/tls
+Summary:		 %{summary} - TLS module
+SUNW_BaseDir:            /
+Requires:                %{name}
+
 
 %prep
 %setup -c -n %{tarball_name}-%{tarball_version}
@@ -143,7 +149,7 @@ LD_RUN_PATH=/lib:/usr/lib:/usr/lib/krb5:/usr/postgres/%{postgres_version}/lib:/u
  --enable-nls \
  --enable-dso \
  --enable-openssl \
- --with-shared=mod_sql:mod_sql_mysql:mod_sql_postgres
+ --with-shared=mod_sql:mod_sql_mysql:mod_sql_postgres:mod_tls
 
 gmake -j$CPUS
 
@@ -226,7 +232,6 @@ rm -rf $RPM_BUILD_ROOT
 %class(manifest) %attr(0444, root, sys) /var/svc/manifest/network/proftpd.xml
 %attr (0511,root,bin) /lib/svc/method/proftpd
 
-
 %files devel
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/
@@ -268,9 +273,22 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/libexec/mod_sql_mysql.la
 %{_prefix}/%{major_version}/libexec/mod_sql_mysql.so
 
+%files tls
+%defattr (-, root, bin)
+# %dir %attr (0755, root, sys) %{_sysconfdir}
+# %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/
+%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/libexec
+# %{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/tls.conf
+%{_prefix}/%{major_version}/libexec/mod_tls.a
+%{_prefix}/%{major_version}/libexec/mod_tls.la
+%{_prefix}/%{major_version}/libexec/mod_tls.so
+
 
 
 %changelog
+* Tue Aug 27 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add service/network/proftpd-13/module/tls
 * Thu Aug 08 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix typo
 * Wed May  6 2009 TAKI, Yasushi <taki@justplayer.com>

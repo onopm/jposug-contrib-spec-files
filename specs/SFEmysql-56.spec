@@ -218,7 +218,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, sys) /etc
 %dir %attr (0755, root, bin) /etc/mysql
 %dir %attr (0755, root, bin) /etc/mysql/5.6
-%attr (0755, root, bin) /etc/mysql/5.6/my.cnf
+%attr (0755, root, bin) %config(noreplace) /etc/mysql/5.6/my.cnf 
 # %attr (0555, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /etc/mysql/my.cnf
 
 # /usr/bin
@@ -295,6 +295,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sun Sep 08 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate 64 bit binary instead of 32 bit binary
+- add %config(noreplace) to /etc/mysql/5.6/my.cnf
 * Mon Aug 12 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.13
 * Mon Jun 10 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

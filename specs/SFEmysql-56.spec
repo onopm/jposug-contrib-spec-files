@@ -3,7 +3,7 @@
 #
 %include Solaris.inc
 %include packagenamemacros.inc
-%define cc_is_gcc 1
+%define cc_is_gcc 0
 %define _gpp g++
 %include base.inc
 
@@ -98,9 +98,14 @@ cmake . -DBUILD_CONFIG=mysql_release \
     -DMYSQL_UNIX_ADDR="/var/mysql/mysql.sock" \
     -DENABLED_LOCAL_INFILE=ON \
     -DENABLE_DTRACE=ON \
-    -DWITH_EMBEDDED_SERVER=ON \
-    -DWITH_READLINE=ON \
-    -DSYSCONFDIR=/etc/mysql
+    -DWITH_EMBEDDED_SERVER=OFF \
+    -DWITH_LIBEDIT=ON \
+    -DSYSCONFDIR=/etc/mysql \
+    -DCMAKE_C_FLAGS="-O3 -m64 -mt -KPIC" \
+    -DCMAKE_CXX_FLAGS="-O3 -m64 -mt -KPIC"
+
+#    -DCMAKE_C_FLAGS="-O3 -m64 -KPIC -g -mt -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt -xtarget=generic" \
+#    -DCMAKE_CXX_FLAGS="-O3 -m64 -KPIC -library=stlport4 -g0 -mt -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt -xtarget=generic -library=stlport4"
 
 gmake -j$CPUS
 gmake -j$CPUS test
@@ -288,6 +293,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Sun Sep 08 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate 64 bit binary instead of 32 bit binary
 * Mon Aug 12 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.13
 * Mon Jun 10 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 2.27200
+%define tarball_version 2.27202
 %define tarball_name    JSON-PP
 
 Name:		SFEperl-json-pp
 IPS_package_name: library/perl-5/json-pp
-Version:	2.27200
-IPS_component_version: 2.27200
+Version:	2.27202
+IPS_component_version: 2.27202
 Summary:	JSON-PP
 License:	Artistic
 Distribution:   OpenSolaris
@@ -100,6 +100,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.27202
 * Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

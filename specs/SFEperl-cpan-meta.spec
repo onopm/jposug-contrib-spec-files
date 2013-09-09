@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 2.120921
+%define tarball_version 2.132510
 %define tarball_name    CPAN-Meta
 
 Name:		SFEperl-cpan-meta
 IPS_package_name: library/perl-5/cpan-meta
-Version:	2.120921
-IPS_component_version: 2.120921
+Version:	2.132510
+IPS_component_version: 2.132510
 Summary:	the distribution metadata for a CPAN dist 
 License:	Artistic
 Distribution:   OpenSolaris
@@ -100,5 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.132510
 * Tue Jun 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for perl-584 and perl-512

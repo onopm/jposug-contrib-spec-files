@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 2.122
+%define tarball_version 2.123
 %define tarball_name    CPAN-Meta-Requirements
 
 Name:		SFEperl-cpan-meta-req
 IPS_package_name: library/perl-5/cpan-meta-requirements
-Version:	2.122
-IPS_component_version: 2.122
+Version:	2.123
+IPS_component_version: 2.123
 Summary:	CPAN-Meta-Requirements
 License:	Artistic
 Distribution:   OpenSolaris
@@ -96,5 +96,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.123
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

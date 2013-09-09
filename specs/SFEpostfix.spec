@@ -45,7 +45,7 @@
 
 Name:           SFEpostfix
 Summary:        postfix mail server
-Version:        2.9.7
+Version:        2.9.8
 IPS_package_name: service/network/smtp/postfix
 License:        IBM Public License
 Url:            http://www.postfix.org
@@ -261,6 +261,8 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 
 
 %changelog
+* Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.9.8
 * Thu Jul 08 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 2.9.7
 * Wed Jan 09 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>

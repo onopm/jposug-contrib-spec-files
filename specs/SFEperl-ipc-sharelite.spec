@@ -40,12 +40,14 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 IPS_package_name: library/perl-5/ipc-sharelite-584
 Summary: IPC::ShareLite for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/cpan-meta-requirements-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/ipc-sharelite-512
 Summary:  IPC::ShareLite for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/cpan-meta-requirements-512
 Requires:	runtime/perl-512
 
 
@@ -98,5 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Sep 09 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequire
 * Sun Sep 08 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

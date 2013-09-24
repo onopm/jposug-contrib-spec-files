@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.4.17
+%define tarball_version  5.4.20
 %define major_version	 5.4
 %define prefix_name      SFEphp54
 %define _basedir         %{_prefix}/%{major_version}
@@ -11,7 +11,7 @@
 Name:                    %{prefix_name}
 IPS_package_name:        web/php-54
 Summary:	         php
-Version:                 5.4.17
+Version:                 5.4.20
 License:		 PHP
 Url:                     http://php.net/
 Source:                  http://jp1.php.net/distributions/php-%{version}.tar.bz2
@@ -382,6 +382,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/apache2/2.2/libexec/mod_php5.4.so
 
 %changelog
+* Tue Sep 24 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.4.20
 * Fri Aug 09 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Mon Jul 29 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

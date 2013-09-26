@@ -19,7 +19,7 @@ Version:        %{module_version}
 Summary:        Puppet Module Standard Library
 Group:		Applications/System
 # License:        ASL 2.0
-URL:            http://www.bolthole.com
+URL:            https://github.com/puppetlabs/puppetlabs-stdlib
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: system/management/puppet3
@@ -56,5 +56,7 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Sep 26 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix URL
 * Mon Jul 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

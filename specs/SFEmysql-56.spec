@@ -37,6 +37,7 @@ Requires:      system/library/gcc-runtime
 %endif
 %include default-depend.inc
 Requires:      database/mysql-common
+Requires:      database/mysql-56/library
 
 %description
 The MySQL(TM) software delivers a very fast, multi-threaded, multi-user,
@@ -95,14 +96,14 @@ cmake . -DBUILD_CONFIG=mysql_release \
     -DCMAKE_INSTALL_PREFIX="%{_prefix}/%{major_version}" \
     -DINSTALL_LIBDIR="lib/mysql" \
     -DMYSQL_DATADIR="/var/mysql" \
-    -DMYSQL_UNIX_ADDR="/var/mysql/mysql.sock" \
+    -DMYSQL_UNIX_ADDR="/var/tmp/mysql.sock" \
     -DENABLED_LOCAL_INFILE=ON \
     -DENABLE_DTRACE=ON \
     -DWITH_EMBEDDED_SERVER=OFF \
     -DWITH_LIBEDIT=ON \
     -DSYSCONFDIR=/etc/mysql \
     -DCMAKE_C_FLAGS="-O3 -m64 -mt -KPIC" \
-    -DCMAKE_CXX_FLAGS="-O3 -m64 -mt -KPIC"
+    -DCMAKE_CXX_FLAGS="-O3 -m64 -mt -KPIC -library=stlport4"
 
 #    -DCMAKE_C_FLAGS="-O3 -m64 -KPIC -g -mt -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt -xtarget=generic" \
 #    -DCMAKE_CXX_FLAGS="-O3 -m64 -KPIC -library=stlport4 -g0 -mt -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt -xtarget=generic -library=stlport4"
@@ -122,6 +123,13 @@ mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/application/database
 install -m 0444 %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application/database
 mkdir -p $RPM_BUILD_ROOT/etc/mysql/5.6
 install support-files/my-default.cnf $RPM_BUILD_ROOT/etc/mysql/5.6/my.cnf
+
+cd $RPM_BUILD_ROOT/usr/mysql/5.6/bin
+ln -s ../scripts/mysql_install_db .
+
+mkdir -p $RPM_BUILD_ROOT/lib/amd64
+cd $RPM_BUILD_ROOT/lib/amd64
+ln -s ../../usr/mysql/5.6/lib/mysql/libstlport.so.1 .
 
 # # make symbolic links for mediator
 # cd $RPM_BUILD_ROOT/etc/mysql
@@ -273,6 +281,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
+%dir %attr (0755, root, bin) /lib
+%dir %attr (0755, root, bin) /lib/amd64
+/lib/amd64/libstlport.so.1
+
 # mysql-51/lib is required by some packages
 # like apr-util-13/dbd-mysql which is required by apache-22
 # and is not mediator ready.
@@ -293,6 +305,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Thu Sep 26 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add some symbolic links
 * Tue Sep 24 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.14
 * Sun Sep 08 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

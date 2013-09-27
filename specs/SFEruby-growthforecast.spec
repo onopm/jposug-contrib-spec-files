@@ -13,12 +13,12 @@
 %define bindir20 /usr/ruby/2.0/bin
 
 %define tarball_name    growthforecast
-%define tarball_version 0.0.3
+%define tarball_version 0.0.4
 
 Summary: %{gemname}
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/growthforecast
-Version: 0.0.3
+Version: 0.0.4
 License: Apache License, Version 2.0
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
@@ -130,5 +130,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Fri Sep 27 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.0.4
 * Thu Mar 07 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

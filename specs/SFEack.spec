@@ -1,0 +1,62 @@
+#
+# spec file for package: SFEperl-app-ack
+#
+# This file and all modifications and additions to the pristine
+# package are under the same license as the package itself.
+#
+# includes module(s):
+#
+%include Solaris.inc
+%include packagenamemacros.inc
+
+%define tarball_version 2.10
+%define tarball_name    App-Ack
+
+Name:		SFEack
+IPS_package_name: text/ack
+Version:	2.10
+IPS_component_version: 2.10
+Summary:	grep-like text finder  
+License:	Artistic
+Url:		http://search.cpan.org/~petdance/%{tarball_name}-%{tarball_version}
+SUNW_Basedir:	%{_basedir}
+SUNW_Copyright: %{name}.copyright
+Source0:	http://search.cpan.org/CPAN/authors/id/P/PE/PETDANCE/ack-%{tarball_version}.tar.gz
+
+BuildRequires:	runtime/perl-512
+Requires:	runtime/perl-512
+
+%description
+grep-like text finder 
+
+%prep
+%setup -q -n ack-%{tarball_version}
+
+%build
+export PERL5LIB=/usr/perl5/vendor_perl/5.12
+/usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.12
+make
+make test
+
+
+%install
+make pure_install
+mkdir -p $RPM_BUILD_ROOT%{_datadir}
+rm -rf $RPM_BUILD_ROOT%{_prefix}/man
+
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,bin)
+%attr(0755,root,sys) %dir %{_datadir}
+%{_mandir}
+%{_bindir}/ack
+%{_prefix}/perl5/vendor_perl/5.12
+
+%changelog
+* Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- initial commit

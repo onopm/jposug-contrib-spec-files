@@ -5,17 +5,22 @@
 %define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
 %define bindir18 /usr/ruby/1.8/bin
+
 %define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
 
+%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+%define bindir20 /usr/ruby/2.0/bin
+
 %define tarball_name    rspec-expectations
-%define tarball_version 2.13.0
+%define tarball_version 2.14.3
 
 Summary: %{gemname}
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/rspec-expectations
-Version: 2.13.0
+Version: 2.14.3
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
@@ -36,6 +41,16 @@ Requires:	runtime/ruby-19
 Requires:       library/ruby-19/diff-lcs
 
 %description 19
+rspec expectations (should[_not] and matchers)
+
+%package 20
+IPS_package_name: library/ruby-20/rspec-expectations
+Summary: %{gemname}
+BuildRequires:	runtime/ruby-20
+Requires:	runtime/ruby-20
+Requires:       library/ruby-20/diff-lcs
+
+%description 20
 rspec expectations (should[_not] and matchers)
 
 %prep
@@ -62,6 +77,13 @@ mkdir -p .%{bindir19}
     -V \
     --force %{SOURCE0}
 
+# ruby-20
+/usr/ruby/2.0/bin/gem install --local \
+    --install-dir .%{gemdir20} \
+    --bindir .%{bindir20} \
+    -V \
+    --force %{SOURCE0}
+
 %install
 rm -rf %{buildroot}
 
@@ -74,6 +96,11 @@ cp -a .%{gemdir18}/* \
 mkdir -p %{buildroot}/%{gemdir19}
 cp -a .%{gemdir19}/* \
     %{buildroot}/%{gemdir19}/
+
+# ruby-20
+mkdir -p %{buildroot}/%{gemdir20}
+cp -a .%{gemdir20}/* \
+    %{buildroot}/%{gemdir20}/
 
 %clean
 rm -rf %{buildroot}
@@ -89,7 +116,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
 
+%files 20
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.0
+
 %changelog
+* Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.14.3
 * Sun Mar 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.13.0
 * Wed Oct 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

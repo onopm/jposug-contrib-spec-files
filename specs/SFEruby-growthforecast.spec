@@ -26,6 +26,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	runtime/ruby-18
 Requires: runtime/ruby-18
+Requires:       scripts/library/ruby-18/resolve-hostname
 
 %description
 Client library and tool to update values, create/edit/delete graphs of GrowthForecast
@@ -35,6 +36,7 @@ IPS_package_name: library/ruby-19/growthforecast
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-19
 Requires:	runtime/ruby-19
+Requires:       scripts/library/ruby-19/resolve-hostname
 
 %description 19
 Client library and tool to update values, create/edit/delete graphs of GrowthForecast
@@ -44,6 +46,7 @@ IPS_package_name: library/ruby-20/growthforecast
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-20
 Requires:	runtime/ruby-20
+Requires:       scripts/library/ruby-20/resolve-hostname
 
 %description 20
 Client library and tool to update values, create/edit/delete graphs of GrowthForecast
@@ -130,6 +133,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Fri Sep 27 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.0.4
 * Thu Mar 07 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

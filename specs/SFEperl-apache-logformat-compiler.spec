@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 0.12
+%define tarball_version 0.13
 %define tarball_name    Apache-LogFormat-Compiler
 
 Name:		SFEperl-a-l-compiler
 IPS_package_name: library/perl-5/apache-logformat-compiler
-Version:	0.12
-IPS_component_version: 0.12
+Version:	0.13
+IPS_component_version: 0.13
 Summary:	Apache::LogFormat::Compiler - Compile a log format string to perl-code
 License:	Artistic
 Distribution:   OpenSolaris
@@ -101,5 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Oct 06 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.13
 * Thu May 02 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

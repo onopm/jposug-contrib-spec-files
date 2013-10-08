@@ -18,7 +18,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/serverspec
-Version:          0.9.7
+Version:          0.9.8
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -163,6 +163,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Tue Oct 08 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.9.8
 * Thu Oct 03 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9.7
 * Wed Sep 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

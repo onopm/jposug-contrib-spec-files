@@ -19,7 +19,7 @@
 Summary:          A Ruby BSON implementation for MongoDB. 
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/%{gemname}
-Version:          1.8.6
+Version:          1.9.2
 License:          Apache License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -141,5 +141,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed Oct 16 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.9.2
 * Mon Jul 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

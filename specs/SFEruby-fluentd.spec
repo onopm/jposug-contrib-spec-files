@@ -43,8 +43,29 @@ mkdir -p .%{gemdir19}
 
 %build
 
+pushd usr/bin
+for i in fluent*
+do
+    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/usr/ruby/1.9/bin/ruby$' > ${i}.tmp
+    mv ${i}.tmp ${i}
+done
+popd
+
+pushd usr/ruby/1.9/lib/ruby/gems/1.9.1/gems/fluentd-%{version}/bin
+for i in fluent*
+do
+    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/usr/ruby/1.9/bin/ruby$' > ${i}.tmp
+    mv ${i}.tmp ${i}
+done
+popd
+
+
 %install
 rm -rf %{buildroot}
+
+mkdir -p %{buildroot}/usr/bin
+cp -a ./usr/bin/* \
+        %{buildroot}/usr/bin/
 
 mkdir -p %{buildroot}%{gemdir19}
 cp -a .%{gemdir19}/* \
@@ -60,11 +81,18 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 # %dir %{geminstdir18}
 %dir %attr(0755, root, sys) /usr
+%dir %attr(0755, root, bin) /usr/bin
+%attr(0555, root, bin) /usr/bin/fluent-cat
+%attr(0555, root, bin) /usr/bin/fluent-debug
+%attr(0555, root, bin) /usr/bin/fluent-gem
+%attr(0555, root, bin) /usr/bin/fluentd
 %{gemdir19}
 
 %changelog
 * Tue Oct 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.39
+- modify shebang to use ruby-19
+- add /usr/bin/fluent*
 * Wed Dec 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.30
 * Wed Dec 05 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

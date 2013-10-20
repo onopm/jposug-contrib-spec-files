@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.0.13
+%define tarball_version  9.0.14
 %define major_version	 9.0
 %define prefix_name      SFEpostgres-90
 
@@ -1703,6 +1703,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Sun Oct 20 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 9.0.14
 * Fri Apr 05 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 9.0.13
 * Thu Feb 07 JST 2013 TAKI, Yasushi <taki@justplayer.com>

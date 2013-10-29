@@ -18,7 +18,7 @@
 Summary: This is a JSON implementation as a Ruby extension in C.
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/json
-Version: 1.8.0
+Version: 1.8.1
 License: Ruby License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -125,6 +125,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Tue Oct 29 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.8.1
 * Mon May 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.8.0
 * Fri Oct 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

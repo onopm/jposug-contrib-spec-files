@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 3.15
+%define tarball_version 3.22
 %define tarball_name    ExtUtils-ParseXS
 
 Name:		SFEperl-extutils-parsexs
 IPS_package_name: library/perl-5/extutils-parsexs
-Version:	3.15
-IPS_component_version: 3.15
+Version:	3.22
+IPS_component_version: 3.22
 Summary:	Converts Perl XS code into C code
 License:	Artistic
 Distribution:   OpenSolaris
@@ -107,6 +107,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/perl5/5.12/bin/*
 
 %changelog
+* Tue Nov 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.22
 * Tue Feb 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequire to %package 584
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

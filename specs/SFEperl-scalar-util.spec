@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 1.32
+%define tarball_version 1.35
 %define tarball_name    Scalar-Util
 
 Name:		SFEperl-scalar-util
 IPS_package_name: library/perl-5/scalar-util
-Version:	1.32
-IPS_component_version: 1.32
+Version:	1.35
+IPS_component_version: 1.35
 Summary:	Scalar utilities (dualvar reftype etc)
 License:	Artistic
 Distribution:   OpenSolaris
@@ -96,6 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Nov 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.35
 * Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.32
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

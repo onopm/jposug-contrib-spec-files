@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 6.37
+%define tarball_version 6.41
 %define tarball_name    Date-Manip
 
 Name:		SFEperl-date-manip
 IPS_package_name: library/perl-5/date-manip
-Version:	6.37
-IPS_component_version: 6.37
+Version:	6.41
+IPS_component_version: 6.41
 Summary:	Complete date/time manipulation package
 License:	Artistic
 Distribution:   OpenSolaris
@@ -100,6 +100,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 6.41
 * Sun Dec 23 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 6.37
 * Sun Aug 26 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

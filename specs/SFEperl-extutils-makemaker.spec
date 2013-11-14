@@ -41,10 +41,12 @@ Summary: Writes Makefiles for extensions for perl-584
 BuildRequires:	runtime/perl-584
 BuildRequires:	library/perl-5/extutils-install-584
 BuildRequires:	library/perl-5/parse-cpan-meta-584
+BuildRequires:	library/perl-5/extutils-manifest-584
 Requires:	runtime/perl-584
 Requires:	library/perl-5/extutils-makemaker
 Requires:	library/perl-5/extutils-install-584
 Requires:	library/perl-5/parse-cpan-meta-584
+Requires:	library/perl-5/extutils-manifest-584
 
 %package 512
 IPS_package_name: library/perl-5/extutils-makemaker-512
@@ -52,10 +54,12 @@ Summary: Writes Makefiles for extensions for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/extutils-install-512
 BuildRequires:	library/perl-5/parse-cpan-meta-512
+BuildRequires:	library/perl-5/extutils-manifest-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/extutils-makemaker
 Requires:	library/perl-5/extutils-install-512
 Requires:	library/perl-5/parse-cpan-meta-512
+Requires:	library/perl-5/extutils-manifest-512
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -93,6 +97,10 @@ fi
 if [ -f $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/ExtUtils/Manifest.pm ]
 then
     rm $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/ExtUtils/Manifest.pm
+fi
+if [ -f $RPM_BUILD_ROOT/usr/share/man/man3perl/ExtUtils::Manifest.3 ]
+then
+    rm $RPM_BUILD_ROOT/usr/share/man/man3perl/ExtUtils::Manifest.3
 fi
 
 # to avoid confilict with SFEperl-file-copy-recursive
@@ -143,6 +151,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete man to avoid conflict
+- add Requires and BuildRequires
 * Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - delete some files to avoid confilict with SFEperl-cpan-meta
 * Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

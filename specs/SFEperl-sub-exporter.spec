@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 0.982
+%define tarball_version 0.987
 %define tarball_name    Sub-Exporter
 
 Name:		SFEperl-sub-exporter
 IPS_package_name: library/perl-5/sub-exporter
-Version:	0.982
-IPS_component_version: 0.982
+Version:	0.987
+IPS_component_version: 0.987
 Summary:	Sub::Exporter
 License:	Artistic
 Distribution:   OpenSolaris
@@ -97,5 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.987
 * Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

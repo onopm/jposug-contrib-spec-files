@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 2.32
+%define tarball_version 2.34
 %define tarball_name    JSON-XS
 
 Name:		SFEperl-json-xs
 IPS_package_name: library/perl-5/json-xs
-Version:	2.32
-IPS_component_version: 2.32
+Version:	2.34
+IPS_component_version: 2.34
 Summary:	JSON-XS
 License:	Artistic
 Distribution:   OpenSolaris
@@ -98,5 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.34
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 0.33
+%define tarball_version 0.34
 %define tarball_name    Package-Stash
 
 Name:		SFEperl-package-stash
 IPS_package_name: library/perl-5/package-stash
-Version:	0.33
-IPS_component_version: 0.33
+Version:	0.34
+IPS_component_version: 0.34
 Summary:	Package::Stash
 License:	Artistic
 Distribution:   OpenSolaris
@@ -46,6 +46,7 @@ IPS_package_name: library/perl-5/package-stash-512
 Summary: Package::Stash for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/package-deprecationmanager-512
+BuildRequires:	library/perl-5/dist-checkconflicts-512
 Requires:	runtime/perl-512
 Requires:       library/perl-5/package-stash
 
@@ -97,6 +98,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.34
+- add BuildRequires
 * Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify %attr
 * Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

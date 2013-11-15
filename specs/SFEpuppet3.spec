@@ -12,7 +12,7 @@
 
 Name:             puppet3
 IPS_package_name: system/management/puppet3
-Version:          3.3.0
+Version:          3.3.2
 Summary:          A network tool for managing many disparate systems
 Group:		  Applications/System
 License:          ASL 2.0
@@ -197,6 +197,8 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
+* Fri Nov 15 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.3.2
 * Tue Sep 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.3.0
 * Tue Jun 16 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

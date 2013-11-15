@@ -1,12 +1,12 @@
 %include Solaris.inc
 
-%{!?ruby_sitelibdir: %define ruby_sitelibdir %(ruby -rrbconfig -e 'puts Config::CONFIG["sitelibdir"]')}
+%{!?ruby_sitelibdir: %define ruby_sitelibdir %(/usr/ruby/1.9/bin/ruby -rrbconfig -e 'puts RbConfig::CONFIG["sitelibdir"]')}
 
 %define has_ruby_noarch %has_ruby_abi
 
 Summary: Ruby module for collecting simple facts about a host operating system
 Name: facter
-IPS_package_name:        runtime/ruby-18/facter
+IPS_package_name:        runtime/ruby-19/facter
 Version: 1.7.3
 License: ASL 2.0
 Group: System Environment/Base
@@ -15,12 +15,9 @@ Source0: http://puppetlabs.com/downloads/facter/facter-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
-# Source1: http://puppetlabs.com/downloads/%{name}/%{name}-%{version}.tar.gz.asc
 
-Requires: runtime/ruby-18
-# Requires: which
-
-BuildRequires: runtime/ruby-18
+BuildRequires: runtime/ruby-19
+Requires: runtime/ruby-19
 
 %description
 Ruby module for collecting simple facts about a host Operating
@@ -34,13 +31,14 @@ operating system. Additional facts can be added through simple Ruby scripts
 
 %install
 rm -rf %{buildroot}
-ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
+/usr/ruby/1.9/bin/ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 mkdir -p %{buildroot}%{_bindir}
-install bin/facter %{buildroot}%{_bindir}/facter
+cat bin/facter | sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/1.9\/bin\/ruby/' > bin/facter-19
+install bin/facter-19 %{buildroot}%{_bindir}/facter
+
 
 %clean
 rm -rf %{buildroot}
-
 
 %files
 %defattr(0755,root,bin,-)
@@ -50,12 +48,13 @@ rm -rf %{buildroot}
 %{_bindir}/facter
 %{ruby_sitelibdir}/facter.rb
 %{ruby_sitelibdir}/facter
-# /usr/ruby/1.8/sbin
-/usr/ruby/1.8/share
-/usr/ruby/1.8/bin
+/usr/ruby/1.9/share
+/usr/ruby/1.9/bin
 
 
 %changelog
+* Fri Nov 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use ruby-19 instead of ruby-18
 * Tue Sep 24 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.7.3
 

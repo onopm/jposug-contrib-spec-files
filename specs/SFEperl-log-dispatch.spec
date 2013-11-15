@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 2.32
+%define tarball_version 2.41
 %define tarball_name    Log-Dispatch
 
 Name:		SFEperl-log-dispatch
 IPS_package_name: library/perl-5/log-dispatch
-Version:	2.32
-IPS_component_version: 2.32
+Version:	2.41
+IPS_component_version: 2.41
 Summary:	Log messages to multiple outputs
 License:	Artistic
 Distribution:   OpenSolaris
@@ -102,5 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Fri Nov 15 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.41
 * Sun Jun 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -7,12 +7,12 @@
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.10.39
+%define tarball_version 0.10.40
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
 Summary:          Fluentd is a log collector daemon written in Ruby. 
-Version:          0.10.39
+Version:          0.10.40
 License:          Apache License, Version 2.0
 URL:              http://fluentd.org/
 Source0:          http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
@@ -89,6 +89,8 @@ rm -rf %{buildroot}
 %{gemdir19}
 
 %changelog
+* Sun Nov 17 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.10.40
 * Tue Oct 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.39
 - modify shebang to use ruby-19

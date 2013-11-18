@@ -19,7 +19,7 @@ Group:		  Applications/System
 License:          ASL 2.0
 URL:              http://puppetlabs.com
 Source0:          http://puppetlabs.com/downloads/puppet/puppet-%{version}.tar.gz
-
+Patch0:           SFEpuppet3-ruby19.patch
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-19
@@ -67,15 +67,20 @@ The server can also function as a certificate authority and file server.
 %setup -q -n puppet-%{version}
 
 %build
+/usr/ruby/1.9/bin/ruby install.rb --destdir=./ --quick --no-rdoc
+cd usr/ruby/1.9/bin
+%patch0 -p2
 
 %install
 rm -rf %{buildroot}
+
 /usr/ruby/1.9/bin/ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 
 install -d -m0755 %{buildroot}%{_sysconfdir}/puppet/manifests
 install -d -m0755 %{buildroot}%{_datadir}/puppet/modules
 install -d -m0755 %{buildroot}%{_localstatedir}/lib
 
+install -Dp -m0755 usr/ruby/1.9/bin/puppet %{buildroot}%{_bindir}/puppet
 install -Dp -m0644 ext/ips/puppet-agent %{buildroot}/lib/svc/method/puppet-agent
 install -Dp -m0644 ext/ips/puppet-master %{buildroot}/lib/svc/method/puppet-master
 install -Dp -m0644 ext/ips/puppetagent.xml %{buildroot}%{_localstatedir}/svc/manifest/system/management/puppetagent.xml
@@ -198,6 +203,8 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
+* Mon Nov 18 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add patch0 to avoid encoding problem
 * Fri Nov 15 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.3.2
 - use ruby-19 instead of ruby-18

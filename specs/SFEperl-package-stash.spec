@@ -47,6 +47,7 @@ Summary: Package::Stash for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/package-deprecationmanager-512
 BuildRequires:	library/perl-5/dist-checkconflicts-512
+BuildRequires:	library/perl-5/module-implementation-512
 Requires:	runtime/perl-512
 Requires:       library/perl-5/package-stash
 
@@ -98,6 +99,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.34
 - add BuildRequires

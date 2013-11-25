@@ -40,12 +40,14 @@ Data::Validator
 IPS_package_name: library/perl-5/data-validator-584
 Summary: Data::Validator for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/mouse-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/data-validator-512
 Summary: Data::Validator for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/mouse-512
 Requires:	runtime/perl-512
 
 
@@ -58,7 +60,7 @@ export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
   DESTDIR=$RPM_BUILD_ROOT \
   LIB=/usr/perl5/vendor_perl/5.8.4
 make
-# make test
+make test
 
 rm -rf $RPM_BUILD_ROOT
 make pure_install

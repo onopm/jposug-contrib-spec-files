@@ -5,7 +5,7 @@
 %define _name ruby
 %define version 2.0.0
 %define unmangled_version 2.0.0
-%define patchlevel 247
+%define patchlevel 353
 
 %include Solaris.inc
 %include packagenamemacros.inc
@@ -92,6 +92,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/2.0
 
 %changelog
+* Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to patchlevel 353
 * Sun Jun 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to patchlevel 247
 * Wed May 15 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

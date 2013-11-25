@@ -40,6 +40,7 @@ IPS_package_name: library/perl-5/test-fatal-512
 Summary: Test::Fatal for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/try-tiny-512
+BuildRequires:	library/perl-5/test-pod-512
 Requires:	runtime/perl-512
 
 
@@ -76,6 +77,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.013
 * Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

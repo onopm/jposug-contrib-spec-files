@@ -107,6 +107,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires and BuildRequires
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires and BuildRequires
 * Sat Jun 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

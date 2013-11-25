@@ -98,6 +98,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Nov 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires and run make test
 * Tue Feb 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - comment out "make test" for perl-584 because "make test" requires Mouse.pm
 * Sat Jun 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

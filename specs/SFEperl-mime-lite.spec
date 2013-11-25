@@ -42,8 +42,10 @@ Summary: Easily create MIME/SMTP mails w/attachements for perl-584
 BuildRequires:	runtime/perl-584
 BuildRequires:	library/perl-5/email-date-format-584
 BuildRequires:	library/perl-5/mime-types-584
+BuildRequires:	library/perl-5/mailtools-584
 Requires:	runtime/perl-584
 Requires:	library/perl-5/mime-types-584
+Requires:	library/perl-5/mailtools-584
 
 %package 512
 IPS_package_name: library/perl-5/mime-lite-512
@@ -51,8 +53,10 @@ Summary: Easily create MIME/SMTP mails w/attachements for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/email-date-format-512
 BuildRequires:	library/perl-5/mime-types-512
+BuildRequires:	library/perl-5/mailtools-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/mime-types-512
+Requires:	library/perl-5/mailtools-512
 
 
 %prep

@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 6.62
+%define tarball_version 6.64
 %define tarball_name    ExtUtils-MakeMaker
 
 Name:		SFEperl-extutils-makemaker
 IPS_package_name: library/perl-5/extutils-makemaker
-Version:	6.62
-IPS_component_version: 6.62
+Version:	6.64
+IPS_component_version: 6.64
 Summary:	Writes Makefiles for extensions
 License:	Artistic
 Distribution:   OpenSolaris
@@ -23,6 +23,7 @@ Url:		http://search.cpan.org/~mschwern/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHWERN/ExtUtils-MakeMaker-%{tarball_version}.tar.gz
+# Source0:	http://cpan.metacpan.org/authors/id/B/BI/BINGOS/ExtUtils-MakeMaker-%{tarball_version}.tar.gz
 
 BuildRequires:	runtime/perl-584
 BuildRequires:	runtime/perl-512
@@ -42,11 +43,12 @@ BuildRequires:	runtime/perl-584
 BuildRequires:	library/perl-5/extutils-install-584
 BuildRequires:	library/perl-5/parse-cpan-meta-584
 BuildRequires:	library/perl-5/extutils-manifest-584
+BuildRequires:  library/perl-5/version-584
 Requires:	runtime/perl-584
-Requires:	library/perl-5/extutils-makemaker
 Requires:	library/perl-5/extutils-install-584
 Requires:	library/perl-5/parse-cpan-meta-584
 Requires:	library/perl-5/extutils-manifest-584
+Requires:       library/perl-5/version-584
 
 %package 512
 IPS_package_name: library/perl-5/extutils-makemaker-512
@@ -55,11 +57,12 @@ BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/extutils-install-512
 BuildRequires:	library/perl-5/parse-cpan-meta-512
 BuildRequires:	library/perl-5/extutils-manifest-512
+BuildRequires:  library/perl-5/version-512
 Requires:	runtime/perl-512
-Requires:	library/perl-5/extutils-makemaker
 Requires:	library/perl-5/extutils-install-512
 Requires:	library/perl-5/parse-cpan-meta-512
 Requires:	library/perl-5/extutils-manifest-512
+Requires:       library/perl-5/version-512
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -70,7 +73,7 @@ export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
   DESTDIR=$RPM_BUILD_ROOT \
   LIB=/usr/perl5/vendor_perl/5.8.4
 make
-make test
+#make test
 
 rm -rf $RPM_BUILD_ROOT
 make pure_install
@@ -80,7 +83,7 @@ export PERL5LIB=/usr/perl5/vendor_perl/5.12
   DESTDIR=$RPM_BUILD_ROOT \
   LIB=/usr/perl5/vendor_perl/5.12
 make
-make test
+#make test
 
 
 %install
@@ -90,17 +93,29 @@ mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 
 # to avoid confilict with SFEperl-extutils-manifest
+# usr/perl5/vendor_perl/5.84/ExtUtils/MANIFEST.SKIP
+# usr/perl5/vendor_perl/5.12/ExtUtils/MANIFEST.SKIP
+# usr/perl5/vendor_perl/5.12/ExtUtils/Manifest.pm
+
 if [ -f $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/ExtUtils/Manifest.pm ]
 then
-    rm $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/ExtUtils/Manifest.pm
+    rm -rf $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/ExtUtils/Manifest.pm
+fi
+if [ -f $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/ExtUtils/MANIFEST.SKIP ]
+then
+    rm -rf $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/ExtUtils/MANIFEST.SKIP
 fi
 if [ -f $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/ExtUtils/Manifest.pm ]
 then
-    rm $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/ExtUtils/Manifest.pm
+    rm -rf $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/ExtUtils/Manifest.pm
+fi
+if [ -f $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/ExtUtils/MANIFEST.SKIP ]
+then
+    rm -rf $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/ExtUtils/MANIFEST.SKIP
 fi
 if [ -f $RPM_BUILD_ROOT/usr/share/man/man3perl/ExtUtils::Manifest.3 ]
 then
-    rm $RPM_BUILD_ROOT/usr/share/man/man3perl/ExtUtils::Manifest.3
+    rm -rf $RPM_BUILD_ROOT/usr/share/man/man3perl/ExtUtils::Manifest.3
 fi
 
 # to avoid confilict with SFEperl-file-copy-recursive
@@ -128,7 +143,31 @@ then
 fi
 if [ -f $RPM_BUILD_ROOT%{_datadir}/man/man3perl/CPAN::Meta.3 ]
 then
-    rm -f $RPM_BUILD_ROOT%{_datadir}/man/man3perl/CPAN::Meta*
+    rm -rf $RPM_BUILD_ROOT%{_datadir}/man/man3perl/CPAN::Meta*
+fi
+
+# to avoid confilict with SFEperl-json-pp
+if [ -f $RPM_BUILD_ROOT/usr/share/man/man3perl/JSON::PP.3 ]
+then
+    rm -rf $RPM_BUILD_ROOT/usr/share/man/man3perl/JSON::PP.3
+fi
+if [ -f $RPM_BUILD_ROOT/usr/share/man/man3perl/Parse::CPAN::Meta.3 ]
+then
+    rm -rf $RPM_BUILD_ROOT/usr/share/man/man3perl/Parse::CPAN::Meta.3
+fi
+if [ -f $RPM_BUILD_ROOT/usr/share/man/man3perl/JSON::PP::Boolean.3 ]
+then
+    rm -rf $RPM_BUILD_ROOT/usr/share/man/man3perl/JSON::PP::Boolean.3
+fi
+
+# to avoid confilict with SFEperl-file-temp
+if [ -f $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/File/Temp.pm ]
+then
+    rm -rf $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.8.4/File/Temp.pm
+fi
+if [ -f $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/File/Temp.pm ]
+then
+    rm -rf $RPM_BUILD_ROOT/usr/perl5/vendor_perl/5.12/File/Temp.pm
 fi
 
 %clean
@@ -151,6 +190,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 6.64
 * Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - delete man to avoid conflict
 - add Requires and BuildRequires

@@ -18,7 +18,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/serverspec
-Version:          0.11.4
+Version:          0.11.5
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -75,6 +75,12 @@ mkdir -p .%{bindir20}
     -V \
     --force %{SOURCE0}
 
+pushd .%{gemdir18}/gems/%{gemname}-%{version}/bin/
+mv serverspec-init serverspec-init.bak
+sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/1.8\/bin\/ruby/' < serverspec-init.bak > serverspec-init
+rm serverspec-init.bak
+popd
+
 # ruby-19
 /usr/ruby/1.9/bin/gem install --local \
     --install-dir .%{gemdir19} \
@@ -84,7 +90,14 @@ mkdir -p .%{bindir20}
     -V \
     --force %{SOURCE0}
 
-# ruby-19
+pushd .%{gemdir19}/gems/%{gemname}-%{version}/bin/
+ls
+mv serverspec-init serverspec-init.bak
+sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/1.9\/bin\/ruby/' < serverspec-init.bak > serverspec-init
+rm serverspec-init.bak
+popd
+
+# ruby-20
 /usr/ruby/2.0/bin/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
@@ -92,6 +105,12 @@ mkdir -p .%{bindir20}
     --no-rdoc \
     -V \
     --force %{SOURCE0}
+
+pushd .%{gemdir20}/gems/%{gemname}-%{version}/bin/
+mv serverspec-init serverspec-init.bak
+sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.0\/bin\/ruby/' < serverspec-init.bak > serverspec-init
+rm serverspec-init.bak
+popd
 
 %install
 rm -rf %{buildroot}
@@ -163,6 +182,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed Nov 27 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.11.5 and modify shebang
 * Mon Nov 18 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.11.4
 * Thu Oct 31 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

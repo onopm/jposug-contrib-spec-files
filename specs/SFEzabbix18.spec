@@ -724,6 +724,9 @@ user ftpuser=false gcos-field="zabbix user" username="%{runuser}" password=NP gr
 #%defattr(-,root,bin)
 
 %changelog
+* Thu Dec 05 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Initial commit for the jposug
+
 * Thu Jan 17 2013 Atsushi Tanaka <a.tanaka77@gmail.com> - 1.8.16-1
 - Update to 1.8.16
 - Update Japanese translation (Source11)

@@ -18,7 +18,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/serverspec
-Version:          0.13.1
+Version:          0.13.2
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -188,6 +188,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Thu Dec 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.13.2
 * Wed Dec 04 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.13.1
 * Mon Dec 02 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

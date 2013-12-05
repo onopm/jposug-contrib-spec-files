@@ -21,7 +21,7 @@
 Name:           SFEzabbix18
 %define _pkg_docdir %{usr_prefix}/share/doc/%{name}
 IPS_package_name:  diagnostic/zabbix18
-#SUNW_Copyright:   SFEphp53.copyright
+SUNW_Copyright:   %{name}.copyright
 Version:        1.8.16
 Release:        1%{?dist}
 Summary:        Open-source monitoring solution for your IT infrastructure

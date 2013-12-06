@@ -71,6 +71,11 @@ Patch101:	zabbix-1.8.16_ldap_m4_solaris.patch
 
 BuildRequires:   %pnm_buildrequires_mysql51
 #BuildRequires:   postgresql-devel
+
+BuildRequires:   database/postgres-92/library
+BuildRequires:   database/postgres-92/developer
+BuildRequires:   %pnm_buildrequires_mysql51lib
+BuildRequires:   %pnm_buildrequires_mysql51
 BuildRequires:   %pnm_requires_system_management_snmp_net_snmp
 BuildRequires:   %pnm_buildrequires_library_openldap
 BuildRequires:   %pnm_buildrequires_library_gnutls
@@ -88,6 +93,7 @@ BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
 %else
 BuildRequires: developer/gcc-46
+Requires:      system/library/gcc
 Requires:      system/library/gcc-runtime
 %endif
 #Requires:        logrotate
@@ -141,7 +147,7 @@ IPS_package_name:  diagnostic/zabbix18/server/mysql
 Group:           Applications/Internet
 Requires:        diagnostic/zabbix18
 Requires:        diagnostic/zabbix18/server
-Requires:        %pnm_buildrequires_database_mysql_51
+Requires:        %pnm_requires_mysql51lib
 #Provides:        diagnostic/zabbix18/server-implementation
 #Obsoletes:       zabbix <= 1.5.3-0.1
 #Conflicts:       diagnostic/zabbix18/server/pgsql
@@ -155,7 +161,7 @@ IPS_package_name:  diagnostic/zabbix18/server/pgsql
 Group:           Applications/Internet
 Requires:        diagnostic/zabbix18
 Requires:        diagnostic/zabbix18/server
-Requires:        database/postgres-92
+Requires:        database/postgres-92/library
 #Provides:        zabbix-server-implementation = %{version}-%{release}
 #Conflicts:       zabbix-server-mysql
 #%description server-pgsql
@@ -199,7 +205,7 @@ Summary:         Zabbix proxy compiled to use MySQL
 IPS_package_name:        diagnostic/zabbix18/proxy/mysql
 Group:           Applications/Internet
 Requires:        diagnostic/zabbix18/proxy
-Requires:        %pnm_requires_mysql51
+Requires:        %pnm_requires_mysql51lib
 #Provides:        diagnostic/zabbix18/proxy-implementation
 #Conflicts:       diagnostic/zabbix18/proxy/pgsql
 #Conflicts:       diagnostic/zabbix18/proxy/sqlite3
@@ -212,7 +218,7 @@ Summary:         Zabbix proxy compiled to use PostgreSQL
 IPS_package_name:        diagnostic/zabbix18/proxy/pgsql
 Group:           Applications/Internet
 Requires:        diagnostic/zabbix18/zabbix-proxy
-Requires:        database/postgres-92
+Requires:        database/postgres-92/library
 #Provides:        diagnostic/zabbix18/zabbix-proxy-implementation
 #Conflicts:       diagnostic/zabbix18/proxy/mysql
 #Conflicts:       diagnostic/zabbix18/proxy/pgsql
@@ -724,6 +730,9 @@ user ftpuser=false gcos-field="zabbix user" username="%{runuser}" password=NP gr
 #%defattr(-,root,bin)
 
 %changelog
+* Fri Dec 06 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Added database dependencies.
+
 * Thu Dec 05 YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial commit for the jposug
 

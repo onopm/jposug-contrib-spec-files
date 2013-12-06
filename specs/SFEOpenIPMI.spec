@@ -20,7 +20,7 @@ Group: System Environment/Base
 URL: http://sourceforge.net/projects/openipmi/
 #rc
 #Source: http://ftp.jaist.ac.jp/pub/sourceforge/o/project/op/openipmi/OpenIPMI\ 2.0\ Library/OpenIPMI-%{version}.tar.gz
-Source: http://ftp.jaist.ac.jp/pub/sourceforge/o/project/op/openipmi/OpenIPMI\ 2.0\ Library/%{version}/OpenIPMI-%{version}.tar.gz
+Source: http://ftp.jaist.ac.jp/pub/Linux/Momonga/development/source/SOURCES/OpenIPMI-%{version}.tar.gz
 Source1: SFEOpenIPMI-openipmi.sysconf
 Source2: SFEOpenIPMI-openipmi.initscript
 Source4: SFEOpenIPMI-openipmi.README.initscript
@@ -34,6 +34,7 @@ Requires: system/management/openipmi/libs
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
 %else
+BuildRequires: developer/gcc
 BuildRequires: developer/gcc-46
 Requires:      system/library/gcc-runtime
 %endif
@@ -193,6 +194,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Fri Dec 06 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- changed the download url
+- append a file dependency of gcc.
+
 * Wed Dec 04 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial revision for the jposug
 - disable perl and python

@@ -76,7 +76,17 @@ rm -rf ${RPM_BUILD_ROOT}
 %files
 %defattr(0755, root, sys)
 %dir %attr (0755, root, bin) %{_bindir}
-%{_bindir}/*
+%{_bindir}/redis-benchmark
+%{_bindir}/redis-cli
+%{_bindir}/redis-check-dump
+%{_bindir}/redis-check-aof
+%{_bindir}/redis-server
+%dir %attr (0755, root, bin) %{_bindir}/%{_arch64}
+%{_bindir}/%{_arch64}/redis-check-aof
+%{_bindir}/%{_arch64}/redis-check-dump
+%{_bindir}/%{_arch64}/redis-cli
+%{_bindir}/%{_arch64}/redis-server
+%{_bindir}/%{_arch64}/redis-benchmark
 
 %changelog
 * Fri Dec 6 2013 - Osamu Tabata<cantimerny.g@gmail.com>

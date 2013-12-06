@@ -196,7 +196,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Fri Dec 06 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
 - changed the download url
-- append a file dependency of gcc.
+- appended a file dependency of gcc.
 
 * Wed Dec 04 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial revision for the jposug

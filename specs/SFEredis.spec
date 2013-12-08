@@ -1,14 +1,18 @@
 #
 # spec file for package SFEredis
 #
-# includes module(s): redis
-#
 
 %include Solaris.inc
 %include packagenamemacros.inc
 %define cc_is_gcc 1
 
+%define _prefix          /usr/redis
+%define _var_prefix      /var/redis
+%define _etc_prefix      /etc/redis
 %define tarball_name     redis
+%define major_version	 2.8
+%define _basedir         %{_prefix}/%{major_version}
+
 
 Name:		SFEredis
 Version:        2.8.2
@@ -16,6 +20,14 @@ Summary:	Redis is an open source, advanced key-value store
 IPS_package_name:    service/redis-28
 URL:		http://redis.io
 Source:		http://download.redis.io/releases/redis-%{version}.tar.gz
+Source1:	redis_28
+Source2:	redis_28.xml
+Source3:	redis-28-auth_attr
+Source4:	redis-28-prof_attr
+Source5:	redis-28-exec_attr
+Source6:        redis-28-user_attr
+Source7:        redis-28.conf
+Source8:        redis-28_64.conf
 Group:		Applications/Archivers
 SUNW_Copyright:	SFEredis.copyright
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
@@ -49,46 +61,103 @@ fi
 
 cd %{tarball_name}-%{version}
 export CC=gcc
-make
+make PREFIX=%{_prefix}/%{major_version}
 
 %ifarch amd64 sparcv9
 cd ../%{tarball_name}-%{version}-64
 export CC=gcc
 export CFLAGS="-m64 $CFLASG"
 export LDFLAGS="-m64"
-make
+make PREFIX=%{_prefix}/%{major_version}
 %endif
 
 %install
 cd %{tarball_name}-%{version}
 export CC=gcc
 rm -rf ${RPM_BUILD_ROOT}
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL_BIN=$RPM_BUILD_ROOT%{_bindir}
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL_BIN=$RPM_BUILD_ROOT%{_prefix}/%{major_version}/bin
 
 %ifarch amd64 sparcv9
 cd ../%{tarball_name}-%{version}-64
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL_BIN=$RPM_BUILD_ROOT%{_bindir}/%{_arch64}
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL_BIN=$RPM_BUILD_ROOT%{_prefix}/%{major_version}/bin/%{_arch64}
 %endif
+
+
+mkdir -p $RPM_BUILD_ROOT/etc/security
+mkdir -p $RPM_BUILD_ROOT%{_var_prefix}/%{major_version}/data
+mkdir -p $RPM_BUILD_ROOT%{_var_prefix}/%{major_version}/data_64
+mkdir -p $RPM_BUILD_ROOT%{_var_prefix}/%{major_version}/log
+
+mkdir -p $RPM_BUILD_ROOT/lib/svc/method/
+cp %{SOURCE1} $RPM_BUILD_ROOT/lib/svc/method/redis_28
+chmod +x $RPM_BUILD_ROOT/lib/svc/method/redis_28
+mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/application/database/
+cp %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application/database/redis_28.xml
+
+
+# attribute
+mkdir -p $RPM_BUILD_ROOT/etc/security/auth_attr.d/
+cp %{SOURCE3} $RPM_BUILD_ROOT/etc/security/auth_attr.d/redis-28
+mkdir -p $RPM_BUILD_ROOT/etc/security/exec_attr.d/
+cp %{SOURCE4} $RPM_BUILD_ROOT/etc/security/exec_attr.d/redis-28
+mkdir -p $RPM_BUILD_ROOT/etc/security/prof_attr.d/
+cp %{SOURCE5} $RPM_BUILD_ROOT/etc/security/prof_attr.d/redis-28
+mkdir -p $RPM_BUILD_ROOT/etc/user_attr.d/
+cp %{SOURCE6} $RPM_BUILD_ROOT/etc/user_attr.d/redis-28
+
+# etc conf
+mkdir -p $RPM_BUILD_ROOT%{_etc_prefix}/%{major_version}/
+cp %{SOURCE7} $RPM_BUILD_ROOT%{_etc_prefix}/%{major_version}/
+cp %{SOURCE8} $RPM_BUILD_ROOT%{_etc_prefix}/%{major_version}/
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
+%actions
+group groupname="redis"
+user ftpuser=false gcos-field="redis Reserved UID" username="redis" password=NP group="redis"
+
 %files
 %defattr(0755, root, sys)
-%dir %attr (0755, root, bin) %{_bindir}
-%{_bindir}/redis-benchmark
-%{_bindir}/redis-cli
-%{_bindir}/redis-check-dump
-%{_bindir}/redis-check-aof
-%{_bindir}/redis-server
-%dir %attr (0755, root, bin) %{_bindir}/%{_arch64}
-%{_bindir}/%{_arch64}/redis-check-aof
-%{_bindir}/%{_arch64}/redis-check-dump
-%{_bindir}/%{_arch64}/redis-cli
-%{_bindir}/%{_arch64}/redis-server
-%{_bindir}/%{_arch64}/redis-benchmark
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
+%{_prefix}/%{major_version}/bin/*
+
+%dir %attr (0755, redis, redis) %{_var_prefix}
+%dir %attr (0755, redis, redis) %{_var_prefix}/%{major_version}
+%dir %attr (0700, redis, redis) %{_var_prefix}/%{major_version}/data
+%dir %attr (0700, redis, redis) %{_var_prefix}/%{major_version}/data_64
+%dir %attr (0700, redis, redis) %{_var_prefix}/%{major_version}/log
+
+%dir %attr (0755, root, sys) /etc
+%dir %attr (0755, root, sys) /etc/security
+%dir %attr (0755, root, sys) /etc/security/auth_attr.d
+%dir %attr (0755, root, sys) /etc/security/exec_attr.d
+%dir %attr (0755, root, sys) /etc/security/prof_attr.d
+%dir %attr (0755, root, sys) /etc/user_attr.d
+%dir %attr (0755, root, bin) /lib
+%dir %attr (0755, root, bin) /lib/svc
+%dir %attr (0755, root, bin) /lib/svc/method
+%dir %attr (0755, root, sys) /var
+%dir %attr (0755, root, sys) /var/svc
+%dir %attr (0755, root, sys) /var/svc/manifest
+%dir %attr (0755, root, sys) /var/svc/manifest/application
+%dir %attr (0755, root, sys) /var/svc/manifest/application/database
+
+%attr (0555, root, bin) /lib/svc/method/redis_28
+%attr (0644, root, sys) /etc/security/auth_attr.d/redis-28
+%attr (0644, root, sys) /etc/security/exec_attr.d/redis-28
+%attr (0644, root, sys) /etc/security/prof_attr.d/redis-28
+%attr (0644, root, sys) /etc/user_attr.d/redis-28
+
+%dir %attr (0755, root, sys) /etc/redis
+%dir %attr (0755, root, sys) /etc/redis/2.8
+%dir %attr (0755, root, sys) /etc/redis/2.8/redis-28.conf
+%dir %attr (0755, root, sys) /etc/redis/2.8/redis-28_64.conf
+%class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_28.xml
 
 %changelog
+* Sun Dec 6 2013 - Osamu Tabata<cantimerny.g@gmail.com>
+- add SMF
 * Fri Dec 6 2013 - Osamu Tabata<cantimerny.g@gmail.com>
 - Support for Solaris11 and Bump up to 2.8.2
 * Sun Feb 26 2012 - Osamu Tabata<cantimerny.g@gmail.com>

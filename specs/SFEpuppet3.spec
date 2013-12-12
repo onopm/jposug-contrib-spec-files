@@ -3,12 +3,11 @@
 %include base.inc
 %define cc_is_gcc 0
 
-%define _bindir /usr/ruby/1.9/bin
-%define _sbindir /usr/ruby/1.9/sbin
-%define _mandir /usr/ruby/1.9/share/man
+%define _bindir /usr/ruby/1.8/bin
+%define _sbindir /usr/ruby/1.8/sbin
+%define _mandir /usr/ruby/1.8/share/man
 
-%{!?ruby_sitelibdir: %define ruby_sitelibdir %(/usr/ruby/1.9/bin/ruby -rrbconfig -e 'puts Config::CONFIG["sitelibdir"]')}
-
+%{!?ruby_sitelibdir: %define ruby_sitelibdir %(ruby -rrbconfig -e 'puts Config::CONFIG["sitelibdir"]')}
 %define confdir conf/solaris
 
 Name:             puppet3
@@ -19,17 +18,17 @@ Group:		  Applications/System
 License:          ASL 2.0
 URL:              http://puppetlabs.com
 Source0:          http://puppetlabs.com/downloads/puppet/puppet-%{version}.tar.gz
-Patch0:           SFEpuppet3-ruby19.patch
+
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:    runtime/ruby-19
-BuildRequires:    runtime/ruby-19/facter
-Requires:         runtime/ruby-19
-Requires:         runtime/ruby-19/facter
-Requires:         library/ruby-19/hiera
-Requires:         library/ruby-19/hiera/puppet
-Requires:         library/ruby-19/hiera/json
-Requires:         library/ruby-19/rgen
+BuildRequires:    runtime/ruby-18
+BuildRequires:    runtime/ruby-18/facter
+Requires:         runtime/ruby-18 >= 1.8.7
+Requires:         runtime/ruby-18/facter
+Requires:         library/ruby-18/hiera
+Requires:         library/ruby-18/hiera/puppet
+Requires:         library/ruby-18/hiera/json
+Requires:         library/ruby-18/rgen
 Requires:         archiver/gnu-tar
 Requires:         system/management/puppet3/common = %{version}
 
@@ -44,10 +43,10 @@ IPS_package_name: system/management/puppet3/master
 Group:		  Applications/System
 Summary:          Server for the puppet system management tool
 Requires:         system/management/puppet3 = %{version}
-Requires:         library/ruby-19/hiera
-Requires:         library/ruby-19/hiera/puppet
-Requires:         library/ruby-19/hiera/json
-Requires:         library/ruby-19/rgen
+Requires:         library/ruby-18/hiera
+Requires:         library/ruby-18/hiera/puppet
+Requires:         library/ruby-18/hiera/json
+Requires:         library/ruby-18/rgen
 Requires:         system/management/puppet3/common = %{version}
 
 %description master
@@ -67,20 +66,15 @@ The server can also function as a certificate authority and file server.
 %setup -q -n puppet-%{version}
 
 %build
-/usr/ruby/1.9/bin/ruby install.rb --destdir=./ --quick --no-rdoc
-cd usr/ruby/1.9/bin
-%patch0 -p2
 
 %install
 rm -rf %{buildroot}
-
-/usr/ruby/1.9/bin/ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
+ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 
 install -d -m0755 %{buildroot}%{_sysconfdir}/puppet/manifests
 install -d -m0755 %{buildroot}%{_datadir}/puppet/modules
 install -d -m0755 %{buildroot}%{_localstatedir}/lib
 
-install -Dp -m0755 usr/ruby/1.9/bin/puppet %{buildroot}%{_bindir}/puppet
 install -Dp -m0644 ext/ips/puppet-agent %{buildroot}/lib/svc/method/puppet-agent
 install -Dp -m0644 ext/ips/puppet-master %{buildroot}/lib/svc/method/puppet-master
 install -Dp -m0644 ext/ips/puppetagent.xml %{buildroot}%{_localstatedir}/svc/manifest/system/management/puppetagent.xml
@@ -203,11 +197,10 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
-* Mon Nov 18 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- add patch0 to avoid encoding problem
+* Thu Dec 12 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- revert to d485c3167adf and specify version 
 * Fri Nov 15 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.3.2
-- use ruby-19 instead of ruby-18
 * Tue Sep 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.3.0
 * Tue Jun 16 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

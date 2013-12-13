@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.6
+%define tarball_version  5.5.7
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
@@ -11,7 +11,7 @@
 Name:                    %{prefix_name}
 IPS_package_name:        web/php-55
 Summary:	         php
-Version:                 5.5.6
+Version:                 %{tarball_version}
 License:		 PHP
 Url:                     http://php.net/
 Source:                  http://jp1.php.net/distributions/php-%{version}.tar.bz2
@@ -366,6 +366,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Fri Dec 13 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.7
 * Fri Nov 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 

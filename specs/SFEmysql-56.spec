@@ -10,7 +10,7 @@
 %define _prefix /usr/mysql
 %define _var_prefix /var/mysql
 %define tarball_name     mysql
-%define tarball_version  5.6.14
+%define tarball_version  5.6.15
 %define major_version	 5.6
 %define prefix_name      SFEmysql-56
 %define _basedir         %{_prefix}/%{major_version}
@@ -18,7 +18,7 @@
 Name:                    %{prefix_name}
 IPS_package_name:        database/mysql-56
 Summary:	         MySQL 5.6
-Version:                 5.6.14
+Version:                 %{tarball_version}
 License:		 GPL v2
 Group:		System/Databases
 Url:                     http://www.mysql.com/
@@ -305,6 +305,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Sat Dec 14 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.6.15
 * Thu Sep 26 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add some symbolic links
 * Tue Sep 24 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

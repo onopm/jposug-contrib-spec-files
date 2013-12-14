@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.1.10
+%define tarball_version  9.1.11
 %define major_version	 9.1
 %define prefix_name      SFEpostgres-91
 %define _basedir         %{_prefix}/%{major_version}
@@ -19,7 +19,7 @@
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-91
 Summary:	         PostgreSQL client tools
-Version:                 9.1.9
+Version:                 %{tarball_version}
 License:		 PostgreSQL
 Group:                   System/Databases
 Url:                     http://www.postgresql.org/
@@ -1131,6 +1131,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Sat Dec 14 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.11
 * Sat Oct 19 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.1.10
 * Fri Apr  5 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -27,8 +27,8 @@ SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/C/CA/CAPTTOFU/DBD-mysql-%{tarball_version}.tar.gz
 
-BuildRequires:	runtime/perl-584
-BuildRequires:	runtime/perl-512
+BuildRequires:	runtime/perl-584 = *
+BuildRequires:	runtime/perl-512 = *
 
 Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
 Meta(info.upstream):            Patrick Galbraith <patg@patg.net>
@@ -42,14 +42,13 @@ MySQL driver for DBI
 IPS_package_name: library/perl-5/dbd-mysql-584
 Summary: MySQL driver for DBI for perl-584
 BuildRequires:	runtime/perl-584
-Requires:	runtime/perl-584
+Requires:	runtime/perl-584 = *
 
 %package 512
 IPS_package_name: library/perl-5/dbd-mysql-512
 Summary: MySQL driver for DBI for perl-512
 BuildRequires:	runtime/perl-512
-Requires:	runtime/perl-512
-
+Requires:	runtime/perl-512 = *
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -109,3 +108,4 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sat Dec 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- specify versions of required packages

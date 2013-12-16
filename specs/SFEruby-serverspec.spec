@@ -18,15 +18,15 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/serverspec
-Version:          0.13.2
+Version:          0.13.3
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:    runtime/ruby-18
-Requires:         runtime/ruby-18
+BuildRequires:    runtime/ruby-18 = *
+Requires:         runtime/ruby-18 = *
 Requires:         library/ruby-18/net-ssh
 Requires:         library/ruby-18/rspec
 Requires:         library/ruby-18/rake
@@ -39,8 +39,8 @@ RSpec tests for your provisioned servers
 %package 19
 IPS_package_name: library/ruby-19/serverspec
 Summary:          RSpec tests for your provisioned servers
-BuildRequires:    runtime/ruby-19
-Requires:         runtime/ruby-19
+BuildRequires:    runtime/ruby-19 = *
+Requires:         runtime/ruby-19 = *
 Requires:         library/ruby-19/net-ssh
 Requires:         library/ruby-19/rspec
 Requires:         library/ruby-19/highline
@@ -52,8 +52,8 @@ RSpec tests for your provisioned servers
 %package 20
 IPS_package_name: library/ruby-20/serverspec
 Summary:          RSpec tests for your provisioned servers
-BuildRequires:    runtime/ruby-20
-Requires:         runtime/ruby-20
+BuildRequires:    runtime/ruby-20 = *
+Requires:         runtime/ruby-20 = *
 Requires:         library/ruby-20/net-ssh
 Requires:         library/ruby-20/rspec
 Requires:         library/ruby-20/highline
@@ -188,6 +188,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Dec 16 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.13.3
 * Thu Dec 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.13.2
 * Wed Dec 04 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

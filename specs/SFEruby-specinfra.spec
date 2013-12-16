@@ -18,14 +18,14 @@
 Summary:          Common layer for serverspec and configspec
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/specinfra
-Version:          0.0.8
+Version:          0.0.12
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-18
-Requires:         runtime/ruby-18
+Requires:         runtime/ruby-18 = *
 
 %description
 Common layer for serverspec and configspec
@@ -34,7 +34,7 @@ Common layer for serverspec and configspec
 IPS_package_name: library/ruby-19/specinfra
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-19
-Requires:         runtime/ruby-19
+Requires:         runtime/ruby-19 = *
 
 %description 19
 Common layer for serverspec and configspec
@@ -43,7 +43,7 @@ Common layer for serverspec and configspec
 IPS_package_name: library/ruby-20/specinfra
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-20
-Requires:         runtime/ruby-20
+Requires:         runtime/ruby-20 = *
 
 %description 20
 Common layer for serverspec and configspec
@@ -123,6 +123,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Dec 16 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.0.12
 * Thu Dec 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.0.8
 * Wed Dec 04 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -18,7 +18,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/serverspec
-Version:          0.13.7
+Version:          0.14.2
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -28,10 +28,10 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 BuildRequires:    runtime/ruby-18 = *
 Requires:         runtime/ruby-18 = *
 Requires:         library/ruby-18/net-ssh
-Requires:         library/ruby-18/rspec
+Requires:         library/ruby-18/rspec >= 2.1.3
 Requires:         library/ruby-18/rake
 Requires:         library/ruby-18/highline
-Requires:         library/ruby-18/specinfra >= 0.0.14
+Requires:         library/ruby-18/specinfra >= 0.1.0
 
 %description
 RSpec tests for your provisioned servers
@@ -42,9 +42,9 @@ Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 Requires:         library/ruby-19/net-ssh
-Requires:         library/ruby-19/rspec
+Requires:         library/ruby-19/rspec >= 2.1.3
 Requires:         library/ruby-19/highline
-Requires:         library/ruby-19/specinfra >= 0.0.14
+Requires:         library/ruby-19/specinfra >= 0.1.0
 
 %description 19
 RSpec tests for your provisioned servers
@@ -55,9 +55,9 @@ Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 Requires:         library/ruby-20/net-ssh
-Requires:         library/ruby-20/rspec
+Requires:         library/ruby-20/rspec >= 2.1.3
 Requires:         library/ruby-20/highline
-Requires:         library/ruby-20/specinfra >= 0.0.14
+Requires:         library/ruby-20/specinfra >= 0.1.0
 
 %description 20
 RSpec tests for your provisioned servers
@@ -188,6 +188,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Sun Dec 29 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.2
 * Thu Dec 19 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.13.6
 - bump to 0.13.7

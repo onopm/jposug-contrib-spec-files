@@ -9,7 +9,7 @@ Name:                    SFEblockdiag
 IPS_package_name:        image/blockdiag
 Summary:                 blockdiag generate block-diagram image file from spec-text file.
 URL:                     http://pypi.python.org/pypi/blockdiag/
-Version:                 1.1.8
+Version:                 1.3.2
 License:                 Apache License 2.0
 Source:                  http://pypi.python.org/packages/source/b/%{tarball_name}/%{tarball_name}-%{tarball_version}.tar.gz
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
@@ -63,6 +63,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Tue Jan 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.3.2
 * Sat Feb 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

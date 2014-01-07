@@ -3,7 +3,7 @@
 %include default-depend.inc
 
 %define tarball_name blockdiag
-%define tarball_version 1.1.8
+%define tarball_version 1.3.2
 
 Name:                    SFEblockdiag
 IPS_package_name:        image/blockdiag

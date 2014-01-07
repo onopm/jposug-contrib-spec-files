@@ -4,13 +4,13 @@
 
 %define tarball_index a
 %define tarball_name actdiag
-%define tarball_version 0.3.4
+%define tarball_version 0.5.1
 
 Name:                    SFEactdiag
 IPS_package_name:        image/actdiag
 Summary:                 actdiag generate activity-diagram image file from spec-text file.
 URL:                     http://pypi.python.org/pypi/actdiag/
-Version:                 0.3.4
+Version:                 %{tarball_version}
 License:                 Apache License 2.0
 Source:                  http://pypi.python.org/packages/source/%{tarball_index}/%{tarball_name}/%{tarball_name}-%{tarball_version}.tar.gz
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
@@ -48,6 +48,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Wed Jan 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.5.1
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Sun Oct 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

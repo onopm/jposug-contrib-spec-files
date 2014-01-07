@@ -7,12 +7,12 @@
 %define _sbindir /usr/ruby/1.8/sbin
 %define _mandir /usr/ruby/1.8/share/man
 
-%{!?ruby_sitelibdir: %define ruby_sitelibdir %(ruby -rrbconfig -e 'puts Config::CONFIG["sitelibdir"]')}
+%{!?ruby_sitelibdir: %define ruby_sitelibdir %(/usr/ruby/1.8/bin/ruby -rrbconfig -e 'puts Config::CONFIG["sitelibdir"]')}
 %define confdir conf/solaris
 
 Name:             puppet3
 IPS_package_name: system/management/puppet3
-Version:          3.3.2
+Version:          3.4.2
 Summary:          A network tool for managing many disparate systems
 Group:		  Applications/System
 License:          ASL 2.0
@@ -69,7 +69,7 @@ The server can also function as a certificate authority and file server.
 
 %install
 rm -rf %{buildroot}
-ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
+/usr/ruby/1.8/bin/ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 
 install -d -m0755 %{buildroot}%{_sysconfdir}/puppet/manifests
 install -d -m0755 %{buildroot}%{_datadir}/puppet/modules
@@ -197,8 +197,10 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
+* Wed Jan 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.4.2
 * Thu Dec 12 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- revert to d485c3167adf and specify version 
+- revert to d485c3167adf and specify version
 * Fri Nov 15 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.3.2
 * Tue Sep 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

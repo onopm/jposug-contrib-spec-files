@@ -1,13 +1,13 @@
 %include Solaris.inc
 
-%{!?ruby_sitelibdir: %define ruby_sitelibdir %(/usr/ruby/1.9/bin/ruby -rrbconfig -e 'puts RbConfig::CONFIG["sitelibdir"]')}
+%{!?ruby_sitelibdir: %define ruby_sitelibdir %(/usr/ruby/1.8/bin/ruby -rrbconfig -e 'puts RbConfig::CONFIG["sitelibdir"]')}
 
 %define has_ruby_noarch %has_ruby_abi
 
 Summary: Ruby module for collecting simple facts about a host operating system
 Name: facter
 IPS_package_name:        runtime/ruby-19/facter
-Version: 1.7.3
+Version: 1.7.4
 License: ASL 2.0
 Group: System Environment/Base
 URL: http://www.puppetlabs.com/puppet/related-projects/%{name}/
@@ -31,9 +31,9 @@ operating system. Additional facts can be added through simple Ruby scripts
 
 %install
 rm -rf %{buildroot}
-/usr/ruby/1.9/bin/ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
+/usr/ruby/1.8/bin/ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 mkdir -p %{buildroot}%{_bindir}
-cat bin/facter | sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/1.9\/bin\/ruby/' > bin/facter-19
+cat bin/facter | sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/1.8\/bin\/ruby/' > bin/facter-19
 install bin/facter-19 %{buildroot}%{_bindir}/facter
 
 
@@ -48,11 +48,14 @@ rm -rf %{buildroot}
 %{_bindir}/facter
 %{ruby_sitelibdir}/facter.rb
 %{ruby_sitelibdir}/facter
-/usr/ruby/1.9/share
-/usr/ruby/1.9/bin
+/usr/ruby/1.8/share
+/usr/ruby/1.8/bin
 
 
 %changelog
+* Wed Jan 08 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use ruby-18 instead of ruby-19
+- bump to 1.7.4
 * Fri Nov 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use ruby-19 instead of ruby-18
 * Tue Sep 24 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
@@ -95,10 +98,10 @@ rm -rf %{buildroot}
 - Updated to version 1.6.1
 
 * Wed Jul 13 2011 Michael Stahnke <stahnma@puppetlabs.com> - 1.6.0-2
-- Update to not be architecture dependant 
+- Update to not be architecture dependant
 
 * Wed Jul 13 2011 Michael Stahnke <stahnma@puppetlabs.com> - 1.6.0-1
-- Update to 1.6.0 
+- Update to 1.6.0
 
 * Sat Aug 28 2010 Todd Zullinger <tmz@pobox.com> - 1.5.8-1
 - Update to 1.5.8

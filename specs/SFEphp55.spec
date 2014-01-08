@@ -20,6 +20,13 @@ Vendor:		         OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
+BuildRequires:  library/spell-checking/enchant
+Requires:       system/management/snmp/net-snmp
+Requires:       system/library/security/libmcrypt
+Requires:       text/tidy
+Requires:       library/libtool/libltdl
+Requires:       web/php-common
+
 %description
 PHP
 
@@ -366,6 +373,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Thu Jan 09 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Fri Dec 13 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.7
 * Fri Nov 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -137,6 +137,7 @@ build --enable-force-cgi-redirect \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
     --enable-fileinfo=shared \
+    --enable-dtrace \
     --with-icu-dir= \
     --with-enchant=shared
 popd
@@ -375,6 +376,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Thu Jan 09 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
+- add --enable-dtrace
 * Fri Dec 13 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.7
 * Fri Nov 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

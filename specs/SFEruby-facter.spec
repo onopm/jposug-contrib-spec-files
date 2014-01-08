@@ -6,7 +6,7 @@
 
 Summary: Ruby module for collecting simple facts about a host operating system
 Name: facter
-IPS_package_name:        runtime/ruby-19/facter
+IPS_package_name:        runtime/ruby-18/facter
 Version: 1.7.4
 License: ASL 2.0
 Group: System Environment/Base
@@ -16,8 +16,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
 
-BuildRequires: runtime/ruby-19
-Requires: runtime/ruby-19
+BuildRequires: runtime/ruby-18
+Requires: runtime/ruby-18
 
 %description
 Ruby module for collecting simple facts about a host Operating
@@ -33,8 +33,8 @@ operating system. Additional facts can be added through simple Ruby scripts
 rm -rf %{buildroot}
 /usr/ruby/1.8/bin/ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 mkdir -p %{buildroot}%{_bindir}
-cat bin/facter | sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/1.8\/bin\/ruby/' > bin/facter-19
-install bin/facter-19 %{buildroot}%{_bindir}/facter
+cat bin/facter | sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/1.8\/bin\/ruby/' > bin/facter-18
+install bin/facter-18 %{buildroot}%{_bindir}/facter
 
 
 %clean
@@ -56,6 +56,7 @@ rm -rf %{buildroot}
 * Wed Jan 08 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use ruby-18 instead of ruby-19
 - bump to 1.7.4
+- fix to work with ruby-18 correctly
 * Fri Nov 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use ruby-19 instead of ruby-18
 * Tue Sep 24 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

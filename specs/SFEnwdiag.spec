@@ -18,7 +18,7 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 BuildRequires:           runtime/python-26
 BuildRequires:           library/python-2/setuptools-26
 Requires:                runtime/python-26
-Requires:                image/blockdiag >= 1.1.8
+Requires:                image/blockdiag >= 1.3.0
 
 %description
 nwdiag generate network-diagram image file from spec-text file.
@@ -50,6 +50,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Thu Jan 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix required blockdiag version
 * Tue Jan 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.0
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

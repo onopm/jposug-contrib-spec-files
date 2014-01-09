@@ -19,7 +19,7 @@ BuildRequires:           library/python-2/setuptools-26
 Requires:                runtime/python-26
 Requires:                library/python-2/funcparserlib-26
 Requires:                library/python-2/ordereddict-26
-Requires:                library/python-2/pil-26
+Requires:                library/python-2/pillow-26
 Requires:                library/python-2/webcolors-26
 
 %description
@@ -63,6 +63,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Wed Jan 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- blockdiag 1.3.2 requires Pillow instead of PIL
 * Tue Jan 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.3.2
 * Sat Feb 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

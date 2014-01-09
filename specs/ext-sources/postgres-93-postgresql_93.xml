@@ -23,7 +23,7 @@
 
  CDDL HEADER END
 
- ident	"@(#)postgresql_92.xml	1.1	09/10/13 SMI"
+ ident	"@(#)postgresql_93.xml	1.1	09/10/13 SMI"
 
         NOTE:  This service manifest is not editable; its contents will
         be overwritten by package or patch operations, including
@@ -31,10 +31,10 @@
         file.
 -->
 
-<service_bundle type='manifest' name='postgresql_92'>
+<service_bundle type='manifest' name='postgresql_93'>
 
 <service
-        name='application/database/postgresql_92'
+        name='application/database/postgresql_93'
         type='service'
         version='1'>
 
@@ -47,7 +47,7 @@
                 restart_on='none'
                 type='service'>
                 <service_fmri value='svc:/milestone/network:default' />
-        </dependency> 
+        </dependency>
 
 	<!--
 	   Wait for all local filesystems to be mounted.
@@ -58,24 +58,24 @@
                 restart_on='none'
                 type='service'>
                 <service_fmri value='svc:/system/filesystem/local:default' />
-        </dependency> 
+        </dependency>
 
         <exec_method
                 type='method'
                 name='start'
-                exec='/lib/svc/method/postgres_92 start'
+                exec='/lib/svc/method/postgres_93 start'
                 timeout_seconds='60' />
 
         <exec_method
                 type='method'
                 name='stop'
-                exec='/lib/svc/method/postgres_92 stop'
+                exec='/lib/svc/method/postgres_93 stop'
                 timeout_seconds='60' />
 
         <exec_method
                 type='method'
                 name='refresh'
-                exec='/lib/svc/method/postgres_92 refresh'
+                exec='/lib/svc/method/postgres_93 refresh'
                 timeout_seconds='60' />
 
         <!--
@@ -91,7 +91,7 @@
         </property_group>
 
         <!--
-          We define 2 instances of PostgreSQL 9.2 as examples (32 & 64 bit).
+          We define 2 instances of PostgreSQL 9.3 as examples (32 & 64 bit).
         -->
 
         <instance name='default_32bit' enabled='false'>
@@ -100,16 +100,16 @@
                 	<method_credential user='postgres' group='postgres' />
         	</method_context>
 
-		<!-- 
+		<!--
 		   Make sure the data configurable property points to the
-		   appropriate database directory and port number in 
+		   appropriate database directory and port number in
 		   postgresql.conf is different than the other instances.
 		-->
-        	<property_group name='postgresql_92' type='application'>
+        	<property_group name='postgresql_93' type='application'>
                 	<propval name='bin' type='astring'
-                    	   value='/usr/postgres/9.2/bin' />
+                    	   value='/usr/postgres/9.3/bin' />
                 	<propval name='data' type='astring'
-                    	   value='/var/postgres/9.2/data' />
+                    	   value='/var/postgres/9.3/data' />
                 	<propval name='log' type='astring'
 			   value='server.log' />
 			<propval name='initialized' type='boolean'
@@ -126,16 +126,16 @@
                 	<method_credential user='postgres' group='postgres' />
         	</method_context>
 
-		<!-- 
+		<!--
 		   Make sure the data configurable property points to the
-		   appropriate database directory and port number in 
+		   appropriate database directory and port number in
 		   postgresql.conf is different than the other instances.
 		-->
-        	<property_group name='postgresql_92' type='application'>
+        	<property_group name='postgresql_93' type='application'>
                 	<propval name='bin' type='astring'
-                    	   value='/usr/postgres/9.2/bin/64' />
+                    	   value='/usr/postgres/9.3/bin/64' />
                 	<propval name='data' type='astring'
-                    	   value='/var/postgres/9.2/data_64' />
+                    	   value='/var/postgres/9.3/data_64' />
                 	<propval name='log' type='astring'
 			   value='server.log' />
 			<propval name='initialized' type='boolean'
@@ -151,11 +151,11 @@
         <template>
                 <common_name>
                         <loctext xml:lang='C'>
-                                PostgreSQL RDBMS version 9.2
+                                PostgreSQL RDBMS version 9.3
                         </loctext>
                 </common_name>
                 <documentation>
-                        <manpage title='postgres_92' section='5' />
+                        <manpage title='postgres_93' section='5' />
                         <doc_link name='postgresql.org'
                                 uri='http://postgresql.org' />
                 </documentation>
@@ -164,4 +164,3 @@
 </service>
 
 </service_bundle>
-

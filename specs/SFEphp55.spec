@@ -15,6 +15,7 @@ Version:                 %{tarball_version}
 License:		 PHP
 Url:                     http://php.net/
 Source:                  http://jp1.php.net/distributions/php-%{version}.tar.bz2
+Source1:                 php-fpm55.xml
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
@@ -300,6 +301,10 @@ install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/php/5.5/pear
 install -m 700 -d $RPM_BUILD_ROOT%{_localstatedir}/php/5.5/sessions
 
 # PHP-FPM stuff
+# SMF manifest
+mkdir -p $RPM_BUILD_ROOT/var/svc/manifest
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/var/svc/manifest/php-fpm55.xml
+
 # Log
 install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/log/php-fpm
 # install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/run/php-fpm
@@ -366,6 +371,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0750, webservd, bin) /var/php/5.5/sessions
 %dir %attr (0755, root, sys) /var/log
 %attr (0755, root, sys) /var/log/php-fpm
+%dir %attr (0755, root, sys) /var/svc
+%dir %attr (0755, root, sys) /var/svc/manifest
+%attr (0644, root, sys) /var/svc/manifest/php-fpm55.xml
 # %dir %attr (0755, root, sys) /var/run
 # %attr (0755, root, root) /var/run/php-fpm
 %dir %attr (0755, root, bin) /usr/apache2
@@ -374,6 +382,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Sun Jan 12 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add SMF manifest php-fpm55.xml
 * Thu Jan 09 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 - add --enable-dtrace
@@ -381,4 +391,3 @@ rm -rf $RPM_BUILD_ROOT
 - bump to 5.5.7
 * Fri Nov 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
-

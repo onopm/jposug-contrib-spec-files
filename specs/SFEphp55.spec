@@ -16,7 +16,7 @@ License:		 PHP
 Url:                     http://php.net/
 Source:                  http://jp1.php.net/distributions/php-%{version}.tar.bz2
 Source1:                 php-fpm55.xml
-Sourcc2:                 php55-opcache.ini
+Source2:                 php55-opcache.ini
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
@@ -302,6 +302,9 @@ install -m 755 build-apache/libs/libphp5.so $RPM_BUILD_ROOT/usr/apache2/2.2/libe
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/conf.d
+install -m 644 php.ini-production $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/php.ini
+install -m 644 php.ini-production $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/php.ini-production
+install -m 644 php.ini-development $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/php.ini-development
 install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/conf.d/opcache.ini
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/zts-conf.d
 install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/php
@@ -368,7 +371,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}
 %dir %attr (0755, root, sys) /etc
 %dir %attr (0755, root, bin) /etc/php
-%attr (0755, root, bin) /etc/php/5.5
+%dir %attr (0755, root, bin) /etc/php/5.5
+%attr (0644, root, bin) %config(noreplace) /etc/php/5.5/php.ini
+%attr (0644, root, bin) %config(noreplace) /etc/php/5.5/php.ini-production
+%attr (0644, root, bin) %config(noreplace) /etc/php/5.5/php.ini-development
+%dir %attr (0755, root, bin) /etc/php/5.5/conf.d
+%attr (0755, root, bin) %config(noreplace) /etc/php/5.5/conf.d/opcache.ini
+%dir %attr (0755, root, bin) /etc/php/5.5/zts-conf.d
+%dir %attr (0755, root, bin) /etc/php/5.5/fpm-conf.d
+%attr (0755, root, bin) %config(noreplace) /etc/php/5.5/php-fpm.conf.default
+%attr (0755, root, bin) %config(noreplace) /etc/php/5.5/pear.conf
 %dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) /usr/bin
 %attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/bin/phar
@@ -396,6 +408,7 @@ rm -rf $RPM_BUILD_ROOT
 * Sun Jan 12 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add SMF manifest php-fpm55.xml
 - fix opcache build problem with SolarisStudio
+- modify %files and include php.ini{,-production,-development}
 * Thu Jan 09 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 - add --enable-dtrace

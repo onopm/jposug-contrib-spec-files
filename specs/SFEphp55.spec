@@ -86,6 +86,8 @@ build() {
     --disable-rpath \
     --with-bz2 \
     --enable-gd-native-ttf \
+    --with-jpeg-dir=/usr/lib \
+    --with-png-dir=/usr/lib \
     --without-gdbm \
     --with-gettext \
     --with-iconv \
@@ -409,6 +411,7 @@ rm -rf $RPM_BUILD_ROOT
 - add SMF manifest php-fpm55.xml
 - fix opcache build problem with SolarisStudio
 - modify %files and include php.ini{,-production,-development}
+- enable gd jpeg support
 * Thu Jan 09 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 - add --enable-dtrace

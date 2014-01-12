@@ -16,12 +16,14 @@ License:		 PHP
 Url:                     http://php.net/
 Source:                  http://jp1.php.net/distributions/php-%{version}.tar.bz2
 Source1:                 php-fpm55.xml
+Sourcc2:                 php55-opcache.ini
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:  library/spell-checking/enchant
+BuildRequires:  text/nkf
 Requires:       system/management/snmp/net-snmp
 Requires:       system/library/security/libmcrypt
 Requires:       text/tidy
@@ -34,6 +36,14 @@ PHP
 
 %prep
 %setup -n %{tarball_name}-%{tarball_version}
+
+# fix opcache build problem with SolarisStudio
+# see https://bugs.php.net/bug.php?id=65207
+for i in ext/opcache/Optimizer/zend_optimizer{.c,.h,_internal.h}
+do
+nkf -Lu --overwrite=.bak ${i}
+done
+
 
 %build
 mkdir build-cgi build-apache build-embedded build-zts build-ztscli build-fpm
@@ -92,7 +102,7 @@ build() {
     --enable-xml \
     --with-system-tzdata \
     --with-mhash \
-    --enable-opcache=no \
+    --enable-opcache=yes \
     $*
     if test $? != 0; then
 	tail -500 config.log
@@ -292,6 +302,7 @@ install -m 755 build-apache/libs/libphp5.so $RPM_BUILD_ROOT/usr/apache2/2.2/libe
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/conf.d
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/conf.d/opcache.ini
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/zts-conf.d
 install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/php
 install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/php/5.5
@@ -384,6 +395,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sun Jan 12 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add SMF manifest php-fpm55.xml
+- fix opcache build problem with SolarisStudio
 * Thu Jan 09 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 - add --enable-dtrace

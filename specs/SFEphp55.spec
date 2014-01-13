@@ -73,7 +73,6 @@ build() {
     --sysconfdir=/etc/php/5.5 \
     --with-config-file-path=/etc/php/5.5 \
     --with-config-file-scan-dir=/etc/php/5.5/conf.d \
-    --with-exec-dir=/usr/php/5.5/bin \
     --with-pear=/var/php/5.5/pear \
     --cache-file=../config.cache \
     --disable-debug \
@@ -96,7 +95,6 @@ build() {
     --with-layout=PHP \
     --enable-exif \
     --enable-ftp \
-    --enable-magic-quotes \
     --with-kerberos \
     --enable-ucd-snmp-hack \
     --enable-shmop \
@@ -407,6 +405,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Mon Jan 13 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete --with-exec-dir and --enable-magic-quotes, because they are obsolete
 * Sun Jan 12 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add SMF manifest php-fpm55.xml
 - fix opcache build problem with SolarisStudio

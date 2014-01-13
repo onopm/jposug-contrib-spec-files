@@ -96,11 +96,9 @@ build() {
     --enable-exif \
     --enable-ftp \
     --with-kerberos \
-    --enable-ucd-snmp-hack \
     --enable-shmop \
     --enable-calendar \
     --enable-xml \
-    --with-system-tzdata \
     --with-mhash \
     --enable-opcache=yes \
     $*
@@ -407,6 +405,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Jan 13 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - delete --with-exec-dir and --enable-magic-quotes, because they are obsolete
+- delete --enable-ucd-snmp-hack and --with-system-tzdata because they are not recognized
 * Sun Jan 12 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add SMF manifest php-fpm55.xml
 - fix opcache build problem with SolarisStudio

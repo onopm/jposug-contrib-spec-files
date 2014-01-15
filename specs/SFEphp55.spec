@@ -48,8 +48,9 @@ done
 %build
 mkdir build-cgi build-apache build-embedded build-zts build-ztscli build-fpm
 
-export CFLAGS="-m32 -xO4 -xchip=pentium -xregs=no%frameptr -mt"
-export CPPFLAGS="-D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I../CPPFLAGSTEST"
+export CFLAGS="-m64 -xO4 -xchip=pentium -xregs=no%frameptr -mt"
+export CPPFLAGS="-m64 -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I../CPPFLAGSTEST"
+export LDFLAGS="-L/lib/`isainfo -k` -L/usr/lib/`isainfo -k` -R/lib/`isainfo -k` -R/usr/lib/`isainfo -k`"
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -273,8 +274,8 @@ make -C build-apache install-modules \
 # Install the default configuration file and icons
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/
 # install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/php.ini
-install -m 755 -d $RPM_BUILD_ROOT%{contentdir}/icons
-install -m 644 php.gif $RPM_BUILD_ROOT%{contentdir}/icons/php.gif
+#install -m 755 -d $RPM_BUILD_ROOT%{contentdir}/icons
+#install -m 644 php.gif $RPM_BUILD_ROOT%{contentdir}/icons/php.gif
 
 # For third-party packaging:
 install -m 755 -d $RPM_BUILD_ROOT%{_datadir}/php
@@ -329,7 +330,7 @@ install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/fpm-conf.d
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/tmpfiles.d
 # install -m 644 php-fpm.tmpfiles $RPM_BUILD_ROOT%{_sysconfdir}/tmpfiles.d/php-fpm.conf
 # install systemd unit files and scripts for handling server startup
-install -m 755 -d $RPM_BUILD_ROOT%{_unitdir}
+# install -m 755 -d $RPM_BUILD_ROOT%{_unitdir}
 # install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_unitdir}/
 # LogRotate
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d
@@ -403,6 +404,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Thu Jan 16 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build 64bit binary instead of 32bit binary
 * Tue Jan 14 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.8
 * Mon Jan 13 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

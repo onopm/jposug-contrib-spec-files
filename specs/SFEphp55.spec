@@ -102,6 +102,7 @@ build() {
     --enable-xml \
     --with-mhash \
     --enable-opcache=yes \
+    --enable-dtrace \
     $*
     if test $? != 0; then
 	tail -500 config.log
@@ -147,7 +148,6 @@ build --enable-force-cgi-redirect \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
     --enable-fileinfo=shared \
-    --enable-dtrace \
     --with-icu-dir= \
     --with-enchant=shared
 popd
@@ -404,6 +404,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Sat Jan 18 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- move --enable-dtrace to build()
 * Fri Jan 17 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - specify required system/management/snmp/net-snmp version
 * Thu Jan 16 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

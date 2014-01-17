@@ -24,7 +24,7 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:  library/spell-checking/enchant
 BuildRequires:  text/nkf
-Requires:       system/management/snmp/net-snmp
+Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       system/library/security/libmcrypt
 Requires:       text/tidy
 Requires:       library/libtool/libltdl
@@ -404,6 +404,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Fri Jan 17 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify required system/management/snmp/net-snmp version
 * Thu Jan 16 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build 64bit binary instead of 32bit binary
 * Tue Jan 14 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

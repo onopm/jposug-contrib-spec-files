@@ -1,5 +1,5 @@
 #
-# spec file for package SFEphp52-pgsql90
+# spec file for package SFEphp55-pgsql93
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -9,7 +9,7 @@
 
 %define _prefix /usr
 %define php_version 5.5
-%define tarball_version  5.5.7
+%define tarball_version  5.5.8
 %define tarball_name     php
 
 Name:                    SFEphp55-pgsql93
@@ -70,11 +70,11 @@ pushd ext/pgsql/
  --prefix=%{_prefix}\
  --exec-prefix=%{_prefix}\
  --sysconfdir=%{_sysconfdir} \
- --libdir=%{_libdir} \
+ --libdir=%{_libdir}/`isainfo -k` \
  --bindir=%{_bindir} \
  --includedir=%{_includedir} \
  --with-php-config=/usr/php/5.5/bin/php-config \
- --with-pgsql=/usr/postgres/9.3
+ --with-pgsql=/usr/postgres/9.3/bin/amd64
 gmake -j$CPUS
 popd
 
@@ -88,7 +88,7 @@ pushd ext/pdo_pgsql/
  --bindir=%{_bindir} \
  --includedir=%{_includedir} \
  --with-php-config=/usr/php/5.5/bin/php-config \
- --with-pdo-pgsql=/usr/postgres/9.3
+ --with-pdo-pgsql=/usr/postgres/9.3/bin/amd64
 gmake -j$CPUS
 popd
 
@@ -130,5 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.5/conf.d/*
 
 %changelog
+* Fri Jan 17 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.8
+- build 64bit binary instead of 32bit binary
 * Thu Jan 16 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -46,8 +46,13 @@ Generic cache interface and implementations
 IPS_package_name: library/perl-5/cache-cache-512
 Summary: Generic cache interface and implementations for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/digest-sha1-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/ipc-sharelite-512
+Requires:	library/perl-5/storable-512
+Requires:	library/perl-5/digest-sha1-512
+# git has usr/perl5/vendor_perl/5.8.4/i86pc-solaris-64int/Error.pm
+Requires:	developer/versioning/git
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -98,6 +103,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sat Jan 18 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires and BuildRequires
 * Sun Sep 09 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Mon May 13 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

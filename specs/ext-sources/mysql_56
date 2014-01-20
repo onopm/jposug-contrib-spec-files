@@ -7,7 +7,7 @@
 
 . /lib/svc/share/smf_include.sh
 
-# SMF_FMRI is the name of the target service. This allows multiple instances 
+# SMF_FMRI is the name of the target service. This allows multiple instances
 # to use the same script.
 
 getproparg() {
@@ -18,7 +18,6 @@ getproparg() {
 MYSQLBIN=`getproparg mysql/bin`
 MYSQLDATA=`getproparg mysql/data`
 PIDFILE=${MYSQLDATA}/`/usr/bin/uname -n`.pid
-
 
 if [ -z $SMF_FMRI ]; then
 	echo "SMF framework variables are not initialized."
@@ -41,32 +40,34 @@ fi
 
 
 mysql_start() 	{
-	MYSQLDVAL=`getproparg mysql/enable_64bit mysql:version_56`
-	if [ "$MYSQLDVAL" != "" ] ; then
+
+    MYSQLDVAL=`getproparg mysql/enable_64bit mysql:version_56`
+    echo "enable_64bit: ${MYSQLDVAL}"
+    echo "`ls -l /usr/mysql/5.6/bin`"
+    if [ "$MYSQLDVAL" != "" ] ; then
 	case "$MYSQLDVAL" in
-	true|1)
+	    true|1)
 		#Check if the system architecture supports 64-bit applications
 		PLATFORM=`isainfo -b`
 		if [ "${PLATFORM}" != "64" ]; then
-		echo "This system is not capable of supporting 64-bit applications."
-		echo "Set the \"enable_64bit\" property value to \"false\" to start the 32-bit server."
-		exit $SMF_EXIT_ERR_CONFIG
+		    echo "This system is not capable of supporting 64-bit applications."
+		    echo "Set the \"enable_64bit\" property value to \"false\" to start the 32-bit server."
+		    exit $SMF_EXIT_ERR_CONFIG
 		else
-		echo ${MYSQLBIN}/64/mysqld_safe --user=mysql --basedir=/usr/mysql/5.6 --datadir=${MYSQLDATA} --pid-file=${PIDFILE}
-		${MYSQLBIN}/64/mysqld_safe --user=mysql --basedir=/usr/mysql/5.6 --datadir=${MYSQLDATA} --pid-file=${PIDFILE} > /dev/null &
+		    echo ${MYSQLBIN}/64/mysqld_safe --user=mysql --basedir=/usr/mysql/5.6 --datadir=${MYSQLDATA} --pid-file=${PIDFILE} --ledir=${MYSQLBIN}/64 --plugin-dir=lib/64/plugin
+		    ${MYSQLBIN}/64/mysqld_safe --user=mysql --basedir=/usr/mysql/5.6 --datadir=${MYSQLDATA} --pid-file=${PIDFILE} --ledir=${MYSQLBIN}/64 --plugin-dir=lib/64/plugin > /dev/null &
 		fi
-	;;
-	false|0)
-		echo ${MYSQLBIN}/mysqld_safe --user=mysql --basedir=/usr/mysql/5.6 --datadir=${MYSQLDATA} --pid-file=${PIDFILE}
-		${MYSQLBIN}/mysqld_safe --user=mysql --basedir=/usr/mysql/5.6 --datadir=${MYSQLDATA} --pid-file=${PIDFILE} > /dev/null &
-		
-	;;
+		;;
+	    false|0)
+		echo ${MYSQLBIN}/mysqld_safe --user=mysql --basedir=/usr/mysql/5.6 --datadir=${MYSQLDATA} --pid-file=${PIDFILE} --ledir=${MYSQLBIN} --plugin-dir=lib/plugin
+		${MYSQLBIN}/mysqld_safe --user=mysql --basedir=/usr/mysql/5.6 --datadir=${MYSQLDATA} --pid-file=${PIDFILE} --ledir=${MYSQLBIN} --plugin-dir=lib/plugin > /dev/null &
+		;;
 	esac
-	fi
-
+    fi
+    
 }
 
-	
+
 mysql_stop()	{
 	if [ -f ${PIDFILE} ]; then
 	pkill mysqld
@@ -75,7 +76,7 @@ mysql_stop()	{
 
 case "$1" in
 'start')
-	mysql_start 
+	mysql_start
 	;;
 
 'stop')

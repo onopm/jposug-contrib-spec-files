@@ -73,7 +73,13 @@ IPS_package_name: database/mysql-56/devel
 Summary: MySQL devel
 
 %prep
-%setup -n %{tarball_name}-%{tarball_version}
+%setup -c -n %{tarball_name}-%{tarball_version}
+
+
+%ifarch amd64 sparcv9
+rm -rf %{tarball_name}-%{tarball_version}-64
+cp -rp %{tarball_name}-%{tarball_version} %{tarball_name}-%{tarball_version}-64
+%endif
 
 
 %build
@@ -83,12 +89,11 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
     CPUS=1
 fi
 
-%if %{cc_is_gcc}
-    export CC=gcc
-    export CXX=g++
-    export CFLAGS="%optflags -fno-strict-aliasing -Wno-pointer-sign"
+cd %{tarball_name}-%{tarball_version}
+%ifarch sparc
+%define target sparc-sun-solaris
 %else
-    export CFLAGS="%optflags"
+%define target i386-sun-solaris
 %endif
 
 cmake . -DBUILD_CONFIG=mysql_release \
@@ -102,45 +107,91 @@ cmake . -DBUILD_CONFIG=mysql_release \
     -DWITH_EMBEDDED_SERVER=OFF \
     -DWITH_LIBEDIT=ON \
     -DSYSCONFDIR=/etc/mysql \
-    -DCMAKE_C_FLAGS="-O3 -m64 -mt -KPIC" \
-    -DCMAKE_CXX_FLAGS="-O3 -m64 -mt -KPIC -library=stlport4"
-
-#    -DCMAKE_C_FLAGS="-O3 -m64 -KPIC -g -mt -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt -xtarget=generic" \
-#    -DCMAKE_CXX_FLAGS="-O3 -m64 -KPIC -library=stlport4 -g0 -mt -fsimple=1 -ftrap=%none -nofstore -xbuiltin=%all -xlibmil -xlibmopt -xtarget=generic -library=stlport4"
+    -DCMAKE_C_FLAGS="-O3 -m32 -mt -KPIC" \
+    -DCMAKE_CXX_FLAGS="-O3 -m32 -mt -KPIC"
 
 gmake -j$CPUS
 gmake -j$CPUS test
 
+%ifarch amd64 sparcv9
+cd ../%{tarball_name}-%{tarball_version}-64
+
+cmake . -DBUILD_CONFIG=mysql_release \
+    -DFEATURE_SET="community" \
+    -DCMAKE_INSTALL_PREFIX="%{_prefix}/%{major_version}" \
+    -DINSTALL_LIBDIR="lib/%{_arch64}/mysql" \
+    -DINSTALL_BINDIR="bin/%{_arch64}" \
+    -DINSTALL_PLUGINDIR="lib/%{_arch64}/plugin" \
+    -DMYSQL_DATADIR="/var/mysql" \
+    -DMYSQL_UNIX_ADDR="/var/tmp/mysql.sock" \
+    -DENABLED_LOCAL_INFILE=ON \
+    -DENABLE_DTRACE=ON \
+    -DWITH_EMBEDDED_SERVER=OFF \
+    -DWITH_LIBEDIT=ON \
+    -DSYSCONFDIR=/etc/mysql \
+    -DCMAKE_C_FLAGS="-O3 -m64 -mt -KPIC" \
+    -DCMAKE_CXX_FLAGS="-O3 -m64 -mt -KPIC -library=stlport4"
+
+gmake -j$CPUS
+gmake -j$CPUS test
+%endif
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
+# install 32bit
+cd %{tarball_name}-%{tarball_version}
 make install DESTDIR=$RPM_BUILD_ROOT
 
+mkdir -p $RPM_BUILD_ROOT/etc/mysql/5.6
+install support-files/my-default.cnf $RPM_BUILD_ROOT/etc/mysql/5.6/my.cnf
+
+mkdir -p $RPM_BUILD_ROOT/usr/lib
+pushd $RPM_BUILD_ROOT/usr/lib
+ln -s ../mysql/5.6/lib/mysql/libstlport.so.1 .
+popd
+
+# install 64bit
+%ifarch amd64 sparcv9
+
+pushd $RPM_BUILD_ROOT/usr/mysql/%{major_version}
+mv bin bin32
+popd
+
+cd ../%{tarball_name}-%{tarball_version}-64
+make install DESTDIR=$RPM_BUILD_ROOT
+cd $RPM_BUILD_ROOT/usr/mysql/%{major_version}/lib
+%ifarch amd64
+ln -s amd64 64
+%endif
+%ifarch sparcv9
+%endif
+
+cd $RPM_BUILD_ROOT/usr/mysql/%{major_version}
+mv bin/m* bin/%{_arch64}
+mv bin32/* bin/
+rmdir bin32
+cd bin
+ln -s %{_arch64} 64
+
+mkdir -p $RPM_BUILD_ROOT/usr/lib/%{_arch64}
+cd $RPM_BUILD_ROOT/usr/lib/%{_arch64}
+ln -s ../../mysql/5.6/lib/%{_arch64}/mysql/libstlport.so.1 .
+%endif
+
+#
 mkdir -p $RPM_BUILD_ROOT%{_var_prefix}/%{major_version}/data
 mkdir -p $RPM_BUILD_ROOT/lib/svc/method
 install -m 0555 %{SOURCE1} $RPM_BUILD_ROOT/lib/svc/method
 mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/application/database
 install -m 0444 %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application/database
-mkdir -p $RPM_BUILD_ROOT/etc/mysql/5.6
-install support-files/my-default.cnf $RPM_BUILD_ROOT/etc/mysql/5.6/my.cnf
 
 cd $RPM_BUILD_ROOT/usr/mysql/5.6/bin
 ln -s ../scripts/mysql_install_db .
-
-mkdir -p $RPM_BUILD_ROOT/lib/amd64
-cd $RPM_BUILD_ROOT/lib/amd64
-ln -s ../../usr/mysql/5.6/lib/mysql/libstlport.so.1 .
-
-# # make symbolic links for mediator
-# cd $RPM_BUILD_ROOT/etc/mysql
-# ln -s 5.6/my.cnf .
+cd $RPM_BUILD_ROOT/usr/mysql/5.6/bin/64
+ln -s ../scripts/mysql_install_db .
 
 cd $RPM_BUILD_ROOT/usr/mysql
-# mysql-51/lib is required by some packages
-# like apr-util-13/dbd-mysql which is required by apache-22
-# and is not mediator ready.
-# then can not create symbolic link to /usr/mysql/lib 
-# ln -s 5.6/lib .
 
 # mkdir -p $RPM_BUILD_ROOT/usr/bin
 # cd $RPM_BUILD_ROOT/usr/bin
@@ -189,6 +240,52 @@ cd $RPM_BUILD_ROOT/usr/mysql
 # ln -s ../mysql/%{major_version}/bin/resolve_stack_dump .
 # ln -s ../mysql/%{major_version}/bin/resolveip .
 
+# mkdir -p $RPM_BUILD_ROOT/usr/bin/amd64
+# cd $RPM_BUILD_ROOT/usr/bin/amd64
+# ln -s ../mysql/%{major_version}/bin/amd64/innochecksum .
+# ln -s ../mysql/%{major_version}/bin/amd64/msql2mysql .
+# ln -s ../mysql/%{major_version}/bin/amd64/my_print_defaults .
+# ln -s ../mysql/%{major_version}/bin/amd64/myisam_ftdump .
+# ln -s ../mysql/%{major_version}/bin/amd64/myisamchk .
+# ln -s ../mysql/%{major_version}/bin/amd64/myisamlog .
+# ln -s ../mysql/%{major_version}/bin/amd64/myisampack .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_client_test .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_client_test_embedded .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_config .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_config_editor .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_convert_table_format .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_embedded .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_find_rows .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_fix_extensions .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_plugin .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_secure_installation .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_setpermission .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_tzinfo_to_sql .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_upgrade .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_waitpid .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysql_zap .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqlaccess .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqlaccess.conf .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqladmin .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqlbinlog .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqlbug .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqlcheck .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqld .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqld_multi .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqld_safe .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqldump .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqldumpslow .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqlhotcopy .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqlimport .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqlshow .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqlslap .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqltest .
+# ln -s ../mysql/%{major_version}/bin/amd64/mysqltest_embedded .
+# ln -s ../mysql/%{major_version}/bin/amd64/perror .
+# ln -s ../mysql/%{major_version}/bin/amd64/replace .
+# ln -s ../mysql/%{major_version}/bin/amd64/resolve_stack_dump .
+# ln -s ../mysql/%{major_version}/bin/amd64/resolveip .
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -201,6 +298,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) /lib/svc/method/mysql_56
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
+# %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
 %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
 %attr (0755, root, bin) %{_prefix}/%{major_version}/README
 %attr (0755, root, bin) %{_prefix}/%{major_version}/share
@@ -216,7 +314,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0700, mysql, mysql) %{_var_prefix}
 %dir %attr (0700, mysql, mysql) %{_var_prefix}/%{major_version}
 %dir %attr (0700, mysql, mysql) %{_var_prefix}/%{major_version}/data
-
 %dir %attr (0755, root, sys) /var/svc
 %dir %attr (0755, root, sys) /var/svc/manifest
 %dir %attr (0755, root, sys) /var/svc/manifest/application
@@ -226,7 +323,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, sys) /etc
 %dir %attr (0755, root, bin) /etc/mysql
 %dir %attr (0755, root, bin) /etc/mysql/5.6
-%attr (0755, root, bin) %config(noreplace) /etc/mysql/5.6/my.cnf 
+%attr (0755, root, bin) %config(noreplace) /etc/mysql/5.6/my.cnf
 # %attr (0555, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /etc/mysql/my.cnf
 
 # /usr/bin
@@ -276,19 +373,66 @@ rm -rf $RPM_BUILD_ROOT
 # %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/resolve_stack_dump
 # %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/resolveip
 
+# %dir %attr (0755, root, bin) /usr/bin/amd64
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/innochecksum
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/msql2mysql
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/my_print_defaults
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/myisam_ftdump
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/myisamchk
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/myisamlog
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/myisampack
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_client_test
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_client_test_embedded
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_config
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_config_editor
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_convert_table_format
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_embedded
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_find_rows
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_fix_extensions
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_plugin
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_secure_installation
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_setpermission
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_tzinfo_to_sql
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_upgrade
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_waitpid
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysql_zap
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqlaccess
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqlaccess.conf
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqladmin
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqlbinlog
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqlbug
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqlcheck
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqld
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqld_multi
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqld_safe
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqldump
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqldumpslow
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqlhotcopy
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqlimport
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqlshow
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqlslap
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqltest
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/mysqltest_embedded
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/perror
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/replace
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/resolve_stack_dump
+# %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/resolveip
+
 %files library
 %defattr (-, root, bin)
 %dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
-%dir %attr (0755, root, bin) /lib
-%dir %attr (0755, root, bin) /lib/amd64
-/lib/amd64/libstlport.so.1
+%dir %attr (0755, root, bin) /usr/lib
+/usr/lib/libstlport.so.1
+%dir %attr (0755, root, bin) /usr/lib/amd64
+/usr/lib/amd64/libstlport.so.1
 
 # mysql-51/lib is required by some packages
 # like apr-util-13/dbd-mysql which is required by apache-22
 # and is not mediator ready.
-# then can not create symbolic link to /usr/mysql/lib 
+# then can not create symbolic link to /usr/mysql/lib
 # %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) %{_prefix}/lib
 
 %files tests
@@ -305,6 +449,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Mon Jan 20 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate 32bit and 64bit binary
 * Sat Dec 14 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.15
 * Thu Sep 26 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

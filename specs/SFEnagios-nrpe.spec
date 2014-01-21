@@ -15,8 +15,8 @@
 
 Name:		SFEnagios-nrpe
 IPS_package_name:        diagnostic/nagios/nrpe
-Version:	2.14
-Summary:	NRPE - Nagios Remote Plugin Executor 
+Version:	2.15
+Summary:	NRPE - Nagios Remote Plugin Executor
 Group:		Applications/System
 License:	GPL
 URL:		http://www.nagios.org/
@@ -61,7 +61,7 @@ make -j$CPUS all
 
 %install
 rm -rf %{buildroot}
-make DESTDIR=%{buildroot} NAGIOS_INSTALL_OPTS="" NRPE_INSTALL_OPTS="" install 
+make DESTDIR=%{buildroot} NAGIOS_INSTALL_OPTS="" NRPE_INSTALL_OPTS="" install
 mkdir -p %{buildroot}/%{_sysconfdir}/nagios
 install -m 0644 sample-config/nrpe.cfg %{buildroot}%{_sysconfdir}/nagios/nrpe.cfg
 
@@ -98,6 +98,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Jan 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.15
 * Wed Mar 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.14
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

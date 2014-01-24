@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.14
+Version:   2.0.17
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -427,6 +427,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Sat Jan 25 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.17
 * Thu Jun 06 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add logadm config files
 * Mon May 13 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

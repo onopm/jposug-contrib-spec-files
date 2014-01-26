@@ -37,7 +37,7 @@ Requires:      system/library/gcc-runtime
 %endif
 %include default-depend.inc
 Requires:      database/mysql-common
-Requires:      database/mysql-56/library
+Requires:      database/mysql-56/library = %{version}
 
 %description
 The MySQL(TM) software delivers a very fast, multi-threaded, multi-user,
@@ -60,9 +60,14 @@ and the manual for more information.
 This package includes the MySQL server binary as well as related utilities
 to run and administer a MySQL server.
 
+%package mysql64
+IPS_package_name: database/mysql-56/64
+Summary: MySQL 64bit binary
+Requires: data/mysql-56/library = %{version}
+
 %package library
 IPS_package_name: database/mysql-56/library
-Summary: MySQL library
+Summary: MySQL library (32bit/64bit)
 
 %package tests
 IPS_package_name: database/mysql-56/tests
@@ -299,7 +304,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
 # %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
-%attr (0755, root, bin) %{_prefix}/%{major_version}/bin
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
+%attr (0755, root, bin) %{_prefix}/%{major_version}/bin/[impr]*
 %attr (0755, root, bin) %{_prefix}/%{major_version}/README
 %attr (0755, root, bin) %{_prefix}/%{major_version}/share
 %attr (0755, root, bin) %{_prefix}/%{major_version}/COPYING
@@ -419,6 +425,15 @@ rm -rf $RPM_BUILD_ROOT
 # %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/resolve_stack_dump
 # %attr (0755, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /usr/bin/amd64/resolveip
 
+
+%files mysql64
+%defattr (-, root, bin)
+%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
+%attr (0755, root, bin) %{_prefix}/%{major_version}/bin/64
+%attr (0755, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}
+
 %files library
 %defattr (-, root, bin)
 %dir %attr (0755, root, sys) /usr
@@ -449,6 +464,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Mon Jan 27 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- divede packages
 * Mon Jan 20 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate 32bit and 64bit binary
 * Sat Dec 14 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

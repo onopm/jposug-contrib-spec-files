@@ -1,5 +1,5 @@
 #
-# spec file for package SFEphp52-pgsql90
+# spec file for package SFEphp55-mysql56
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -48,7 +48,7 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
 fi
 
 export CFLAGS="-m64 -xO4 -xchip=generic -xregs=no%frameptr -mt"
-export LDFLAGS="-L/lib/`isainfo -k` -L/usr/lib/`isainfo -k` -R/lib/`isainfo -k` -R/usr/lib/`isainfo -k`"
+export LDFLAGS="-L/usr/mysql/5.6/lib/`isainfo -k`/mysql -L/lib/`isainfo -k` -L/usr/lib/`isainfo -k` -R/usr/mysql/5.6/lib/`isainfo -k`/mysql -R/lib/`isainfo -k` -R/usr/lib/`isainfo -k`"
 export CC=cc
 
 pwd
@@ -62,22 +62,24 @@ cd %{tarball_name}-%{tarball_version}
 pushd ext/mysql
 /usr/php/5.5/bin/phpize
 ./configure \
- --prefix=%{_prefix}\
- --exec-prefix=%{_prefix}\
+ --prefix=%{_prefix} \
+ --exec-prefix=%{_prefix} \
  --sysconfdir=%{_sysconfdir} \
  --libdir=%{_libdir} \
  --bindir=%{_bindir} \
  --includedir=%{_includedir} \
  --with-php-config=/usr/php/5.5/bin/php-config \
- --with-mysql=/usr/mysql/5.6
+ --with-mysql=/usr/mysql/5.6 \
+ --with-zlib-dir=/usr/lib/%{_arch64}
 gmake -j$CPUS
+# gmake test
 popd
 
 pushd ext/mysqli
 /usr/php/5.5/bin/phpize
 ./configure \
- --prefix=%{_prefix}\
- --exec-prefix=%{_prefix}\
+ --prefix=%{_prefix} \
+ --exec-prefix=%{_prefix} \
  --sysconfdir=%{_sysconfdir} \
  --libdir=%{_libdir} \
  --bindir=%{_bindir} \
@@ -85,6 +87,7 @@ pushd ext/mysqli
  --with-php-config=/usr/php/5.5/bin/php-config \
  --with-mysqli=/usr/mysql/5.6/bin/mysql_config
 gmake -j$CPUS
+# gmake test
 popd
 
 pushd ext/pdo_mysql
@@ -99,6 +102,7 @@ pushd ext/pdo_mysql
  --with-php-config=/usr/php/5.5/bin/php-config \
  --with-pdo-mysql=/usr/mysql/5.6
 gmake -j$CPUS
+# gmake test
 popd
 
 
@@ -141,5 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.5/conf.d/*
 
 %changelog
+* Tue Jan 28 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify LDFLAGS
 * Fri Jan 17 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

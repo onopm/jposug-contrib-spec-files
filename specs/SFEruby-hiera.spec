@@ -17,7 +17,7 @@
 Summary: A pluggable data store for hierarcical data
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/hiera
-Version: 1.3.0
+Version: 1.3.1
 License: Apache License 2.0
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -137,6 +137,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed Jan 29 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.3.1
 * Wed Jan 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.3.0
 * Thu Sep 26 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 1.5012
+%define tarball_version 3.1.1
 %define tarball_name    Text-Xslate
 
 Name:		SFEperl-text-xslate
 IPS_package_name: library/perl-5/text-xslate
-Version:	1.5012
-IPS_component_version: 1.5012
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	Text-Xslate
 License:	Artistic
 Distribution:   OpenSolaris
@@ -102,5 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.1.1
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

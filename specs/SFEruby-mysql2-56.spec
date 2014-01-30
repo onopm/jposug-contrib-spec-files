@@ -19,7 +19,7 @@
 Summary: A simple, fast Mysql library for Ruby, binding to libmysql
 Name: SFEruby-%{gemname}-56
 IPS_package_name:        library/ruby-18/mysql2-56
-Version: 0.3.11
+Version: 0.3.15
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -29,6 +29,7 @@ BuildRequires:	runtime/ruby-18
 BuildRequires:	database/mysql-56
 BuildRequires:	database/mysql-56/library
 Requires:       runtime/ruby-18
+Requires:	database/mysql-56/library
 
 %description
 A simple, fast Mysql library for Ruby, binding to libmysql
@@ -40,20 +41,22 @@ BuildRequires:	runtime/ruby-19
 BuildRequires:	database/mysql-56
 BuildRequires:	database/mysql-56/library
 Requires:	runtime/ruby-19
+Requires:	database/mysql-56/library
 
 %description 19
 A simple, fast Mysql library for Ruby, binding to libmysql
 
-# %package 20
-# IPS_package_name: library/ruby-20/mysql2-56
-# Summary: A simple, fast Mysql library for Ruby, binding to libmysql
-# BuildRequires:	runtime/ruby-20
-# BuildRequires:	database/mysql-56
-# BuildRequires:	database/mysql-56/library
-# Requires:	runtime/ruby-20
+%package 20
+IPS_package_name: library/ruby-20/mysql2-56
+Summary: A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:	runtime/ruby-20
+BuildRequires:	database/mysql-56
+BuildRequires:	database/mysql-56/library
+Requires:	runtime/ruby-20
+Requires:	database/mysql-56/library
 
-# %description 20
-# A simple, fast Mysql library for Ruby, binding to libmysql
+%description 20
+A simple, fast Mysql library for Ruby, binding to libmysql
 
 %prep
 %setup -q -c -T
@@ -61,6 +64,8 @@ mkdir -p .%{gemdir18}
 mkdir -p .%{bindir18}
 mkdir -p .%{gemdir19}
 mkdir -p .%{bindir19}
+mkdir -p .%{gemdir20}
+mkdir -p .%{bindir20}
 
 %build
 export PATH=/usr/mysql/5.6/bin:$PATH
@@ -75,9 +80,24 @@ export PATH=/usr/mysql/5.6/bin:$PATH
     --force %{SOURCE0} \
     -- --with-mysql-config=/usr/mysql/5.6/bin/mysql_config
 
-mv .%{gemdir18}/gems//mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir18}/gems//mysql2-%{version}/lib/mysql2/mysql2-56.so 
+mv .%{gemdir18}/gems//mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir18}/gems//mysql2-%{version}/lib/mysql2/mysql2-56.so
+
+# ruby-20
+/usr/ruby/2.0/bin/gem install --local \
+    --install-dir .%{gemdir20} \
+    --bindir .%{bindir20} \
+    --no-ri \
+    --no-rdoc \
+    -V \
+    --force %{SOURCE0} \
+    -- --with-mysql-config=/usr/mysql/5.6/bin/mysql_config
+
+mv .%{gemdir20}/gems/mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir20}/gems/mysql2-%{version}/lib/mysql2/mysql2-56.so
 
 # ruby-19
+export CFLAGS='-m64'
+export LDFLAGS='-L/usr/mysql/5.6/lib/%{_arch64}:/lib/%{_arch64}:/usr/lib/%{_arch64} -R/usr/mysql/5.6/lib/%{_arch64}:/lib/%{_arch64}:/usr/lib/%{_arch64}'
+
 /usr/ruby/1.9/bin/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
@@ -85,21 +105,10 @@ mv .%{gemdir18}/gems//mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir18}/gems//
     --no-rdoc \
     -V \
     --force %{SOURCE0} \
-    -- --with-mysql-config=/usr/mysql/5.6/bin/mysql_config
+    -- --with-mysql-config=/usr/mysql/5.6/bin/%{_arch64}/mysql_config
 
 mv .%{gemdir19}/gems/mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir19}/gems/mysql2-%{version}/lib/mysql2/mysql2-56.so
 
-# # ruby-20
-# /usr/ruby/2.0/bin/gem install --local \
-#     --install-dir .%{gemdir20} \
-#     --bindir .%{bindir20} \
-#     --no-ri \
-#     --no-rdoc \
-#     -V \
-#     --force %{SOURCE0} \
-#     -- --with-mysql-config=/usr/mysql/5.6/bin/mysql_config
-
-# mv .%{gemdir20}/gems/mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir20}/gems/mysql2-%{version}/lib/mysql2/mysql2-56.so
 
 %install
 rm -rf %{buildroot}
@@ -124,15 +133,15 @@ pushd %{buildroot}/%{gemdir19}/gems/mysql2-%{version}/lib/mysql2
 ln -s mysql2-56.so mysql2.so
 popd
 
-# # ruby-20
-# mkdir -p %{buildroot}/%{gemdir20}
-# cp -a .%{gemdir20}/* \
-#     %{buildroot}/%{gemdir20}/
+# ruby-20
+mkdir -p %{buildroot}/%{gemdir20}
+cp -a .%{gemdir20}/* \
+    %{buildroot}/%{gemdir20}/
 
-# rm -rf %{buildroot}/%{gemdir20}/gems/mysql2-%{version}/ext
-# pushd %{buildroot}/%{gemdir20}/gems/mysql2-%{version}/lib/mysql2
-# ln -s mysql2-56.so mysql2.so
-# popd
+rm -rf %{buildroot}/%{gemdir20}/gems/mysql2-%{version}/ext
+pushd %{buildroot}/%{gemdir20}/gems/mysql2-%{version}/lib/mysql2
+ln -s mysql2-56.so mysql2.so
+popd
 
 %clean
 rm -rf %{buildroot}
@@ -148,11 +157,13 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
 
-# %files 20
-# %defattr(0755,root,bin,-)
-# %dir %attr (0755, root, sys) /usr
-# /usr/ruby/2.0
+%files 20
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.0
 
 %changelog
+* Fri Jan 31 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.3.15
 * Tue May 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

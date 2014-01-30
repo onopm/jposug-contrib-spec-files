@@ -9,9 +9,9 @@
 %define bindir19 /usr/ruby/1.9/bin
 
 Summary:          included to format values into json, tsv or csv
-Name:             SFEfluent-plugin-mpf
-IPS_package_name: system/fluentd/plugins/mixin-plaintextformatter
-Version:          0.2.2
+Name:             SFEfluent-mpf
+IPS_package_name: system/fluentd/mixin-plaintextformatter
+Version:          0.2.5
 License:          Apache License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -63,5 +63,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Fri Jan 31 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.2.5 and modify IPS_package_name
 * Mon Jul 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -20,7 +20,7 @@ Summary: A gem to provide easy switching between different JSON backends,
 # Name: SFEruby-%{gemname}
 Name: SFEruby-multi-json
 IPS_package_name:        library/ruby-18/%{gemname}
-Version: 1.7.3
+Version: 1.8.4
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -140,5 +140,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Fri Jan 31 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.8.4
 * Tue May 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

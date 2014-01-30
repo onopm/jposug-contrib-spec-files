@@ -6,12 +6,12 @@
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
 %define tarball_name    yajl-ruby
-%define tarball_version 1.1.0
+%define tarball_version 1.2.0
 
 Summary: %{gemname}
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-19/yajl-ruby
-Version: 1.1.0
+Version: 1.2.0
 License: MIT
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
@@ -56,5 +56,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2.0
 * Wed Nov 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

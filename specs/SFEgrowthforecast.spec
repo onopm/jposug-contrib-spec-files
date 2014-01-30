@@ -48,6 +48,7 @@ Requires:	library/perl-5/http-date-512
 Requires:	library/perl-5/kossy-512
 Requires:	library/perl-5/list-moreutils-512
 Requires:	library/perl-5/log-minimal-512
+Requires:	library/perl-5/plack-512
 Requires:	library/perl-5/plack-builder-conditionals-512
 Requires:	library/perl-5/plack-middleware-scope-container-512
 Requires:	library/perl-5/proclet-512
@@ -55,6 +56,25 @@ Requires:	library/perl-5/scope-container-512
 Requires:	library/perl-5/scope-container-dbi-512
 Requires:	library/perl-5/starlet-512
 Requires:	library/perl-5/time-piece-512
+Requires:	library/perl-5/router-simple-512
+Requires:	library/perl-5/net-cidr-lite-512
+Requires:	library/perl-5/text-xslate-512
+Requires:	library/perl-5/data-messagepack-512
+Requires:	library/perl-5/html-fillinform-lite-512
+Requires:	library/perl-5/json-512
+Requires:	library/perl-5/dbi-512
+Requires:	library/perl-5/dbix-transactionmanager-512
+Requires:	library/perl-5/rrdtool-512
+Requires:	library/perl-5/parallel-prefork-512
+Requires:	library/perl-5/proc-wait3-512
+Requires:	library/perl-5/data-validator-512
+Requires:	library/perl-5/mouse-512
+Requires:	library/perl-5/class-inspector-512
+Requires:	library/perl-5/text-xslate-bridge-tt2like-512
+Requires:	library/perl-5/number-format-512
+Requires:	library/perl-5/server-starter-512
+Requires:	library/perl-5/scope-guard-512
+Requires:	library/perl-5/any-moose-512
 
 %description
 GrowthForecast - Lightning Fast Graphing/Visualization
@@ -117,6 +137,8 @@ user ftpuser=false gcos-field="GrowthForecast Reserved UID" username="growthfore
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/site/growthforecast.xml
 
 %changelog
+* Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requirs
 * Tue Sep 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.70
 * Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

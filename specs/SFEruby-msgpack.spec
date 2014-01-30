@@ -5,7 +5,7 @@
 %{!?ruby_sitelibdir: %define ruby20_sitelibdir %(/usr/ruby/2.0/bin/ruby -rrbconfig -e 'puts RbConfig::CONFIG["sitelibdir"]')}
 
 %define gemname msgpack
-%define gemdir18 %(ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir19}/gems/%{gemname}-%{version}
 
 %define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
@@ -17,7 +17,7 @@
 Name: SFEruby-msgpack
 IPS_package_name:        library/ruby-18/msgpack
 Summary: MessagePack is an efficient binary serialization format.
-Version: 0.5.6
+Version: 0.5.8
 License: ASL 2.0
 Group: System Environment/Base
 URL:     http://msgpack.org/
@@ -74,7 +74,7 @@ cp -a .%{gemdir18}/* \
         %{buildroot}%{gemdir18}/
 
 # mkdir -p %{buildroot}%{_bindir}
-# cp -a .%{_bindir}/* \   
+# cp -a .%{_bindir}/* \
 #         %{buildroot}%{_bindir}/
 
 rm -rf %{buildroot}%{geminstdir18}/.yardoc/
@@ -86,7 +86,7 @@ cp -a .%{gemdir19}/* \
         %{buildroot}%{gemdir19}/
 
 # mkdir -p %{buildroot}%{_bindir}
-# cp -a .%{_bindir}/* \   
+# cp -a .%{_bindir}/* \
 #         %{buildroot}%{_bindir}/
 
 # 2.0
@@ -121,6 +121,8 @@ rm -rf %{buildroot}
 %{gemdir20}
 
 %changelog
+* Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.5.8
 * Wed Oct 16 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.5.6
 * Sat Jan 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -2,10 +2,10 @@
 %include default-depend.inc
 
 %define gemname http_parser.rb
-%define gemdir18 %(ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
 %define bindir18 /usr/ruby/1.8/bin
-%define gemdir19 %(ruby19 -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
 
@@ -87,5 +87,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %define gemdir18 and gemdir19
 * Wed Oct 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -1,5 +1,4 @@
 %include Solaris.inc
-%include default-depend.inc
 
 %define gemname fluent-plugin-http-enhanced
 %define generate_executable 0
@@ -61,5 +60,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Sat Feb 01 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- not include default-depend.inc
 * Fri Jan 31 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

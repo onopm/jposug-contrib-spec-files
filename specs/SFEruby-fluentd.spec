@@ -16,6 +16,8 @@ Version:          %{tarball_version}
 License:          Apache License, Version 2.0
 URL:              http://fluentd.org/
 Source0:          http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
+Source1:          fluentd.xml
+Source2:          svc-fluentd
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 %description
@@ -73,13 +75,24 @@ cp -a .%{gemdir19}/* \
 
 rm -rf %{buildroot}%{geminstdir19}/.yardoc/
 
+# SMF
+mkdir -p %{buildroot}/lib/svc/manifest/system
+cp %{SOURCE1} %{buildroot}/lib/svc/manifest/system/
+
+mkdir -p %{buildroot}/lib/svc/method
+cp %{SOURCE2} %{buildroot}/lib/svc/method/
+
+# log
+mkdir -p %{buildroot}/var/log/fluentd
+
+# config
+mkdir -p %{buildroot}/etc/fluentd
+
 %clean
 rm -rf %{buildroot}
 
-
 %files
 %defattr(0755,root,bin,-)
-# %dir %{geminstdir18}
 %dir %attr(0755, root, sys) /usr
 %dir %attr(0755, root, bin) /usr/bin
 %attr(0555, root, bin) /usr/bin/fluent-cat
@@ -87,8 +100,22 @@ rm -rf %{buildroot}
 %attr(0555, root, bin) /usr/bin/fluent-gem
 %attr(0555, root, bin) /usr/bin/fluentd
 %{gemdir19}
+%dir %attr(0755, root, bin) /lib/
+%dir %attr(0755, root, bin) /lib/svc
+%dir %attr(0755, root, sys) /lib/svc/manifest
+%dir %attr(0755, root, sys) /lib/svc/manifest/system
+%attr(0444, root, sys) /lib/svc/manifest/system/fluentd.xml
+%dir %attr(0755, root, bin) /lib/svc/method
+%attr(0555, root, bin) /lib/svc/method/svc-fluentd
+%dir %attr(0755, root, sys) /var
+%dir %attr(0755, root, sys) /var/log/
+%dir %attr(0755, root, sys) /var/log/fluentd
+%dir %attr(0755, root, sys) /etc
+%dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* San Feb 02 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add SMF manifest and method
 * Thu Jan 30 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.42
 * Sun Nov 17 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

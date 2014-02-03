@@ -10,7 +10,7 @@
 %define _prefix /usr/mysql
 %define _var_prefix /var/mysql
 %define tarball_name     mysql
-%define tarball_version  5.6.15
+%define tarball_version  5.6.16
 %define major_version	 5.6
 %define prefix_name      SFEmysql-56
 %define _basedir         %{_prefix}/%{major_version}
@@ -27,15 +27,8 @@ Source:                  http://cdn.mysql.com/Downloads/MySQL-%{major_version}/m
 Source1:                 mysql_56
 Source2:                 mysql_56.xml
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
+
 BuildRequires: developer/build/cmake
-%if %( expr %{osbuild} '=' 175 )
-BuildRequires: developer/gcc-45
-Requires:      system/library/gcc-45-runtime
-%else
-BuildRequires: developer/gcc-46
-Requires:      system/library/gcc-runtime
-%endif
-%include default-depend.inc
 Requires:      database/mysql-common
 Requires:      database/mysql-56/library = %{version}
 
@@ -464,6 +457,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Tue Feb 04 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.6.16
 * Mon Jan 27 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - divede packages
 * Mon Jan 20 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

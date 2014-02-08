@@ -7,7 +7,7 @@
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.10.42
+%define tarball_version 0.10.43
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -34,6 +34,7 @@ Requires:	library/ruby-19/http_parser.rb >= 0.5.1
 Requires:	library/ruby-19/json >= 1.4.3
 Requires:	library/ruby-19/msgpack >= 0.5.8
 Requires:	library/ruby-19/yajl-ruby >= 1.0
+Requires:	library/ruby-19/sigdump >= 0.2.2
 
 %prep
 %setup -q -c -T
@@ -114,6 +115,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Sat Feb 08 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.10.43
 * San Feb 02 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add SMF manifest and method
 * Thu Jan 30 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

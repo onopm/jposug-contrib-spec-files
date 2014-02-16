@@ -225,18 +225,20 @@ rm -rf %{buildroot}
 
 
 %files dig
-%defattr(-, root, sys)
+%defattr(-, root, bin)
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_dig
 
 %files dns
-%defattr(-, root, sys)
+%defattr(-, root, bin)
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_dns
 
 %files fping
-%defattr(-, root, sys)
+%defattr(-, root, bin)
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %defattr
 * Tue Jan 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.5
 * Tue Jul 17 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

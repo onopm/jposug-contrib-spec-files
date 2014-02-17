@@ -15,7 +15,7 @@
 
 
 Name:		SFEredis
-Version:        2.8.2
+Version:        2.8.6
 Summary:	Redis is an open source, advanced key-value store
 IPS_package_name:    service/redis-28
 URL:		http://redis.io
@@ -33,16 +33,16 @@ SUNW_Copyright:	SFEredis.copyright
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 
 %description
-Redis is an open source, advanced key-value store. 
+Redis is an open source, advanced key-value store.
 It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
-You can run atomic operations on these types, like appending to a string incrementing the value in a hash 
+You can run atomic operations on these types, like appending to a string incrementing the value in a hash
 pushing to a list computing set intersection, union and difference; or getting the member with highest ranking in a sorted set.
 In order to achieve its outstanding performance, Redis works with an in-memory dataset.
 Depending on your use case, you can persist it either by dumping the dataset to disk every once in a while, or by appending each command to a log.
 Redis also supports trivial-to-setup master-slave replication, with very fast non-blocking first synchronization, auto-reconnection on net split and so forth.
 Other features include a simple check-and-set mechanism, pub/sub and configuration settings to make Redis behave like a cache.
 You can use Redis from most programming languages out there.
-Redis is written in ANSI C and works in most POSIX systems like Linux, *BSD, OS X and Solaris without external dependencies. 
+Redis is written in ANSI C and works in most POSIX systems like Linux, *BSD, OS X and Solaris without external dependencies.
 There is no official support for Windows builds, although you may have some options.
 
 %prep
@@ -156,6 +156,8 @@ user ftpuser=false gcos-field="redis Reserved UID" username="redis" password=NP 
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_28.xml
 
 %changelog
+* Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.8.6
 * Sun Dec 6 2013 - Osamu Tabata<cantimerny.g@gmail.com>
 - add SMF
 * Fri Dec 6 2013 - Osamu Tabata<cantimerny.g@gmail.com>

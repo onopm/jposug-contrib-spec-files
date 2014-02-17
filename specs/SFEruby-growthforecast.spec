@@ -25,8 +25,8 @@ Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	runtime/ruby-18
-Requires: runtime/ruby-18
-Requires:       scripts/library/ruby-18/resolve-hostname
+Requires:       runtime/ruby-18
+Requires:       library/ruby-18/resolve-hostname
 
 %description
 Client library and tool to update values, create/edit/delete graphs of GrowthForecast
@@ -36,7 +36,7 @@ IPS_package_name: library/ruby-19/growthforecast
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-19
 Requires:	runtime/ruby-19
-Requires:       scripts/library/ruby-19/resolve-hostname
+Requires:       library/ruby-19/resolve-hostname
 
 %description 19
 Client library and tool to update values, create/edit/delete graphs of GrowthForecast
@@ -46,7 +46,7 @@ IPS_package_name: library/ruby-20/growthforecast
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-20
 Requires:	runtime/ruby-20
-Requires:       scripts/library/ruby-20/resolve-hostname
+Requires:       library/ruby-20/resolve-hostname
 
 %description 20
 Client library and tool to update values, create/edit/delete graphs of GrowthForecast
@@ -133,6 +133,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix BuildRequires
 * Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Fri Sep 27 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

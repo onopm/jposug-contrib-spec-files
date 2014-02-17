@@ -9,7 +9,7 @@
 
 %define _prefix /usr
 %define php_version 5.5
-%define tarball_version  5.5.8
+%define tarball_version  5.5.9
 %define tarball_name     php
 
 Name:                    SFEphp55-mysql56
@@ -27,12 +27,13 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: web/php-55
 BuildRequires: text/gnu-sed
+BuildRequires: database/mysql-56
 BuildRequires: database/mysql-56/library
 BuildRequires: database/mysql-56/devel
 BuildRequires: developer/lexer/re2c
 
 Requires: database/mysql-56/library >= 5.6.0
-Requires: web/php-55 >= 5.5.0
+Requires: web/php-55 >= 5.5.9
 
 %description
 PHP 5.5 module for MySQL 5.6
@@ -145,6 +146,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.5/conf.d/*
 
 %changelog
+* Mon Feb 17 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.9
 * Tue Jan 28 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify LDFLAGS
 * Fri Jan 17 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

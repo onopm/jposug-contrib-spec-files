@@ -11,32 +11,32 @@
 %define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 
-Summary: bundler
-Name: SFEruby-%{gemname}
-IPS_package_name:        library/ruby-18/bundler
-Version: 1.3.5
-License: MIT
-URL: http://rubygems.org/gems/%{gemname}
-Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Summary:          Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
+Name:             SFEruby-%{gemname}
+IPS_package_name: library/ruby-18/bundler
+Version:          1.5.3
+License:          MIT
+URL:              http://rubygems.org/gems/%{gemname}
+Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
+BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: runtime/ruby-18
-Requires: runtime/ruby-18
+Requires:      runtime/ruby-18
 
 %description
-Simple and opinionated helper for creating Rubygem projects on GitHub
+Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
 
 %package 19
 IPS_package_name: library/ruby-19/bundler
-Summary: bundler
-BuildRequires:	runtime/ruby-19
-Requires:	runtime/ruby-19
+Summary:          Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
+BuildRequires:	  runtime/ruby-19
+Requires:	  runtime/ruby-19
 
 %package 20
 IPS_package_name: library/ruby-20/bundler
-Summary: bundler
-BuildRequires:	runtime/ruby-20
-Requires:	runtime/ruby-20
+Summary:          Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
+BuildRequires:	  runtime/ruby-20
+Requires:	  runtime/ruby-20
 
 %prep
 %setup -q -c -T
@@ -124,6 +124,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed Feb 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.3
 * Mon May 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.3.5
 * Sat Mar 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

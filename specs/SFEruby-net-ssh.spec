@@ -14,35 +14,35 @@
 %define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 
-Summary: Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. 
-Name: SFEruby-%{gemname}
-IPS_package_name:        library/ruby-18/net-ssh
-Version: 2.6.7
-License: MIT License
-URL: http://rubygems.org/gems/%{gemname}
-Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.
+Name:             SFEruby-%{gemname}
+IPS_package_name: library/ruby-18/net-ssh
+Version:          2.8.0
+License:          MIT License
+URL:              http://rubygems.org/gems/%{gemname}
+Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
+BuildRoot:       %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:  runtime/ruby-18
-Requires:       runtime/ruby-18
+BuildRequires:   runtime/ruby-18
+Requires:        runtime/ruby-18
 
 %description
 Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
 
 %package 19
 IPS_package_name: library/ruby-19/net-ssh
-Summary: Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. 
-BuildRequires:  runtime/ruby-19
-Requires:       runtime/ruby-19
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.
+BuildRequires:    runtime/ruby-19
+Requires:         runtime/ruby-19
 
 %description 19
 Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
 
 %package 20
 IPS_package_name: library/ruby-20/net-ssh
-Summary: Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. 
-BuildRequires:  runtime/ruby-20
-Requires:       runtime/ruby-20
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.
+BuildRequires:    runtime/ruby-20
+Requires:         runtime/ruby-20
 
 %description 20
 Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
@@ -119,6 +119,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Thu Feb 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.8.0
 * Wed Jun 12 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-20
 * Fri Apr 19 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

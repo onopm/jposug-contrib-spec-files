@@ -97,7 +97,7 @@
         <instance name='default_32bit' enabled='false'>
 
         	<method_context>
-                	<method_credential user='root' group='other' />
+                	<method_credential user='redis' group='redis' />
         	</method_context>
 
 		<!-- 
@@ -115,7 +115,7 @@
                 	<propval name='conf' type='astring'
                     	   value='/etc/redis/2.8/redis-28.conf' />
                 	<propval name='pid' type='astring'
-                    	   value='/var/run/redis.pid' />
+                    	   value='/var/redis/2.8/redis.pid' />
                 	<propval name='log' type='astring'
 			   value='/var/redis/2.8/log/redis.log' />
 			<propval name='initialized' type='boolean'
@@ -129,7 +129,7 @@
         <instance name='default_64bit' enabled='false'>
 
         	<method_context>
-                	<method_credential user='root' group='other' />
+                	<method_credential user='redis' group='redis' />
         	</method_context>
 
 		<!-- 
@@ -147,7 +147,7 @@
                 	<propval name='conf' type='astring'
                     	   value='/etc/redis/2.8/redis-28_64.conf' />
                 	<propval name='pid' type='astring'
-                    	   value='/var/run/redis.pid' />
+                    	   value='/var/redis/2.8/redis.pid' />
                 	<propval name='log' type='astring'
 			   value='/var/redis/2.8/log/redis.log' />
 			<propval name='initialized' type='boolean'

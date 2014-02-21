@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.3.2
+%define tarball_version  9.3.3
 %define major_version	 9.3
 %define prefix_name      SFEpostgres-93
 %define _basedir         %{_prefix}/%{major_version}
@@ -65,7 +65,7 @@ Meta(info.maintainer):	 	pkglabo.justplayer.com <pkgadmin@justplayer.com>
 Meta(info.classification):	System Database
 
 %description
-PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness. It runs on all major operating systems, including Linux, UNIX (AIX, BSD, HP-UX, SGI IRIX, Mac OS X, Solaris, Tru64), and Windows. It is fully ACID compliant, has full support for foreign keys, joins, views, triggers, and stored procedures (in multiple languages). It includes most SQL:2008 data types, including INTEGER, NUMERIC, BOOLEAN, CHAR, VARCHAR, DATE, INTERVAL, and TIMESTAMP. It also supports storage of binary large objects, including pictures, sounds, or video. It has native programming interfaces for C/C++, Java, .Net, Perl, Python, Ruby, Tcl, ODBC, among others, and exceptional documentation. 
+PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness. It runs on all major operating systems, including Linux, UNIX (AIX, BSD, HP-UX, SGI IRIX, Mac OS X, Solaris, Tru64), and Windows. It is fully ACID compliant, has full support for foreign keys, joins, views, triggers, and stored procedures (in multiple languages). It includes most SQL:2008 data types, including INTEGER, NUMERIC, BOOLEAN, CHAR, VARCHAR, DATE, INTERVAL, and TIMESTAMP. It also supports storage of binary large objects, including pictures, sounds, or video. It has native programming interfaces for C/C++, Java, .Net, Perl, Python, Ruby, Tcl, ODBC, among others, and exceptional documentation.
 
 %package -n %{prefix_name}-libs
 
@@ -530,7 +530,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/libpq.so.5.6
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/postgres_fdw.so
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/worker_spi.so
- 
+
 %files -n %{prefix_name}-pl
 %defattr (-, root, bin)
 
@@ -1163,7 +1163,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/bin/pg_isready
 %{_prefix}/%{major_version}/bin/pg_standby
 %{_prefix}/%{major_version}/bin/pg_upgrade
-%{_prefix}/%{major_version}/bin/pg_xlogdump 
+%{_prefix}/%{major_version}/bin/pg_xlogdump
 %{_prefix}/%{major_version}/bin/pgbench
 %{_prefix}/%{major_version}/bin/vacuumlo
 
@@ -1181,6 +1181,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Fri Feb 21 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.3
 * Sat Dec 14 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.3.2
 * Sun Oct 20 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

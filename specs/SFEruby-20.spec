@@ -42,9 +42,10 @@ Requires:      system/library/gcc-runtime
 # %setup -c -n ruby-%{version}-p%{patchlevel}
 %setup -n ruby-%{version}-p%{patchlevel}
 %build
-export CXXFLAGS="%cxx_optflags"
-export LDFLAGS="%_ldflags %gnu_lib_path"
-export CFLAGS="%optflags"
+export CFLAGS='-m64 -std=gnu99 -I/usr/gcc/include'
+export CPPFLAGS="-m64 -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I../CPPFLAGSTEST"
+export LDFLAGS="-m64 -L/lib/%{_arch64} -L/usr/lib/%{_arch64} -R/lib/%{_arch64} -R/usr/lib/%{_arch64}"
+
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
     CPUS=1
@@ -56,8 +57,9 @@ ac_cv_func_dl_iterate_phdr=no \
 %endif
     --prefix=/usr/ruby/2.0 \
     --bindir=/usr/ruby/2.0/bin \
-    --libdir=/usr/ruby/2.0/lib \
+    --libdir=/usr/ruby/2.0/lib/amd64 \
     --sbindir=/usr/ruby/2.0/sbin \
+    --mandir=/usr/ruby/2.0/share/man \
     --enable-dtrace \
     --enable-shared \
     --enable-install-doc \
@@ -67,6 +69,7 @@ ac_cv_func_dl_iterate_phdr=no \
     --with-curses-dir=/usr \
     CC=/usr/bin/gcc \
     CXX=/usr/bin/g++
+
 make -j$CPUS
 
 %install
@@ -92,6 +95,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/2.0
 
 %changelog
+* Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build 64bit binary instead of 32bit binary
 * Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to patchlevel 353
 * Sun Jun 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

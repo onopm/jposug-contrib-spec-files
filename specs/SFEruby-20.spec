@@ -5,7 +5,7 @@
 %define _name ruby
 %define version 2.0.0
 %define unmangled_version 2.0.0
-%define patchlevel 353
+%define patchlevel 451
 
 %include Solaris.inc
 %include packagenamemacros.inc
@@ -97,6 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build 64bit binary instead of 32bit binary
+- bump to patchlevel 451
 * Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to patchlevel 353
 * Sun Jun 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

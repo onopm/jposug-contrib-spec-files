@@ -15,6 +15,10 @@
 %define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/serverspec
@@ -62,6 +66,19 @@ Requires:         library/ruby-20/specinfra >= 0.5.8
 %description 20
 RSpec tests for your provisioned servers
 
+%package 21
+IPS_package_name: library/ruby-21/serverspec
+Summary:          RSpec tests for your provisioned servers
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby-21/net-ssh
+Requires:         library/ruby-21/rspec >= 2.13.0
+Requires:         library/ruby-21/highline
+Requires:         library/ruby-21/specinfra >= 0.5.8
+
+%description 21
+RSpec tests for your provisioned servers
+
 %prep
 %setup -q -c -T
 mkdir -p .%{gemdir18}
@@ -70,6 +87,8 @@ mkdir -p .%{gemdir19}
 mkdir -p .%{bindir19}
 mkdir -p .%{gemdir20}
 mkdir -p .%{bindir20}
+mkdir -p .%{gemdir21}
+mkdir -p .%{bindir21}
 
 %build
 # ruby-18
@@ -115,6 +134,21 @@ popd
 pushd .%{gemdir20}/gems/%{gemname}-%{version}/bin/
 mv serverspec-init serverspec-init.bak
 sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.0\/bin\/ruby/' < serverspec-init.bak > serverspec-init
+rm serverspec-init.bak
+popd
+
+# ruby-21
+/usr/ruby/2.1/bin/gem install --local \
+    --install-dir .%{gemdir21} \
+    --bindir .%{bindir21} \
+    --no-ri \
+    --no-rdoc \
+    -V \
+    --force %{SOURCE0}
+
+pushd .%{gemdir21}/gems/%{gemname}-%{version}/bin/
+mv serverspec-init serverspec-init.bak
+sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.1\/bin\/ruby/' < serverspec-init.bak > serverspec-init
 rm serverspec-init.bak
 popd
 
@@ -164,6 +198,20 @@ pushd %{buildroot}/%{bindir20}
 ln -s ../lib/ruby/gems/2.0.0/gems/%{gemname}-%{version}/bin/serverspec-init .
 popd
 
+# ruby-21
+mkdir -p %{buildroot}/%{gemdir21}
+cp -a .%{gemdir21}/* \
+    %{buildroot}/%{gemdir21}/
+
+pushd %{buildroot}/%{_bindir}
+ln -s ../ruby/2.0/lib/ruby/gems/2.1.0/gems/%{gemname}-%{version}/bin/serverspec-init serverspec-init21
+popd
+
+mkdir -p %{buildroot}/%{bindir21}
+pushd %{buildroot}/%{bindir21}
+ln -s ../lib/ruby/gems/2.1.0/gems/%{gemname}-%{version}/bin/serverspec-init .
+popd
+
 %clean
 rm -rf %{buildroot}
 
@@ -187,7 +235,15 @@ rm -rf %{buildroot}
 /usr/bin/serverspec-init20
 /usr/ruby/2.0
 
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/bin/serverspec-init21
+/usr/ruby/2.1
+
 %changelog
+* Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build package for ruby-21
 * Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.15.3
 * Wed Jan 29 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -15,10 +15,14 @@
 %define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+
 Summary:          Common layer for serverspec and configspec
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/specinfra
-Version:          0.6.1
+Version:          0.7.0
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -48,6 +52,15 @@ Requires:         runtime/ruby-20 = *
 %description 20
 Common layer for serverspec and configspec
 
+%package 21
+IPS_package_name: library/ruby-21/specinfra
+Summary:          RSpec tests for your provisioned servers
+BuildRequires:    runtime/ruby-21
+Requires:         runtime/ruby-21 = *
+
+%description 20
+Common layer for serverspec and configspec
+
 %prep
 %setup -q -c -T
 mkdir -p .%{gemdir18}
@@ -56,6 +69,8 @@ mkdir -p .%{gemdir19}
 mkdir -p .%{bindir19}
 mkdir -p .%{gemdir20}
 mkdir -p .%{bindir20}
+mkdir -p .%{gemdir21}
+mkdir -p .%{bindir21}
 
 %build
 # ruby-18
@@ -85,6 +100,15 @@ mkdir -p .%{bindir20}
     -V \
     --force %{SOURCE0}
 
+# ruby-21
+/usr/ruby/2.1/bin/gem install --local \
+    --install-dir .%{gemdir21} \
+    --bindir .%{bindir21} \
+    --no-ri \
+    --no-rdoc \
+    -V \
+    --force %{SOURCE0}
+
 %install
 rm -rf %{buildroot}
 
@@ -102,6 +126,11 @@ cp -a .%{gemdir19}/* \
 mkdir -p %{buildroot}/%{gemdir20}
 cp -a .%{gemdir20}/* \
     %{buildroot}/%{gemdir20}/
+
+# ruby-21
+mkdir -p %{buildroot}/%{gemdir21}
+cp -a .%{gemdir21}/* \
+    %{buildroot}/%{gemdir21}/
 
 %clean
 rm -rf %{buildroot}
@@ -122,7 +151,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+
 %changelog
+* Sat Feb 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.7.0 and build package for ruby-21
 * Sat Feb 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.6.1
 * Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

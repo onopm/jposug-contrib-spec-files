@@ -21,7 +21,7 @@
 Summary: A high-level IO library that provides validation, type conversion, and more for command-line interfaces.
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/highline
-Version: 1.6.18
+Version: 1.6.20
 License: Ruby
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -154,5 +154,6 @@ rm -rf %{buildroot}
 %changelog
 * Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for ruby-20 and ruby-21
+- bump to 1.6.20
 * Tue Apr 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

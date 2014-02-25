@@ -4,6 +4,7 @@
 
 %define _name ruby
 %define version 2.1.1
+%define major_version 2.1
 %define unmangled_version 2.1.0
 %define patchlevel 0
 
@@ -79,6 +80,14 @@ rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/bin
 cd $RPM_BUILD_ROOT/usr/bin
+ln -s ../ruby/2.1/bin/erb .
+ln -s ../ruby/2.1/bin/gem .
+ln -s ../ruby/2.1/bin/irb .
+ln -s ../ruby/2.1/bin/rake .
+ln -s ../ruby/2.1/bin/rdoc .
+ln -s ../ruby/2.1/bin/ri .
+ln -s ../ruby/2.1/bin/ruby .
+
 ln -s ../ruby/2.1/bin/erb erb21
 ln -s ../ruby/2.1/bin/gem gem21
 ln -s ../ruby/2.1/bin/irb irb21
@@ -93,9 +102,18 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,bin)
 %dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) /usr/bin
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/erb
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/gem
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/irb
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/rake
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/rdoc
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/ri
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/ruby
 /usr/bin/*21
 /usr/ruby/2.1
 
 %changelog
 * Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- use mediator

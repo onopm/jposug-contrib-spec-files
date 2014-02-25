@@ -4,6 +4,7 @@
 
 %define _name ruby
 %define version 2.0.0
+%define major_version 2.0
 %define unmangled_version 2.0.0
 %define patchlevel 451
 
@@ -77,6 +78,14 @@ rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/bin
 cd $RPM_BUILD_ROOT/usr/bin
+ln -s ../ruby/2.0/bin/erb .
+ln -s ../ruby/2.0/bin/gem .
+ln -s ../ruby/2.0/bin/irb .
+ln -s ../ruby/2.0/bin/rake .
+ln -s ../ruby/2.0/bin/rdoc .
+ln -s ../ruby/2.0/bin/ri .
+ln -s ../ruby/2.0/bin/ruby .
+
 ln -s ../ruby/2.0/bin/erb erb20
 ln -s ../ruby/2.0/bin/gem gem20
 ln -s ../ruby/2.0/bin/irb irb20
@@ -91,6 +100,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,bin)
 %dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) /usr/bin
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/erb
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/gem
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/irb
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/rake
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/rdoc
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/ri
+%ips_tag (mediator=ruby mediator-version=%{major_version})  /usr/bin/ruby
 /usr/bin/*20
 /usr/ruby/2.0
 
@@ -98,6 +115,7 @@ rm -rf $RPM_BUILD_ROOT
 * Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build 64bit binary instead of 32bit binary
 - bump to patchlevel 451
+- use mediator
 * Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to patchlevel 353
 * Sun Jun 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

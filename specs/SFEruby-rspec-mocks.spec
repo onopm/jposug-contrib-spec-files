@@ -2,52 +2,65 @@
 %include default-depend.inc
 
 %define gemname rspec-mocks
-%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
 %define bindir18 /usr/ruby/1.8/bin
+%define gemdir18 %(%{bindir18}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
 
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
-%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 %define bindir20 /usr/ruby/2.0/bin
+%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    rspec-mocks
-%define tarball_version 2.14.3
+%define tarball_version 2.14.6
 
-Summary: %{gemname}
-Name: SFEruby-%{gemname}
-IPS_package_name:        library/ruby-18/rspec-mocks
-Version: 2.14.3
-License: MIT License
-URL: http://rubygems.org/gems/%{gemname}
-Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Summary:          %{gemname}
+Name:             SFEruby-%{gemname}
+IPS_package_name: library/ruby-18/rspec-mocks
+Version:          %{tarball_version}
+License:          MIT License
+URL:              http://rubygems.org/gems/%{gemname}
+Source0:          http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
+BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	runtime/ruby-18
-Requires: runtime/ruby-18
+BuildRequires:    runtime/ruby-18
+Requires:         runtime/ruby-18
 
 %description
 RSpec's 'test double' framework, with support for stubbing and mocking
 
 %package 19
 IPS_package_name: library/ruby-19/rspec-mocks
-Summary: %{gemname}
-BuildRequires:	runtime/ruby-19
-Requires:	runtime/ruby-19
+Summary:          %{gemname}
+BuildRequires:    runtime/ruby-19
+Requires:         runtime/ruby-19
 
 %description 19
 RSpec's 'test double' framework, with support for stubbing and mocking
 
 %package 20
 IPS_package_name: library/ruby-20/rspec-mocks
-Summary: %{gemname}
-BuildRequires:	runtime/ruby-20
-Requires:	runtime/ruby-20
+Summary:          %{gemname}
+BuildRequires:    runtime/ruby-20
+Requires:         runtime/ruby-20
 
 %description 20
+RSpec's 'test double' framework, with support for stubbing and mocking
+
+%package 21
+IPS_package_name: library/ruby-21/rspec-mocks
+Summary:          %{gemname}
+BuildRequires:    runtime/ruby-21
+Requires:         runtime/ruby-21
+
+%description 21
 RSpec's 'test double' framework, with support for stubbing and mocking
 
 %prep
@@ -58,26 +71,31 @@ mkdir -p .%{gemdir19}
 mkdir -p .%{bindir19}
 
 %build
-# export CONFIGURE_ARGS="--with-cflags='%{optflags}'"
-
 # ruby-18
-/usr/ruby/1.8/bin/gem install --local \
+%{bindir18}/gem install --local \
     --install-dir .%{gemdir18} \
     --bindir .%{bindir18} \
     -V \
     --force %{SOURCE0}
 
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     -V \
     --force %{SOURCE0}
 
 # ruby-20
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir20}/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
+    -V \
+    --force %{SOURCE0}
+
+# ruby-21
+%{bindir21}/gem install --local \
+    --install-dir .%{gemdir21} \
+    --bindir .%{bindir21} \
     -V \
     --force %{SOURCE0}
 
@@ -99,6 +117,11 @@ mkdir -p %{buildroot}/%{gemdir20}
 cp -a .%{gemdir20}/* \
     %{buildroot}/%{gemdir20}/
 
+# ruby-21
+mkdir -p %{buildroot}/%{gemdir21}
+cp -a .%{gemdir21}/* \
+    %{buildroot}/%{gemdir21}/
+
 %clean
 rm -rf %{buildroot}
 
@@ -118,7 +141,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+
 %changelog
+* Wed Feb 26 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.14.6 and generate package for ruby-21
 * Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.14.3
 * Sun Mar 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -14,6 +14,10 @@
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 %define bindir20 /usr/ruby/2.0/bin
 
+%define gemdir21 %(/usr/ruby/2.1/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+%define bindir21 /usr/ruby/2.1/bin
+
 %define tarball_name    rspec
 %define tarball_version 2.14.1
 
@@ -28,9 +32,9 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	runtime/ruby-18
 Requires:       runtime/ruby-18
-Requires:       library/ruby-18/rspec-core >= 2.14
-Requires:       library/ruby-18/rspec-expectations >= 2.14
-Requires:       library/ruby-18/rspec-mocks >= 2.14
+Requires:       library/ruby-18/rspec-core >= 2.14.0
+Requires:       library/ruby-18/rspec-expectations >= 2.14.0
+Requires:       library/ruby-18/rspec-mocks >= 2.14.0
 
 %description
 BDD for Ruby
@@ -40,9 +44,9 @@ IPS_package_name: library/ruby-19/rspec
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-19
 Requires:	runtime/ruby-19
-Requires:       library/ruby-19/rspec-core = %{version}
-Requires:       library/ruby-19/rspec-expectations = %{version}
-Requires:       library/ruby-19/rspec-mocks = %{version}
+Requires:       library/ruby-19/rspec-core >= 2.14.0
+Requires:       library/ruby-19/rspec-expectations >= 2.14.0
+Requires:       library/ruby-19/rspec-mocks >= 2.14.0
 
 %description 19
 BDD for Ruby
@@ -52,11 +56,23 @@ IPS_package_name: library/ruby-20/rspec
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-20
 Requires:	runtime/ruby-20
-Requires:       library/ruby-20/rspec-core = %{version}
-Requires:       library/ruby-20/rspec-expectations = %{version}
-Requires:       library/ruby-20/rspec-mocks = %{version}
+Requires:       library/ruby-20/rspec-core >= 2.14.0
+Requires:       library/ruby-20/rspec-expectations >= 2.14.0
+Requires:       library/ruby-20/rspec-mocks >= 2.14.0
 
 %description 20
+BDD for Ruby
+
+%package 21
+IPS_package_name: library/ruby-21/rspec
+Summary: %{gemname}
+BuildRequires:	runtime/ruby-21
+Requires:	runtime/ruby-21
+Requires:       library/ruby-21/rspec-core >= 2.14.0
+Requires:       library/ruby-21/rspec-expectations >= 2.14.0
+Requires:       library/ruby-21/rspec-mocks >= 2.14.0
+
+%description 21
 BDD for Ruby
 
 %prep
@@ -90,6 +106,13 @@ mkdir -p .%{bindir19}
     -V \
     --force %{SOURCE0}
 
+# ruby-21
+/usr/ruby/2.1/bin/gem install --local \
+    --install-dir .%{gemdir21} \
+    --bindir .%{bindir21} \
+    -V \
+    --force %{SOURCE0}
+
 %install
 rm -rf %{buildroot}
 
@@ -107,6 +130,11 @@ cp -a .%{gemdir19}/* \
 mkdir -p %{buildroot}/%{gemdir20}
 cp -a .%{gemdir20}/* \
     %{buildroot}/%{gemdir20}/
+
+# ruby-21
+mkdir -p %{buildroot}/%{gemdir21}
+cp -a .%{gemdir21}/* \
+    %{buildroot}/%{gemdir21}/
 
 %clean
 rm -rf %{buildroot}
@@ -127,7 +155,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+
 %changelog
+* Wed Feb 26 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for ruby-21
 * Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.14.1
 * Sun Mar 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

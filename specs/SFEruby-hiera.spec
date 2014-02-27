@@ -14,10 +14,14 @@
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 %define bindir20 /usr/ruby/2.0/bin
 
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir21}/gems/%{gemname}-%{version}
+
 Summary: A pluggable data store for hierarcical data
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-18/hiera
-Version: 1.3.1
+Version: 1.3.2
 License: Apache License 2.0
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -35,7 +39,7 @@ IPS_package_name: library/ruby-19/hiera
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-19
 Requires:	runtime/ruby-19
- Requires:	library/ruby-19/json_pure
+Requires:	library/ruby-19/json_pure
 
 %description 19
 A pluggable data store for hierarcical data
@@ -45,9 +49,19 @@ IPS_package_name: library/ruby-20/hiera
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-20
 Requires:	runtime/ruby-20
- Requires:	library/ruby-20/json_pure
+Requires:	library/ruby-20/json_pure
 
 %description 20
+A pluggable data store for hierarcical data
+
+%package 21
+IPS_package_name: library/ruby-21/hiera
+Summary: %{gemname}
+BuildRequires:	runtime/ruby-21
+Requires:	runtime/ruby-21
+Requires:	library/ruby-21/json_pure
+
+%description 21
 A pluggable data store for hierarcical data
 
 %prep
@@ -60,8 +74,6 @@ mkdir -p .%{gemdir20}
 mkdir -p .%{bindir20}
 
 %build
-# export CONFIGURE_ARGS="--with-cflags='%{optflags}'"
-
 # ruby-18
 /usr/ruby/1.8/bin/gem install --local \
     --install-dir .%{gemdir18} \
@@ -80,6 +92,13 @@ mkdir -p .%{bindir20}
 /usr/ruby/2.0/bin/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
+    -V \
+    --force %{SOURCE0}
+
+# ruby-21
+/usr/ruby/2.0/bin/gem install --local \
+    --install-dir .%{gemdir21} \
+    --bindir .%{bindir21} \
     -V \
     --force %{SOURCE0}
 
@@ -113,6 +132,15 @@ mkdir -p %{buildroot}%{bindir20}
 cp -a .%{bindir20}/* \
     %{buildroot}%{bindir20}/
 
+# ruby-21
+mkdir -p %{buildroot}/%{gemdir21}
+cp -a .%{gemdir21}/* \
+    %{buildroot}/%{gemdir21}/
+
+mkdir -p %{buildroot}%{bindir21}
+cp -a .%{bindir21}/* \
+    %{buildroot}%{bindir21}/
+
 rm -rf %{buildroot}%{geminstdir}/.yardoc/
 
 %clean
@@ -136,7 +164,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+
 %changelog
+* Thu Feb 27 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.3.2 and generate package for ruby-21
 * Wed Jan 29 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.3.1
 * Wed Jan 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

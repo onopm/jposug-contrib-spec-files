@@ -10,7 +10,7 @@
 
 Name:		SFEnagios-plugins
 IPS_package_name:        diagnostic/nagios/plugins
-Version:	1.5
+Version:	2.0
 Summary:	Nagios plugins
 Group:		Applications/System
 License:	GPLv2
@@ -122,6 +122,11 @@ do
     [ -x $i ] && \
     install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
 done
+
+# check_uptime works on Linux only and it is not builded on Solaris.
+# But check_uptime.c is installed because mode of check_uptime.c is 0755.
+# Then delete installed check_uptime.c
+rm %{buildroot}%{_libdir}/nagios/plugins/check_uptime.c
 
 cd ../plugins-root
 for i in check_* pst3
@@ -237,6 +242,8 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Wed Mar 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0
 * Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %defattr
 * Tue Jan 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

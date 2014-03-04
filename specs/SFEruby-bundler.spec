@@ -2,14 +2,21 @@
 %include default-depend.inc
 
 %define gemname bundler
+%define bindir18 /usr/ruby/1.8/bin
 %define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
 
+%define bindir19 /usr/ruby/1.9/bin
 %define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
+%define bindir20 /usr/ruby/2.0/bin
 %define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 Summary:          Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
 Name:             SFEruby-%{gemname}
@@ -38,6 +45,12 @@ Summary:          Bundler manages an application's dependencies through its enti
 BuildRequires:	  runtime/ruby-20
 Requires:	  runtime/ruby-20
 
+%package 21
+IPS_package_name: library/ruby-21/bundler
+Summary:          Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
+BuildRequires:	  runtime/ruby-21
+Requires:	  runtime/ruby-21
+
 %prep
 %setup -q -c -T
 
@@ -50,6 +63,9 @@ mkdir -p ./usr/ruby/1.9/bin
 
 mkdir -p .%{gemdir20}
 mkdir -p ./usr/ruby/2.0/bin
+
+mkdir -p .%{gemdir21}
+mkdir -p .%{bindir21}
 
 %build
 
@@ -67,6 +83,12 @@ mkdir -p ./usr/ruby/2.0/bin
 
 /usr/ruby/2.0/bin/gem install --local --install-dir .%{gemdir20} \
     --bindir ./usr/ruby/2.0/bin \
+    --no-ri \
+    --no-rdoc \
+    --force %{SOURCE0}
+
+%{bindir21}/gem install --local --install-dir .%{gemdir21} \
+    --bindir ./%{bindir21} \
     --no-ri \
     --no-rdoc \
     --force %{SOURCE0}
@@ -102,6 +124,15 @@ cp -a .%{gemdir20}/* \
 rm -rf %{buildroot}%{geminstdir20}/.yardoc/
 rm -rf %{buildroot}%{gemdir20}/doc
 
+# 2.1
+mkdir -p %{buildroot}%{gemdir21}
+mkdir -p %{buildroot}%{bindir21}
+cp -a .%{gemdir21}/* \
+        %{buildroot}%{gemdir21}/
+
+rm -rf %{buildroot}%{geminstdir21}/.yardoc/
+rm -rf %{buildroot}%{gemdir21}/doc
+
 %clean
 rm -rf %{buildroot}
 
@@ -123,7 +154,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+
 %changelog
+* Tue Feb 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for ruby-21
 * Wed Feb 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.5.3
 * Mon May 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

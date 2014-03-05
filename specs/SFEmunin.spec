@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.17
+Version:   2.0.19
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -23,6 +23,7 @@ Source4:        munin.logadm.conf
 Source5:        munin-node.logadm.conf
 
 Patch1: SFEmunin-SyncDictFile.patch
+Patch2: SFEmunin-2.0.19-makefile.patch
 
 BuildRequires: library/perl-5/module-build-512
 BuildRequires: library/perl-5/log-log4perl-512
@@ -32,7 +33,6 @@ BuildRequires: library/perl-5/net-snmp-512
 BuildRequires: library/perl-5/io-stringy-512
 BuildRequires: library/perl-5/test-differences-512
 BuildRequires: library/perl-5/test-longstring-512
-
 
 # java buildrequires on fedora
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6 
@@ -160,6 +160,7 @@ munin-async
 %prep
 %setup -q
 %patch1
+%patch2
 # %if 0%{?rhel} < 6 && 0%{?fedora} < 11
 # %patch2 -p0
 # %endif
@@ -427,6 +428,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Wed Mar 05 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.19
 * Sat Jan 25 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.17
 * Thu Jun 06 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

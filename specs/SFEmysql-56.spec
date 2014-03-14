@@ -65,6 +65,8 @@ Summary: MySQL library (32bit/64bit)
 %package tests
 IPS_package_name: database/mysql-56/tests
 Summary: MySQL tests
+Requires:      library/perl-5/dbi-512
+Requires:      library/perl-5/dbd-mysql-512
 
 %package devel
 IPS_package_name: database/mysql-56/devel
@@ -457,6 +459,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Fri Mar 14 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Tue Feb 04 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.16
 * Mon Jan 27 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

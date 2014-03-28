@@ -22,7 +22,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/serverspec
-Version:          0.15.3
+Version:          1.0.0
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -35,7 +35,7 @@ Requires:         library/ruby-18/net-ssh
 Requires:         library/ruby-18/rspec >= 2.13.0
 Requires:         library/ruby-18/rake
 Requires:         library/ruby-18/highline
-Requires:         library/ruby-18/specinfra >= 0.5.8
+Requires:         library/ruby-18/specinfra >= 1.0.0
 
 %description
 RSpec tests for your provisioned servers
@@ -48,7 +48,7 @@ Requires:         runtime/ruby-19 = *
 Requires:         library/ruby-19/net-ssh
 Requires:         library/ruby-19/rspec >= 2.13.0
 Requires:         library/ruby-19/highline
-Requires:         library/ruby-19/specinfra >= 0.5.8
+Requires:         library/ruby-19/specinfra >= 1.0.0
 
 %description 19
 RSpec tests for your provisioned servers
@@ -61,7 +61,7 @@ Requires:         runtime/ruby-20 = *
 Requires:         library/ruby-20/net-ssh
 Requires:         library/ruby-20/rspec >= 2.13.0
 Requires:         library/ruby-20/highline
-Requires:         library/ruby-20/specinfra >= 0.5.8
+Requires:         library/ruby-20/specinfra >= 1.0.0
 
 %description 20
 RSpec tests for your provisioned servers
@@ -74,7 +74,7 @@ Requires:         runtime/ruby-21 = *
 Requires:         library/ruby-21/net-ssh
 Requires:         library/ruby-21/rspec >= 2.13.0
 Requires:         library/ruby-21/highline
-Requires:         library/ruby-21/specinfra >= 0.5.8
+Requires:         library/ruby-21/specinfra >= 1.0.0
 
 %description 21
 RSpec tests for your provisioned servers
@@ -162,12 +162,12 @@ cp -a .%{gemdir18}/* \
 
 mkdir -p %{buildroot}/%{_bindir}
 pushd %{buildroot}/%{_bindir}
-ln -s ../../var/ruby1.8/gem_home/gems/%{gemname}-%{version}/bin/serverspec-init serverspec-init18
+ln -s ../../var/ruby/1.8/gem_home/gems/%{gemname}-%{version}/bin/serverspec-init serverspec-init18
 popd
 
 mkdir -p %{buildroot}/%{bindir18}
 pushd %{buildroot}/%{bindir18}
-ln -s ../../../../var/ruby1.8/gem_home/gems/%{gemname}-%{version}/bin/serverspec-init .
+ln -s ../../../../var/ruby/1.8/gem_home/gems/%{gemname}-%{version}/bin/serverspec-init .
 popd
 
 # ruby-19
@@ -242,6 +242,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Fri Mar 28 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.0
 * Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for ruby-21
 * Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

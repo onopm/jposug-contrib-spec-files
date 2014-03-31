@@ -19,7 +19,7 @@
 Summary:          This is a JSON implementation in pure Ruby.
 Name:             SFEruby-json-pure
 IPS_package_name: library/ruby-18/%{gemname}
-Version:          1.8.0
+Version:          1.8.1
 License:          Ruby License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -146,5 +146,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Mar 31 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.8.1
 * Tue Jul 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

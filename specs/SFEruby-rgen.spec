@@ -16,10 +16,10 @@
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 %define bindir20 /usr/ruby/2.0/bin
 
-Summary:          RGen is a framework for Model Driven Software Development (MDSD) in Ruby. 
+Summary:          RGen is a framework for Model Driven Software Development (MDSD) in Ruby.
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-18/%{gemname}
-Version:          0.6.2
+Version:          0.6.6
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://ruby-gen.org/
@@ -34,7 +34,7 @@ RGen is a framework for Model Driven Software Development (MDSD) in Ruby. This m
 
 %package 19
 IPS_package_name: library/ruby-19/%{gemname}
-Summary:          RGen is a framework for Model Driven Software Development (MDSD) in Ruby. 
+Summary:          RGen is a framework for Model Driven Software Development (MDSD) in Ruby.
 BuildRequires:	  runtime/ruby-19
 Requires:	  runtime/ruby-19
 
@@ -43,7 +43,7 @@ RGen is a framework for Model Driven Software Development (MDSD) in Ruby. This m
 
 %package 20
 IPS_package_name: library/ruby-20/%{gemname}
-Summary:          RGen is a framework for Model Driven Software Development (MDSD) in Ruby. 
+Summary:          RGen is a framework for Model Driven Software Development (MDSD) in Ruby.
 BuildRequires:	  runtime/ruby-20
 Requires:	  runtime/ruby-20
 
@@ -147,5 +147,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Mar 31 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.6.6
 * Thu May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

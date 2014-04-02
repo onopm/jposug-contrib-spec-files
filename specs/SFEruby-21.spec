@@ -26,9 +26,9 @@ Source: http://cache.ruby-lang.org/pub/ruby/2.1/ruby-%{version}.tar.gz
 # Source: http://cache.ruby-lang.org/pub/ruby/2.1/ruby-%{version}-p%{patchlevel}.tar.gz
 Url: http://www.ruby-lang.org/
 
-BuildRequires: library/text/yaml
+BuildRequires: library/text/yaml >= 0.1.6
 BuildRequires: system/network/bpf
-Requires:      library/text/yaml
+Requires:      library/text/yaml >= 0.1.6
 
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
@@ -114,6 +114,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/2.1
 
 %changelog
+* Wed Apr 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify required version of library/text/yaml (CVE-2014-2525)
 * Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - use mediator

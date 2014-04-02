@@ -28,10 +28,10 @@ SUNW_Basedir:            /
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: web/php-53
-BuildRequires: library/text/yaml
+BuildRequires: library/text/yaml >= 0.1.6
 
 Requires: web/php-53
-Requires: library/text/yaml
+Requires: library/text/yaml >= 0.1.6
 Requires: web/php-53/extension/php-date
 
 # OpenSolaris IPS Package Manifest Fields
@@ -96,6 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/%{php_version}/conf.d/*
 
 %changelog
+* Wed Apr 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify required version of library/text/yaml (CVE-2014-2525)
 * Wed Jan 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify %files
 * Sat Dec 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

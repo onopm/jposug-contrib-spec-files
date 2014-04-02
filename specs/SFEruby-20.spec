@@ -25,8 +25,8 @@ License: GPL
 Source: http://ftp.ruby-lang.org/pub/ruby/2.0/ruby-%{version}-p%{patchlevel}.tar.gz
 Url: http://www.ruby-lang.org/
 
-BuildRequires: library/text/yaml
-Requires:      library/text/yaml
+BuildRequires: library/text/yaml >= 0.1.6
+Requires:      library/text/yaml >= 0.1.6
 
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
@@ -112,6 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/2.0
 
 %changelog
+* Wed Apr 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify required version of library/text/yaml (CVE-2014-2525)
 * Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build 64bit binary instead of 32bit binary
 - bump to patchlevel 451

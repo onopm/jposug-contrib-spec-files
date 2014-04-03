@@ -7,7 +7,7 @@
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.10.43
+%define tarball_version 0.10.45
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -27,7 +27,7 @@ BuildRequires:	runtime/ruby-19
 BuildRequires:	library/ruby-19/jeweler
 BuildRequires:	library/ruby-19/rr
 BuildRequires:	library/ruby-19/timecop
-BuildRequires:	library/text/yaml
+BuildRequires:	library/text/yaml >= 0.1.6
 Requires:	runtime/ruby-19
 Requires:	library/ruby-19/cool.io >= 1.1.1
 Requires:	library/ruby-19/http_parser.rb >= 0.5.1
@@ -115,6 +115,9 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Thu Apr 03 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.10.45
+- specify required version of library/text/yaml (CVE-2014-2525)
 * Sat Feb 08 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.43
 * San Feb 02 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

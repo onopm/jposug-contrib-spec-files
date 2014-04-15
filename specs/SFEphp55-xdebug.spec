@@ -28,7 +28,7 @@ SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: web/php-55
-Requires: web/php-55
+Requires: web/php-55 >= *
 
 %prep
 %setup -c -n %tarball_name-%tarball_version
@@ -92,4 +92,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Tue Apr 15 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- require any version of php-55
 - Initial Revision

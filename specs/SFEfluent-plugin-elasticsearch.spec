@@ -3,14 +3,15 @@
 %define gemname fluent-plugin-elasticsearch
 %define generate_executable 0
 
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
+
 
 Name:             fluent-plugin-elasticsearch
 IPS_package_name: system/fluentd/plugins/elasticsearch
 Summary:          fluent plugin for elasticsearch
-Version:          0.2.0
+Version:          0.3.0
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -29,7 +30,7 @@ fluent plugin for elasticsearch
 %build
 
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     --no-rdoc \
@@ -60,6 +61,8 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.3.0
 * Tue Feb 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - not include default-depend.inc
 * Mon Feb 03 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

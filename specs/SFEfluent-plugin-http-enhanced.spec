@@ -3,9 +3,9 @@
 %define gemname fluent-plugin-http-enhanced
 %define generate_executable 0
 
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
 Summary:          Enhanced HTTP input plugin for Fluent event collector
 Name:             SFEfluent-http-enhanced
@@ -29,7 +29,7 @@ Enhanced HTTP input plugin for Fluent event collector
 %build
 
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     --no-rdoc \
@@ -60,6 +60,8 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use %{bindir19}
 * Sat Feb 01 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - not include default-depend.inc
 * Fri Jan 31 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -4,14 +4,14 @@
 %define gemname fluent-mixin-config-placeholders
 %define generate_executable 0
 
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
 Summary:          to add various placeholders for plugin configurations
 Name:             SFEfluent-config-ph
 IPS_package_name: system/fluentd/mixin-config-placeholders
-Version:          0.2.3
+Version:          0.2.4
 License:          Apache License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -32,7 +32,7 @@ mkdir -p .%{bindir18}
 %build
 
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     --no-rdoc \
@@ -63,5 +63,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.2.4
 * Fri Jan 31 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

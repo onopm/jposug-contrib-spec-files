@@ -36,6 +36,10 @@ install -m 0555 %{SOURCE1} $RPM_BUILD_ROOT/lib/svc/method
 mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/application
 install -m 0644 %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application
 
+%actions
+group groupname="elasticsearch"
+user username="elasticsearch" group="elasticsearch" password=NP gcos-field="Elasticsearch Reservd UID"
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -49,4 +53,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Sun Apr 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add %action
 - initial commit

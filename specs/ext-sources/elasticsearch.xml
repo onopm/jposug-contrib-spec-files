@@ -54,8 +54,8 @@
         </property_group>
 
         <instance name='default' enabled='false'>
-        	<method_context>
-                	<method_credential user='root' group='sys' />
+        	<method_context working_directory='/var/elasticsearch'>
+                	<method_credential user='elasticsearch' group='elasticsearch' />
         	</method_context>
 
         	<property_group name='elasticsearch' type='application'>

@@ -18,7 +18,7 @@
 
 Summary: HTTP/REST API client library.
 Name: SFEruby-%{gemname}
-IPS_package_name:        library/ruby-18/faraday
+IPS_package_name:        library/ruby-19/faraday
 Version: 0.9.0
 License: Ruby
 URL: http://rubygems.org/gems/%{gemname}
@@ -121,5 +121,6 @@ rm -rf %{buildroot}
 %changelog
 * Sun Apr 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9.0
+- fix IPS_package_name
 * Tue May 26 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

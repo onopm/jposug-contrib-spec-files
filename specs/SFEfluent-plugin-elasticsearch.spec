@@ -20,6 +20,8 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 BuildRequires:	  runtime/ruby-19
 Requires:         runtime/ruby-19
 Requires:         system/fluentd
+Requires:         library/ruby-19/elasticsearch
+Requires:         library/ruby-19/patron
 
 %description
 fluent plugin for elasticsearch
@@ -61,6 +63,8 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Sun Apr 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.3.0
 * Tue Feb 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

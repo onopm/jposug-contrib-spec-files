@@ -46,7 +46,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr (-, root, bin)
 %dir %attr(0755, root, sys) /etc
-/etc/elasticsearch
+%dir %attr(0755, root, bin) /etc/elasticsearch
+%attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/elasticsearch.yml
+%attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/logging.yml
 %dir %attr(0755, root, sys) /usr
 /usr/elasticsearch
 %dir %attr(0755, root, bin) /lib
@@ -63,6 +65,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755, root, sys) /var/svc/manifest/application/elasticsearch.xml
 
 %changelog
+* Tue Apr 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add %config(noreplace) to config files
 * Mon Apr 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %files
 * Sun Apr 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

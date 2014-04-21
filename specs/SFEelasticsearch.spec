@@ -45,13 +45,26 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr (-, root, bin)
+%dir %attr(0755, root, sys) /etc
 /etc/elasticsearch
+%dir %attr(0755, root, sys) /usr
 /usr/elasticsearch
-/var/elasticsearch
-/lib/svc/method
-/var/svc/manifest/application
+%dir %attr(0755, root, bin) /lib
+%dir %attr(0755, root, bin) /lib/svc
+%dir %attr(0755, root, bin) /lib/svc/method
+%attr(0555, root, bin) /lib/svc/method/svc-elasticsearch
+%dir %attr(0755, root, sys) /var
+%dir %attr(0755, elasticsearch, elasticsearch) /var/elasticsearch
+%dir %attr(0755, elasticsearch, elasticsearch) /var/elasticsearch/data
+%dir %attr(0755, elasticsearch, elasticsearch) /var/elasticsearch/logs
+%dir %attr(0755, root, sys) /var/svc
+%dir %attr(0755, root, sys) /var/svc/manifest
+%dir %attr(0755, root, sys) /var/svc/manifest/application
+%attr(0755, root, sys) /var/svc/manifest/application/elasticsearch.xml
 
 %changelog
+* Mon Apr 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %files
 * Sun Apr 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add %action
 - initial commit

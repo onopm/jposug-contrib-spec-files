@@ -12,7 +12,7 @@ Source2:		elasticsearch.xml
 URL:			http://www.elasticsearch.org/
 License:		Apache License 2.0
 
-Requires:	runtime/java
+Requires:	runtime/java = *
 
 %prep
 %setup -q -n elasticsearch-%{version}
@@ -67,6 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Tue Apr 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add %config(noreplace) to config files
+- require any version of runtime/java
 * Mon Apr 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %files
 * Sun Apr 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

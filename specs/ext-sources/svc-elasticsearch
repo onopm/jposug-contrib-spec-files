@@ -13,7 +13,7 @@ ES_WORKDIR=`getproparg elasticsearch/workdir`
 ES_DATADIR=`getproparg elasticsearch/datadir`
 ES_LOGDIR=`getproparg elasticsearch/logdir`
 ES_CONFIG=`getproparg elasticsearch/config`
-PIDFILE='/var/run/elasticsearch.pid'
+PIDFILE='/var/elasticsearch/elasticsearch.pid'
 
 
 if [ -z $SMF_FMRI ]; then

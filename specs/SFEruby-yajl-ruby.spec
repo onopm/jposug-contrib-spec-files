@@ -1,5 +1,4 @@
 %include Solaris.inc
-%include default-depend.inc
 
 %define gemname yajl-ruby
 %define gemdir19 %(ruby19 -rubygems -e 'puts Gem::dir' 2>/dev/null)
@@ -56,6 +55,8 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Wed Apr 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete default-depend.inc
 * Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.2.0
 * Wed Nov 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

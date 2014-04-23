@@ -19,7 +19,7 @@ Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	runtime/ruby-19
-Requires:       runtime/ruby-19
+Requires:       runtime/ruby-19 = *
 
 %description
 Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-<pid>.log.
@@ -93,6 +93,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed Apr 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- require any version of ruby-19
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - stop to generate package for ruby-18
 * Sat Feb 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

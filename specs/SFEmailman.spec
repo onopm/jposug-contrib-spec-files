@@ -96,7 +96,6 @@ Patch7:         mailman-2.1.2-list_lists.patch
 Patch10:        mailman-2.1.4-dirmode.patch
 Patch11:        mailman-2.1.4-notavaliduser.patch
 Patch17:        mailman-weak-password.diff
-Patch18:        mailman-2.1.5-no_extra_asian.dif
 Patch19:        mailman-python24.patch
 #%if %DISTRIBUTABLE
 #%else
@@ -139,7 +138,6 @@ Authors:
 %patch10 -p1
 %patch11 -p1
 %patch17 -p1
-%patch18
 %patch19
 #%if %DISTRIBUTABLE
 #%else
@@ -363,6 +361,8 @@ user ftpuser=false gcos-field="GNU Mailing List Manager" username="%{mmuser}" ui
 # ----------------------------------------------------------------------------
 
 %changelog
+* Tue Apr 29 2014 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- delete a patch mailman-2.1.5-no_extra_asian.dif 
 * Mon Apr 28 2014 YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Rewritten for OpenSolaris.
 - Introduced Japanese version (+j*) and python kanji code filter.

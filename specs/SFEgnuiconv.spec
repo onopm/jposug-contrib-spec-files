@@ -6,7 +6,6 @@
 %include Solaris.inc
 %include usr-gnu.inc
 %include packagenamemacros.inc
-
 %define tarball_name libiconv
 %define major_version 1.13
 # patches for future phone in Japan
@@ -16,8 +15,12 @@
 ##TODO## Bug No SUNWncurses TBD 
 ##TODO## Bug No SUNWtixi    TBD 
 %define workaround_gnu_share_doc_group %( /usr/bin/ls -dl /usr/gnu/share/doc | grep " root.*bin " > /dev/null 2>&1 && echo bin || echo other )
-
-
+%ifarch amd64 sparcv9
+%include arch64.inc
+%use iconv_base_64 = gnuiconv.spec
+%endif
+%include base.inc
+%use iconv_base = gnuiconv.spec
 Name:		SFEgnuiconv
 IPS_Package_Name:	library/text/gnu-iconv
 Summary:	GNU iconv - Code set conversion
@@ -48,81 +51,43 @@ Requires:	%name
 
 %if %build_l10n
 %package l10n
+IPS_Package_Name:	library/text/gnu-iconv/l10n
 Summary:	%{summary} - l10n files
 SUNW_BaseDir:	%{_basedir}
 Requires:	%{name}
 %endif
 
 %prep
-%setup -c -n %{tarball_name}-%{version}
-pushd %{tarball_name}-%{version}
-%patch0 -p1
-%patch2 -p1
-popd
+rm -rf %name-%version
+mkdir %name-%version
+
 %ifarch amd64 sparcv9
-rm -rf %{tarball_name}-%{version}-64
-cp -rp %{tarball_name}-%{version} %{tarball_name}-%{version}-64
+mkdir %name-%version/%_arch64
+%iconv_base_64.prep -d %name-%version/%_arch64
 %endif
+
+mkdir %name-%version/%{base_arch}
+%iconv_base.prep -d %name-%version/%{base_arch}
 
 %build
-CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
-if test "x$CPUS" = "x" -o $CPUS = 0; then
-     CPUS=1
-fi
-
-export CFLAGS="%optflags -D__C99FEATURES__"
-export LDFLAGS="%_ldflags -L/usr/gnu/lib -R/usr/gnu/lib"
-cd %{tarball_name}-%{version}
-./configure \
-        --prefix=%{_prefix}	\
-        --libdir=%{_libdir}	\
-        --datadir=%{_datadir}	\
-        --mandir=%{_mandir}	\
-        --enable-static=no
-
-make -j$CPUS
-
 %ifarch amd64 sparcv9
-export CFLAGS="-m64 %optflags -D__C99FEATURES__"
-export LDFLAGS="%_ldflags -L/usr/gnu/lib -R/usr/gnu/lib"
-cd ../%{tarball_name}-%{version}-64
-./configure \
-        --prefix=%{_prefix}	\
-        --libdir=%{_libdir}/%{_arch64}	\
-        --datadir=%{_datadir}	\
-        --bindir=%{_bindir}/%{_arch64} \
-        --sbindir=%{_sbindir}/%{_arch64} \
-        --mandir=%{_mandir}	\
-        --enable-static=no
+%iconv_base_64.build -d %name-%version/%_arch64
 %endif
+%iconv_base.build -d %name-%version/%{base_arch}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-cd %{tarball_name}-%{version}
-make install DESTDIR=$RPM_BUILD_ROOT
-rm -f ${RPM_BUILD_ROOT}%{_libdir}/lib*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/charset.alias
-%if %build_l10n
-%else
-# REMOVE l10n FILES
-rm -fr $RPM_BUILD_ROOT%{_datadir}/locale
-#rm -r $RPM_BUILD_ROOT%{_datadir}/gnome/help/gnome-commander/[a-z]*
-#rm -r $RPM_BUILD_ROOT%{_datadir}/omf/gnome-commander/*-[a-z]*.omf
-%endif
-
 %ifarch amd64 sparcv9
-cd ../%{tarball_name}-%{version}-64
-make install DESTDIR=$RPM_BUILD_ROOT
-rm -f ${RPM_BUILD_ROOT}%{_libdir}/%{_arch64}/lib*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{_arch64}/charset.alias
-%if %build_l10n
-%else
-# REMOVE l10n FILES
-rm -fr $RPM_BUILD_ROOT%{_datadir}/locale
-#rm -r $RPM_BUILD_ROOT%{_datadir}/gnome/help/gnome-commander/[a-z]*
-#rm -r $RPM_BUILD_ROOT%{_datadir}/omf/gnome-commander/*-[a-z]*.omf
+%iconv_base_64.install -d %name-%version/%_arch64
 %endif
+%iconv_base.install -d %name-%version/%{base_arch}
+%if %can_isaexec
+mkdir $RPM_BUILD_ROOT%{_bindir}/%{base_isa}
+for file in iconv
+do
+ mv $RPM_BUILD_ROOT%{_bindir}/$file $RPM_BUILD_ROOT%{_bindir}/%{base_isa}
+ cd $RPM_BUILD_ROOT%{_bindir} && ln -s ../../lib/isaexec $file
+done
 %endif
 
 %clean
@@ -131,7 +96,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_bindir}
+%if %can_isaexec
+%{_bindir}/%{base_isa}
+%hard %{_bindir}/iconv
+%else
 %{_bindir}/iconv
+%endif
 %ifarch amd64 sparcv9
 %dir %attr (0755, root, bin) %{_bindir}/%{_arch64}
 %{_bindir}/%{_arch64}/iconv
@@ -169,6 +139,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon May 05 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- Fixed configure problems when compile with 64 bit.
+  I think iconv was compiled with 64 bit, but that was wrong.
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - change IPS package name
 * Tue 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>

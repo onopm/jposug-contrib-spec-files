@@ -10,15 +10,16 @@ IPS_Package_Name:	developer/build/automake-111
 SUNW_Copyright: %{name}.copyright
 Summary:	GNU Automake 1.11
 License:	GPLv2
-URL:		http://http://www.gnu.org/software/automake/
-Version:	1.11.1
-Source:		http://ftp.gnu.org/gnu/automake/automake-%{version}.tar.bz2
+URL:		http://www.gnu.org/software/automake/
+Version:	1.11.3
+Source:		http://ftp.gnu.org/gnu/automake/automake-%{version}.tar.gz
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
 
 %prep
 %setup -q -n automake-%{version}
+sed -i".orig" "s/\(system_includes = ('@datadir@\)\/aclocal/\1\/aclocal-1.11/" aclocal.in
 
 %build
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
@@ -39,6 +40,10 @@ make install DESTDIR=%{buildroot}
 /bin/rm -f %{buildroot}/%{_bindir}/automake
 /bin/rm -rf %{buildroot}/%{_infodir}
 /bin/rm -rf %{buildroot}/%{_datadir}/doc
+/bin/rm -rf %{buildroot}/%{_datadir}/aclocal
+for f in automake aclocal; do
+    /bin/mv -f $RPM_BUILD_ROOT%{_mandir}/man1/$f.1 $RPM_BUILD_ROOT%{_mandir}/man1/$f-111.1
+done
 
 %clean
 rm -rf %{buildroot}
@@ -52,6 +57,9 @@ rm -rf %{buildroot}
 %{_mandir}
 
 %changelog
+* Thr May 01 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- fixed file conflicts, when you install another version.
+- Bump to 1.11.3
 * Fri May 03 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Initial revision for the jposug
 * Tue Oct 11 2011 - Milan Jurik

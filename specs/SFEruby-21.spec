@@ -3,7 +3,7 @@
 #
 
 %define _name ruby
-%define version 2.1.1
+%define version 2.1.2
 %define major_version 2.1
 %define unmangled_version 2.1.0
 %define patchlevel 0
@@ -114,6 +114,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/2.1
 
 %changelog
+* Fri May 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.2
 * Wed Apr 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - specify required version of library/text/yaml (CVE-2014-2525)
 * Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

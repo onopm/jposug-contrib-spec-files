@@ -87,6 +87,13 @@ BuildRequires:  %{pnm_buildrequires_library_openldap}
 Requires:       %{pnm_requires_library_openldap}
 BuildRequires:  %pnm_buildrequires_openssl
 Requires:       %pnm_requires_openssl
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
+%endif
 
 # OpenSolaris IPS Manifest Fields
 Meta(info.maintainer_url):      http://sourceforge.jp/forum/forum.php?forum_id=25193
@@ -270,6 +277,8 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 
 
 %changelog
+* Sun May 11 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- added gcc dependencies
 * Fri May 02 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - enable TLS support
 - set default_database_type to hash  

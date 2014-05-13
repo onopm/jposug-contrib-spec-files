@@ -10,7 +10,7 @@
 %include packagenamemacros.inc
 
 %define tarball_name    nrpe
-%define tarball_version 2.14
+%define tarball_version 2.15
 
 
 Name:		SFEnagios-nrpe
@@ -55,6 +55,7 @@ fi
 	--sysconfdir=%{_sysconfdir}/nagios \
 	--localstatedir=%{_localstatedir}/log/nagios \
 	--datadir=%{_datadir}/nagios/html \
+        --enable-command-args
 
 make -j$CPUS all
 
@@ -98,6 +99,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue May 13 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add configure option '--enable-command-args'
 * Tue Jan 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.15
 * Wed Mar 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

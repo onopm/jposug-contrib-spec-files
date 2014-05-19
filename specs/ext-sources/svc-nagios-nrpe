@@ -63,9 +63,11 @@ case "$1" in
   start)
 	# Start daemons.
 	echo -n "Starting nrpe: "
-	if [ ! -d /var/run/nagios ]
+	NrpeRunDir=`dirname $NrpeRunFile`
+        if [ ! -d $NrpeRunDir ]
 	then
-	    mkdir /var/run/nagios
+	    mkdir $NrpeRunDir
+	    chown nagios:nagios $NrpeRunDir
 	fi
 	touch $NrpeRunFile
 	chown $NrpeUser:$NrpeGroup $NrpeRunFile

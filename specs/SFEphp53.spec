@@ -70,7 +70,7 @@ Vendor:         OpenSolaris Community
 %define _mandir %{_prefix}/man
 %define _pkg_docdir %{usr_prefix}/share/doc/SFEphp53
 
-Source0: http://jp.php.net/distributions/%{src_name}.tar.bz2
+Source0: http://downloads.php.net/johannes/%{src_name}.tar.bz2
 Source1: SFEphp53-php.conf
 Source2: SFEphp53-php.ini
 Source3: SFEphp53-macros.php
@@ -116,6 +116,7 @@ BuildRequires:  %pnm_buildrequires_library_spell_checking_enchant
 BuildRequires:  developer/build/autoconf259
 BuildRequires:  library/text/gnu-iconv/developer
 BuildRequires:  %{pnm_buildrequires_developer_icu}
+BuildRequires:  library/gmp-5/developer
 #BuildRequires: bzip2-devel, curl-devel >= 7.9, db4-devel, gmp-devel
 #BuildRequires: httpd-devel >= 2.0.46-1, pam-devel
 #BuildRequires: libstdc++-devel, openssl-devel, sqlite-devel >= 3.6.0
@@ -133,6 +134,7 @@ Requires:       database/berkeleydb-48
 Requires:  %pnm_requires_library_spell_checking_enchant
 Requires:  library/text/gnu-iconv
 Requires:  %{pnm_requires_developer_icu}
+Requires:  library/gmp-5/developer
 
 %description
 PHP is an HTML-embedded scripting language. PHP attempts to make it
@@ -1142,6 +1144,9 @@ rm files.*
 %files enchant -f files.enchant
 
 %changelog
+* Mon May 19 2014 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
+- Fix dependency and source url
+
 * Thr Apr 18 2013 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
 - Ready for imap
 

@@ -17,7 +17,7 @@
 
 Name:                    SFEpython-worldtimezone
 IPS_package_name:        library/python-2/worldtimezone
-Summary:                 Japanese Kanji filter module 
+Summary:                 World Timezone Definitions for Python
 SUNW_Copyright:          %{name}.copyright
 URL:                     http://pypi.python.org/pypi/%{tarball_name}/
 Version:                 %tarball_version
@@ -57,5 +57,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Tue May 20 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- change summary
+
 * Tue May 20 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - initial commit

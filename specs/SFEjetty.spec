@@ -27,21 +27,28 @@ Jetty provides a Web server and javax.servlet container, plus support for SPDY, 
 rm -rf %{buildroot}
 
 install -d -m 0755 %{buildroot}/usr/jetty
-install -d -m 0755 %{buildroot}/usr/jetty/webapps
-cp -r etc %{buildroot}/usr/jetty
 cp -r lib %{buildroot}/usr/jetty
 cp -r modules %{buildroot}/usr/jetty
 cp -r resources %{buildroot}/usr/jetty
-cp -r start.d %{buildroot}/usr/jetty
-install start.ini %{buildroot}/usr/jetty
 install start.jar %{buildroot}/usr/jetty
+
+install -d -m 0750 %{buildroot}/var/jetty/webapps
+install -d -m 0640 %{buildroot}/var/jetty/logs
+cp -r etc %{buildroot}/var/jetty
+cp -r start.d %{buildroot}/var/jetty
+install start.ini %{buildroot}/var/jetty
+
+pushd %{buildroot}/usr/jetty
+ln -s ../../var/jetty/etc .
+ln -s ../../var/jetty/webapps .
+ln -s ../../var/jetty/logs .
+popd
 
 install -d %{buildroot}/lib/svc/method
 install %{SOURCE1} %{buildroot}/lib/svc/method/svc-jetty
 
 install -d %{buildroot}/var/svc/manifest/network
 install %{SOURCE2} %{buildroot}/var/svc/manifest/network/jetty.xml
-
 
 exit
 
@@ -64,6 +71,17 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /usr
 %attr(0755, root, bin) /usr/jetty
 
+%dir %attr(0755, root, bin) /var/jetty
+%dir %attr(0755, root, bin) /var/jetty/etc
+%config %attr(0644, root, bin) /var/jetty/etc/*
+%dir %attr(0755, root, bin) /var/jetty/start.d
+%config %attr(0644, root, bin) /var/jetty/start.d/*
+%dir %attr(0755, root, bin) /var/jetty/webapps
+%dir %attr(0755, webservd, webservd) /var/jetty/logs
+%config %attr(0644, root, bin) /var/jetty/start.ini
+
 %changelog
+* Wed May 28 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use /var/jetty
 * Tue May 27 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

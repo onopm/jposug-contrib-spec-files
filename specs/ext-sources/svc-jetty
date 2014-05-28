@@ -8,9 +8,12 @@ getproparg() {
 }
 
 JETTY_JAVA=`getproparg jetty/java`
-JETTY_HOMEDIR=`getproparg jetty/jetty_home`
+JETTY_HOME=`getproparg jetty/jetty_home`
+JETTY_BASE=`getproparg jetty/jetty_base`
 JETTY_EXEC_USER=`getproparg jetty/exec_user`
 PIDFILE='/var/run/jetty/jetty.pid'
+
+JAVA_OPTIONS="-Djetty.logs=/var/jetty/logs -Djetty.home=${JETTY_HOME} -Djetty.base=${JETTY_BASE}"
 
 
 if [ -z $SMF_FMRI ]; then
@@ -25,8 +28,8 @@ case "$1" in
 	then
 	    mkdir -p `dirname ${PIDFILE}`
 	fi
-	cd ${JETTY_HOMEDIR}
-	sudo -u ${JETTY_EXEC_USER} ${JETTY_JAVA} -jar start.jar &
+	cd ${JETTY_BASE}
+	sudo -u ${JETTY_EXEC_USER} ${JETTY_JAVA} ${JAVA_OPTIONS} -jar ${JETTY_HOME}/start.jar &
 	echo $! > ${PIDFILE}
         ;;
 'stop')

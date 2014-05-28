@@ -63,6 +63,8 @@
                     	   value='/usr/bin/java' />
                 	<propval name='jetty_home' type='astring'
                     	   value='/usr/jetty' />
+                	<propval name='jetty_base' type='astring'
+                    	   value='/var/jetty' />
                 	<propval name='exec_user' type='astring'
                     	   value='webservd' />
         	</property_group>

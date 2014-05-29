@@ -3,15 +3,8 @@
 %include base.inc
 %define cc_is_gcc 0
 
-%define _bindir /usr/ruby/1.8/bin
-%define _sbindir /usr/ruby/1.8/sbin
-%define _mandir /usr/ruby/1.8/share/man
-
 %define module_name puppetlabs-stdlib
 %define module_version 4.1.0
-
-%{!?ruby_sitelibdir: %define ruby_sitelibdir %(ruby -rrbconfig -e 'puts Config::CONFIG["sitelibdir"]')}
-%define confdir conf/solaris
 
 Name:           puppet-modules-stdlib
 IPS_package_name:        system/management/puppet3/modules/puppetlabs/stdlib
@@ -39,7 +32,6 @@ mkdir %{module_name}-%{module_version}
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_datadir}/puppet/modules
-# cp -r ppbrown-svcprop-%{version}/* %{buildroot}%{_datadir}/puppet/modules/svcprop
 puppet module install %{module_name} \
     --force \
     --ignore-dependencies \
@@ -51,11 +43,12 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-, root, bin, 0755)
-# %doc README
 /usr/share/puppet/modules
 
 
 %changelog
+* Fri May 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete unnecessary lines
 * Thu Sep 26 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix URL
 * Mon Jul 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

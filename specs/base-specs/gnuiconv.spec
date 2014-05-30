@@ -12,13 +12,16 @@ SUNW_Copyright:	%{name}.copyright
 URL:		http://www.gnu.org/s/libiconv/
 Version:	%{major_version}
 Source:		http://ftp.gnu.org/pub/gnu/libiconv/%{tarball_name}-%{version}.tar.gz
-Patch0:         http://www2d.biglobe.ne.jp/~msyk/software/libiconv/%{tarball_name}-%{patch_version}.patch.gz
+#up to 1.13
+#Patch0:         http://www2d.biglobe.ne.jp/~msyk/software/libiconv/%{tarball_name}-%{patch_version}.patch.gz
+#1.14
+Patch0:         http://apolloron.org/software/libiconv-1.14-ja/%{tarball_name}-%{patch_version}.patch
 Patch2:		libiconv-02-646.diff
 
 %prep
 %setup -q -n %{tarball_name}-%{version}
-#%patch0 -p1
-#%patch2 -p1
+%patch0 -p1
+%patch2 -p1
 
 %build
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
@@ -52,6 +55,8 @@ rm -fr $RPM_BUILD_ROOT%{_datadir}/locale
 %endif
 
 %changelog
+* Sat May 31 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- bump to 1.14
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - change IPS package name
 * Tue 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>

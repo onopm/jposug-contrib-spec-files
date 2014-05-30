@@ -7,9 +7,10 @@
 %include usr-gnu.inc
 %include packagenamemacros.inc
 %define tarball_name libiconv
-%define major_version 1.13
+%define major_version 1.14
 # patches for future phone in Japan
-%define patch_version 1.13-ja-1
+
+%define patch_version 1.14-ja-1
 %define build_l10n 1
 ##TODO## Bug SUNWncurses and SUNWtixi do not define group "other" for /usr/gnu/share/doc
 ##TODO## Bug No SUNWncurses TBD 
@@ -29,9 +30,6 @@ License:	LGPLv2
 SUNW_Copyright:	%{name}.copyright
 URL:		http://www.gnu.org/s/libiconv/
 Version:	%{major_version}
-Source:		http://ftp.gnu.org/pub/gnu/libiconv/%{tarball_name}-%{version}.tar.gz
-Patch0:         http://www2d.biglobe.ne.jp/~msyk/software/libiconv/%{tarball_name}-%{patch_version}.patch.gz
-Patch2:		libiconv-02-646.diff
 
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
@@ -139,6 +137,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat May 31 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- bump to 1.14
 * Mon May 05 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - Fixed configure problems when compile with 64 bit.
   I think iconv was compiled with 64 bit, but that was wrong.

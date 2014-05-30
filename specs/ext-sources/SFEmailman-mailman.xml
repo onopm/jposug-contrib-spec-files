@@ -24,7 +24,7 @@
 		<dependency name="postifx" grouping="require_all" restart_on="none" type="service">
 			<service_fmri value="svc:/network/smtp"/>
 		</dependency>
-		<instance name="mailman" enabled="false">
+		<instance name="default" enabled="false">
 			<dependency name="config-file" grouping="require_all" restart_on="refresh" type="path">
 				<service_fmri value="file://localhost/usr/lib/mailman/Mailman/Defaults.py"/>
 				<service_fmri value="file://localhost/usr/lib/mailman/Mailman/mm_cfg.py"/>

@@ -31,7 +31,7 @@
 
 Summary: A simple, fast Mysql library for Ruby, binding to libmysql
 Name: SFEruby-%{gemname}-02-51
-IPS_package_name:        library/ruby/mysql2-02/mysql51
+IPS_package_name:        library/ruby/mysql2-02/mysql-51
 SUNW_Copyright:   %name.copyright
 Version: 0.2.23
 License: MIT License
@@ -51,7 +51,7 @@ A simple, fast Mysql library for Ruby, binding to libmysql
 
 %if %with_ruby18
 %package 18
-IPS_package_name: library/ruby-18/mysql2-02/mysql51
+IPS_package_name: library/ruby-18/mysql2-02/mysql-51
 Summary: A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:  runtime/ruby-18
 Requires:       runtime/ruby-18
@@ -62,7 +62,7 @@ A simple, fast Mysql library for Ruby, binding to libmysql
 %endif
 
 %package 19
-IPS_package_name: library/ruby-19/mysql2-02/mysql51
+IPS_package_name: library/ruby-19/mysql2-02/mysql-51
 Summary: A simple, fast Mysql library for Ruby, binding to libmysql
 Requires:	runtime/ruby-19
 Requires:       %pnm_requires_mysql51lib
@@ -72,7 +72,7 @@ A simple, fast Mysql library for Ruby, binding to libmysql
 
 %if %with_ruby20
 # %package 20
-# IPS_package_name: library/ruby-20/mysql2-02/mysql51
+# IPS_package_name: library/ruby-20/mysql2-02/mysql-51
 # Summary: A simple, fast Mysql library for Ruby, binding to libmysql
 # Requires:	runtime/ruby-20
 #Requires:       %pnm_requires_mysql51lib
@@ -208,5 +208,7 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Fri Jun 6 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Change package name 
 * Fri Jun 6 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - initial commit

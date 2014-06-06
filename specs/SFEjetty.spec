@@ -13,7 +13,7 @@ Source:		http://ftp.yz.yamagata-u.ac.jp/pub/eclipse//jetty/stable-9/dist/jetty-d
 Source1:		svc-jetty
 Source2:		jetty.xml
 
-Requires:		runtime/java/jre
+Requires:		runtime/java/jre >= 1.7.0
 
 %description
 Jetty provides a Web server and javax.servlet container, plus support for SPDY, WebSocket, OSGi, JMX, JNDI, JAAS and many other integrations. These components are open source and available for commercial use and distribution.
@@ -81,6 +81,8 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/start.ini
 
 %changelog
+* Fri Jun 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify required version of runtime/java/jre
 * Wed May 28 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use /var/jetty
 * Tue May 27 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

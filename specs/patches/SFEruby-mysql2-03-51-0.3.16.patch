@@ -1,0 +1,11 @@
+--- mysql2-0.3.16/ext/mysql2/extconf.rb.orig	2014-06-06 18:04:11.082167630 +0900
++++ mysql2-0.3.16/ext/mysql2/extconf.rb	2014-06-06 18:32:15.518807538 +0900
+@@ -126,5 +126,7 @@
+     end
+   end
+ end
+-
++$CPPFLAGS = $CPPFLAGS.gsub(/(-Xlinker|-i)/, '')
++$CFLAGS = $CFLAGS.gsub(/(-Xlinker|-i)/, '')
++$libs = $libs.gsub(/(-lCrun|-L\/opt\/SUNWspro\/lib|-R\/opt\/SUNWspro\/lib)/, '')
+ create_makefile('mysql2/mysql2')

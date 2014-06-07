@@ -1,6 +1,6 @@
 #
 # spec file for package SFEruby-mysql2-02-51
-# mysql2 0.2.x
+# gem install mysql2 (0.2.x)
 #
 %include Solaris.inc
 %include packagenamemacros.inc
@@ -45,6 +45,16 @@ BuildRequires:	%pnm_buildrequires_database_mysql_51
 BuildRequires:	%pnm_buildrequires_mysql51lib
 Requires:	%pnm_requires_mysql51lib
 BuildRequires:  runtime/ruby-19
+%if %cc_is_gcc
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc
+Requires:      system/library/gcc-runtime
+%endif
+%endif
 
 %description
 A simple, fast Mysql library for Ruby, binding to libmysql
@@ -56,6 +66,7 @@ Summary: A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:  runtime/ruby-18
 Requires:       runtime/ruby-18
 Requires:       %pnm_requires_mysql51lib
+Requires:	library/ruby/mysql2-02/mysql-51
 
 %description 18
 A simple, fast Mysql library for Ruby, binding to libmysql
@@ -66,19 +77,21 @@ IPS_package_name: library/ruby-19/mysql2-02/mysql-51
 Summary: A simple, fast Mysql library for Ruby, binding to libmysql
 Requires:	runtime/ruby-19
 Requires:       %pnm_requires_mysql51lib
+Requires:	library/ruby/mysql2-02/mysql-51
 
 %description 19
 A simple, fast Mysql library for Ruby, binding to libmysql
 
 %if %with_ruby20
-# %package 20
-# IPS_package_name: library/ruby-20/mysql2-02/mysql-51
-# Summary: A simple, fast Mysql library for Ruby, binding to libmysql
-# Requires:	runtime/ruby-20
+#%package 20
+#IPS_package_name: library/ruby-20/mysql2-02/mysql-51
+#Summary: A simple, fast Mysql library for Ruby, binding to libmysql
+#Requires:	runtime/ruby-20
 #Requires:       %pnm_requires_mysql51lib
+#Requires:	library/ruby/mysql2-02/mysql-51
 
-# %description 20
-# A simple, fast Mysql library for Ruby, binding to libmysql
+#%description 20
+#A simple, fast Mysql library for Ruby, binding to libmysql
 %endif
 
 %prep
@@ -208,6 +221,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sat Jun 7 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Change dependencies
 * Fri Jun 6 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Change package name 
 * Fri Jun 6 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>

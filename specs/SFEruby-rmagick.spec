@@ -40,6 +40,16 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildRequires:	image/editor/imagemagick
 Requires:	image/editor/imagemagick
 BuildRequires:  runtime/ruby-19
+%if %cc_is_gcc
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc
+Requires:      system/library/gcc-runtime
+%endif
+%endif
 
 %description
 RMagick is an interface between Ruby and ImageMagick.
@@ -51,6 +61,7 @@ Summary: RMagick is an interface between Ruby and ImageMagick.
 BuildRequires:  runtime/ruby-18
 Requires:       runtime/ruby-18
 Requires:	image/editor/imagemagick
+Requires:	library/ruby/%{gemname}
 
 %description 18
 RMagick is an interface between Ruby and ImageMagick.
@@ -61,6 +72,7 @@ IPS_package_name: library/ruby-19/%{gemname}
 Summary: RMagick is an interface between Ruby and ImageMagick.
 Requires:	runtime/ruby-19
 Requires:       image/editor/imagemagick
+Requires:	library/ruby/%{gemname}
 
 %description 19
 RMagick is an interface between Ruby and ImageMagick.
@@ -71,6 +83,7 @@ RMagick is an interface between Ruby and ImageMagick.
 #Summary: RMagick is an interface between Ruby and ImageMagick.
 #Requires:	runtime/ruby-20
 #Requires:      image/editor/imagemagick 
+#Requires:	library/ruby/%{gemname}
 
 #%description 20
 #RMagick is an interface between Ruby and ImageMagick. 
@@ -182,5 +195,7 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sat Jun 7 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Change dependencies
 * Sat Jun 7 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - initial commit

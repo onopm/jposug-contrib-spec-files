@@ -10,11 +10,11 @@
 %include packagenamemacros.inc
 
 %define tarball_name    GrowthForecast
-%define tarball_version 0.70
+%define tarball_version 0.81
 
 Name:		growthforecast
 IPS_package_name:        diagnostic/growthforecast
-Version:	0.70
+Version:	%{tarball_version}
 Summary:	GrowthForecast - Lightning Fast Graphing/Visualization
 Group:		Applications/System
 License:	Perl5
@@ -75,6 +75,10 @@ Requires:	library/perl-5/number-format-512
 Requires:	library/perl-5/server-starter-512
 Requires:	library/perl-5/scope-guard-512
 Requires:	library/perl-5/any-moose-512
+Requires:	library/perl-5/router-boom-512
+Requires:	library/perl-5/http-headers-fast-512
+Requires:	library/perl-5/kossy-validator-512
+Requires:	library/perl-5/http-entity-parser-512
 
 %description
 GrowthForecast - Lightning Fast Graphing/Visualization
@@ -87,7 +91,7 @@ GrowthForecast - Lightning Fast Graphing/Visualization
   DESTDIR=$RPM_BUILD_ROOT \
   LIB=/usr/perl5/vendor_perl/5.12
 make
-# make test
+make test
 
 
 %install
@@ -137,6 +141,8 @@ user ftpuser=false gcos-field="GrowthForecast Reserved UID" username="growthfore
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/site/growthforecast.xml
 
 %changelog
+* Mon Jun 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.81
 * Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requirs
 * Tue Sep 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

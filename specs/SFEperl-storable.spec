@@ -1,4 +1,4 @@
-0;95;0c#
+#
 # spec file for package: SFEperl-storable
 #
 # This file and all modifications and additions to the pristine
@@ -23,7 +23,8 @@ Vendor:         OpenSolaris Community
 Url:		http://search.cpan.org/~ams/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/A/AM/AMS/Storable-%{tarball_version}.tar.gz
+# Source0:	http://search.cpan.org/CPAN/authors/id/A/AM/AMS/Storable-%{tarball_version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/A/AM/AMS/Storable-%{tarball_version}.tar.gz
 
 BuildRequires:	runtime/perl-584
 BuildRequires:	runtime/perl-512
@@ -99,6 +100,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Jun 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- change Source0 URL
 * Mon Jun 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.45
 * Tue Jun 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

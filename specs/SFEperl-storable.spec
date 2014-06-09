@@ -1,4 +1,4 @@
-#
+0;95;0c#
 # spec file for package: SFEperl-storable
 #
 # This file and all modifications and additions to the pristine
@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 2.35
+%define tarball_version 2.45
 %define tarball_name    Storable
 
 Name:		SFEperl-storable
 IPS_package_name: library/perl-5/storable
-Version:	2.35
-IPS_component_version: 2.35
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	Persistent data structure mechanism
 License:	Artistic
 Distribution:   OpenSolaris
@@ -41,12 +41,14 @@ IPS_package_name: library/perl-5/storable-584
 Summary: Persistent data structure mechanism for perl-584
 BuildRequires:	runtime/perl-584
 Requires:	runtime/perl-584
+Requires:	library/perl-5/xsloader-584
 
 %package 512
 IPS_package_name: library/perl-5/storable-512
 Summary: Persistent data structure mechanism for perl-512
 BuildRequires:	runtime/perl-512
 Requires:	runtime/perl-512
+Requires:	library/perl-5/xsloader-512
 
 
 %prep
@@ -97,5 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Jun 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.45
 * Tue Jun 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

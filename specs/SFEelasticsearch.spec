@@ -4,9 +4,8 @@
 Name:			SFEelasticsearch
 IPS_package_name:       database/elasticsearch
 Summary:		distributed restful search and analytics
-Version:		1.1.1
-# Source:		https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-%{version}.tar.gz
-Source:		http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.1.tar.gz
+Version:		1.2.1
+Source:			http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-%{version}.tar.gz
 Source1:		svc-elasticsearch
 Source2:		elasticsearch.xml
 URL:			http://www.elasticsearch.org/
@@ -65,6 +64,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755, root, sys) /var/svc/manifest/application/elasticsearch.xml
 
 %changelog
+* Tue Jun 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2.1
 * Tue Apr 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add %config(noreplace) to config files
 - require any version of runtime/java

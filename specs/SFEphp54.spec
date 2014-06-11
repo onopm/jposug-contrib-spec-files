@@ -3,7 +3,8 @@
 #
 %include Solaris.inc
 %include packagenamemacros.inc
-%define cc_is_gcc 0
+# You can also compile on SunStudio.
+%define cc_is_gcc 1
 %include base.inc
 #
 %define with_imap 1
@@ -144,7 +145,7 @@ Name:     SFEphp54
 %define _pkg_docdir %{usr_prefix}/share/doc/SFEphp54
 SUNW_Copyright:   %name.copyright
 IPS_package_name:        web/php-54
-Version:  5.4.16
+Version:  5.4.29
 %define src_name php-%{version}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -178,15 +179,6 @@ Patch8: %name-php-5.4.7-libdb.patch
 # Fixes for extension modules
 # https://bugs.php.net/63171 no odbc call during timeout
 Patch21: %name-php-5.4.7-odbctimer.patch
-# Fixed Bug #64949 (Buffer overflow in _pdo_pgsql_error)
-Patch22: %name-php-5.4.16-pdopgsql.patch
-# Fixed bug #64960 (Segfault in gc_zval_possible_root)
-Patch23: %name-php-5.4.16-gc.patch
-# Fixed Bug #64915 (error_log ignored when daemonize=0)
-Patch24: %name-php-5.4.16-fpm.patch
-# https://bugs.php.net/65143 php-cgi man page
-# https://bugs.php.net/65142 phar man page
-Patch25: %name-php-5.4.16-man.patch
 
 # Functional changes
 Patch40: %name-php-5.4.0-dlopen.patch
@@ -203,12 +195,6 @@ Patch46: %name-php-5.4.9-fixheader.patch
 # drop "Configure command" from phpinfo output
 Patch47: %name-php-5.4.9-phpinfo.patch
 
-# Fixes for tests
-Patch60: %name-php-5.4.16-pdotests.patch
-
-# Security fixes
-Patch100: %name-php-5.4.17-CVE-2013-4013.patch
-Patch101: %name-php-5.4.16-CVE-2013-4248.patch
 # below the jposug made patches.
 # This function (mem'p'cpy) is a GNU extension. So put compatible codes.
 Patch200: %name-php-5.4.16-mempcpy.patch
@@ -985,10 +971,10 @@ support for using the enchant library to PHP.
 %patch8 -p1 -b .libdb
 
 %patch21 -p1 -b .odbctimer
-%patch22 -p1 -b .pdopgsql
-%patch23 -p1 -b .gc
-%patch24 -p1 -b .fpm
-%patch25 -p1 -b .manpages
+#%patch22 -p1 -b .pdopgsql
+#%patch23 -p1 -b .gc
+#%patch24 -p1 -b .fpm
+#%patch25 -p1 -b .manpages
 
 %patch40 -p1 -b .dlopen
 %patch41 -p1 -b .easter
@@ -1003,10 +989,10 @@ support for using the enchant library to PHP.
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
 
-%patch60 -p1 -b .pdotests
+#%patch60 -p1 -b .pdotests
 
-%patch100 -p1 -b .cve4113
-%patch101 -p1 -b .cve4248
+#%patch100 -p1 -b .cve4113
+#%patch101 -p1 -b .cve4248
 
 %patch200 -p1 -b .mempcpy
 %patch201 -p1 -b .orig
@@ -1148,6 +1134,11 @@ cat `aclocal --print-ac-dir`/{libtool,ltoptions,ltsugar,ltversion,lt~obsolete}.m
 %else
 cat `aclocal --print-ac-dir`/libtool.m4 > build/libtool.m4
 %endif
+%if %cc_is_gcc
+# to remove warning gcc: -i: linker input file unused because linking not done 
+sed -i -e 's/-Xlinker//' -e 's/-i//' aclocal.m4
+sed -i -e 's/-Xlinker//' -e 's/-i//' build/libtool.m4
+%endif
 
 # Regenerate configure scripts (patches change config.m4's)
 touch configure.in
@@ -1155,12 +1146,15 @@ touch configure.in
 
 #CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
 #export CFLAGS
-export CXXFLAGS="%cxx_optflags"
-export CFLAGS="%optflags"
 export LDFLAGS="%_ldflags %gnu_lib_path -L/opt/solarisstudio12.3/lib -R%{mysql_prefix}/lib/mysql"
 %if %cc_is_gcc
+export CXXFLAGS=$(echo "%cxx_optflags" | sed -e 's/-Xlinker//' -e 's/-i//')
+export CFLAGS=$(echo "%optflags" | sed -e 's/-Xlinker//' -e 's/-i//')
 export CC=gcc
 export CXX=g++
+%else
+export CXXFLAGS="%cxx_optflags"
+export CFLAGS="%optflags"
 %endif
 # Install extension modules in %{_libdir}/php/modules.
 EXTENSION_DIR=%{_libdir}/php/modules; export EXTENSION_DIR
@@ -1596,37 +1590,46 @@ make -C build-apache install-modules \
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/
 install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/php.ini
 #install -m 755 -d $RPM_BUILD_ROOT%{_httpd_contentdir}/icons
-#install -m 644 php.gif $RPM_BUILD_ROOT%{_httpd_contentdir}/icons/php54.gif
+#install -m 644 php.gif $RPM_BUILD_ROOT%{_httpd_contentdir}/icons/php5.gif
 /bin/rm -rf php.gif
 
 # For third-party packaging:
 install -m 755 -d $RPM_BUILD_ROOT%{_datadir}/php
 
 # install the DSO
+moddir="%{_httpd_moddir}"
+moddir=${moddir#%{usr_prefix}}
 install -m 755 -d $RPM_BUILD_ROOT%{_httpd_moddir}
-install -m 755 build-apache/libs/libphp5.so $RPM_BUILD_ROOT%{_httpd_moddir}
+install -d 755 $RPM_BUILD_ROOT%{_prefix}$moddir/
+install -m 755 build-apache/libs/libphp5.so $RPM_BUILD_ROOT%{_prefix}$moddir/libphp5.so
+pushd $RPM_BUILD_ROOT/%{_httpd_moddir}
+ln -s ../../../php/%{major_version}/$moddir/libphp5.so .
+popd
 
 %if %{with_zts}
 # install the ZTS DSO
-install -m 755 build-zts/libs/libphp5.so $RPM_BUILD_ROOT%{_httpd_moddir}/libphp5-zts.so
+install -m 755 build-zts/libs/libphp5.so $RPM_BUILD_ROOT%{_prefix}$moddir/libphp5-zts.so
+pushd $RPM_BUILD_ROOT/%{_httpd_moddir}
+ln -s ../../../php/%{major_version}$moddir/libphp5-zts.so .
+popd
 %endif
 
 # Apache config fragment
-%if %{?scl:1}0
-install -m 755 -d $RPM_BUILD_ROOT%{_root_httpd_moddir}
-ln -s %{_httpd_moddir}/libphp5.so      $RPM_BUILD_ROOT%{_root_httpd_moddir}/libphp5.so
-%if %{with_zts}
-ln -s %{_httpd_moddir}/libphp5-zts.so  $RPM_BUILD_ROOT%{_root_httpd_moddir}/libphp5-zts.so
-%endif
-%endif
+#%if %{?scl:1}0
+#install -m 755 -d $RPM_BUILD_ROOT%{_root_httpd_moddir}
+#ln -s %{_httpd_moddir}/libphp5.so      $RPM_BUILD_ROOT%{_root_httpd_moddir}/libphp5.so
+#%if %{with_zts}
+#ln -s %{_httpd_moddir}/libphp5-zts.so  $RPM_BUILD_ROOT%{_root_httpd_moddir}/libphp5-zts.so
+#%endif
+#%endif
 sed -e 's|modules/libphp5\.so|libexec/libphp5.so|' %{SOURCE9} >modconf
 
 #%if "%{_httpd_modconfdir}" == "%{_httpd_confdir}"
 # Single config file with httpd < 2.4 (fedora <= 17)
-install -D -m 644 modconf $RPM_BUILD_ROOT%{_httpd_confdir}/php-32.load
-cat %{SOURCE1} >>$RPM_BUILD_ROOT%{_httpd_confdir}/php-32.load
+install -D -m 644 modconf $RPM_BUILD_ROOT%{_httpd_confdir}/php54-32.load
+cat %{SOURCE1} >>$RPM_BUILD_ROOT%{_httpd_confdir}/php54-32.load
 %if %{with_zts}
-cat %{SOURCE10} >>$RPM_BUILD_ROOT%{_httpd_confdir}/php32-load
+cat %{SOURCE10} >>$RPM_BUILD_ROOT%{_httpd_confdir}/php54-32.load
 %endif
 
 #%else
@@ -1638,7 +1641,10 @@ cat %{SOURCE10} >>$RPM_BUILD_ROOT%{_httpd_confdir}/php32-load
 #install -D -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
 #%endif
 sed -e 's:/var/lib:%{_localstatedir}/lib:' \
-    -i $RPM_BUILD_ROOT%{_httpd_confdir}/php-32.load
+    -i $RPM_BUILD_ROOT%{_httpd_confdir}/php54-32.load
+pushd $RPM_BUILD_ROOT%{_httpd_confdir}
+ln -s php54-32.load php-32.load
+popd
 
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php.d
 %if %{with_zts}
@@ -1874,9 +1880,9 @@ done
 popd
 %endif
 mkdir -p "${RPM_BUILD_ROOT}/lib/svc/method"
-cp "%{SOURCE200}" "${RPM_BUILD_ROOT}/lib/svc/method/php54-fpm"
+cp "%{SOURCE200}" "${RPM_BUILD_ROOT}/lib/svc/method/php5-fpm"
 mkdir -p "${RPM_BUILD_ROOT}%{svcdir}"
-cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php54-fpm.xml"
+cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php5-fpm.xml"
 
 %clean
 %if %{skip_prep}
@@ -1989,11 +1995,12 @@ cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php54-fpm.xml"
 %dir %attr (0755, root, sys) %{_localstatedir}
 %dir %attr (0755, root, other) %{_localstatedir}/lib
 %attr (0770,root,webservd) %dir %{_localstatedir}/lib/php/session
-%config(noreplace) %{_httpd_confdir}/php-32.load
+%config(noreplace) %{_httpd_confdir}/php54-32.load
+%ips_tag (mediator=php mediator-version=%{major_version}) %{_httpd_confdir}/php-32.load
 #%if "%{_httpd_modconfdir}" != "%{_httpd_confdir}"
 #%config(noreplace) %{_httpd_modconfdir}/10-php.conf
 #%endif
-#%{_httpd_contentdir}/icons/php54.gif
+#%{_httpd_contentdir}/icons/php5.gif
 %if %{with_mediator_in_directory_usr_php_bin}
 %attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/php/bin
 %attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/php/include
@@ -2020,6 +2027,7 @@ cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php54-fpm.xml"
 %endif
 %dir %{_localstatedir}/lib/php
 %dir %{_datadir}/php
+%{_prefix}/apache2
 
 %files cli
 %defattr(-,root,bin)
@@ -2070,11 +2078,11 @@ cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php54-fpm.xml"
 %dir %attr (0755, root, sys) %{_localstatedir}/svc
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
-%class(manifest) %attr (0444, root, sys) %{_localstatedir}/svc/manifest/site/php54-fpm.xml
+%class(manifest) %attr (0444, root, sys) %{_localstatedir}/svc/manifest/site/php5-fpm.xml
 %dir %attr (0755, root, bin) /lib
 %dir %attr (0755, root, bin) /lib/svc
 %dir %attr (0755, root, bin) /lib/svc/method
-%attr (0555, root, bin) /lib/svc/method/php54-fpm
+%attr (0555, root, bin) /lib/svc/method/php5-fpm
 %endif
 
 %files devel
@@ -2160,8 +2168,14 @@ cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php54-fpm.xml"
 %files mysqlnd -f files.mysqlnd
 %endif
 
-
 %changelog
+* Tue June 10 2014 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.4.29
+- Bump up to 5.4.29
+- Fixed problem:
+  Warning: Linking the shared library libphp5.la against the non-libtool
+- postgres still not supported
+- Fix mediator for coexistence under php 5.3
+
 * Thr May 29 2014 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.4.16
 - ready for OI (151a9)
 - enable dtrace

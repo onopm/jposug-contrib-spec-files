@@ -897,7 +897,10 @@ popd
 
 # Apache config fragment
 install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php-32.load
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php53-32.load
+pushd $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d
+ln -s php53-32.load php-32.load
+popd
 
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/conf.d
 #install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php-zts.d
@@ -1045,7 +1048,8 @@ rm files.*
 %dir %attr (0755, root, bin) %{_localstatedir}/php
 %dir %attr (0755, root, bin) %{_localstatedir}/php/%{major_version}
 %attr(0770,root,webservd) %dir %{_localstatedir}/php/%{major_version}/session
-%config(noreplace) /etc/apache2/2.2/conf.d/php-32.load
+%config(noreplace) /etc/apache2/2.2/conf.d/php53-32.load
+%ips_tag (mediator=php mediator-version=%{major_version}) /etc/apache2/2.2/conf.d/php-32.load
 %config(noreplace) %{contentdir}/icons/php.gif
 %dir %attr (0755, root, bin) %{_libdir}
 %dir %attr (0755, root, bin) %{_libdir}/build
@@ -1144,6 +1148,9 @@ rm files.*
 %files enchant -f files.enchant
 
 %changelog
+* Mon May 19 2014 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
+- Fix mediator for coexistence under php 5.4
+
 * Mon May 19 2014 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.3.20
 - Fix dependency and source url
 

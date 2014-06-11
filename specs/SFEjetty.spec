@@ -1,7 +1,7 @@
 %include Solaris.inc
 
-%define jetty_version 9.1.5
-%define jetty_date 20140505
+%define jetty_version 9.2.1
+%define jetty_date 20140609
 
 Name:			SFEjetty
 IPS_package_name:	web/server/jetty
@@ -81,6 +81,8 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/start.ini
 
 %changelog
+* Wed Jun 11 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.1
 * Fri Jun 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - specify required version of runtime/java/jre
 * Wed May 28 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

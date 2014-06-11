@@ -21,7 +21,7 @@
 Summary: Ruby module for collecting simple facts about a host operating system
 Name: facter
 IPS_package_name:        library/ruby-19/%{gemname}
-Version: 2.0.1
+Version: 2.0.2
 License: ASL 2.0
 Group: System Environment/Base
 URL: http://www.puppetlabs.com/puppet/related-projects/%{name}/
@@ -159,6 +159,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Wed Jun 11 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.2
 * Fri May 30 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.1
 * Fri Feb 14 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

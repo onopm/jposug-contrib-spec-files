@@ -8,7 +8,7 @@
 %include base.inc
 #
 %define with_imap 1
-%define with_pgsql 0
+%define with_pgsql 1
 %define with_unixodbc 0
 %define with_pspell 0
 %define with_recode 0
@@ -579,7 +579,7 @@ This package use the MySQL Native Driver
 %package pgsql
 Summary: A PostgreSQL database module for PHP
 Group: Development/Languages
-IPS_package_name: web/php-54/extension/php-pgsql
+IPS_package_name: web/php-54/extension/php-postgres
 # All files licensed under PHP version 3.01
 License: PHP
 #Requires: %{?scl_prefix}php-pdo%{?_isa} = %{version}-%{release}
@@ -589,7 +589,9 @@ Requires: database/postgres-92/library
 #Provides: %{?scl_prefix}php_database
 #Provides: %{?scl_prefix}php-pdo_pgsql, %{?scl_prefix}php-pdo_pgsql%{?_isa}
 #%{!?scl:Obsoletes: mod_php3-pgsql, stronghold-php-pgsql}
-BuildRequires: krb5-devel, openssl-devel, postgresql-devel
+#BuildRequires: krb5-devel, openssl-devel, postgresql-devel
+BuildRequires: %{pnm_buildrequires_service_security_kerberos_5}
+BuildRequires: %{pnm_buildrequires_SUNWopenssl}
 BuildRequires: database/postgres-92/library
 BuildRequires: database/postgres-92/developer
 BuildRequires: %{pnm_buildrequires_text_gnu_sed}
@@ -971,10 +973,6 @@ support for using the enchant library to PHP.
 %patch8 -p1 -b .libdb
 
 %patch21 -p1 -b .odbctimer
-#%patch22 -p1 -b .pdopgsql
-#%patch23 -p1 -b .gc
-#%patch24 -p1 -b .fpm
-#%patch25 -p1 -b .manpages
 
 %patch40 -p1 -b .dlopen
 %patch41 -p1 -b .easter
@@ -988,11 +986,6 @@ support for using the enchant library to PHP.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
-
-#%patch60 -p1 -b .pdotests
-
-#%patch100 -p1 -b .cve4113
-#%patch101 -p1 -b .cve4248
 
 %patch200 -p1 -b .mempcpy
 %patch201 -p1 -b .orig
@@ -1590,7 +1583,7 @@ make -C build-apache install-modules \
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/
 install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/php.ini
 #install -m 755 -d $RPM_BUILD_ROOT%{_httpd_contentdir}/icons
-#install -m 644 php.gif $RPM_BUILD_ROOT%{_httpd_contentdir}/icons/php5.gif
+#install -m 644 php.gif $RPM_BUILD_ROOT%{_httpd_contentdir}/icons/php.gif
 /bin/rm -rf php.gif
 
 # For third-party packaging:
@@ -1880,9 +1873,9 @@ done
 popd
 %endif
 mkdir -p "${RPM_BUILD_ROOT}/lib/svc/method"
-cp "%{SOURCE200}" "${RPM_BUILD_ROOT}/lib/svc/method/php5-fpm"
+cp "%{SOURCE200}" "${RPM_BUILD_ROOT}/lib/svc/method/php54-fpm"
 mkdir -p "${RPM_BUILD_ROOT}%{svcdir}"
-cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php5-fpm.xml"
+cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php54-fpm.xml"
 
 %clean
 %if %{skip_prep}
@@ -2000,7 +1993,7 @@ cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php5-fpm.xml"
 #%if "%{_httpd_modconfdir}" != "%{_httpd_confdir}"
 #%config(noreplace) %{_httpd_modconfdir}/10-php.conf
 #%endif
-#%{_httpd_contentdir}/icons/php5.gif
+#%{_httpd_contentdir}/icons/php.gif
 %if %{with_mediator_in_directory_usr_php_bin}
 %attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/php/bin
 %attr (0555, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /usr/php/include
@@ -2078,11 +2071,11 @@ cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php5-fpm.xml"
 %dir %attr (0755, root, sys) %{_localstatedir}/svc
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
-%class(manifest) %attr (0444, root, sys) %{_localstatedir}/svc/manifest/site/php5-fpm.xml
+%class(manifest) %attr (0444, root, sys) %{_localstatedir}/svc/manifest/site/php54-fpm.xml
 %dir %attr (0755, root, bin) /lib
 %dir %attr (0755, root, bin) /lib/svc
 %dir %attr (0755, root, bin) /lib/svc/method
-%attr (0555, root, bin) /lib/svc/method/php5-fpm
+%attr (0555, root, bin) /lib/svc/method/php54-fpm
 %endif
 
 %files devel
@@ -2169,6 +2162,9 @@ cp "%{SOURCE201}" "${RPM_BUILD_ROOT}%{svcdir}/php5-fpm.xml"
 %endif
 
 %changelog
+* Thr Jun 12 2014 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.4.29
+- Ready for postgres
+
 * Tue June 10 2014 YAMAMOTO Takashi <yamachan@selfnavi.com> - 5.4.29
 - Bump up to 5.4.29
 - Fixed problem:

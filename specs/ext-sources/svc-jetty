@@ -13,7 +13,7 @@ JETTY_BASE=`getproparg jetty/jetty_base`
 JETTY_EXEC_USER=`getproparg jetty/exec_user`
 PIDFILE='/var/run/jetty/jetty.pid'
 
-JAVA_OPTIONS="-Djetty.logs=/var/jetty/logs -Djetty.home=${JETTY_HOME} -Djetty.base=${JETTY_BASE}"
+JAVA_OPTIONS="-Djetty.logs=/var/jetty/logs -Djetty.home=${JETTY_HOME} -Djetty.base=${JETTY_BASE} `getproparg jetty/java_options`"
 
 
 if [ -z $SMF_FMRI ]; then

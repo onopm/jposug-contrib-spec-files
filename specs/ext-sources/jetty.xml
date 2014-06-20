@@ -66,7 +66,9 @@
                 	<propval name='jetty_base' type='astring'
                     	   value='/var/jetty' />
                 	<propval name='exec_user' type='astring'
-                    	   value='webservd' />
+                    		 value='webservd' />
+                	<propval name='java_options' type='astring'
+                    		 value='' />
         	</property_group>
         </instance>
 

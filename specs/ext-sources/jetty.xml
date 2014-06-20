@@ -68,7 +68,7 @@
                 	<propval name='exec_user' type='astring'
                     		 value='webservd' />
                 	<propval name='java_options' type='astring'
-                    		 value='' />
+                    		 value='-Xmx1024m' />
         	</property_group>
         </instance>
 

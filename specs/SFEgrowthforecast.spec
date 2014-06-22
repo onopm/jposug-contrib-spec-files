@@ -79,6 +79,8 @@ Requires:	library/perl-5/router-boom-512
 Requires:	library/perl-5/http-headers-fast-512
 Requires:	library/perl-5/kossy-validator-512
 Requires:	library/perl-5/http-entity-parser-512
+Requires:	library/perl-5/try-tiny-512
+Requires:	library/perl-5/cookie-baker-512
 
 %description
 GrowthForecast - Lightning Fast Graphing/Visualization
@@ -141,6 +143,8 @@ user ftpuser=false gcos-field="GrowthForecast Reserved UID" username="growthfore
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/site/growthforecast.xml
 
 %changelog
+* Sun Jun 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Mon Jun 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.81
 * Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

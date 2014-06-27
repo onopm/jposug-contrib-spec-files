@@ -2,11 +2,17 @@
 
 %define gemname msgpack
 
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
-%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define bindir20 /usr/ruby/2.0/bin
+%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 Name: SFEruby-msgpack
 IPS_package_name:        library/ruby-19/msgpack
@@ -30,17 +36,29 @@ Summary: MessagePack for Ruby 2.0
 BuildRequires:	runtime/ruby-20
 Requires:	runtime/ruby-20
 
+%package 21
+IPS_package_name: library/ruby-21/msgpack
+Summary: MessagePack for Ruby 2.1
+BuildRequires:	runtime/ruby-21
+Requires:	runtime/ruby-21
+
 %prep
 %setup -q -c -T
 # ruby 1.9
 mkdir -p .%{gemdir19}
-/usr/ruby/1.9/bin/gem install --local --install-dir .%{gemdir19} \
+%{bindir19}/gem install --local --install-dir .%{gemdir19} \
             --bindir .%{_bindir} \
             --force %{SOURCE0}
 
 # ruby 2.0
 mkdir -p .%{gemdir20}
-/usr/ruby/2.0/bin/gem install --local --install-dir .%{gemdir20} \
+%{bindir20}/gem install --local --install-dir .%{gemdir20} \
+            --bindir .%{_bindir} \
+            --force %{SOURCE0}
+
+# ruby 2.1
+mkdir -p .%{gemdir21}
+%{bindir21}/gem install --local --install-dir .%{gemdir21} \
             --bindir .%{_bindir} \
             --force %{SOURCE0}
 
@@ -64,7 +82,10 @@ mkdir -p %{buildroot}%{gemdir20}
 cp -a .%{gemdir20}/* \
         %{buildroot}%{gemdir20}/
 
-rm -rf %{buildroot}%{geminstdir19}/.yardoc/
+# 2.1
+mkdir -p %{buildroot}%{gemdir21}
+cp -a .%{gemdir20}/* \
+        %{buildroot}%{gemdir21}/
 
 %clean
 rm -rf %{buildroot}
@@ -81,7 +102,15 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /usr
 %{gemdir20}
 
+# 2.1
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr(0755, root, sys) /usr
+%{gemdir21}
+
 %changelog
+* Fri Jun 27 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for ruby-21
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - stop to generate package for ruby-18
 * Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

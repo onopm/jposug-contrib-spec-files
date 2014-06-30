@@ -19,7 +19,7 @@
 Summary: A scripting framework that replaces rake, sake and rubigen
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-21/%{gemname}
-Version: 0.18.1
+Version: 0.19.1
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -148,5 +148,6 @@ rm -rf %{buildroot}
 %changelog
 * Tue Jul 01 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21 instead of ruby-18
+- bump to 0.19.1
 * Tue May 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

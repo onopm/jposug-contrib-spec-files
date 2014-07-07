@@ -9,7 +9,7 @@
 
 %define _prefix /usr
 %define php_version 5.5
-%define tarball_version  5.5.10
+%define tarball_version  5.5.14
 %define tarball_name     php
 
 Name:                    SFEphp55-pgsql93
@@ -130,6 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.5/conf.d/*
 
 %changelog
+* Mon Jul 07 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.14
 * Mon Mar 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.10
 * Fri Jan 17 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -2,10 +2,6 @@
 %include default-depend.inc
 
 %define gemname rspec-core
-%define bindir18 /usr/ruby/1.8/bin
-%define gemdir18 %(%{bindir18}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-
 %define bindir19 /usr/ruby/1.9/bin
 %define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
@@ -19,19 +15,19 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    rspec-core
-%define tarball_version 2.14.7
+%define tarball_version 2.99.1
 
 Summary:          %{gemname}
 Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby-18/rspec-core
+IPS_package_name: library/ruby-21/rspec-core
 Version:          %{tarball_version}
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:    runtime/ruby-18
-Requires:         runtime/ruby-18
+BuildRequires:    runtime/ruby-21
+Requires:         runtime/ruby-21
 
 %description
 BDD for Ruby. RSpec runner and example groups.
@@ -54,30 +50,10 @@ Requires:         runtime/ruby-20
 %description 20
 BDD for Ruby. RSpec runner and example groups.
 
-%package 21
-IPS_package_name: library/ruby-21/rspec-core
-Summary:          %{gemname}
-BuildRequires:    runtime/ruby-21
-Requires:         runtime/ruby-21
-
-%description 21
-BDD for Ruby. RSpec runner and example groups.
-
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir18}
-mkdir -p .%{bindir18}
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
 
 %build
-# ruby-18
-/usr/ruby/1.8/bin/gem install --local \
-    --install-dir .%{gemdir18} \
-    --bindir .%{bindir18} \
-    -V \
-    --force %{SOURCE0}
-
 # ruby-19
 /usr/ruby/1.9/bin/gem install --local \
     --install-dir .%{gemdir19} \
@@ -101,15 +77,6 @@ mkdir -p .%{bindir19}
 
 %install
 rm -rf %{buildroot}
-
-# ruby-18
-mkdir -p %{buildroot}/%{gemdir18}
-cp -a .%{gemdir18}/* \
-    %{buildroot}/%{gemdir18}/
-
-mkdir -p %{buildroot}%{bindir18}
-cp -a .%{bindir18}/* \
-    %{buildroot}%{bindir18}/
 
 # ruby-19
 mkdir -p %{buildroot}/%{gemdir19}
@@ -145,10 +112,8 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/1.8
+/usr/ruby/2.1
 
 %files 19
 %defattr(0755,root,bin,-)
@@ -160,12 +125,9 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-
 %changelog
+* Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.99.1 and stop to generate package for ruby-18
 * Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.14.7 and generate package for ruby-21
 * Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

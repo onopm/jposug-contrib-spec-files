@@ -32,7 +32,7 @@ Source2:        SFEopenvpn-openvpn
 SUNW_BaseDir:   %{_basedir}
 SUNW_Copyright: %{name}.copyright
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-BuildRequires:  %define pnm_buildrequires_wget
+BuildRequires:  %pnm_buildrequires_wget
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
@@ -61,7 +61,7 @@ CPUS=$(psrinfo | awk '$2=="on-line"{cpus++}END{print (cpus==0)?1:cpus}')
 %if %{cc_is_gcc}
     export CC=gcc
     export CXX=g++
-    #export CFLAGS="%optflags -fno-strict-aliasing -Wno-pointer-sign"
+    export CFLAGS="%optflags -fno-strict-aliasing"
 %else
     export CFLAGS="%optflags"
 %endif

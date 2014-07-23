@@ -25,7 +25,7 @@ Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:       %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:   runtime/ruby-21
-Requires:        runtime/ruby-21
+Requires:        runtime/ruby-21 >= 2.1.0
 
 %description
 Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
@@ -34,7 +34,7 @@ Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you 
 IPS_package_name: library/ruby-19/net-ssh
 Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.
 BuildRequires:    runtime/ruby-19
-Requires:         runtime/ruby-19
+Requires:         runtime/ruby-19 >= 1.9.3
 
 %description 19
 Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
@@ -43,7 +43,7 @@ Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you 
 IPS_package_name: library/ruby-20/net-ssh
 Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.
 BuildRequires:    runtime/ruby-20
-Requires:         runtime/ruby-20
+Requires:         runtime/ruby-20 >= 2.0.0
 
 %description 20
 Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
@@ -112,6 +112,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed Jul 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify required ruby version
 * Thu Feb 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.9.1 and stop to generate package for ruby-18
 * Thu Feb 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

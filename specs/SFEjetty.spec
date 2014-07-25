@@ -1,7 +1,7 @@
 %include Solaris.inc
 
-%define jetty_version 9.2.1
-%define jetty_date 20140609
+%define jetty_version 9.2.2
+%define jetty_date 20140723
 
 Name:			SFEjetty
 IPS_package_name:	web/server/jetty
@@ -9,7 +9,8 @@ Version:		%{jetty_version}
 Summary:		Jetty provides a Web server and javax.servlet container
 License:		Apache License 2.0
 URL:			http://www.eclipse.org/jetty/
-Source:		http://ftp.yz.yamagata-u.ac.jp/pub/eclipse//jetty/stable-9/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
+# Source:		http://ftp.yz.yamagata-u.ac.jp/pub/eclipse//jetty/stable-9/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
+Source: 		http://ftp.yz.yamagata-u.ac.jp/pub/eclipse/jetty/%{jetty_version}.v%{jetty_date}/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
 Source1:		svc-jetty
 Source2:		jetty.xml
 
@@ -81,6 +82,8 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/start.ini
 
 %changelog
+* Wed Jul 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.2
 * Wed Jun 11 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.2.1
 * Fri Jun 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

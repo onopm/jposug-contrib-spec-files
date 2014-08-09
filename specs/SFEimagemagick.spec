@@ -102,11 +102,15 @@ CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
     CPUS=1
 fi
-
+%if %( expr %{osbuild} '=' 175 )
 export CC=gcc
 export CXX=g++
-export CXXFLAGS=$(echo "%cxx_optflags" | sed -e 's/-Xlinker//' -e '/-i//')
-export CFLAGS=$(echo "%optflags" | sed -e 's/-Xlinker//' -e '/-i//')
+%else
+export CC=/usr/gcc/4.6/bin/gcc
+export CXX=/usr/gcc/4.6/bin/g++
+%endif
+#export CXXFLAGS=$(echo "%cxx_optflags" | sed -e 's/-Xlinker//' -e '/-i//')
+#export CFLAGS=$(echo "%optflags" | sed -e 's/-Xlinker//' -e '/-i//')
 export CFLAGS="$CFLAGS -O3 -I/usr/X11/include"
 # to fake to find complex.h
 export CFLAGS="$CFLAGS -I/usr/gcc/4.6/include/c++/4.6.3 -I/usr/gcc/4.6/include/c++/4.6.3/i386-pc-solaris2.11"
@@ -168,6 +172,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (-, root, root) %_sysconfdir/%{src_name}-%{majorone}
 
 %changelog
+* Sun Aug 10 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- rewrited to use gcc 4.6 for the OpenIndiana.
 * Tue Jun 03 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - Bump to 6.8.9.2
 - Change dependency for gcc

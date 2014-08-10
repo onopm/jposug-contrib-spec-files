@@ -173,7 +173,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Sun Aug 10 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
-- rewrited to use gcc 4.6 for the OpenIndiana.
+- To use gcc 4.6 at the OpenIndiana.
 * Tue Jun 03 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - Bump to 6.8.9.2
 - Change dependency for gcc

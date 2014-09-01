@@ -18,7 +18,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/serverspec
-Version:          1.10.0
+Version:          1.15.0
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -31,7 +31,7 @@ Requires:         library/ruby-21/net-ssh
 Requires:         library/ruby-21/rspec >= 2.99.0
 Requires:         library/ruby-21/rake
 Requires:         library/ruby-21/highline
-Requires:         library/ruby-21/specinfra >= 1.20.0
+Requires:         library/ruby-21/specinfra >= 1.26.0
 
 %description
 RSpec tests for your provisioned servers
@@ -44,7 +44,7 @@ Requires:         runtime/ruby-19 = *
 Requires:         library/ruby-19/net-ssh
 Requires:         library/ruby-19/rspec >= 2.99.0
 Requires:         library/ruby-19/highline
-Requires:         library/ruby-19/specinfra >= 1.20.0
+Requires:         library/ruby-19/specinfra >= 1.26.0
 
 %description 19
 RSpec tests for your provisioned servers
@@ -57,7 +57,7 @@ Requires:         runtime/ruby-20 = *
 Requires:         library/ruby-20/net-ssh
 Requires:         library/ruby-20/rspec >= 2.99.0
 Requires:         library/ruby-20/highline
-Requires:         library/ruby-20/specinfra >= 1.20.0
+Requires:         library/ruby-20/specinfra >= 1.26.0
 
 %description 20
 RSpec tests for your provisioned servers
@@ -186,6 +186,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Sep 01 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.15.0
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.10.0
 * Tue Jul 01 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

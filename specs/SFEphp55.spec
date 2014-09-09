@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.14
+%define tarball_version  5.5.16
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
@@ -404,6 +404,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Tue Sep 09 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.16
 * Mon Jun 30 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.14
 * Fri Apr 04 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

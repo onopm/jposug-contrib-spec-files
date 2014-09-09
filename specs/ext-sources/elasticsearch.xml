@@ -61,6 +61,8 @@
         	<property_group name='elasticsearch' type='application'>
                 	<propval name='bin' type='astring'
                     	   value='/usr/elasticsearch/bin/elasticsearch' />
+                	<propval name='configfile' type='astring'
+                    	   value='/etc/elasticsearch/elasticsearch.yml' />
                 	<propval name='homedir' type='astring'
                     	   value='/usr/elasticsearch' />
                 	<propval name='workdir' type='astring'

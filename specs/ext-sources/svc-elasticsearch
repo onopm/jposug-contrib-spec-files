@@ -8,6 +8,7 @@ getproparg() {
 }
 
 ES_BIN=`getproparg elasticsearch/bin`
+ES_CONFIGFILE=`getproparg elasticsearch/configfile`
 ES_HOMEDIR=`getproparg elasticsearch/homedir`
 ES_WORKDIR=`getproparg elasticsearch/workdir`
 ES_DATADIR=`getproparg elasticsearch/datadir`
@@ -27,6 +28,8 @@ case "$1" in
 	${ES_BIN} \
 	    -d \
 	    -p ${PIDFILE} \
+	    -Des.config=${ES_CONFIGFILE} \
+	    -Des.default.path.home=${ES_HOMEDIR} \
 	    -Des.default.path.home=${ES_HOMEDIR} \
 	    -Des.default.path.work=${ES_WORKDIR} \
 	    -Des.default.path.logs=${ES_LOGDIR} \

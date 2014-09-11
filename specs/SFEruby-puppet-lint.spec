@@ -25,12 +25,11 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    puppet-lint
-%define tarball_version 0.3.2
-
+%define tarball_version 1.0.1
 Summary: %{gemname}
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-21/puppet-lint
-Version: 0.3.2
+Version: 1.0.1
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
@@ -138,6 +137,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Thu Sep 11 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.1
 * Wed Oct 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for ruby-19, ruby-20 and ruby-21
 * Wed Oct 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -18,7 +18,7 @@
 Summary:          Common layer for serverspec and configspec
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/specinfra
-Version:          1.26.0
+Version:          2.1.0
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -26,6 +26,8 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-21
 Requires:         runtime/ruby-21 = *
+Requires:         library/ruby-21/net-ssh
+Requires:         library/ruby-21/net-scp
 
 %description
 Common layer for serverspec and configspec
@@ -35,6 +37,8 @@ IPS_package_name: library/ruby-19/specinfra
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-19
 Requires:         runtime/ruby-19 = *
+Requires:         library/ruby-19/net-ssh
+Requires:         library/ruby-19/net-scp
 
 %description 19
 Common layer for serverspec and configspec
@@ -44,18 +48,14 @@ IPS_package_name: library/ruby-20/specinfra
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-20
 Requires:         runtime/ruby-20 = *
+Requires:         library/ruby-20/net-ssh
+Requires:         library/ruby-20/net-scp
 
 %description 20
 Common layer for serverspec and configspec
 
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
-mkdir -p .%{gemdir20}
-mkdir -p .%{bindir20}
-mkdir -p .%{gemdir21}
-mkdir -p .%{bindir21}
 
 %build
 # ruby-19
@@ -122,6 +122,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Sun Sep 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.0
 * Mon Sep 01 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.26.0
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

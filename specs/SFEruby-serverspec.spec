@@ -18,7 +18,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/serverspec
-Version:          1.15.0
+Version:          2.1.0
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -27,11 +27,11 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby-21/net-ssh
-Requires:         library/ruby-21/rspec >= 2.99.0
+Requires:         library/ruby-21/rspec >= 3.0.0
+Requires:         library/ruby-21/rspec-its
 Requires:         library/ruby-21/rake
 Requires:         library/ruby-21/highline
-Requires:         library/ruby-21/specinfra >= 1.26.0
+Requires:         library/ruby-21/specinfra >= 2.1.0
 
 %description
 RSpec tests for your provisioned servers
@@ -41,10 +41,11 @@ IPS_package_name: library/ruby-19/serverspec
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
-Requires:         library/ruby-19/net-ssh
-Requires:         library/ruby-19/rspec >= 2.99.0
+Requires:         library/ruby-19/rspec >= 3.0.0
+Requires:         library/ruby-19/rspec-its
+Requires:         library/ruby-19/rake
 Requires:         library/ruby-19/highline
-Requires:         library/ruby-19/specinfra >= 1.26.0
+Requires:         library/ruby-19/specinfra >= 2.1.0
 
 %description 19
 RSpec tests for your provisioned servers
@@ -54,26 +55,21 @@ IPS_package_name: library/ruby-20/serverspec
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-Requires:         library/ruby-20/net-ssh
-Requires:         library/ruby-20/rspec >= 2.99.0
+Requires:         library/ruby-20/rspec >= 3.0.0
+Requires:         library/ruby-20/rspec-its
+Requires:         library/ruby-20/rake
 Requires:         library/ruby-20/highline
-Requires:         library/ruby-20/specinfra >= 1.26.0
+Requires:         library/ruby-20/specinfra >= 2.1.0
 
 %description 20
 RSpec tests for your provisioned servers
 
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
-mkdir -p .%{gemdir20}
-mkdir -p .%{bindir20}
-mkdir -p .%{gemdir21}
-mkdir -p .%{bindir21}
 
 %build
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     --no-ri \
@@ -89,7 +85,7 @@ rm serverspec-init.bak
 popd
 
 # ruby-20
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir20}/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
     --no-ri \
@@ -104,7 +100,7 @@ rm serverspec-init.bak
 popd
 
 # ruby-21
-/usr/ruby/2.1/bin/gem install --local \
+%{bindir21}/gem install --local \
     --install-dir .%{gemdir21} \
     --bindir .%{bindir21} \
     --no-ri \
@@ -186,6 +182,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Sun Sep 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.0
 * Mon Sep 01 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.15.0
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

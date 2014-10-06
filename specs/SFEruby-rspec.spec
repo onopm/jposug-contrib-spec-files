@@ -15,7 +15,7 @@
 %define bindir21 /usr/ruby/2.1/bin
 
 %define tarball_name    rspec
-%define tarball_version 2.99.0
+%define tarball_version 3.1.0
 
 Summary: %{gemname}
 Name: SFEruby-%{gemname}
@@ -28,9 +28,9 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	runtime/ruby-21
 Requires:       runtime/ruby-21
-Requires:       library/ruby-21/rspec-core >= 2.99.0
-Requires:       library/ruby-21/rspec-expectations >= 2.99.0
-Requires:       library/ruby-21/rspec-mocks >= 2.99.0
+Requires:       library/ruby-21/rspec-core >= 3.1.0
+Requires:       library/ruby-21/rspec-expectations >= 3.1.0
+Requires:       library/ruby-21/rspec-mocks >= 3.1.0
 
 %description
 BDD for Ruby
@@ -40,9 +40,9 @@ IPS_package_name: library/ruby-19/rspec
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-19
 Requires:	runtime/ruby-19
-Requires:       library/ruby-19/rspec-core >= 2.99.0
-Requires:       library/ruby-19/rspec-expectations >= 2.99.0
-Requires:       library/ruby-19/rspec-mocks >= 2.99.0
+Requires:       library/ruby-19/rspec-core >= 3.1.0
+Requires:       library/ruby-19/rspec-expectations >= 3.1.0
+Requires:       library/ruby-19/rspec-mocks >= 3.1.0
 
 %description 19
 BDD for Ruby
@@ -52,9 +52,9 @@ IPS_package_name: library/ruby-20/rspec
 Summary: %{gemname}
 BuildRequires:	runtime/ruby-20
 Requires:	runtime/ruby-20
-Requires:       library/ruby-20/rspec-core >= 2.99.0
-Requires:       library/ruby-20/rspec-expectations >= 2.99.0
-Requires:       library/ruby-20/rspec-mocks >= 2.99.0
+Requires:       library/ruby-20/rspec-core >= 3.1.0
+Requires:       library/ruby-20/rspec-expectations >= 3.1.0
+Requires:       library/ruby-20/rspec-mocks >= 3.1.0
 
 %description 20
 BDD for Ruby
@@ -122,6 +122,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Oct 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.1.0
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.99.0
 * Mon Jun 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

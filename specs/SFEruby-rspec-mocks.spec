@@ -15,7 +15,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    rspec-mocks
-%define tarball_version 2.99.1
+%define tarball_version 3.1.2
 
 Summary:          %{gemname}
 Name:             SFEruby-%{gemname}
@@ -28,6 +28,7 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-21
 Requires:         runtime/ruby-21
+Requires:         library/ruby-21/rspec-support
 
 %description
 RSpec's 'test double' framework, with support for stubbing and mocking
@@ -37,6 +38,7 @@ IPS_package_name: library/ruby-19/rspec-mocks
 Summary:          %{gemname}
 BuildRequires:    runtime/ruby-19
 Requires:         runtime/ruby-19
+Requires:         library/ruby-19/rspec-support
 
 %description 19
 RSpec's 'test double' framework, with support for stubbing and mocking
@@ -46,6 +48,7 @@ IPS_package_name: library/ruby-20/rspec-mocks
 Summary:          %{gemname}
 BuildRequires:    runtime/ruby-20
 Requires:         runtime/ruby-20
+Requires:         library/ruby-20/rspec-support
 
 %description 20
 RSpec's 'test double' framework, with support for stubbing and mocking
@@ -113,6 +116,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Oct 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.1.2
 * Wed Jul 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.99.1 and stop to generate package for ruby-18
 * Wed Feb 26 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

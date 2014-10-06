@@ -129,7 +129,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
-* Mon Sep 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Mon Oct 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.1.0
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.99.1 and stop to generate package for ruby-18

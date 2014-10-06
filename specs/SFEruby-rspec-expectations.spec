@@ -15,7 +15,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    rspec-expectations
-%define tarball_version 2.99.1
+%define tarball_version 3.1.2
 
 Summary:          %{gemname}
 Name:             SFEruby-%{gemname}
@@ -29,6 +29,7 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 BuildRequires:    runtime/ruby-21
 Requires:         runtime/ruby-21
 Requires:         library/ruby-21/diff-lcs
+Requires:         library/ruby-21/rspec-support >= 3.1.0
 
 %description
 rspec expectations (should[_not] and matchers)
@@ -39,6 +40,7 @@ Summary:          %{gemname}
 BuildRequires:    runtime/ruby-19
 Requires:         runtime/ruby-19
 Requires:         library/ruby-19/diff-lcs
+Requires:         library/ruby-19/rspec-support >= 3.1.0
 
 %description 19
 rspec expectations (should[_not] and matchers)
@@ -49,6 +51,7 @@ Summary:          %{gemname}
 BuildRequires:    runtime/ruby-20
 Requires:         runtime/ruby-20
 Requires:         library/ruby-20/diff-lcs
+Requires:         library/ruby-20/rspec-support >= 3.1.0
 
 %description 20
 rspec expectations (should[_not] and matchers)
@@ -116,6 +119,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Oct 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.1.2
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.99.1 and stop to generate package for ruby-18
 * Wed Feb 26 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

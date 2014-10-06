@@ -15,7 +15,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    rspec-core
-%define tarball_version 2.99.1
+%define tarball_version 3.1.0
 
 Summary:          %{gemname}
 Name:             SFEruby-%{gemname}
@@ -28,6 +28,7 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-21
 Requires:         runtime/ruby-21
+Requires:         library/ruby-21/rspec-support = 3.1.0
 
 %description
 BDD for Ruby. RSpec runner and example groups.
@@ -37,6 +38,7 @@ IPS_package_name: library/ruby-19/rspec-core
 Summary:          %{gemname}
 BuildRequires:	  runtime/ruby-19
 Requires:	  runtime/ruby-19
+Requires:         library/ruby-19/rspec-support = 3.1.0
 
 %description 19
 BDD for Ruby. RSpec runner and example groups.
@@ -46,6 +48,7 @@ IPS_package_name: library/ruby-20/rspec-core
 Summary:          %{gemname}
 BuildRequires:    runtime/ruby-20
 Requires:         runtime/ruby-20
+Requires:         library/ruby-20/rspec-support = 3.1.0
 
 %description 20
 BDD for Ruby. RSpec runner and example groups.
@@ -55,21 +58,21 @@ BDD for Ruby. RSpec runner and example groups.
 
 %build
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     -V \
     --force %{SOURCE0}
 
 # ruby-20
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir20}/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
     -V \
     --force %{SOURCE0}
 
 # ruby-21
-/usr/ruby/2.1/bin/gem install --local \
+%{bindir21}/gem install --local \
     --install-dir .%{gemdir21} \
     --bindir .%{bindir21} \
     -V \
@@ -126,6 +129,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Mon Sep 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.1.0
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.99.1 and stop to generate package for ruby-18
 * Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

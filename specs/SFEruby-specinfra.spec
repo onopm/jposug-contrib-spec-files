@@ -18,7 +18,7 @@
 Summary:          Common layer for serverspec and configspec
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/specinfra
-Version:          2.1.0
+Version:          2.2.1
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -59,7 +59,7 @@ Common layer for serverspec and configspec
 
 %build
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     --no-ri \
@@ -68,7 +68,7 @@ Common layer for serverspec and configspec
     --force %{SOURCE0}
 
 # ruby-20
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir20}/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
     --no-ri \
@@ -77,7 +77,7 @@ Common layer for serverspec and configspec
     --force %{SOURCE0}
 
 # ruby-21
-/usr/ruby/2.1/bin/gem install --local \
+%{bindir21}/gem install --local \
     --install-dir .%{gemdir21} \
     --bindir .%{bindir21} \
     --no-ri \
@@ -122,6 +122,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Thu Sep 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.1
 * Sun Sep 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.1.0
 * Mon Sep 01 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

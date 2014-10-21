@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.17
+%define tarball_version  5.5.18
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
@@ -18,7 +18,7 @@ Source:                  http://jp1.php.net/distributions/php-%{version}.tar.bz2
 Source1:                 php-fpm55.xml
 Source2:                 php55-opcache.ini
 Distribution:            OpenSolaris
-Vendor:		         OpenSolaris Community
+Vendor:		 OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
@@ -313,6 +313,14 @@ install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/php/5.5/modules
 install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/php/5.5/pear
 install -m 700 -d $RPM_BUILD_ROOT%{_localstatedir}/php/5.5/sessions
 
+
+pushd $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/conf.d > /dev/null
+for i in curl dba dom fileinfo gd json mbstring mcrypt pdo pdo_sqlite phar posix snmp soap sysvmsg sysvsem sysvshm tidy xmlreader xmlwriter xmlrpc xsl zip
+do
+    echo "extenxion=${i}.so" > ${i}.ini
+done
+popd > /dev/null
+
 # PHP-FPM stuff
 # SMF manifest
 mkdir -p $RPM_BUILD_ROOT/var/svc/manifest
@@ -375,7 +383,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %config(noreplace) /etc/php/5.5/php.ini-production
 %attr (0644, root, bin) %config(noreplace) /etc/php/5.5/php.ini-development
 %dir %attr (0755, root, bin) /etc/php/5.5/conf.d
-%attr (0755, root, bin) %config(noreplace) /etc/php/5.5/conf.d/opcache.ini
+%attr (0644, root, bin) %config(noreplace) /etc/php/5.5/conf.d/*.ini
 %dir %attr (0755, root, bin) /etc/php/5.5/zts-conf.d
 %dir %attr (0755, root, bin) /etc/php/5.5/fpm-conf.d
 %attr (0755, root, bin) %config(noreplace) /etc/php/5.5/php-fpm.conf.default
@@ -404,6 +412,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Tue Oct 21 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.18
 * Mon Sep 22 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.17
 * Tue Sep 09 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

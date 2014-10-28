@@ -317,7 +317,7 @@ install -m 700 -d $RPM_BUILD_ROOT%{_localstatedir}/php/5.5/sessions
 pushd $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5/conf.d > /dev/null
 for i in curl dba dom fileinfo gd json mbstring mcrypt pdo pdo_sqlite phar posix snmp soap sysvmsg sysvsem sysvshm tidy xmlreader xmlwriter xmlrpc xsl zip
 do
-    echo "extenxion=${i}.so" > ${i}.ini
+    echo "extension=${i}.so" > ${i}.ini
 done
 popd > /dev/null
 
@@ -412,6 +412,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Tue Oct 28 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix typo
 * Tue Oct 21 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.18
 * Mon Sep 22 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

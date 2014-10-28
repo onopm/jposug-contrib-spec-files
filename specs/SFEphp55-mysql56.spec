@@ -9,7 +9,7 @@
 
 %define _prefix /usr
 %define php_version 5.5
-%define tarball_version  5.5.10
+%define tarball_version  5.5.18
 %define tarball_name     php
 
 Name:                    SFEphp55-mysql56
@@ -146,6 +146,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.5/conf.d/*
 
 %changelog
+* Tue Oct 28 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.18
 * Mon Mar 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.10
 * Mon Feb 17 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

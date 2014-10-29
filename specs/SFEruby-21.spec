@@ -3,7 +3,7 @@
 #
 
 %define _name ruby
-%define version 2.1.3
+%define version 2.1.4
 %define major_version 2.1
 %define unmangled_version 2.1.0
 %define patchlevel 0
@@ -114,6 +114,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/2.1
 
 %changelog
+* Wed Oct 28 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.4
 * Mon Sep 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.1.3
 * Fri May 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

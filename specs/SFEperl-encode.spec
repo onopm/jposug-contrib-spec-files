@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 2.52
+%define tarball_version 2.63
 %define tarball_name    Encode
 
 Name:		SFEperl-encode
 IPS_package_name: library/perl-5/encode
-Version:	2.52
-IPS_component_version: 2.52
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	Character Encodings Handler
 License:	Artistic
 Distribution:   OpenSolaris
@@ -98,6 +98,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Oct 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.63
 * Sun Aug 18 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.52
 * Tue Apr 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

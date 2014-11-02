@@ -19,7 +19,7 @@
 Summary:          TZInfo is a Ruby library that uses the standard tz (Olson) database
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/%{gemname}
-Version:          0.3.37
+Version:          1.2.2
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -27,6 +27,7 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-21
 Requires:         runtime/ruby-21
+Requires:         library/ruby-21/thread_safe
 
 %description
 TZInfo is a Ruby library that uses the standard tz (Olson) database to provide daylight savings aware transformations between times in different time zones.
@@ -36,6 +37,7 @@ IPS_package_name: library/ruby-19/%{gemname}
 Summary:          TZInfo is a Ruby library that uses the standard tz (Olson) database
 BuildRequires:	  runtime/ruby-19
 Requires:	  runtime/ruby-19
+Requires:         library/ruby-19/thread_safe
 
 %description 19
 TZInfo is a Ruby library that uses the standard tz (Olson) database to provide daylight savings aware transformations between times in different time zones.
@@ -45,6 +47,7 @@ IPS_package_name: library/ruby-20/%{gemname}
 Summary:          TZInfo is a Ruby library that uses the standard tz (Olson) database
 BuildRequires:	  runtime/ruby-20
 Requires:	  runtime/ruby-20
+Requires:         library/ruby-20/thread_safe
 
 %description 20
 TZInfo is a Ruby library that uses the standard tz (Olson) database to provide daylight savings aware transformations between times in different time zones.
@@ -136,6 +139,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2.2
 * Sun Jun 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21 instead of ruby-18
 * The May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

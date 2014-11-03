@@ -17,7 +17,7 @@
 Summary: %{gemname}
 Name: SFEruby-http-parser-rb
 IPS_package_name:        library/ruby-19/http_parser.rb
-Version: 0.5.3
+Version: 0.6.0
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -120,6 +120,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Mon Nov 03 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.6.0
 * Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for ruby-20 and ruby-21 instead of ruby-18
 * Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

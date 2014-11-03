@@ -17,7 +17,7 @@
 Name: SFEruby-msgpack
 IPS_package_name:        library/ruby-19/msgpack
 Summary: MessagePack is an efficient binary serialization format.
-Version: 0.5.8
+Version: 0.5.9
 License: ASL 2.0
 Group: System Environment/Base
 URL:     http://msgpack.org/
@@ -109,6 +109,8 @@ rm -rf %{buildroot}
 %{gemdir21}
 
 %changelog
+* Sun Nov 03 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.5.9
 * Fri Jun 27 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

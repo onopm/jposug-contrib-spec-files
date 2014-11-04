@@ -16,12 +16,17 @@
 %define prefix_name      SFEpostgres-93
 %define _basedir         %{_prefix}/%{major_version}
 
+# with Oracle Solaris 11.2,
+# - use library/libedit
+# - SFEpostgres-common is not needed, because user and group 'postgres' exist.
+%define oracle_solaris_11_2 %(grep 'Oracle Solaris 11.2' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-93
 Summary:	         PostgreSQL client tools
 Version:                 %{tarball_version}
 License:		 PostgreSQL
-Group:		System/Databases
+Group:			 System/Databases
 Url:                     http://www.postgresql.org/
 Source:                  http://ftp.postgresql.org/pub/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
 Source1:		 postgres-93-postgres_93
@@ -31,7 +36,7 @@ Source4:		 postgres-93-prof_attr
 Source5:		 postgres-93-exec_attr
 Source6:		 postgres-93-user_attr
 Distribution:            OpenSolaris
-Vendor:		         OpenSolaris Community
+Vendor:		 OpenSolaris Community
 SUNW_Basedir:            /usr
 SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
@@ -45,7 +50,11 @@ BuildRequires: %{pnm_buildrequires_SUNWcsl}
 BuildRequires: %{pnm_buildrequires_SUNWlibms}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWTcl}
+%if %{oracle_solaris_11_2}
+BuildRequires: library/libedit
+%else
 BuildRequires: SFEeditline
+%endif
 
 Requires: %{pnm_requires_SUNWlxsl}
 Requires: %{pnm_requires_SUNWlxml}
@@ -54,7 +63,11 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWgss}
+%if %{oracle_solaris_11_2}
+Requires: library/libedit
+%else
 Requires: SFEeditline
+%endif
 
 Requires: %{prefix_name}-libs
 
@@ -120,7 +133,11 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{prefix_name}-libs
+%if %{oracle_solaris_11_2}
+#
+%else
 Requires: SFEpostgres-common
+%endif
 
 %package -n %{prefix_name}-contrib
 IPS_package_name: database/postgres-93/contrib
@@ -1181,6 +1198,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Wed Nov 05 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- with Oracle Solaris 11.2, use library/libedit and not require SFEpostgres-common
 * Fri Jul 25 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.3.5
 * Sun Mar 23 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

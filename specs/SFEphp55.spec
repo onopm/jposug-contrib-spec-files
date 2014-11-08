@@ -8,6 +8,8 @@
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
 
+%define oracle_solaris_11_2 %(grep 'Oracle Solaris 11.2' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+
 Name:                    %{prefix_name}
 IPS_package_name:        web/php-55
 Summary:	         php
@@ -24,11 +26,22 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:  library/spell-checking/enchant
 BuildRequires:  text/nkf
+%if %{oracle_solaris_11_2}
+BuildRequires: library/libedit
+%else
+BuildRequires: SFEeditline
+%endif
+
 Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       system/library/security/libmcrypt
 Requires:       text/tidy
 Requires:       library/libtool/libltdl
 Requires:       web/php-common
+%if %{oracle_solaris_11_2}
+Requires:       library/libedit
+%else
+Requires:       SFEeditline
+%endif
 
 %description
 PHP
@@ -412,6 +425,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Sat Nov 08 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequire and Require
 * Tue Oct 28 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix typo
 * Tue Oct 21 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

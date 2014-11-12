@@ -25,11 +25,12 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    puppet-lint
-%define tarball_version 1.0.1
+%define tarball_version 1.1.0
+
 Summary: %{gemname}
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-21/puppet-lint
-Version: 1.0.1
+Version: %{tarball_version}
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
@@ -70,6 +71,7 @@ mkdir -p .%{bindir19}
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     -V \
+    --no-env-shebang \
     --force %{SOURCE0}
 
 # ruby-20
@@ -77,6 +79,7 @@ mkdir -p .%{bindir19}
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
     -V \
+    --no-env-shebang \
     --force %{SOURCE0}
 
 # ruby-21
@@ -84,6 +87,7 @@ mkdir -p .%{bindir19}
     --install-dir .%{gemdir21} \
     --bindir .%{bindir21} \
     -V \
+    --no-env-shebang \
     --force %{SOURCE0}
 
 %install
@@ -137,6 +141,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed Nov 12 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.1.0
 * Thu Sep 11 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.1
 * Wed Oct 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

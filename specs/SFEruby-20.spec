@@ -6,7 +6,7 @@
 %define version 2.0.0
 %define major_version 2.0
 %define unmangled_version 2.0.0
-%define patchlevel 594
+%define patchlevel 598
 
 %include Solaris.inc
 %include packagenamemacros.inc
@@ -112,6 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/2.0
 
 %changelog
+* Fri Nov 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to patchlevel 598
 * Wed Oct 29 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to patchlevel 594
 * Mon Sep 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

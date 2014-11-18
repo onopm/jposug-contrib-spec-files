@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.18
+%define tarball_version  5.5.19
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
@@ -425,6 +425,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
 
 %changelog
+* Tue Nov 18 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.19
 * Sat Nov 08 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequire and Require
 * Tue Oct 28 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

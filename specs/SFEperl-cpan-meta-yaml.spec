@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 0.008
+%define tarball_version 0.012
 %define tarball_name    CPAN-Meta-YAML
 
 Name:		SFEperl-cpan-meta-yaml
 IPS_package_name: library/perl-5/cpan-meta-yaml
-Version:	0.008
-IPS_component_version: 0.8
+Version:	0.012
+IPS_component_version: 0.12
 Summary:	Read and write a subset of YAML for CPAN Meta files
 License:	Artistic
 Distribution:   OpenSolaris
@@ -100,5 +100,6 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Nov 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
+- bump to 0.012
 * Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512

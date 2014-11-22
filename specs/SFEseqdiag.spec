@@ -4,13 +4,13 @@
 
 %define tarball_index s
 %define tarball_name seqdiag
-%define tarball_version 0.7.5
+%define tarball_version 0.9.0
 
 Name:                    SFEseqdiag
 IPS_package_name:        image/seqdiag
 Summary:                 seqdiag generate sequence-diagram image file from spec-text file.
 URL:                     http://pypi.python.org/pypi/seqdiag/
-Version:                 0.7.5
+Version:                 %{tarball_version}
 License:                 Apache License 2.0
 Source:                  http://pypi.python.org/packages/source/%{tarball_index}/%{tarball_name}/%{tarball_name}-%{tarball_version}.tar.gz
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
@@ -48,6 +48,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Wed Jan 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.9.0
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Sun Oct 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

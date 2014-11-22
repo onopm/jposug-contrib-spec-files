@@ -65,8 +65,15 @@ straight-forward, and extensible.
 export CXXFLAGS="%cxx_optflags"
 export LDFLAGS="%_ldflags %gnu_lib_path"
 export CFLAGS="%optflags"
-export CC=/usr/bin/gcc
-export CXX=/usr/bin/g++
+%if %( expr %{osbuild} '=' 175 )
+export CC=gcc
+export CXX=g++
+%else
+export CC=/usr/gcc/4.6/bin/gcc
+export CXX=/usr/gcc/4.6/bin/g++
+%endif
+$CC -v
+$CXX -v
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
     CPUS=1

@@ -47,6 +47,8 @@ make install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}/man
 
+find $RPM_BUILD_ROOT/usr/perl5 -type f -name perllocal.pod -exec rm {} \;
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -58,6 +60,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Nov 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- not include perllocal.pod
 * Sun Nov 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.14
 * Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

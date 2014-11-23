@@ -9,14 +9,14 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 2.10
+%define tarball_version 2.14
 %define tarball_name    App-Ack
 
 Name:		SFEack
 IPS_package_name: text/ack
-Version:	2.10
-IPS_component_version: 2.10
-Summary:	grep-like text finder  
+Version:	2.14
+IPS_component_version: 2.14
+Summary:	grep-like text finder
 License:	Artistic
 Url:		http://search.cpan.org/~petdance/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
@@ -25,9 +25,10 @@ Source0:	http://search.cpan.org/CPAN/authors/id/P/PE/PETDANCE/ack-%{tarball_vers
 
 BuildRequires:	runtime/perl-512
 Requires:	runtime/perl-512
+Requires:	library/perl-5/file-next-512
 
 %description
-grep-like text finder 
+grep-like text finder
 
 %prep
 %setup -q -n ack-%{tarball_version}
@@ -42,10 +43,9 @@ make test
 
 
 %install
-make pure_install
+make install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
-rm -rf $RPM_BUILD_ROOT%{_prefix}/man
-
+mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}/man
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -58,5 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Nov 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.14
 * Mon Sep 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -75,6 +75,7 @@ rmdir $RPM_BUILD_ROOT/usr/man/man3
 rmdir $RPM_BUILD_ROOT/usr/man
 
 rm -rf $RPM_BUILD_ROOT%{_prefix}/lib
+find $RPM_BUILD_ROOT/usr/perl5 -type f -name perllocal.pod -exec rm {} \;
 
 %{?pkgbuild_postprocess: %pkgbuild_postprocess -v -c "%{version}:%{jds_version}:%{name}:$RPM_ARCH:%(date +%%Y-%%m-%%d):%{support_level}" $RPM_BUILD_ROOT}
 
@@ -99,6 +100,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Nov 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- not include perllocal.pod
 * Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9904
 * Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

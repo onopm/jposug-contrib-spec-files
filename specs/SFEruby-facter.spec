@@ -1,64 +1,190 @@
 %include Solaris.inc
 
-%{!?ruby_sitelibdir: %define ruby_sitelibdir %(ruby -rrbconfig -e 'puts Config::CONFIG["sitelibdir"]')}
+%define gemname facter
+%define generate_executable 1
+
+%define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
+
+%define bindir20 /usr/ruby/2.0/bin
+%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+
 
 %define has_ruby_noarch %has_ruby_abi
 
 Summary: Ruby module for collecting simple facts about a host operating system
 Name: facter
-IPS_package_name:        runtime/ruby-18/facter
-Version: 1.6.16
+IPS_package_name:        library/ruby-19/%{gemname}
+Version: 2.2.0
 License: ASL 2.0
 Group: System Environment/Base
 URL: http://www.puppetlabs.com/puppet/related-projects/%{name}/
-Source0: http://puppetlabs.com/downloads/facter/facter-%{version}.tar.gz
+# Source0: http://puppetlabs.com/downloads/facter/facter-%{version}.tar.gz
+Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-SUNW_BaseDir:   %{_basedir}
-%include default-depend.inc
-# Source1: http://puppetlabs.com/downloads/%{name}/%{name}-%{version}.tar.gz.asc
 
-Requires: runtime/ruby-18
-# Requires: which
-
-BuildRequires: runtime/ruby-18
+BuildRequires: runtime/ruby-19
+Requires: runtime/ruby-19
 
 %description
 Ruby module for collecting simple facts about a host Operating
-system. Some of the facts are preconfigured, such as the hostname and the
+lsystem. Some of the facts are preconfigured, such as the hostname and the
 operating system. Additional facts can be added through simple Ruby scripts
 
+%package 20
+IPS_package_name: library/ruby-20/%{gemname}
+Summary:          Ruby module for collecting simple facts about a host operating system
+BuildRequires:	  runtime/ruby-20
+Requires:	  runtime/ruby-20
+
+%description 20
+Ruby module for collecting simple facts about a host operating system
+
+%package 21
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          Ruby module for collecting simple facts about a host operating system
+BuildRequires:	  runtime/ruby-21
+Requires:	  runtime/ruby-21
+
+%description 21
+Ruby module for collecting simple facts about a host operating system
+
 %prep
-%setup -q
+%setup -q -c -T
 
 %build
+# ruby-19
+%{bindir19}/gem install --local \
+    --install-dir .%{gemdir19} \
+    --bindir .%{bindir19} \
+    --no-rdoc \
+    --no-ri \
+    -V \
+    --force %{SOURCE0}
+
+# ruby-20
+%{bindir20}/gem install --local \
+    --install-dir .%{gemdir20} \
+    --bindir .%{bindir20} \
+    --no-rdoc \
+    --no-ri \
+    -V \
+    --force %{SOURCE0}
+
+# ruby-21
+%{bindir21}/gem install --local \
+    --install-dir .%{gemdir21} \
+    --bindir .%{bindir21} \
+    --no-rdoc \
+    --no-ri \
+    -V \
+    --force %{SOURCE0}
+
 
 %install
 rm -rf %{buildroot}
-ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
-mkdir -p %{buildroot}%{_bindir}
-cd %{buildroot}%{_bindir}
-ln -s ../ruby/1.8/bin/facter .
+
+# ruby-19
+mkdir -p %{buildroot}/%{gemdir19}
+cp -a .%{gemdir19}/* \
+    %{buildroot}/%{gemdir19}/
+
+%if %generate_executable
+mkdir -p %{buildroot}%{bindir19}
+cp -a .%{bindir19}/* \
+   %{buildroot}%{bindir19}/
+%endif
+
+# ruby-20
+mkdir -p %{buildroot}/%{gemdir20}
+cp -a .%{gemdir20}/* \
+    %{buildroot}/%{gemdir20}/
+
+%if %generate_executable
+mkdir -p %{buildroot}%{bindir20}
+cp -a .%{bindir20}/* \
+   %{buildroot}%{bindir20}/
+%endif
+
+# ruby-21
+mkdir -p %{buildroot}/%{gemdir21}
+cp -a .%{gemdir21}/* \
+    %{buildroot}/%{gemdir21}/
+
+%if %generate_executable
+mkdir -p %{buildroot}%{bindir21}
+cp -a .%{bindir21}/* \
+   %{buildroot}%{bindir21}/
+%endif
+
+mkdir -p %{buildroot}/usr/bin
+cat %{buildroot}%{gemdir19}/gems/%{gemname}-%{version}/bin/facter | \
+    sed -e 's!/usr/bin/env ruby!/usr/ruby/1.9/bin/ruby!' > %{buildroot}/usr/bin/facter-19
+cat %{buildroot}%{gemdir20}/gems/%{gemname}-%{version}/bin/facter | \
+    sed -e 's!/usr/bin/env ruby!/usr/ruby/2.0/bin/ruby!' > %{buildroot}/usr/bin/facter-20
+cat %{buildroot}%{gemdir21}/gems/%{gemname}-%{version}/bin/facter | \
+    sed -e 's!/usr/bin/env ruby!/usr/ruby/2.1/bin/ruby!' > %{buildroot}/usr/bin/facter-21
+cd %{buildroot}/usr/bin
+ln -s facter-21 facter
 
 %clean
 rm -rf %{buildroot}
 
-
 %files
 %defattr(0755,root,bin,-)
-%doc LICENSE README.md CONTRIBUTING.md
-%dir %attr (0755, root, sys) /usr/share
-%dir %attr (0755, root, other) /usr/share/doc
-%{_bindir}/facter
-%{ruby_sitelibdir}/facter.rb
-%{ruby_sitelibdir}/facter
-# /usr/ruby/1.8/sbin
-/usr/ruby/1.8/share
-/usr/ruby/1.8/bin
+%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) /usr/bin
+/usr/bin/facter-19
+/usr/ruby/1.9
 
+%files 20
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) /usr/bin
+/usr/bin/facter-20
+/usr/ruby/2.0
+
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) /usr/bin
+/usr/bin/facter
+/usr/bin/facter-21
+/usr/ruby/2.1
 
 %changelog
-* Thu Dec 20 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- make symbolic link from /usr/ruby/1.8/bin/facter to /usr/bin/facter
+* Mon Sep 01 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.0
+* Wed Jun 11 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.2
+* Fri May 30 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.1
+* Fri Feb 14 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7.5
+* Wed Jan 08 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use ruby-18 instead of ruby-19
+- bump to 1.7.4
+- fix to work with ruby-18 correctly
+* Fri Nov 15 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use ruby-19 instead of ruby-18
+* Tue Sep 24 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7.3
+
+* Thu Jul 11 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7.2
+
+* Tue Apr 16 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update to 1.7.0
+
+* Thu Mar 14 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update to 1.6.18
+
 * Mon Dec 10 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update to 1.6.16
 
@@ -87,10 +213,10 @@ rm -rf %{buildroot}
 - Updated to version 1.6.1
 
 * Wed Jul 13 2011 Michael Stahnke <stahnma@puppetlabs.com> - 1.6.0-2
-- Update to not be architecture dependant 
+- Update to not be architecture dependant
 
 * Wed Jul 13 2011 Michael Stahnke <stahnma@puppetlabs.com> - 1.6.0-1
-- Update to 1.6.0 
+- Update to 1.6.0
 
 * Sat Aug 28 2010 Todd Zullinger <tmz@pobox.com> - 1.5.8-1
 - Update to 1.5.8

@@ -36,7 +36,7 @@ Requires: library/perl-5/version
 %ifarch sparc
 %define perl_dir sun4-solaris-64int
 %else
-%define perl_dir i86pc-solaris-64int 
+%define perl_dir i86pc-solaris-64int
 %endif
 %include default-depend.inc
 
@@ -84,7 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr (-, root, bin)
 %defattr(-,root,bin)
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 
 %files version-584
@@ -101,6 +101,8 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9904
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
 * Mon Jun 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9901
 * Mon Jun 04 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

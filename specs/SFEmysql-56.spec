@@ -10,7 +10,7 @@
 %define _prefix /usr/mysql
 %define _var_prefix /var/mysql
 %define tarball_name     mysql
-%define tarball_version  5.6.20
+%define tarball_version  5.6.22
 %define major_version	 5.6
 %define prefix_name      SFEmysql-56
 %define _basedir         %{_prefix}/%{major_version}
@@ -459,6 +459,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Tue Dec 02 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.6.22
 * Thu Aug 01 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.20
 * Thu Jul 31 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

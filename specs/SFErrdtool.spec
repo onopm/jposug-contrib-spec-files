@@ -16,7 +16,7 @@
 %ifarch sparc
 %define perl_dir sun4-solaris-64int
 %else
-%define perl_dir i86pc-solaris-64int 
+%define perl_dir i86pc-solaris-64int
 %endif
 
 # %define SUNWruby18u    %(/usr/bin/pkginfo -q SUNWruby18u && echo 1 || echo 0)
@@ -26,7 +26,7 @@ Name:                    rrdtool
 IPS_package_name:        image/jposug-rrdtool
 Summary:                 rrdtool - data logging and graphing system for time series data.
 URL:                     http://oss.oetiker.ch/rrdtool/
-Version:                 1.4.8
+Version:                 1.4.9
 Source:                  http://oss.oetiker.ch/rrdtool/pub/rrdtool-%{version}.tar.gz
 
 # SUNW_BaseDir:            %{_basedir}
@@ -52,6 +52,8 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 #want perl modules, right.
 Requires:                runtime/perl-512
+Requires:                image/library/libpng
+Requires:                library/desktop/pango
 BuildRequires:           runtime/perl-512
 
 #bug and lacks perl modules (, ruby, python too)
@@ -142,6 +144,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Dec 03 2014 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
+- bump to 1.4.9
 * Mon Aug 05 2013 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
 - bump to 1.4.8
 * Fri Jun 22 2012 - Fumihisa Tonaka <fumi.ftnk@gmail.com>

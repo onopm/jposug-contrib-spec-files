@@ -6,7 +6,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.10.56
+%define tarball_version 0.10.57
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -116,6 +116,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.10.57
 * Mon Nov 03 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.56 and use ruby-21 instead of ruby-19
 * Thu Apr 03 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

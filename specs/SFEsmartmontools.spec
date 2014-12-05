@@ -15,7 +15,7 @@
 Name:           SFEsmartmontools
 IPS_package_name:        system/smartmontools
 Summary:        utility programs to control and monitor storage systems using SMART
-Version:        6.0
+Version:        6.3
 License:        GPLv2
 Url:            http://sourceforge.net/apps/trac/smartmontools/
 Source:         %{sf_download}/smartmontools/%{srcname}-%{version}.tar.gz
@@ -57,12 +57,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_sbindir}/smartctl
 %dir %attr (0755, root, other) %{_docdir}
 %dir %attr (0755, root, bin) %{_docdir}/smartmontools
-%{_docdir}/smartmontools/CHANGELOG
+%{_docdir}/smartmontools/ChangeLog
+%{_docdir}/smartmontools/ChangeLog-5.0-6.0
 %dir %attr (0755, root, bin) %{_docdir}/smartmontools/examplescripts
 %{_docdir}/smartmontools/examplescripts/Example2
 %{_docdir}/smartmontools/examplescripts/Example1
 %{_docdir}/smartmontools/examplescripts/Example3
 %{_docdir}/smartmontools/examplescripts/Example4
+%{_docdir}/smartmontools/examplescripts/Example5
+%{_docdir}/smartmontools/examplescripts/Example6
 %{_docdir}/smartmontools/examplescripts/README
 %{_docdir}/smartmontools/AUTHORS
 %{_docdir}/smartmontools/NEWS
@@ -78,10 +81,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_mandir}/man1m
 %{_mandir}/man1m/smartd.1m
 %{_mandir}/man1m/smartctl.1m
+%{_mandir}/man1m/update-smart-drivedb.1m
 %dir %attr (0755, root, bin) %{_datadir}/smartmontools
 %{_datadir}/smartmontools/drivedb.h
 
 %changelog
-* Sat Feb 09 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Fri Dec 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 6.3
+* Sat Feb 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - add Requires

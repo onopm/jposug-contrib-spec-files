@@ -18,7 +18,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/serverspec
-Version:          2.5.0
+Version:          2.6.0
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -31,7 +31,7 @@ Requires:         library/ruby-21/rspec >= 3.0.0
 Requires:         library/ruby-21/rspec-its
 Requires:         library/ruby-21/rake
 Requires:         library/ruby-21/highline
-Requires:         library/ruby-21/specinfra >= 2.9.0
+Requires:         library/ruby-21/specinfra >= 2.10.0
 Requires:         library/ruby-21/multi_json
 
 %description
@@ -46,7 +46,7 @@ Requires:         library/ruby-19/rspec >= 3.0.0
 Requires:         library/ruby-19/rspec-its
 Requires:         library/ruby-19/rake
 Requires:         library/ruby-19/highline
-Requires:         library/ruby-19/specinfra >= 2.9.0
+Requires:         library/ruby-19/specinfra >= 2.10.0
 Requires:         library/ruby-19/multi_json
 
 %description 19
@@ -61,7 +61,7 @@ Requires:         library/ruby-20/rspec >= 3.0.0
 Requires:         library/ruby-20/rspec-its
 Requires:         library/ruby-20/rake
 Requires:         library/ruby-20/highline
-Requires:         library/ruby-20/specinfra >= 2.9.0
+Requires:         library/ruby-20/specinfra >= 2.10.0
 Requires:         library/ruby-20/multi_json
 
 %description 20
@@ -185,6 +185,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Fri Dec 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.6.0
 * Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.5.0
 * Wed Nov 26 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -7,6 +7,7 @@
 # includes module(s):
 #
 %include Solaris.inc
+%include osdistro.inc
 
 %define tarball_version 2.008
 %define tarball_name    Net-Server
@@ -143,6 +144,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Dec 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add '%include osdistro.inc' because %{osbuild} is defined in osdistro.inc
 * Jul 21 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Bump up 2.008. Supported oi_151a9
 * Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

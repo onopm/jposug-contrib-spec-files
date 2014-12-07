@@ -9,7 +9,13 @@
 
 %include Solaris.inc
 %include packagenamemacros.inc
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
+%define with_mysql 0
+%else
+# OI
 %define with_mysql 1
+%endif
 %define src_name postfix
 %define postfix_usr_dir  %{_prefix}/postfix
 %define postfix_var_dir  %{_var}/postfix
@@ -277,6 +283,8 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 
 
 %changelog
+* Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- disable MySQL with Oracle Solaris because build fails
 * Sun May 11 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - added gcc dependencies
 * Fri May 02 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>

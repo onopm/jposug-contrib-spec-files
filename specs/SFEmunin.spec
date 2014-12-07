@@ -33,6 +33,19 @@ BuildRequires: library/perl-5/net-snmp-512
 BuildRequires: library/perl-5/io-stringy-512
 BuildRequires: library/perl-5/test-differences-512
 BuildRequires: library/perl-5/test-longstring-512
+BuildRequires: library/perl-5/cache-cache-512
+BuildRequires: library/perl-5/cache-memcached-512
+BuildRequires: library/perl-5/date-manip-512
+BuildRequires: library/perl-5/db-file-512
+BuildRequires: library/perl-5/file-copy-recursive-512
+BuildRequires: library/perl-5/io-socket-inet6-512
+BuildRequires: library/perl-5/lwp-512
+BuildRequires: library/perl-5/net-cidr-512
+BuildRequires: library/perl-5/rrdtool-512
+BuildRequires: library/perl-5/uri-512
+BuildRequires: library/perl-5/test-deep-512
+BuildRequires: library/perl-5/test-mockmodule-512
+BuildRequires: library/perl-5/file-slurp-512
 
 # java buildrequires on fedora
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6
@@ -428,6 +441,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* SUn Dec 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.25
 * Tue Jun 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

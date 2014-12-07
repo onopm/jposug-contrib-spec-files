@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 1.03
+%define tarball_version 1.05
 %define tarball_name    Test-Inter
 
 Name:		SFEperl-test-inter
 IPS_package_name: library/perl-5/test-inter
-Version:	1.03
-IPS_component_version: 1.3
+Version:	1.05
+IPS_component_version: 1.5
 Summary:	Test::Inter
 License:	Artistic
 Distribution:   OpenSolaris
@@ -98,5 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.05
 * Sun Aug 26 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

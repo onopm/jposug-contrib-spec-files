@@ -53,10 +53,12 @@ BuildRequires:	runtime/perl-512
 BuildRequires:  library/perl-5/capture-tiny-512
 BuildRequires:  library/perl-5/class-data-inheritable-512
 BuildRequires:  library/perl-5/class-accessor-lite-512
-# BuildRequires:  library/perl-5/dbi-512
+BuildRequires:  library/perl-5/test-tcp-512
+BuildRequires:  library/perl-5/dbi-512
 BuildRequires:  library/perl-5/dbix-transactionmanager-512
 BuildRequires:  library/perl-5/data-validator-512
 Requires:	runtime/perl-512
+Requires:  library/perl-5/dbi-512
 
 
 %prep
@@ -111,6 +113,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Wed Dec 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires and Requires
 * Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - not generate package for perl-584
 * Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

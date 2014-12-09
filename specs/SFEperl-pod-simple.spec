@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 3.22
+%define tarball_version 3.28
 %define tarball_name    Pod-Simple
 
 Name:		SFEperl-pod-simple
 IPS_package_name: library/perl-5/pod-simple
-Version:	3.22
-IPS_component_version: 3.22
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	the framework for parsing Pod
 License:	Artistic
 Distribution:   OpenSolaris
@@ -98,5 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.28
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

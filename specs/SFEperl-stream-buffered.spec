@@ -40,12 +40,14 @@ temporary buffer to save bytes
 IPS_package_name: library/perl-5/stream-buffered-584
 Summary: temporary buffer to save bytes for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/io-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/stream-buffered-512
 Summary: temporary buffer to save bytes for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/io-512
 Requires:	runtime/perl-512
 
 
@@ -98,5 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Nov 01 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

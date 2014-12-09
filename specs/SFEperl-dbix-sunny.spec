@@ -35,16 +35,16 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 %description
 DBIx::Sunny
 
-%package 584
-IPS_package_name: library/perl-5/dbix-sunny-584
-Summary: DBIx::Sunny for perl-584
-BuildRequires:	runtime/perl-584
-BuildRequires:  library/perl-5/capture-tiny-584
-BuildRequires:  library/perl-5/class-data-inheritable-584
-# BuildRequires:  library/perl-5/dbi-584
-BuildRequires:  library/perl-5/dbix-transactionmanager-584
-BuildRequires:  library/perl-5/data-validator-584
-Requires:	runtime/perl-584
+# %package 584
+# IPS_package_name: library/perl-5/dbix-sunny-584
+# Summary: DBIx::Sunny for perl-584
+# BuildRequires:	runtime/perl-584
+# BuildRequires:  library/perl-5/capture-tiny-584
+# BuildRequires:  library/perl-5/class-data-inheritable-584
+# # BuildRequires:  library/perl-5/dbi-584
+# BuildRequires:  library/perl-5/dbix-transactionmanager-584
+# BuildRequires:  library/perl-5/data-validator-584
+# Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/dbix-sunny-512
@@ -52,6 +52,7 @@ Summary: DBIx::Sunny for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:  library/perl-5/capture-tiny-512
 BuildRequires:  library/perl-5/class-data-inheritable-512
+BuildRequires:  library/perl-5/class-accessor-lite-512
 # BuildRequires:  library/perl-5/dbi-512
 BuildRequires:  library/perl-5/dbix-transactionmanager-512
 BuildRequires:  library/perl-5/data-validator-512
@@ -62,33 +63,35 @@ Requires:	runtime/perl-512
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+# export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
 
-/usr/perl5/5.8.4/bin/perl Build.PL \
-  --installdirs vendor \
-  --destdir $RPM_BUILD_ROOT
-/usr/perl5/5.8.4/bin/perl ./Build
-# /usr/perl5/5.8.4/bin/perl ./Build test
+# /usr/perl5/5.8.4/bin/perl Build.PL \
+#   --installdirs vendor \
+#   --destdir $RPM_BUILD_ROOT
+# /usr/perl5/5.8.4/bin/perl ./Build
+# # /usr/perl5/5.8.4/bin/perl ./Build test
 
-rm -rf $RPM_BUILD_ROOT
-/usr/perl5/5.8.4/bin/perl ./Build install --destdir $RPM_BUILD_ROOT
-/usr/perl5/5.8.4/bin/perl ./Build install clean
+# rm -rf $RPM_BUILD_ROOT
+# /usr/perl5/5.8.4/bin/perl ./Build install --destdir $RPM_BUILD_ROOT
+# /usr/perl5/5.8.4/bin/perl ./Build install clean
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Build.PL \
   --installdirs vendor \
   --destdir $RPM_BUILD_ROOT
 /usr/perl5/5.12/bin/perl ./Build
-# /usr/perl5/5.12/bin/perl ./Build test
+/usr/perl5/5.12/bin/perl ./Build test
 
 %install
+rm -rf $RPM_BUILD_ROOT
+
 /usr/perl5/5.12/bin/perl ./Build install --destdir $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/man
-rm -rf $RPM_BUILD_ROOT/usr/perl5/5.8.4/man
+# rm -rf $RPM_BUILD_ROOT/usr/perl5/5.8.4/man
 mv $RPM_BUILD_ROOT/usr/perl5/5.12/man $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 
-rm -rf $RPM_BUILD_ROOT/usr/perl5/5.8.4
+#rm -rf $RPM_BUILD_ROOT/usr/perl5/5.8.4
 rm -rf $RPM_BUILD_ROOT/usr/perl5/5.12
 
 %clean
@@ -99,15 +102,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 
-%files 584
-%defattr (-, root, bin)
-%{_prefix}/perl5/vendor_perl/5.8.4
+# %files 584
+# %defattr (-, root, bin)
+# %{_prefix}/perl5/vendor_perl/5.8.4
 
 %files 512
 %defattr (-, root, bin)
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- not generate package for perl-584
 * Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.21 and generate package for perl-584
 * Sat Jun 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

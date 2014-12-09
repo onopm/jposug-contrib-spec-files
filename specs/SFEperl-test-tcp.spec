@@ -47,6 +47,7 @@ IPS_package_name: library/perl-5/test-tcp-512
 Summary: Test-TCP for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/test-sharedfork-512
+BuildRequires:	library/perl-5/cpan-meta-512
 Requires:	runtime/perl-512
 
 
@@ -106,6 +107,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Nov 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.02
 - not generate package for perl-584

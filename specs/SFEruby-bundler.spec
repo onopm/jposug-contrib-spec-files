@@ -17,7 +17,7 @@
 Summary:          Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/bundler
-Version:          1.5.3
+Version:          1.7.9
 License:          MIT
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -123,6 +123,7 @@ rm -rf %{buildroot}
 %changelog
 * Wed Dec 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - not generate package for ruby-18
+- bump to 1.7.9
 * Tue Feb 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21
 * Wed Feb 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

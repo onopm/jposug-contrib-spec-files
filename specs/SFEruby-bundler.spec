@@ -2,10 +2,6 @@
 %include default-depend.inc
 
 %define gemname bundler
-%define bindir18 /usr/ruby/1.8/bin
-%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-
 %define bindir19 /usr/ruby/1.9/bin
 %define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
@@ -20,15 +16,15 @@
 
 Summary:          Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
 Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby-18/bundler
+IPS_package_name: library/ruby-21/bundler
 Version:          1.5.3
 License:          MIT
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires: runtime/ruby-18
-Requires:      runtime/ruby-18
+BuildRequires: runtime/ruby-21
+Requires:      runtime/ruby-21
 
 %description
 Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
@@ -54,26 +50,7 @@ Requires:	  runtime/ruby-21
 %prep
 %setup -q -c -T
 
-# ruby 1.8
-mkdir -p .%{gemdir18}
-mkdir -p ./usr/ruby/1.8/bin
-
-mkdir -p .%{gemdir19}
-mkdir -p ./usr/ruby/1.9/bin
-
-mkdir -p .%{gemdir20}
-mkdir -p ./usr/ruby/2.0/bin
-
-mkdir -p .%{gemdir21}
-mkdir -p .%{bindir21}
-
 %build
-
-/usr/ruby/1.8/bin/gem install --local --install-dir .%{gemdir18} \
-    --bindir ./usr/ruby/1.8/bin \
-    --no-ri \
-    --no-rdoc \
-    --force %{SOURCE0}
 
 /usr/ruby/1.9/bin/gem install --local --install-dir .%{gemdir19} \
     --bindir ./usr/ruby/1.9/bin \
@@ -96,15 +73,6 @@ mkdir -p .%{bindir21}
 
 %install
 rm -rf %{buildroot}
-
-# 1.8
-mkdir -p %{buildroot}%{gemdir18}
-mkdir -p %{buildroot}/usr/ruby/1.8/bin
-cp -a .%{gemdir18}/* \
-        %{buildroot}%{gemdir18}/
-
-rm -rf %{buildroot}%{geminstdir18}/.yardoc/
-rm -rf %{buildroot}%{gemdir18}/doc
 
 # 1.9
 mkdir -p %{buildroot}%{gemdir19}
@@ -139,10 +107,8 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/1.8
+/usr/ruby/2.1
 
 %files 19
 %defattr(0755,root,bin,-)
@@ -154,12 +120,9 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-
 %changelog
+* Wed Dec 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- not generate package for ruby-18
 * Tue Feb 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21
 * Wed Feb 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

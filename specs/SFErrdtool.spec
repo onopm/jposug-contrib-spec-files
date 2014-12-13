@@ -16,7 +16,7 @@
 %ifarch sparc
 %define perl_dir sun4-solaris-64int
 %else
-%define perl_dir i86pc-solaris-64int 
+%define perl_dir i86pc-solaris-64int
 %endif
 
 # %define SUNWruby18u    %(/usr/bin/pkginfo -q SUNWruby18u && echo 1 || echo 0)
@@ -51,8 +51,8 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 # %endif
 
 #want perl modules, right.
-Requires:                runtime/perl-512
-BuildRequires:           runtime/perl-512
+Requires:                runtime/perl-512 = *
+BuildRequires:           runtime/perl-512 = *
 
 #bug and lacks perl modules (, ruby, python too)
 Conflicts: SUNWrrdtool
@@ -61,7 +61,7 @@ Conflicts: SUNWrrdtool
 IPS_package_name:        library/perl-5/rrdtool-512
 Summary: perl-rrdtool
 Requires: %{name} = %{version}
-Requires: runtime/perl-512
+Requires: runtime/perl-512 = *
 
 
 %prep

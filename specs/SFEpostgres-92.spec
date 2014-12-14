@@ -16,6 +16,8 @@
 %define prefix_name      SFEpostgres-92
 %define _basedir         %{_prefix}/%{major_version}
 
+%define oracle_solaris_11_2 %(grep 'Oracle Solaris 11.2' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-92
 Summary:	         PostgreSQL client tools
@@ -45,7 +47,11 @@ BuildRequires: %{pnm_buildrequires_SUNWcsl}
 BuildRequires: %{pnm_buildrequires_SUNWlibms}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWTcl}
+%if %{oracle_solaris_11_2}
+BuildRequires: library/libedit
+%else
 BuildRequires: SFEeditline
+%endif
 
 Requires: %{pnm_requires_SUNWlxsl}
 Requires: %{pnm_requires_SUNWlxml}
@@ -54,7 +60,11 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWgss}
+%if %{oracle_solaris_11_2}
+Requires: library/libedit
+%else
 Requires: SFEeditline
+%endif
 
 Requires: %{prefix_name}-libs
 
@@ -1148,6 +1158,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- With Oracle Solaris 11.2, use library/libedit instead of SFEeditline
 * Fri Jul 25 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.2.9
 * Sun Mar 23 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

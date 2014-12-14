@@ -130,7 +130,11 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{prefix_name}-libs
+%if %{oracle_solaris_11_2}
+#On Oracle Soalris 11.2, user postgres exists by default.
+%else
 Requires: SFEpostgres-common
+%endif
 
 %package -n %{prefix_name}-contrib
 IPS_package_name: database/postgres-90/contrib
@@ -1715,6 +1719,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - With Oracle Solaris 11.2, use library/libedit instead of SFEeditline
+- SFEpostgres-common is no required on Oracle Solaris 11.2
 * Fri Feb 21 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 9.0.16
 * Tue Feb 18 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

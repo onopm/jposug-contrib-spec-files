@@ -127,12 +127,12 @@ cp -a .%{gemdir19}/* \
     %{buildroot}/%{gemdir19}/
 
 pushd %{buildroot}/%{_bindir}
-ln -s ../ruby/1.9/lib/ruby/gems/1.9.1/gems/%{gemname}-%{version}/bin/serverspec-init serverspec-init19
+ln -s "../$( echo "%{geminstdir19}" | cut -d/ -f3-)/bin/serverspec-init" serverspec-init19
 popd
 
 mkdir -p %{buildroot}/%{bindir19}
 pushd %{buildroot}/%{bindir19}
-ln -s ../lib/ruby/gems/1.9.1/gems/%{gemname}-%{version}/bin/serverspec-init .
+ln -s "../$( echo "%{geminstdir19}" | cut -d/ -f5-)/bin/serverspec-init" .
 popd
 
 # ruby-20
@@ -141,12 +141,12 @@ cp -a .%{gemdir20}/* \
     %{buildroot}/%{gemdir20}/
 
 pushd %{buildroot}/%{_bindir}
-ln -s ../ruby/2.0/lib/ruby/gems/2.0.0/gems/%{gemname}-%{version}/bin/serverspec-init serverspec-init20
+ln -s "../$( echo "%{geminstdir20}" | cut -d/ -f3-)/bin/serverspec-init" serverspec-init20
 popd
 
 mkdir -p %{buildroot}/%{bindir20}
 pushd %{buildroot}/%{bindir20}
-ln -s ../lib/ruby/gems/2.0.0/gems/%{gemname}-%{version}/bin/serverspec-init .
+ln -s "../$( echo "%{geminstdir20}" | cut -d/ -f5-)/bin/serverspec-init" .
 popd
 
 # ruby-21
@@ -155,12 +155,12 @@ cp -a .%{gemdir21}/* \
     %{buildroot}/%{gemdir21}/
 
 pushd %{buildroot}/%{_bindir}
-ln -s ../ruby/2.0/lib/ruby/gems/2.1.0/gems/%{gemname}-%{version}/bin/serverspec-init serverspec-init21
+ln -s "../$( echo "%{geminstdir20}" | cut -d/ -f3-)/bin/serverspec-init" serverspec-init21
 popd
 
 mkdir -p %{buildroot}/%{bindir21}
 pushd %{buildroot}/%{bindir21}
-ln -s ../lib/ruby/gems/2.1.0/gems/%{gemname}-%{version}/bin/serverspec-init .
+ln -s "../$( echo "%{geminstdir21}" | cut -d/ -f5-)/bin/serverspec-init" .
 popd
 
 %clean
@@ -185,6 +185,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix symbolic links
 * Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.7.0
 * Fri Dec 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

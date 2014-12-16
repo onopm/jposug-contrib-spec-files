@@ -19,6 +19,7 @@ Url:                     http://php.net/
 Source:                  http://jp1.php.net/distributions/php-%{version}.tar.bz2
 Source1:                 php-fpm55.xml
 Source2:                 php55-opcache.ini
+Source3:                 php5.5.conf
 Distribution:            OpenSolaris
 Vendor:		 OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
@@ -301,15 +302,24 @@ install -m 755 build-apache/libs/libphp5.so $RPM_BUILD_ROOT/usr/apache2/2.2/libe
 # install -m 755 build-zts/libs/libphp5.so $RPM_BUILD_ROOT%{_libdir}/httpd/modules/libphp5-zts.so
 
 # Apache config fragment
-%if "%{_httpd_modconfdir}" == "%{_httpd_confdir}"
-# Single config file with httpd < 2.4
-# install -D -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
-# cat %{SOURCE1} >>$RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
-%else
-# Dual config file with httpd >= 2.4
-# install -D -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_httpd_modconfdir}/10-php.conf
-# install -D -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
-%endif
+# %if "%{_httpd_modconfdir}" == "%{_httpd_confdir}"
+# # Single config file with httpd < 2.4
+# # install -D -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
+# # cat %{SOURCE1} >>$RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
+# %else
+# # Dual config file with httpd >= 2.4
+# # install -D -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_httpd_modconfdir}/10-php.conf
+# # install -D -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
+# %endif
+install -m 755 -d $RPM_BUILD_ROOT/etc
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php/php5.5.conf
+pushd $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php > /dev/null
+ln -s php5.5.conf php.conf
+popd > /dev/null
 
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5
@@ -423,8 +433,16 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) /usr/apache2/2.2
 %dir %attr (0755, root, bin) /usr/apache2/2.2/libexec
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
+%dir %attr (0755, root, bin) /etc/apache2
+%dir %attr (0755, root, bin) /etc/apache2/2.2
+%dir %attr (0755, root, bin) /etc/apache2/2.2/conf.d
+%dir %attr (0755, root, bin) /etc/apache2/2.2/conf.d/php
+%attr (0644, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /etc/apache2/2.2/conf.d/php/php.conf
+%attr (0644, root, bin) %config(noreplace) /etc/apache2/2.2/conf.d/php/php5.5.conf
 
 %changelog
+* Tue Nov 18 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add /etc/apache2/2.2/conf.d/php/php5.5.conf
 * Tue Nov 18 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.19
 * Sat Nov 08 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -1,5 +1,4 @@
 %include Solaris.inc
-%include default-depend.inc
 
 %define gemname method_source
 %define generate_executable 0
@@ -20,7 +19,7 @@ Summary:          retrieve the sourcecode for a method
 # Name:             SFEruby-%{gemname}
 Name:             SFEruby-method-source
 IPS_package_name: library/ruby-21/%{gemname}
-Version:          0.8.1
+Version:          0.8.2
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -174,5 +173,6 @@ rm -rf %{buildroot}
 %changelog
 * Wed Dec 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21 instead of ruby-18
+- bump to 0.8.2
 * Thu May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

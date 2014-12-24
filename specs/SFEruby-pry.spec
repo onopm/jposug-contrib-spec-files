@@ -2,7 +2,7 @@
 %include default-depend.inc
 
 %define gemname pry
-%define generate_executable 0
+%define generate_executable 1
 
 %define bindir19 /usr/ruby/1.9/bin
 %define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
@@ -94,6 +94,9 @@ An IRB alternative and runtime developer console
 %install
 rm -rf %{buildroot}
 
+%if %generate_executable
+mkdir -p %{buildroot}/usr/bin
+%endif
 # ruby-19
 mkdir -p %{buildroot}/%{gemdir19}
 cp -a .%{gemdir19}/* \
@@ -102,7 +105,14 @@ cp -a .%{gemdir19}/* \
 %if %generate_executable
 mkdir -p %{buildroot}%{bindir19}
 cp -a .%{bindir19}/* \
-   %{buildroot}%{bindir19}/
+    %{buildroot}%{bindir19}/
+
+pushd %{buildroot}/usr/bin
+for i in  ../ruby/1.9/bin/*
+do
+    ln -s ${i} $(basename ${i})19
+done
+popd
 %endif
 
 # ruby-20
@@ -114,6 +124,12 @@ cp -a .%{gemdir20}/* \
 mkdir -p %{buildroot}%{bindir20}
 cp -a .%{bindir20}/* \
    %{buildroot}%{bindir20}/
+pushd %{buildroot}/usr/bin
+for i in  ../ruby/2.0/bin/*
+do
+    ln -s ${i} $(basename ${i})20
+done
+popd
 %endif
 
 # ruby-21
@@ -125,6 +141,12 @@ cp -a .%{gemdir21}/* \
 mkdir -p %{buildroot}%{bindir21}
 cp -a .%{bindir21}/* \
    %{buildroot}%{bindir21}/
+pushd %{buildroot}/usr/bin
+for i in  ../ruby/2.1/bin/*
+do
+    ln -s ${i} $(basename ${i})21
+done
+popd
 %endif
 
 %clean
@@ -134,21 +156,34 @@ rm -rf %{buildroot}
 %files
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %generate_executable
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
 /usr/ruby/2.1
 
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %generate_executable
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*19
+%endif
 /usr/ruby/1.9
 
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %generate_executable
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*20
+%endif
 /usr/ruby/2.0
 
 %changelog
 * Wed Dec 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21 instead of ruby-18
+- add symbolic links
 * Mon May 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9.12.2
 * Wed Oct 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

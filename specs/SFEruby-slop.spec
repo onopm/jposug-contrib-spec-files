@@ -1,5 +1,4 @@
 %include Solaris.inc
-%include default-depend.inc
 
 %define gemname slop
 %define generate_executable 0
@@ -19,7 +18,7 @@
 Summary:          A simple DSL for gathering options and parsing the command line
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/%{gemname}
-Version:          3.4.5
+Version:          3.6.0
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -174,5 +173,6 @@ rm -rf %{buildroot}
 %changelog
 * Wed Dec 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21 instead of ruby-18
+- bump to 3.6.0
 * Thu May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

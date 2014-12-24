@@ -4,21 +4,21 @@
 %define gemname pry
 %define generate_executable 0
 
-%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-%define bindir18 /usr/ruby/1.8/bin
-
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
-%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 %define bindir20 /usr/ruby/2.0/bin
+%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 Summary:          An IRB alternative and runtime developer console
 Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby-18/%{gemname}
+IPS_package_name: library/ruby-21/%{gemname}
 Version:          0.9.12.2
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
@@ -26,11 +26,11 @@ URL:              http://pryrepl.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	  runtime/ruby-18
-Requires:         runtime/ruby-18
-Requires:         library/ruby-18/coderay
-Requires:         library/ruby-18/method_source
-Requires:         library/ruby-18/slop
+BuildRequires:	  runtime/ruby-21
+Requires:         runtime/ruby-21
+Requires:         library/ruby-21/coderay
+Requires:         library/ruby-21/method_source
+Requires:         library/ruby-21/slop
 
 %description
 An IRB alternative and runtime developer console
@@ -61,22 +61,11 @@ An IRB alternative and runtime developer console
 
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir18}
-mkdir -p .%{bindir18}
 
 %build
 
-# ruby-18
-/usr/ruby/1.8/bin/gem install --local \
-    --install-dir .%{gemdir18} \
-    --bindir .%{bindir18} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
-
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     --no-rdoc \
@@ -85,7 +74,7 @@ mkdir -p .%{bindir18}
     --force %{SOURCE0}
 
 # ruby-20
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir20}/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
     --no-rdoc \
@@ -93,19 +82,17 @@ mkdir -p .%{bindir18}
     -V \
     --force %{SOURCE0}
 
+# ruby-21
+%{bindir21}/gem install --local \
+    --install-dir .%{gemdir21} \
+    --bindir .%{bindir21} \
+    --no-rdoc \
+    --no-ri \
+    -V \
+    --force %{SOURCE0}
+
 %install
 rm -rf %{buildroot}
-
-# ruby-18
-mkdir -p %{buildroot}/%{gemdir18}
-cp -a .%{gemdir18}/* \
-    %{buildroot}/%{gemdir18}/
-
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir18}
-cp -a .%{bindir18}/* \
-   %{buildroot}%{bindir18}/
-%endif
 
 # ruby-19
 mkdir -p %{buildroot}/%{gemdir19}
@@ -129,14 +116,25 @@ cp -a .%{bindir20}/* \
    %{buildroot}%{bindir20}/
 %endif
 
+# ruby-21
+mkdir -p %{buildroot}/%{gemdir21}
+cp -a .%{gemdir21}/* \
+    %{buildroot}/%{gemdir21}/
+
+%if %generate_executable
+mkdir -p %{buildroot}%{bindir21}
+cp -a .%{bindir21}/* \
+   %{buildroot}%{bindir21}/
+%endif
+
 %clean
 rm -rf %{buildroot}
 
 
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
 
 %files 19
 %defattr(0755,root,bin,-)
@@ -149,6 +147,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed Dec 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for ruby-21 instead of ruby-18
 * Mon May 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9.12.2
 * Wed Oct 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

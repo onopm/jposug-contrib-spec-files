@@ -19,7 +19,7 @@
 Summary: Fast and easy syntax highlighting for selected languages, written in Ruby. 
 Name: SFEruby-%{gemname}
 IPS_package_name:        library/ruby-21/coderay
-Version: 1.0.9
+Version: 1.1.0
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -174,5 +174,6 @@ rm -rf %{buildroot}
 %changelog
 * Wed Dec 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - stop to generate package for ruby-18 and generate package for ruby-20 and ruby-21
+- bump to 1.1.0
 * Tue May 26 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

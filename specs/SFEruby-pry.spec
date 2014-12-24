@@ -19,7 +19,7 @@
 Summary:          An IRB alternative and runtime developer console
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/%{gemname}
-Version:          0.9.12.2
+Version:          0.10.1
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://pryrepl.org/
@@ -27,10 +27,10 @@ Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	  runtime/ruby-21
-Requires:         runtime/ruby-21
-Requires:         library/ruby-21/coderay
-Requires:         library/ruby-21/method_source
-Requires:         library/ruby-21/slop
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby-21/coderay >= 1.1.0
+Requires:         library/ruby-21/method_source >= 0.8.1
+Requires:         library/ruby-21/slop >= 3.4.0
 
 %description
 An IRB alternative and runtime developer console
@@ -39,10 +39,10 @@ An IRB alternative and runtime developer console
 IPS_package_name: library/ruby-19/%{gemname}
 Summary:          An IRB alternative and runtime developer console
 BuildRequires:	  runtime/ruby-19
-Requires:         runtime/ruby-19
-Requires:         library/ruby-19/coderay
-Requires:         library/ruby-19/method_source
-Requires:         library/ruby-19/slop
+Requires:         runtime/ruby-19 = *
+Requires:         library/ruby-19/coderay >= 1.1.0
+Requires:         library/ruby-19/method_source >= 0.8.1
+Requires:         library/ruby-19/slop >= 3.4.0
 
 %description 19
 An IRB alternative and runtime developer console
@@ -51,10 +51,10 @@ An IRB alternative and runtime developer console
 IPS_package_name: library/ruby-20/%{gemname}
 Summary:          An IRB alternative and runtime developer console
 BuildRequires:	  runtime/ruby-20
-Requires:         runtime/ruby-20
-Requires:         library/ruby-20/coderay
-Requires:         library/ruby-20/method_source
-Requires:         library/ruby-20/slop
+Requires:         runtime/ruby-20 = *
+Requires:         library/ruby-20/coderay >= 1.1.0
+Requires:         library/ruby-20/method_source >= 0.8.1
+Requires:         library/ruby-20/slop >= 3.4.0
 
 %description 20
 An IRB alternative and runtime developer console
@@ -184,6 +184,7 @@ rm -rf %{buildroot}
 * Wed Dec 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21 instead of ruby-18
 - add symbolic links
+- bump to 0.10.1
 * Mon May 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9.12.2
 * Wed Oct 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

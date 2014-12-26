@@ -27,6 +27,7 @@ Url:			 http://www.ruby-lang.org/
 
 BuildRequires: library/text/yaml >= 0.1.6
 BuildRequires: system/network/bpf
+BuildRequires: system/library/libnet
 Requires:      library/text/yaml >= 0.1.6
 
 %if %( expr %{osbuild} '=' 175 )
@@ -117,3 +118,4 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Fri Dec 26 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- add BuildRequires

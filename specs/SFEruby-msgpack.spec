@@ -14,8 +14,12 @@
 %define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
+%define bindir22 /usr/ruby/2.2/bin
+%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
+
 Name: SFEruby-msgpack
-IPS_package_name:        library/ruby-19/msgpack
+IPS_package_name:        library/ruby-22/msgpack
 Summary: MessagePack is an efficient binary serialization format.
 Version: 0.5.9
 License: ASL 2.0
@@ -24,11 +28,17 @@ URL:     http://msgpack.org/
 Source0: http://rubygems.org/downloads/msgpack-%{version}.gem
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
-Requires: runtime/ruby-19
-BuildRequires: runtime/ruby-19
+Requires: runtime/ruby-22
+BuildRequires: runtime/ruby-22
 
 %description
 MessagePack is an efficient binary serialization format. It lets you exchange data among multiple languages like JSON but it's faster and smaller. For example, small integers (like flags or error code) are encoded into a single byte, and typical short strings only require an extra byte in addition to the strings themselves.
+
+%package 19
+IPS_package_name: library/ruby-19/msgpack
+Summary: MessagePack for Ruby 1.9
+BuildRequires:	runtime/ruby-19
+Requires:	runtime/ruby-19
 
 %package 20
 IPS_package_name: library/ruby-20/msgpack
@@ -62,6 +72,11 @@ mkdir -p .%{gemdir21}
             --bindir .%{_bindir} \
             --force %{SOURCE0}
 
+# ruby 2.2
+mkdir -p .%{gemdir22}
+%{bindir22}/gem install --local --install-dir .%{gemdir22} \
+            --bindir .%{_bindir} \
+            --force %{SOURCE0}
 
 %build
 
@@ -73,10 +88,6 @@ mkdir -p %{buildroot}%{gemdir19}
 cp -a .%{gemdir19}/* \
         %{buildroot}%{gemdir19}/
 
-# mkdir -p %{buildroot}%{_bindir}
-# cp -a .%{_bindir}/* \
-#         %{buildroot}%{_bindir}/
-
 # 2.0
 mkdir -p %{buildroot}%{gemdir20}
 cp -a .%{gemdir20}/* \
@@ -84,14 +95,25 @@ cp -a .%{gemdir20}/* \
 
 # 2.1
 mkdir -p %{buildroot}%{gemdir21}
-cp -a .%{gemdir20}/* \
+cp -a .%{gemdir21}/* \
         %{buildroot}%{gemdir21}/
+
+# 2.2
+mkdir -p %{buildroot}%{gemdir22}
+cp -a .%{gemdir22}/* \
+        %{buildroot}%{gemdir22}/
 
 %clean
 rm -rf %{buildroot}
 
 
 %files
+%defattr(0755,root,bin,-)
+%dir %attr(0755, root, sys) /usr
+%{gemdir22}
+
+# 1.9
+%files 19
 %defattr(0755,root,bin,-)
 %dir %attr(0755, root, sys) /usr
 %{gemdir19}
@@ -109,6 +131,8 @@ rm -rf %{buildroot}
 %{gemdir21}
 
 %changelog
+* Sun Jan 18 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for ruby-22
 * Sun Nov 03 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.5.9
 * Fri Jun 27 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

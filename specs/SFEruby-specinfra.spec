@@ -15,19 +15,23 @@
 %define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
+%define bindir22 /usr/ruby/2.2/bin
+%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
+
 Summary:          Common layer for serverspec and configspec
 Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby-21/specinfra
+IPS_package_name: library/ruby-22/specinfra
 Version:          2.11.8
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:    runtime/ruby-21
-Requires:         runtime/ruby-21 = *
-Requires:         library/ruby-21/net-ssh
-Requires:         library/ruby-21/net-scp
+BuildRequires:    runtime/ruby-22
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby-22/net-ssh
+Requires:         library/ruby-22/net-scp
 
 %description
 Common layer for serverspec and configspec
@@ -52,6 +56,17 @@ Requires:         library/ruby-20/net-ssh
 Requires:         library/ruby-20/net-scp
 
 %description 20
+Common layer for serverspec and configspec
+
+%package 21
+IPS_package_name: library/ruby-21/specinfra
+Summary:          RSpec tests for your provisioned servers
+BuildRequires:    runtime/ruby-21
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby-21/net-ssh
+Requires:         library/ruby-21/net-scp
+
+%description 21
 Common layer for serverspec and configspec
 
 %prep
@@ -85,6 +100,15 @@ Common layer for serverspec and configspec
     -V \
     --force %{SOURCE0}
 
+# ruby-22
+%{bindir22}/gem install --local \
+    --install-dir .%{gemdir22} \
+    --bindir .%{bindir22} \
+    --no-ri \
+    --no-rdoc \
+    -V \
+    --force %{SOURCE0}
+
 %install
 rm -rf %{buildroot}
 
@@ -103,13 +127,18 @@ mkdir -p %{buildroot}/%{gemdir21}
 cp -a .%{gemdir21}/* \
     %{buildroot}/%{gemdir21}/
 
+# ruby-22
+mkdir -p %{buildroot}/%{gemdir22}
+cp -a .%{gemdir22}/* \
+    %{buildroot}/%{gemdir22}/
+
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
+/usr/ruby/2.2
 
 %files 19
 %defattr(0755,root,bin,-)
@@ -121,9 +150,15 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+
 %changelog
 * Fri Jan 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.11.8
+- generate package for ruby-22
 * Wed Dec 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.10.2
 * Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

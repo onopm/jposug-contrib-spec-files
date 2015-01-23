@@ -1,10 +1,9 @@
 %include Solaris.inc
 %include packagenamemacros.inc
-%include default-depend.inc
 
 %define tarball_index s
 %define tarball_name seqdiag
-%define tarball_version 0.9.0
+%define tarball_version 0.9.5
 
 Name:                    SFEseqdiag
 IPS_package_name:        image/seqdiag
@@ -18,7 +17,10 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 BuildRequires:           runtime/python-26
 BuildRequires:           library/python-2/setuptools-26
 Requires:                runtime/python-26
-Requires:                image/blockdiag
+Requires:                library/python-2/funcparserlib-26 >= 0.3.6
+Requires:                library/python-2/ordereddict-26
+Requires:                library/python-2/pillow-26 >= 2.2.1
+Requires:                library/python-2/webcolors-26
 
 %description
 seqdiag generate sequence-diagram image file from spec-text file.
@@ -48,6 +50,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Fri Jan 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.9.5
 * Wed Jan 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9.0
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

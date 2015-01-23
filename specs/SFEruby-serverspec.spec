@@ -18,7 +18,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/serverspec
-Version:          2.7.0
+Version:          2.7.2
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -185,6 +185,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Fri Jan 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.7.2
 * Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix symbolic links
 * Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

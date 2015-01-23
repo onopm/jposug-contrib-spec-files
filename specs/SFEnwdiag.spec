@@ -17,6 +17,7 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 BuildRequires:           runtime/python-26
 BuildRequires:           library/python-2/setuptools-26
 Requires:                runtime/python-26
+Requires:                library/python-2/setuptools-26
 Requires:                library/python-2/funcparserlib-26 >= 0.3.6
 Requires:                library/python-2/ordereddict-26
 Requires:                library/python-2/pillow-26 >= 2.2.1
@@ -54,6 +55,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Fri Jan 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.4
+- add Requires
 * Thu Jan 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix required blockdiag version
 * Tue Jan 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

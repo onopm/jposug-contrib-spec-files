@@ -41,6 +41,7 @@ Summary: WWW::Form::UrlEncoded - parser and builder for application/x-www-form-u
 BuildRequires:	runtime/perl-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/exporter-512
+Requires:	library/perl-5/www-form-urlencoded-xs-512
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -80,5 +81,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Fri Jan 30 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Mon Jun 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

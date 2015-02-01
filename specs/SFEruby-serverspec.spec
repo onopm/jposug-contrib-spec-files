@@ -22,7 +22,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-22/serverspec
-Version:          2.7.2
+Version:          2.8.1
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -35,7 +35,7 @@ Requires:         library/ruby-22/rspec >= 3.0.0
 Requires:         library/ruby-22/rspec-its
 Requires:         library/ruby-22/rake
 Requires:         library/ruby-22/highline
-Requires:         library/ruby-22/specinfra >= 2.10.0
+Requires:         library/ruby-22/specinfra >= 2.12.0
 Requires:         library/ruby-22/multi_json
 
 %description
@@ -50,7 +50,7 @@ Requires:         library/ruby-19/rspec >= 3.0.0
 Requires:         library/ruby-19/rspec-its
 Requires:         library/ruby-19/rake
 Requires:         library/ruby-19/highline
-Requires:         library/ruby-19/specinfra >= 2.10.0
+Requires:         library/ruby-19/specinfra >= 2.12.0
 Requires:         library/ruby-19/multi_json
 
 %description 19
@@ -65,7 +65,7 @@ Requires:         library/ruby-20/rspec >= 3.0.0
 Requires:         library/ruby-20/rspec-its
 Requires:         library/ruby-20/rake
 Requires:         library/ruby-20/highline
-Requires:         library/ruby-20/specinfra >= 2.10.0
+Requires:         library/ruby-20/specinfra >= 2.12.0
 Requires:         library/ruby-20/multi_json
 
 %description 20
@@ -80,7 +80,7 @@ Requires:         library/ruby-21/rspec >= 3.0.0
 Requires:         library/ruby-21/rspec-its
 Requires:         library/ruby-21/rake
 Requires:         library/ruby-21/highline
-Requires:         library/ruby-21/specinfra >= 2.10.0
+Requires:         library/ruby-21/specinfra >= 2.12.0
 Requires:         library/ruby-21/multi_json
 
 %description 21
@@ -239,6 +239,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Sun Feb 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.8.1
 * Fri Jan 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.7.2
 - generate package for ruby-22

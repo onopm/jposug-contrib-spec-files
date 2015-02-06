@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.4.0
+%define tarball_version  9.4.1
 %define major_version	 9.4
 %define prefix_name      SFEpostgres-94
 %define _basedir         %{_prefix}/%{major_version}
@@ -730,6 +730,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/datatype/timestamp.h
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/libpq/*.h
 %dir %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/common
+%attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/common/string.h
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/common/fe_memutils.h
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/common/relpath.h
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/common/username.h
@@ -1221,5 +1222,7 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_recvlogical
 
 %changelog
+* Sat Feb 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.4.1
 * Mon Dec 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -2,9 +2,6 @@
 %include default-depend.inc
 
 %define gemname highline
-%define bindir18 /usr/ruby/1.8/bin
-%define gemdir18 %(%{bindir18}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
 
 %define bindir19 /usr/ruby/1.9/bin
 %define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
@@ -20,15 +17,15 @@
 
 Summary: A high-level IO library that provides validation, type conversion, and more for command-line interfaces.
 Name: SFEruby-%{gemname}
-IPS_package_name:        library/ruby-18/highline
+IPS_package_name:        library/ruby-21/highline
 Version: 1.6.20
 License: Ruby
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	runtime/ruby-18
-Requires:       runtime/ruby-18
+BuildRequires:	runtime/ruby-21
+Requires:       runtime/ruby-21
 
 %description
 A high-level IO library that provides validation, type conversion, and more for command-line interfaces. HighLine also includes a complete menu system that can crank out anything from simple list selection to complete shells with just minutes of work.
@@ -51,34 +48,10 @@ Requires:	runtime/ruby-20
 %description 20
 A high-level IO library that provides validation, type conversion, and more for command-line interfaces. HighLine also includes a complete menu system that can crank out anything from simple list selection to complete shells with just minutes of work.
 
-%package 21
-IPS_package_name: library/ruby-21/highline
-Summary: A high-level IO library that provides validation, type conversion, and more for command-line interfaces.
-BuildRequires:	runtime/ruby-21
-Requires:	runtime/ruby-21
-
-%description 21
-A high-level IO library that provides validation, type conversion, and more for command-line interfaces. HighLine also includes a complete menu system that can crank out anything from simple list selection to complete shells with just minutes of work.
-
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir18}
-mkdir -p .%{bindir18}
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
-mkdir -p .%{gemdir20}
-mkdir -p .%{bindir20}
-mkdir -p .%{gemdir21}
-mkdir -p .%{bindir21}
 
 %build
-# ruby-18
-/usr/ruby/1.8/bin/gem install --local \
-    --install-dir .%{gemdir18} \
-    --bindir .%{bindir18} \
-    -V \
-    --force %{SOURCE0}
-
 # ruby-19
 /usr/ruby/1.9/bin/gem install --local \
     --install-dir .%{gemdir19} \
@@ -103,11 +76,6 @@ mkdir -p .%{bindir21}
 %install
 rm -rf %{buildroot}
 
-# ruby-18
-mkdir -p %{buildroot}/%{gemdir18}
-cp -a .%{gemdir18}/* \
-    %{buildroot}/%{gemdir18}/
-
 # ruby-19
 mkdir -p %{buildroot}/%{gemdir19}
 cp -a .%{gemdir19}/* \
@@ -131,10 +99,8 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
 %dir %attr (0755, root, sys) /usr
-# /usr/ruby/1.8
+/usr/ruby/2.1
 
 %files 19
 %defattr(0755,root,bin,-)
@@ -146,12 +112,9 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-
 %changelog
+* Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- stop to generate package for ruby-18
 * Tue Feb 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for ruby-20 and ruby-21
 - bump to 1.6.20

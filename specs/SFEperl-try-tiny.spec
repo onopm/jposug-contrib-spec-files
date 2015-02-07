@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 0.11
+%define tarball_version 0.18
 %define tarball_name    Try-Tiny
 
 Name:		SFEperl-try-tiny
 IPS_package_name: library/perl-5/try-tiny
-Version:	0.11
-IPS_component_version: 0.11
+Version:	0.18
+IPS_component_version: 0.18
 Summary:	Try::Tiny
 License:	Artistic
 Distribution:   OpenSolaris
@@ -82,7 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,bin)
 #%{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
@@ -96,6 +96,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.18
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
 * Sat 16 Jun 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for perl-584
 * Sat 09 Jun 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

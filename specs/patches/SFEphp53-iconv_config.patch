@@ -1,0 +1,37 @@
+--- php-5.3.20.orig/ext/iconv/config.m4	2012-12-20 00:13:48.000000000 +0900
++++ php-5.3.20/ext/iconv/config.m4	2013-01-23 20:47:32.060380872 +0900
+@@ -15,14 +15,14 @@
+ 
+   if test "$iconv_avail" != "no"; then
+     if test -z "$ICONV_DIR"; then
+-      for i in /usr/local /usr; do
++      for i in /usr/local /usr/gnu /usr; do
+         if test -f "$i/include/iconv.h" || test -f "$i/include/giconv.h"; then
+           PHP_ICONV_PREFIX="$i"
+           break
+         fi
+       done
+       if test -z "$PHP_ICONV_PREFIX"; then
+-        PHP_ICONV_PREFIX="/usr"
++        PHP_ICONV_PREFIX="/usr/gnu"
+       fi
+     else
+       PHP_ICONV_PREFIX="$ICONV_DIR"
+@@ -49,7 +49,7 @@
+     if test -z "$iconv_impl_name"; then
+       AC_MSG_CHECKING([if using GNU libiconv])
+       php_iconv_old_ld="$LDFLAGS"
+-      LDFLAGS="-liconv $LDFLAGS"
++      LDFLAGS="$LDFLAGS -liconv"
+       AC_TRY_RUN([
+ #include <$PHP_ICONV_H_PATH>
+ int main() {
+@@ -61,7 +61,7 @@
+         iconv_impl_name="gnu_libiconv"
+       ],[
+         AC_MSG_RESULT(no)
+-        LDFLAGS="$php_iconv_old_ld"
++        iconv_impl_name="gnu_libiconv"
+       ],[
+         AC_MSG_RESULT(no, cross-compiling)
+         LDFLAGS="$php_iconv_old_ld"

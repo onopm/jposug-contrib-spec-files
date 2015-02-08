@@ -9,18 +9,29 @@
 %define         perl_vendorarch %(%{__perl} -MConfig -e 'print $Config{vendorarch}')
 %define         perl_archlib    %(%{__perl} -MConfig -e 'print $Config{archlib}')
 %define         perl_man3dir    %(%{__perl} -MConfig -e 'print $Config{man3dir}')
+%define         tarball_name    nkf
 
-Name:		   nkf
-Version:	   2.1.1
+Name:		   SFEnkf
+Version:	   2.1.3
 IPS_package_name:  text/nkf
 License:           BSD
 Group:             Applications/Text
 URL:               http://nkf.sourceforge.jp/
-Source0:           http://dl.sourceforge.jp/%{name}/48945/%{name}-%{version}.tar.gz
-Buildroot:         %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires:     SUNWperl584core
-BuildRequires:     system/library/iconv/utf-8
-SUNW_Copyright:    %{name}.copyright
+Source0:           http://dl.sourceforge.jp/%{tarball_name}/59912/%{tarball_name}-%{version}.tar.gz
+Buildroot:         %{_tmppath}/%{tarball_name}-%{version}-%{release}-root
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires:     %{pnm_buildrequires_SUNWperl584core_devel}
+Requires:          %{pnm_requires_SUNWperl584core}
+%else
+BuildRequires:     %{pnm_buildrequires_perl510core}
+Requires:          %{pnm_requires_perl510core}
+%endif
+BuildRequires:     %{pnm_buildrequires_system_library_iconv_utf_8}
+BuildRequires:          system/library
+Requires:          system/library
+Requires:          %{pnm_requires_system_library_iconv_utf_8}
+
+SUNW_Copyright:    %{tarball_name}.copyright
 
 Meta(info.maintainer_url):      http://sourceforge.jp/forum/forum.php?forum_id=25193
 Meta(info.upstream_url):        http://sourceforge.jp/projects/nkf/
@@ -30,27 +41,34 @@ Meta(info.classification):      org.opensolaris.category.2008:Text
 Nkf is a Kanji code converter for terminals, hosts, and networks. Nkf
 converts input Kanji code to 7-bit JIS, MS-kanji (shifted-JIS) or EUC.
 
-%package  NKF
+%package -n SFEperl-nkf
 IPS_package_name: library/perl-5/nkf
 Summary:        Perl extension for Network Kanji Filter
 Group:          Applications/Text
-BuildRequires:	SUNWperl584core
-BuildRequires:	SUNWperl584usr
-Requires:	SUNWperl584core
-Requires:	SUNWperl584usr
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires:     %{pnm_buildrequires_SUNWperl584core_devel}
+Requires:          %{pnm_requires_SUNWperl584core}
+%else
+BuildRequires:     %{pnm_buildrequires_perl510core}
+Requires:          %{pnm_requires_perl510core}
+%endif
+BuildRequires:     %{pnm_buildrequires_system_library_iconv_utf_8}
+BuildRequires:          system/library
+Requires:          system/library
+#Requires:          %{pnm_requires_system_library}
+Requires:          %{pnm_requires_system_library_iconv_utf_8}
 
-
-%description  NKF
+%description -n SFEperl-nkf
 This is a Perl Extension version of nkf (Network Kanji Filter).
 It converts the last argument and return converted result.
 Conversion details are specified by flags before the last argument.
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{tarball_name}-%{version}
 
 %build
-CC=/usr/bin/cc
+CC=cc
 CFLAGS="-xO3 -xspace -xildoff -KPIC"
 export CC CFLAGS
 
@@ -98,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/nkf.1*
 %{_mandir}/ja_JP.UTF-8/man1/nkf.1*
 
-%files  NKF
+%files -n SFEperl-nkf
 %defattr (-, root, sys, -)
 %dir %{_prefix}
 %defattr (-, root, bin, -)
@@ -109,8 +127,15 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_man3dir}/NKF.3
 
 %changelog
-* Thu Mar 15 2021 Satoru MIYAZAKI <s.miyaza@gmail.com> 
+* Wed Nov 12 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.3
+* Tue Jan 29 2013 YAMAMOTO Takashi<yamachan@selfnavi.com>
+- Support for OpenIndiana
+* Sun Jan  6 2013 TAKI, Yasushi <taki@justplayer.com>
+- Bump to 2.1.2
+- use pnmacro.
+- fix minor error
+* Thu Mar 15 2012 Satoru MIYAZAKI <s.miyaza@gmail.com>
 - add dir entries
-
-* Thu Feb  3 2011 Satoru MIYAZAKI <s.miyaza@gmail.com> 
+* Thu Feb  3 2011 Satoru MIYAZAKI <s.miyaza@gmail.com>
 - Support for Solaris11 Express.

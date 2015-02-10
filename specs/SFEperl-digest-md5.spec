@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 2.52
+%define tarball_version 2.54
 %define tarball_name    Digest-MD5
 
 Name:		SFEperl-digest-md5
 IPS_package_name: library/perl-5/digest-md5
-Version:	2.52
-IPS_component_version: 2.52
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	 MD5 message digest algorithm
 License:	Artistic
 Distribution:   OpenSolaris
@@ -41,13 +41,14 @@ IPS_package_name: library/perl-5/digest-md5-584
 Summary:  MD5 message digest algorithm for perl-584
 BuildRequires:	runtime/perl-584
 Requires:	runtime/perl-584
+Requires:	library/perl-5/digest-base-584
 
 %package 512
 IPS_package_name: library/perl-5/digest-md5-512
 Summary:  MD5 message digest algorithm for perl-512
 BuildRequires:	runtime/perl-512
 Requires:	runtime/perl-512
-
+Requires:	library/perl-5/digest-base-512
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -59,10 +60,10 @@ export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
   LIB=/usr/perl5/vendor_perl/5.8.4
 make
 make test
-make clean
 
 rm -rf $RPM_BUILD_ROOT
 make pure_install
+make clean
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
@@ -97,5 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Wed Feb 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.54
 * Tue Jun 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

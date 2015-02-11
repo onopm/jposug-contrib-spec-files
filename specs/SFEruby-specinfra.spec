@@ -22,7 +22,7 @@
 Summary:          Common layer for serverspec and configspec
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-22/specinfra
-Version:          2.12.3
+Version:          2.12.6
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -156,6 +156,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Wed Feb 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.12.6
 * Sun Feb 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.12.3
 * Fri Jan 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

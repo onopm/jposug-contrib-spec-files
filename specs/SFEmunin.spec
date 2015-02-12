@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.21
+Version:   2.0.25
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -24,6 +24,7 @@ Source5:        munin-node.logadm.conf
 
 Patch1: SFEmunin-SyncDictFile.patch
 # Patch2: SFEmunin-2.0.19-makefile.patch
+Patch3: munin-plugin-mysql_.patch
 
 BuildRequires: library/perl-5/module-build-512
 BuildRequires: library/perl-5/log-log4perl-512
@@ -33,6 +34,19 @@ BuildRequires: library/perl-5/net-snmp-512
 BuildRequires: library/perl-5/io-stringy-512
 BuildRequires: library/perl-5/test-differences-512
 BuildRequires: library/perl-5/test-longstring-512
+BuildRequires: library/perl-5/cache-cache-512
+BuildRequires: library/perl-5/cache-memcached-512
+BuildRequires: library/perl-5/date-manip-512
+BuildRequires: library/perl-5/db-file-512
+BuildRequires: library/perl-5/file-copy-recursive-512
+BuildRequires: library/perl-5/io-socket-inet6-512
+BuildRequires: library/perl-5/lwp-512
+BuildRequires: library/perl-5/net-cidr-512
+BuildRequires: library/perl-5/rrdtool-512
+BuildRequires: library/perl-5/uri-512
+BuildRequires: library/perl-5/test-deep-512
+BuildRequires: library/perl-5/test-mockmodule-512
+BuildRequires: library/perl-5/file-slurp-512
 
 # java buildrequires on fedora
 # %if 0%{?rhel} > 4 || 0%{?fedora} > 6
@@ -164,7 +178,7 @@ munin-async
 # %if 0%{?rhel} < 6 && 0%{?fedora} < 11
 # %patch2 -p0
 # %endif
-# %patch3 -p1
+%patch3 -p1
 
 %build
 export PATH=/usr/perl5/5.12/bin:$PATH
@@ -428,6 +442,12 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Fri Dec 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add patch3 to make mysql_innodb_insert_buf to work
+* Sun Dec 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
+* Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.25
 * Tue Jun 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.21
 * Wed Mar 05 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -4,7 +4,7 @@
 %define cc_is_gcc 0
 
 %define module_name puppetlabs-stdlib
-%define module_version 4.3.2
+%define module_version 4.5.1
 
 Name:           puppet-modules-stdlib
 IPS_package_name:        system/management/puppet3/modules/puppetlabs/stdlib
@@ -47,6 +47,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Feb 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 4.5.1
 * Tue Oct 28 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.3.2
 * Fri May 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

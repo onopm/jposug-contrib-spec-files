@@ -4,7 +4,7 @@
 Name:			SFEelasticsearch
 IPS_package_name:       database/elasticsearch
 Summary:		distributed restful search and analytics
-Version:		1.3.5
+Version:		1.4.3
 Source:		http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-%{version}.tar.gz
 Source1:		svc-elasticsearch
 Source2:		elasticsearch.xml
@@ -64,6 +64,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755, root, sys) /var/svc/manifest/application/elasticsearch.xml
 
 %changelog
+* Sun Feb 15 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.4.3
 * Fri Nov 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.3.5
 * Sat Oct 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

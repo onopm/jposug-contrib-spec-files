@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.21
+%define tarball_version  5.5.22
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
@@ -441,6 +441,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %config(noreplace) /etc/apache2/2.2/conf.d/php/php5.5.conf
 
 %changelog
+* Fri Feb 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.22
 * Tue Jan 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.21
 * Tue Jan 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

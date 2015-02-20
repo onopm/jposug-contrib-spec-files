@@ -21,7 +21,7 @@
 Name: SFEruby-msgpack
 IPS_package_name:        library/ruby-22/msgpack
 Summary: MessagePack is an efficient binary serialization format.
-Version: 0.5.9
+Version: 0.5.11
 License: ASL 2.0
 Group: System Environment/Base
 URL:     http://msgpack.org/
@@ -131,6 +131,8 @@ rm -rf %{buildroot}
 %{gemdir21}
 
 %changelog
+* Fri Feb 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.5.11
 * Sun Jan 18 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-22
 * Sun Nov 03 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
@@ -151,3 +153,4 @@ rm -rf %{buildroot}
 - use full path to gem
 * Sun Jun 24 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+p

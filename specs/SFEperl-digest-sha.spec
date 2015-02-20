@@ -8,15 +8,15 @@
 #
 %include Solaris.inc
 
-%define tarball_version 5.71
+%define tarball_version 5.95
 %define tarball_name    Digest-SHA
 
 Name:		SFEperl-digest-sha
 IPS_package_name: library/perl-5/digest-sha
-Version:	5.71
-IPS_component_version: 5.71
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	Perl extension for SHA-1/224/256/384/512
-License:	Artistic
+License:	Perl 5
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 Url:		http://search.cpan.org/~mshelor/%{tarball_name}-%{tarball_version}
@@ -92,5 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Fri 20 Feb 2015 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.95
 * Mon 04 Jun 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

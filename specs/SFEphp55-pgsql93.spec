@@ -9,7 +9,7 @@
 
 %define _prefix /usr
 %define php_version 5.5
-%define tarball_version  5.5.18
+%define tarball_version  5.5.22
 %define tarball_name     php
 
 Name:                    SFEphp55-pgsql93
@@ -25,14 +25,14 @@ SUNW_Basedir:            /
 #SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires: web/php-55
+BuildRequires: web/php-55 >= %{version}
 BuildRequires: text/gnu-sed
 BuildRequires: database/postgres-93/library
 BuildRequires: database/postgres-93/developer
 BuildRequires: developer/lexer/re2c
 
 Requires: database/postgres-93/library
-Requires: web/php-55
+Requires: web/php-55 >= %{version}
 
 %description
 The SFEphp55-pgsql93 package includes a dynamic shared object (DSO) that can
@@ -130,6 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.5/conf.d/*
 
 %changelog
+* Tue Mar 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.22
 * Tue Oct 28 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.18
 * Mon Jul 07 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

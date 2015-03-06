@@ -22,7 +22,7 @@
 Summary:          Infrastructure Behavior Testing Framework
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-22/%{gemname}
-Version:          0.2.1
+Version:          0.2.5
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -176,6 +176,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Fri Mar 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.2.5
 * Sun Jan 18 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.2.1
 * Sat Jan 17 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

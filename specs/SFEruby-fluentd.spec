@@ -6,7 +6,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.10.57
+%define tarball_version 0.12.6
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -28,10 +28,10 @@ BuildRequires:	library/ruby-21/rr
 BuildRequires:	library/ruby-21/timecop
 BuildRequires:	library/text/yaml >= 0.1.6
 Requires:	runtime/ruby-21
-Requires:	library/ruby-21/cool.io >= 1.1.1
+Requires:	library/ruby-21/cool.io >= 1.2.2
 Requires:	library/ruby-21/http_parser.rb >= 0.5.1
 Requires:	library/ruby-21/json >= 1.4.3
-Requires:	library/ruby-21/msgpack >= 0.5.8
+Requires:	library/ruby-21/msgpack >= 0.5.11
 Requires:	library/ruby-21/sigdump >= 0.2.2
 Requires:	library/ruby-21/yajl-ruby >= 1.0
 Requires:	library/ruby-21/tzinfo >= 1.0.0
@@ -63,6 +63,13 @@ do
 done
 popd
 
+# ruby > 2.1 does not require string-scrub
+cp usr/ruby/2.1/lib/amd64/ruby/gems/2.1.0/specifications/fluentd-0.12.6.gemspec \
+    usr/ruby/2.1/lib/amd64/ruby/gems/2.1.0/specifications/fluentd-0.12.6.gemspec.tmp
+
+sed -e 's/.*string-scrub.*//' \
+    usr/ruby/2.1/lib/amd64/ruby/gems/2.1.0/specifications/fluentd-0.12.6.gemspec.tmp > \
+    usr/ruby/2.1/lib/amd64/ruby/gems/2.1.0/specifications/fluentd-0.12.6.gemspec
 
 %install
 rm -rf %{buildroot}
@@ -116,6 +123,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Sat Mar 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.6
 * Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.57
 * Mon Nov 03 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

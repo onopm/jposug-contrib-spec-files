@@ -11,7 +11,7 @@
 Summary:          alternative implementation of out_file, with various configurations
 Name:             SFEfluent-plugin-file-alt
 IPS_package_name: system/fluentd/plugins/file-alternative
-Version:          0.1.5
+Version:          0.2.0
 License:          Apache License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -19,7 +19,7 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	  runtime/ruby-21
 Requires:         runtime/ruby-21
-Requires:         system/fluentd
+Requires:         system/fluentd >= 0.10.39
 Requires:         system/fluentd/plugins/mixin-plaintextformatter
 
 %description
@@ -63,6 +63,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.2.0
 * Mon Jul 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.1.5 and use ruby-21 instead of ruby-19
 * Mon Jul 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

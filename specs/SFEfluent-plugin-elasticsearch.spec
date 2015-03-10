@@ -11,7 +11,7 @@
 Name:             fluent-plugin-elasticsearch
 IPS_package_name: system/fluentd/plugins/elasticsearch
 Summary:          fluent plugin for elasticsearch
-Version:          0.6.0
+Version:          0.7.0
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -19,7 +19,7 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	  runtime/ruby-21
 Requires:         runtime/ruby-21
-Requires:         system/fluentd
+Requires:         system/fluentd >= 0.10.43
 Requires:         library/ruby-21/elasticsearch
 Requires:         library/ruby-21/patron
 
@@ -63,6 +63,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.7.0
 * Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.6.0 and use ruby-21 instead of ruby-19
 * Sun Apr 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

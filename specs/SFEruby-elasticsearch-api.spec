@@ -15,21 +15,35 @@
 %define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
+%define bindir22 /usr/ruby/2.2/bin
+%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
+
 Summary:          Ruby client for Elasticsearch.
 Name:             SFEruby-es-api
-IPS_package_name: library/ruby-19/%{gemname}
-Version:          1.0.1
+IPS_package_name: library/ruby-22/%{gemname}
+Version:          1.0.7
 License:          Apache 2
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	  runtime/ruby-19
-Requires:         runtime/ruby-19
-Requires:         library/ruby-19/multi_json
+BuildRequires:	  runtime/ruby-22
+Requires:         runtime/ruby-22
+Requires:         library/ruby-22/multi_json
 
 %description
 Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+%package 19
+IPS_package_name: library/ruby-19/%{gemname}
+Summary:          Ruby HTTP client library based on libcurl
+BuildRequires:	  runtime/ruby-19
+Requires:	  runtime/ruby-19
+Requires:         library/ruby-19/multi_json
+
+%description 19
+Ruby HTTP client library based on libcurl
 
 %package 20
 IPS_package_name: library/ruby-20/%{gemname}
@@ -66,7 +80,7 @@ Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
     --force %{SOURCE0}
 
 # ruby-20
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir20}/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
     --no-rdoc \
@@ -75,9 +89,18 @@ Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
     --force %{SOURCE0}
 
 # ruby-21
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir21}/gem install --local \
     --install-dir .%{gemdir21} \
     --bindir .%{bindir21} \
+    --no-rdoc \
+    --no-ri \
+    -V \
+    --force %{SOURCE0}
+
+# ruby-22
+%{bindir22}/gem install --local \
+    --install-dir .%{gemdir22} \
+    --bindir .%{bindir22} \
     --no-rdoc \
     --no-ri \
     -V \
@@ -119,12 +142,27 @@ cp -a .%{bindir21}/* \
    %{buildroot}%{bindir21}/
 %endif
 
+# ruby-22
+mkdir -p %{buildroot}/%{gemdir22}
+cp -a .%{gemdir22}/* \
+    %{buildroot}/%{gemdir22}/
+
+%if %generate_executable
+mkdir -p %{buildroot}%{bindir22}
+cp -a .%{bindir22}/* \
+   %{buildroot}%{bindir22}/
+%endif
 
 %clean
 rm -rf %{buildroot}
 
 
 %files
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.2
+
+%files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
@@ -140,5 +178,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.7 and generate package for ruby-22
 * Mon Apr 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

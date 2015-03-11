@@ -9,16 +9,15 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  2.2.4
+%define tarball_version  2.3.1
 %define tarball_name     xdebug
 
 Name:                    SFEphp55-xdebug
 IPS_package_name:	 web/php-55/extension/php-xdebug
 Summary:                 Xdebug module for PHP 5.5
-Version:                 2.2.4
+Version:                 %{tarball_version}
 License:		 Xdebug License
-Url:                     http://pecl.php.net/package/%{tarball_name}
-# Source:                  http://pecl.php.net/get/%{tarball_name}-%{tarball_version}.tgz
+Url:                     http://xdebug.org/
 Source:                  http://xdebug.org/files/%{tarball_name}-%{tarball_version}.tgz
 Source1:                 %{name}.ini
 Distribution:            OpenSolaris
@@ -91,6 +90,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.5/conf.d/*
 
 %changelog
+* Wed Mar 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.1
 * Tue Apr 15 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - require any version of php-55
 - Initial Revision

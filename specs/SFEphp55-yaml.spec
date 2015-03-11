@@ -10,13 +10,13 @@
 
 %define _prefix /usr
 %define php_version 5.5
-%define tarball_version  1.1.0
+%define tarball_version  1.1.1
 %define tarball_name     yaml
 
 Name:                    SFEphp55-yaml
 IPS_package_name:	 web/php-55/extension/php-yaml
 Summary:                 PHP 5.5 module for YAML
-Version:                 1.1.0
+Version:                 %{tarball_version}
 License:		 PHP License
 Url:                     http://pecl.php.net/package/%{tarball_name}
 Source:                  http://pecl.php.net/get/%{tarball_name}-%{tarball_version}.tgz
@@ -29,7 +29,6 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: web/php-55
 BuildRequires: library/text/yaml >= 0.1.6
-
 Requires: web/php-55
 Requires: library/text/yaml >= 0.1.6
 Requires: web/php-55/extension/php-date
@@ -98,5 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/%{php_version}/conf.d/*
 
 %changelog
+* Wed Mar 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.1.1
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

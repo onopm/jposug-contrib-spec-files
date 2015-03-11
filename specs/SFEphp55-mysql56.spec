@@ -9,7 +9,7 @@
 
 %define _prefix /usr
 %define php_version 5.5
-%define tarball_version  5.5.18
+%define tarball_version  5.5.22
 %define tarball_name     php
 
 Name:                    SFEphp55-mysql56
@@ -33,7 +33,7 @@ BuildRequires: database/mysql-56/devel
 BuildRequires: developer/lexer/re2c
 
 Requires: database/mysql-56/library >= 5.6.0
-Requires: web/php-55 >= 5.5.10
+Requires: web/php-55 = %{version}
 
 %description
 PHP 5.5 module for MySQL 5.6
@@ -75,6 +75,9 @@ pushd ext/mysql
 gmake -j$CPUS
 # gmake test
 popd
+
+mkdir -p ext/mysqli/ext/mysqlnd
+cp ext/mysqlnd/mysql_float_to_double.h ext/mysqli/ext/mysqlnd
 
 pushd ext/mysqli
 /usr/php/5.5/bin/phpize
@@ -146,6 +149,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.5/conf.d/*
 
 %changelog
+* Wed Mar 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.22
 * Tue Oct 28 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.18
 * Mon Mar 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

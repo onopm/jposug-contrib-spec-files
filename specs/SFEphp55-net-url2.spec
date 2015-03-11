@@ -2,7 +2,7 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  2.0.6
+%define tarball_version  2.1.1
 %define tarball_name     Net_URL2
 %define pear_dir   %(/usr/php/5.5/bin/pear config-get php_dir)
 
@@ -55,5 +55,7 @@ rm -rf $RPM_BUILD_ROOT
 %{pear_dir}/.registry/net_url2.reg
 
 %changelog
-* Thu Jul 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Wed Mar 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.1
+* Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

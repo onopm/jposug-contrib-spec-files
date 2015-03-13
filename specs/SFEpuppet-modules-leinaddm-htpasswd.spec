@@ -15,8 +15,8 @@ License:        Apache Version 2.0
 URL:            https://github.com/puppetlabs/puppetlabs-stdlib
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires: system/management/puppet3
-Requires:      system/management/puppet3
+BuildRequires: system/management/puppet3 = *
+Requires:      system/management/puppet3 = *
 
 %description
 Puppet module to manage htpasswd and htgroup files
@@ -46,5 +46,7 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Mar 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify required puppet3 version
 * Thu Mar 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

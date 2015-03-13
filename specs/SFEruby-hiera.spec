@@ -3,30 +3,34 @@
 
 %define gemname hiera
 
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
-%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 %define bindir20 /usr/ruby/2.0/bin
+%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 
 %define bindir21 /usr/ruby/2.1/bin
 %define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir20 %{gemdir21}/gems/%{gemname}-%{version}
 
+%define bindir22 /usr/ruby/2.2/bin
+%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir22}/gems/%{gemname}-%{version}
+
 Summary: A pluggable data store for hierarcical data
 Name: SFEruby-%{gemname}
-IPS_package_name:        library/ruby-21/hiera
+IPS_package_name:        library/ruby-22/hiera
 Version: 1.3.4
 License: Apache License 2.0
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	runtime/ruby-21
-Requires:       runtime/ruby-21
-Requires:	library/ruby-21/json_pure
+BuildRequires:	runtime/ruby-22
+Requires:       runtime/ruby-22
+Requires:	library/ruby-22/json_pure
 
 %description
 A pluggable data store for hierarcical data
@@ -51,28 +55,45 @@ Requires:	library/ruby-20/json_pure
 %description 20
 A pluggable data store for hierarcical data
 
+%package 21
+IPS_package_name: library/ruby-21/hiera
+Summary: %{gemname}
+BuildRequires:	runtime/ruby-21
+Requires:	runtime/ruby-21
+Requires:	library/ruby-21/json_pure
+
+%description 21
+A pluggable data store for hierarcical data
+
 %prep
 %setup -q -c -T
 
 %build
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     -V \
     --force %{SOURCE0}
 
 # ruby-20
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir20}/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
     -V \
     --force %{SOURCE0}
 
 # ruby-21
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir21}/gem install --local \
     --install-dir .%{gemdir21} \
     --bindir .%{bindir21} \
+    -V \
+    --force %{SOURCE0}
+
+# ruby-22
+%{bindir22}/gem install --local \
+    --install-dir .%{gemdir22} \
+    --bindir .%{bindir22} \
     -V \
     --force %{SOURCE0}
 
@@ -106,6 +127,15 @@ mkdir -p %{buildroot}%{bindir21}
 cp -a .%{bindir21}/* \
     %{buildroot}%{bindir21}/
 
+# ruby-22
+mkdir -p %{buildroot}/%{gemdir22}
+cp -a .%{gemdir22}/* \
+    %{buildroot}/%{gemdir22}/
+
+mkdir -p %{buildroot}%{bindir22}
+cp -a .%{bindir22}/* \
+    %{buildroot}%{bindir22}/
+
 rm -rf %{buildroot}%{geminstdir}/.yardoc/
 
 %clean
@@ -114,7 +144,7 @@ rm -rf %{buildroot}
 %files
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
+/usr/ruby/2.2
 
 %files 19
 %defattr(0755,root,bin,-)
@@ -126,7 +156,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+
 %changelog
+* Fri Mar 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for ruby-22
 * Wed Jun 11 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.3.4
 * Tue Jun 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

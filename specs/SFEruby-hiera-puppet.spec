@@ -2,6 +2,7 @@
 %include default-depend.inc
 
 %define gemname hiera-puppet
+
 %define bindir19 /usr/ruby/1.9/bin
 %define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
@@ -12,20 +13,24 @@
 
 %define bindir21 /usr/ruby/2.1/bin
 %define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+%define geminstdir20 %{gemdir21}/gems/%{gemname}-%{version}
+
+%define bindir22 /usr/ruby/2.2/bin
+%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir22}/gems/%{gemname}-%{version}
 
 Summary: Store and query Hiera data from Puppet
 Name: SFEruby-hiera-puppet
-IPS_package_name:        library/ruby-21/hiera/puppet
+IPS_package_name:        library/ruby-22/hiera/puppet
 Version: 1.0.0
 License: MIT License
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	runtime/ruby-21
-Requires:       runtime/ruby-21
-Requires:       library/ruby-21/hiera
+BuildRequires:	runtime/ruby-22
+Requires:       runtime/ruby-22
+Requires:       library/ruby-22/hiera
 
 %description
 Store and query Hiera data from Puppet
@@ -87,6 +92,13 @@ Store and query Hiera data from Puppet
     -V \
     --force %{SOURCE0}
 
+# ruby-22
+%{bindir22}/gem install --local \
+    --install-dir .%{gemdir22} \
+    --bindir .%{bindir22} \
+    -V \
+    --force %{SOURCE0}
+
 %install
 rm -rf %{buildroot}
 
@@ -105,7 +117,10 @@ mkdir -p %{buildroot}/%{gemdir21}
 cp -a .%{gemdir21}/* \
     %{buildroot}/%{gemdir21}/
 
-rm -rf %{buildroot}%{geminstdir}/.yardoc/
+# ruby-22
+mkdir -p %{buildroot}/%{gemdir22}
+cp -a .%{gemdir22}/* \
+    %{buildroot}/%{gemdir22}/
 
 %clean
 rm -rf %{buildroot}
@@ -114,7 +129,7 @@ rm -rf %{buildroot}
 %files
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
+/usr/ruby/2.2
 
 %files 19
 %defattr(0755,root,bin,-)
@@ -126,8 +141,15 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+
 %changelog
-* Sun Dec 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Sat Mar 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for ruby-22
+* Tue Apr 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21 and stop to generate package for ruby-18
 * Sun Dec 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - delete unnecessary string which causes syntax error

@@ -24,7 +24,7 @@
 Summary:          Builder provides a number of builder objects that make creating structured data simple to do. 
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-22/%{gemname}
-Version:          3.0.4
+Version:          3.2.2
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -157,11 +157,8 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
-%if %generate_executable
+%dir %attr (0755, root, sys) /usr
 /usr/ruby/2.2
-%endif
 
 %files 19
 %defattr(0755,root,bin,-)
@@ -173,14 +170,15 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
-%files 20
+%files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/2.0
+/usr/ruby/2.1
 
 %changelog
 * Tue Mar 17 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for ruby-21 and ruby-22 instead of ruby-18
+- bump to 3.2.2
 * Wed May 29 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - version down to 3.0.4 because kaminari requires builder ~> 3.0.0
 * Thu May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -5,28 +5,33 @@
 %define generate_executable 0
 
 %define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-%define bindir18 /usr/ruby/1.8/bin
-
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 %define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
 
-%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
 %define bindir20 /usr/ruby/2.0/bin
+%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+
+%define bindir22 /usr/ruby/2.2/bin
+%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
 
 Summary:          Builder provides a number of builder objects that make creating structured data simple to do. 
 Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby-18/%{gemname}
+IPS_package_name: library/ruby-22/%{gemname}
 Version:          3.0.4
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:    runtime/ruby-18
-Requires:         runtime/ruby-18
+BuildRequires:    runtime/ruby-22
+Requires:         runtime/ruby-22
 
 %description
 Builder provides a number of builder objects that make creating structured data simple to do. Currently the following builder objects are supported: * XML Markup * XML Events 
@@ -49,28 +54,22 @@ Requires:	  runtime/ruby-20
 %description 20
 Builder provides a number of builder objects that make creating structured data simple to do. Currently the following builder objects are supported: * XML Markup * XML Events 
 
+%package 21
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          Builder provides a number of builder objects that make creating structured data simple to do. 
+BuildRequires:	  runtime/ruby-21
+Requires:	  runtime/ruby-21
+
+%description 21
+Builder provides a number of builder objects that make creating structured data simple to do. Currently the following builder objects are supported: * XML Markup * XML Events 
+
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir18}
-mkdir -p .%{bindir18}
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
-mkdir -p .%{gemdir20}
-mkdir -p .%{bindir20}
 
 %build
 
-# ruby-18
-/usr/ruby/1.8/bin/gem install --local \
-    --install-dir .%{gemdir18} \
-    --bindir .%{bindir18} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
-
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
+%{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
     --no-rdoc \
@@ -79,7 +78,7 @@ mkdir -p .%{bindir20}
     --force %{SOURCE0}
 
 # ruby-20
-/usr/ruby/2.0/bin/gem install --local \
+%{bindir20}/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
     --no-rdoc \
@@ -87,19 +86,26 @@ mkdir -p .%{bindir20}
     -V \
     --force %{SOURCE0}
 
+# ruby-21
+%{bindir21}/gem install --local \
+    --install-dir .%{gemdir21} \
+    --bindir .%{bindir21} \
+    --no-rdoc \
+    --no-ri \
+    -V \
+    --force %{SOURCE0}
+
+# ruby-22
+%{bindir22}/gem install --local \
+    --install-dir .%{gemdir22} \
+    --bindir .%{bindir22} \
+    --no-rdoc \
+    --no-ri \
+    -V \
+    --force %{SOURCE0}
+
 %install
 rm -rf %{buildroot}
-
-# ruby-18
-mkdir -p %{buildroot}/%{gemdir18}
-cp -a .%{gemdir18}/* \
-    %{buildroot}/%{gemdir18}/
-
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir18}
-cp -a .%{bindir18}/* \
-   %{buildroot}%{bindir18}/
-%endif
 
 # ruby-19
 mkdir -p %{buildroot}/%{gemdir19}
@@ -123,6 +129,28 @@ cp -a .%{bindir20}/* \
    %{buildroot}%{bindir20}/
 %endif
 
+# ruby-21
+mkdir -p %{buildroot}/%{gemdir21}
+cp -a .%{gemdir21}/* \
+    %{buildroot}/%{gemdir21}/
+
+%if %generate_executable
+mkdir -p %{buildroot}%{bindir21}
+cp -a .%{bindir21}/* \
+   %{buildroot}%{bindir21}/
+%endif
+
+# ruby-22
+mkdir -p %{buildroot}/%{gemdir22}
+cp -a .%{gemdir22}/* \
+    %{buildroot}/%{gemdir22}/
+
+%if %generate_executable
+mkdir -p %{buildroot}%{bindir22}
+cp -a .%{bindir22}/* \
+   %{buildroot}%{bindir22}/
+%endif
+
 %clean
 rm -rf %{buildroot}
 
@@ -132,7 +160,7 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /var
 %attr (0755, root, bin) /var/ruby/1.8/gem_home
 %if %generate_executable
-/usr/ruby/1.8
+/usr/ruby/2.2
 %endif
 
 %files 19
@@ -145,7 +173,14 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
 
+%files 20
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.0
+
 %changelog
+* Tue Mar 17 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate packages for ruby-21 and ruby-22 instead of ruby-18
 * Wed May 29 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - version down to 3.0.4 because kaminari requires builder ~> 3.0.0
 * Thu May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

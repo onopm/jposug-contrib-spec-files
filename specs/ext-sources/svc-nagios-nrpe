@@ -9,7 +9,7 @@ getproparg() {
 status_nrpe ()
 {
     pid_nrpe
-    if ps -p $NagiosPID > /dev/null 2>&1; then
+    if ps -p $NrpePID > /dev/null 2>&1; then
 	return 0
     else
 	return 1

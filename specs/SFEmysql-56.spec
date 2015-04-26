@@ -10,8 +10,9 @@
 %define _prefix /usr/mysql
 %define _var_prefix /var/mysql
 %define tarball_name     mysql
-%define tarball_version  5.6.22
+%define tarball_version  5.6.24
 %define major_version	 5.6
+%define q4m_ver          0.9.14
 %define prefix_name      SFEmysql-56
 %define _basedir         %{_prefix}/%{major_version}
 
@@ -26,6 +27,11 @@ Url:                     http://www.mysql.com/
 Source:                  http://cdn.mysql.com/Downloads/MySQL-%{major_version}/mysql-%{version}.tar.gz
 Source1:                 mysql_56
 Source2:                 mysql_56.xml
+Source3:                 http://github.com/q4m/q4m/archive/%{q4m_ver}.tar.gz
+Patch1:                  5.6-select-where-queue-wait.patch
+Patch2:                  queue_cond.cc-0.9.14.patch
+Patch3:                  queue_cond.h-0.9.14.patch
+Patch4:                  ha_queue.cc-0.9.14.patch
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: developer/build/cmake
@@ -74,6 +80,16 @@ Summary: MySQL devel
 
 %prep
 %setup -c -n %{tarball_name}-%{tarball_version}
+cd %{tarball_name}-%{tarball_version}
+%patch1 -p0
+cd ..
+tar -xzvf %{SOURCE3}
+mv q4m-%{q4m_ver} %{tarball_name}-%{tarball_version}/storage/q4m
+cd %{tarball_name}-%{tarball_version}
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+cd ..
 
 
 %ifarch amd64 sparcv9
@@ -143,8 +159,10 @@ rm -rf $RPM_BUILD_ROOT
 cd %{tarball_name}-%{tarball_version}
 make install DESTDIR=$RPM_BUILD_ROOT
 
-mkdir -p $RPM_BUILD_ROOT/etc/mysql/5.6
+mkdir -p $RPM_BUILD_ROOT/etc/mysql/%{major_version}
 install support-files/my-default.cnf $RPM_BUILD_ROOT/etc/mysql/5.6/my.cnf
+install storage/q4m/support-files/install.sql $RPM_BUILD_ROOT/usr/mysql/5.6/share/install.sql
+install storage/q4m/support-files/q4m-forward $RPM_BUILD_ROOT/usr/mysql/5.6/share/q4m-forward
 
 mkdir -p $RPM_BUILD_ROOT/usr/lib
 pushd $RPM_BUILD_ROOT/usr/lib
@@ -176,7 +194,7 @@ ln -s %{_arch64} 64
 
 mkdir -p $RPM_BUILD_ROOT/usr/lib/%{_arch64}
 cd $RPM_BUILD_ROOT/usr/lib/%{_arch64}
-ln -s ../../mysql/5.6/lib/%{_arch64}/mysql/libstlport.so.1 .
+ln -s ../../mysql/%{major_version}/lib/%{_arch64}/mysql/libstlport.so.1 .
 %endif
 
 #
@@ -186,9 +204,9 @@ install -m 0555 %{SOURCE1} $RPM_BUILD_ROOT/lib/svc/method
 mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/application/database
 install -m 0444 %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application/database
 
-cd $RPM_BUILD_ROOT/usr/mysql/5.6/bin
+cd $RPM_BUILD_ROOT/usr/mysql/%{major_version}/bin
 ln -s ../scripts/mysql_install_db .
-cd $RPM_BUILD_ROOT/usr/mysql/5.6/bin/64
+cd $RPM_BUILD_ROOT/usr/mysql/%{major_version}/bin/64
 ln -s ../scripts/mysql_install_db .
 
 cd $RPM_BUILD_ROOT/usr/mysql
@@ -323,8 +341,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %attr (0755, root, sys) /etc
 %dir %attr (0755, root, bin) /etc/mysql
-%dir %attr (0755, root, bin) /etc/mysql/5.6
-%attr (0755, root, bin) %config(noreplace) /etc/mysql/5.6/my.cnf
+%dir %attr (0755, root, bin) /etc/mysql/%{major_version}
+%attr (0755, root, bin) %config(noreplace) /etc/mysql/%{major_version}/my.cnf
 # %attr (0555, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /etc/mysql/my.cnf
 
 # /usr/bin
@@ -459,6 +477,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
+* Sun Apr 04 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>
+- bump to 5.6.24 and add Q4M storage engine
 * Tue Dec 02 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.22
 * Thu Aug 01 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

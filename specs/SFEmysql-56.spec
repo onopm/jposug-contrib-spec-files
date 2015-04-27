@@ -29,9 +29,9 @@ Source1:                 mysql_56
 Source2:                 mysql_56.xml
 Source3:                 http://github.com/q4m/q4m/archive/%{q4m_ver}.tar.gz
 Patch1:                  5.6-select-where-queue-wait.patch
-Patch2:                  queue_cond.cc-0.9.14.patch
-Patch3:                  queue_cond.h-0.9.14.patch
-Patch4:                  ha_queue.cc-0.9.14.patch
+Patch2:                  5.6-queue_cond.cc-0.9.14.patch
+Patch3:                  5.6-queue_cond.h-0.9.14.patch
+Patch4:                  5.6-ha_queue.cc-0.9.14.patch
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: developer/build/cmake
@@ -477,7 +477,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 
 %changelog
-* Sun Apr 04 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>
+* Sun Apr 27 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>
+- Q4M patches rename
+* Sun Apr 27 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>
 - bump to 5.6.24 and add Q4M storage engine
 * Tue Dec 02 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.6.22

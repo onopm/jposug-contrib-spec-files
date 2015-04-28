@@ -156,6 +156,8 @@ user ftpuser=false gcos-field="redis Reserved UID" username="redis" password=NP 
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_28.xml
 
 %changelog
+* Thu Feb 21 2015 - Osamu Tabata <cantimerny.g@gmail.com>
+- Modify SMF script
 * Fri Feb 21 2014 - Osamu Tabata <cantimerny.g@gmail.com>
 - Change to run user redis
 * Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

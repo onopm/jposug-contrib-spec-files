@@ -110,6 +110,7 @@
 #no versioning here
 %define openindiana 0
 %define solaris11express 0
+%define omnios 0
 
 #boolean flags for major osdistro names - *with* versioning the releases
 #use osbuild in addition to finer granularity, e.g. osbuild >= 148
@@ -351,7 +352,6 @@
 ##END
 
 ##OmniOS
-%define omnios 0
 %if %{osdet299999}
 %if %( expr %{osbuild} '>=' 151002 )
 %if %( uname -v | egrep 'omnios' > /dev/null && echo 1 || echo 0 )

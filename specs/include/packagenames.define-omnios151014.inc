@@ -3829,3 +3829,5 @@
 %define pnm_requires_wget web/wget
 %define pnm_buildrequires_library_openldap naming/ldap
 %define pnm_requires_library_openldap naming/ldap
+%define pnm_buildrequires_library_database_gdbm omniti/library/libgdbm
+%define pnm_requires_library_database_gdbm omniti/library/libgdbm

@@ -351,6 +351,7 @@
 ##END
 
 ##OmniOS
+%define omnios 0
 %if %{osdet299999}
 %if %( expr %{osbuild} '>=' 151002 )
 %if %( uname -v | egrep 'omnios' > /dev/null && echo 1 || echo 0 )

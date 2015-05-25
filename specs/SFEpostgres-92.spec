@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.2.10
+%define tarball_version  9.2.11
 %define major_version	 9.2
 %define prefix_name      SFEpostgres-92
 %define _basedir         %{_prefix}/%{major_version}
@@ -1033,6 +1033,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/share/extension/chkpass.control
 %{_prefix}/%{major_version}/share/extension/citext--1.0.sql
 %{_prefix}/%{major_version}/share/extension/citext--unpackaged--1.0.sql
+%{_prefix}/%{major_version}/share/extension/citext--1.1.sql
+%{_prefix}/%{major_version}/share/extension/citext--1.0--1.1.sql
+%{_prefix}/%{major_version}/share/extension/citext--1.1--1.0.sql
 %{_prefix}/%{major_version}/share/extension/citext.control
 %{_prefix}/%{major_version}/share/extension/cube--1.0.sql
 %{_prefix}/%{major_version}/share/extension/cube--unpackaged--1.0.sql
@@ -1162,6 +1165,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Mon May 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.11
 * Sun Feb 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.2.10
 * Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

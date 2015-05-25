@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 1.09
+%define tarball_version 1.18
 %define tarball_name    File-Which
 
 Name:		SFEperl-file-which
 IPS_package_name: library/perl-5/file-which
-Version:	1.09
-IPS_component_version: 1.9
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	Portable implementation of `which'
 License:	Artistic
 Distribution:   OpenSolaris
@@ -23,7 +23,8 @@ Vendor:         OpenSolaris Community
 Url:		http://search.cpan.org/~adamk/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/A/AD/ADAMK/File-Which-%{tarball_version}.tar.gz
+# Source0:	http://search.cpan.org/CPAN/authors/id/A/AD/ADAMK/File-Which-%{tarball_version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/P/PL/PLICEASE/File-Which-%{tarball_version}.tar.gz
 
 BuildRequires:	runtime/perl-584
 BuildRequires:	runtime/perl-512
@@ -66,8 +67,8 @@ rm -rf $RPM_BUILD_ROOT
 make pure_install
 make clean
 
-mkdir -p $RPM_BUILD_ROOT/usr/perl5/5.8.4
-mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/5.8.4
+# mkdir -p $RPM_BUILD_ROOT/usr/perl5/5.8.4
+# mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/5.8.4
 
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
@@ -84,8 +85,8 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 
-mkdir -p $RPM_BUILD_ROOT/usr/perl5/5.12
-mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/5.12
+# mkdir -p $RPM_BUILD_ROOT/usr/perl5/5.12
+# mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/5.12
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -101,14 +102,16 @@ rm -rf $RPM_BUILD_ROOT
 %files 584
 %defattr (-, root, bin)
 %{_prefix}/perl5/vendor_perl/5.8.4
-%{_prefix}/perl5/5.8.4/bin
+# %{_prefix}/perl5/5.8.4/bin
 
 
 %files 512
 %defattr (-, root, bin)
 %{_prefix}/perl5/vendor_perl/5.12
-%{_prefix}/perl5/5.12/bin
+# %{_prefix}/perl5/5.12/bin
 
 %changelog
+* Mon May 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.18
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

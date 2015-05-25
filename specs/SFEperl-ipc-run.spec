@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 0.91
+%define tarball_version 0.94
 %define tarball_name    IPC-Run
 
 Name:		SFEperl-ipc-run
 IPS_package_name: library/perl-5/ipc-run
-Version:	0.91
-IPS_component_version: 0.91
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	Child procs w/ piping, redir and psuedo-ttys
 License:	Artistic
 Distribution:   OpenSolaris
@@ -94,5 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon 25 May 2015 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.94
 * Mon 04 Jun 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

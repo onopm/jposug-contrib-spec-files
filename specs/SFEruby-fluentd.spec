@@ -6,7 +6,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.12.6
+%define tarball_version 0.12.9
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -63,12 +63,12 @@ done
 popd
 
 # ruby > 2.1 does not require string-scrub
-cp .%{gemdir21}/specifications/fluentd-0.12.6.gemspec \
-    .%{gemdir21}/specifications/fluentd-0.12.6.gemspec.tmp
+cp .%{gemdir21}/specifications/fluentd-%{version}.gemspec \
+    .%{gemdir21}/specifications/fluentd-%{version}.gemspec.tmp
 
 sed -e 's/.*string-scrub.*//' \
-    .%{gemdir21}/specifications/fluentd-0.12.6.gemspec.tmp > \
-    .%{gemdir21}/specifications/fluentd-0.12.6.gemspec
+    .%{gemdir21}/specifications/fluentd-%{version}.gemspec.tmp > \
+    .%{gemdir21}/specifications/fluentd-%{version}.gemspec
 
 %install
 rm -rf %{buildroot}
@@ -124,6 +124,7 @@ rm -rf %{buildroot}
 %changelog
 * Wed May 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use variables to aboid path problem
+- bump to 0.12.9
 * Sat Mar 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.12.6
 * Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

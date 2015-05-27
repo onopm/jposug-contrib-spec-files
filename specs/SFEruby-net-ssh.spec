@@ -15,10 +15,10 @@
 %define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.
+Summary:          a pure-Ruby implementation of the SSH2 client protocol.
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-21/net-ssh
-Version:          2.9.1
+Version:          2.9.2
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -28,25 +28,25 @@ BuildRequires:   runtime/ruby-21
 Requires:        runtime/ruby-21 >= 2.1.0
 
 %description
-Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
 
 %package 19
 IPS_package_name: library/ruby-19/net-ssh
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.
+Summary:          a pure-Ruby implementation of the SSH2 client protocol.
 BuildRequires:    runtime/ruby-19
 Requires:         runtime/ruby-19 >= 1.9.3
 
 %description 19
-Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
 
 %package 20
 IPS_package_name: library/ruby-20/net-ssh
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.
+Summary:          a pure-Ruby implementation of the SSH2 client protocol.
 BuildRequires:    runtime/ruby-20
 Requires:         runtime/ruby-20 >= 2.0.0
 
 %description 20
-Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
 
 
 %prep
@@ -78,16 +78,34 @@ Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you 
 rm -rf %{buildroot}
 
 # ruby-19
+pushd .%{gemdir19}/gems/%{gemname}-%{version}
+mv support/ssh_tunnel_bug.rb support/ssh_tunnel_bug.rb.bak
+sed -e 's!/usr/bin/ruby!%{bindir19}/ruby!' < support/ssh_tunnel_bug.rb.bak > support/ssh_tunnel_bug.rb
+rm support/ssh_tunnel_bug.rb.bak
+popd
+
 mkdir -p %{buildroot}/%{gemdir19}
 cp -a .%{gemdir19}/* \
     %{buildroot}/%{gemdir19}/
 
 # ruby-20
+pushd .%{gemdir20}/gems/%{gemname}-%{version}
+mv support/ssh_tunnel_bug.rb support/ssh_tunnel_bug.rb.bak
+sed -e 's!/usr/bin/ruby!%{bindir20}/ruby!' < support/ssh_tunnel_bug.rb.bak > support/ssh_tunnel_bug.rb
+rm support/ssh_tunnel_bug.rb.bak
+popd
+
 mkdir -p %{buildroot}/%{gemdir20}
 cp -a .%{gemdir20}/* \
     %{buildroot}/%{gemdir20}/
 
 # ruby-21
+pushd .%{gemdir21}/gems/%{gemname}-%{version}
+mv support/ssh_tunnel_bug.rb support/ssh_tunnel_bug.rb.bak
+sed -e 's!/usr/bin/ruby!%{bindir21}/ruby!' < support/ssh_tunnel_bug.rb.bak > support/ssh_tunnel_bug.rb
+rm support/ssh_tunnel_bug.rb.bak
+popd
+
 mkdir -p %{buildroot}/%{gemdir21}
 cp -a .%{gemdir21}/* \
     %{buildroot}/%{gemdir21}/
@@ -112,6 +130,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed May 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify shebang to avoid dependency detection problem
 * Wed Jul 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - specify required ruby version
 * Thu Feb 20 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

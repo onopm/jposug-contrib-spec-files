@@ -41,11 +41,10 @@ Requires:	library/ruby-21/tzinfo-data >= 1.0.0
 %setup -q -c -T
 
 mkdir -p .%{gemdir21}
+%build
 %{bindir21}/gem install --local --install-dir .%{gemdir21} \
             --bindir .%{_bindir} \
             --force %{SOURCE0}
-
-%build
 
 pushd usr/bin
 for i in fluent*
@@ -55,7 +54,7 @@ do
 done
 popd
 
-pushd usr/ruby/2.1/lib/%{_arch64}/ruby/gems/2.1.0/gems/fluentd-%{version}/bin
+pushd .%{geminstdir21}/bin
 for i in fluent*
 do
     cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/usr/ruby/2.1/bin/ruby$' > ${i}.tmp
@@ -64,12 +63,12 @@ done
 popd
 
 # ruby > 2.1 does not require string-scrub
-cp usr/ruby/2.1/lib/amd64/ruby/gems/2.1.0/specifications/fluentd-0.12.6.gemspec \
-    usr/ruby/2.1/lib/amd64/ruby/gems/2.1.0/specifications/fluentd-0.12.6.gemspec.tmp
+cp .%{gemdir21}/specifications/fluentd-0.12.6.gemspec \
+    .%{gemdir21}/specifications/fluentd-0.12.6.gemspec.tmp
 
 sed -e 's/.*string-scrub.*//' \
-    usr/ruby/2.1/lib/amd64/ruby/gems/2.1.0/specifications/fluentd-0.12.6.gemspec.tmp > \
-    usr/ruby/2.1/lib/amd64/ruby/gems/2.1.0/specifications/fluentd-0.12.6.gemspec
+    .%{gemdir21}/specifications/fluentd-0.12.6.gemspec.tmp > \
+    .%{gemdir21}/specifications/fluentd-0.12.6.gemspec
 
 %install
 rm -rf %{buildroot}
@@ -123,6 +122,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Wed May 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use variables to aboid path problem
 * Sat Mar 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.12.6
 * Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -278,8 +278,8 @@
 %define pnm_requires_SUNWbison developer/parser/bison
 %define pnm_buildrequires_bison developer/parser/bison
 %define pnm_requires_bison developer/parser/bison
-%define pnm_buildrequires_developer_swig developer/swig
-%define pnm_requires_developer_swig developer/swig
+%define pnm_buildrequires_developer_swig omniti/developer/swig
+%define pnm_requires_developer_swig omniti/developer/swig
 %define pnm_buildrequires_SUNWswig_devel developer/swig
 %define pnm_buildrequires_SUNWswig developer/swig
 %define pnm_requires_SUNWswig developer/swig
@@ -3831,3 +3831,7 @@
 %define pnm_requires_library_openldap naming/ldap
 %define pnm_buildrequires_library_database_gdbm omniti/library/libgdbm
 %define pnm_requires_library_database_gdbm omniti/library/libgdbm
+%define pnm_requires_SUNWlibpopt library/popt
+%define pnm_buildrequires_libpopt library/popt
+%define pnm_buildrequires_gnu_automake_114 developer/build/automake
+%define pnm_requires_gnu_automake_114 developer/build/automake

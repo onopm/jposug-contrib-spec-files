@@ -47,7 +47,7 @@ __END__
 %define build27 1
 %define build34 0
 
-%define tarball_index <%= data['name'][0].upcase %>
+%define tarball_index <%= data['name'][0] %>
 %define tarball_name <%= data['name'] %>
 %define tarball_version <%= data['version'] %>
 

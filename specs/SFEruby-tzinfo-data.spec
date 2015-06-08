@@ -23,7 +23,7 @@
 Summary:          TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-22/%{gemname}
-Version:          1.2015.1
+Version:          1.2015.4
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -178,6 +178,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Tue Jun 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2015.4
 * Wed Mar 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.2015.1 and generate package for ruby-22
 * Sat Dec 13 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

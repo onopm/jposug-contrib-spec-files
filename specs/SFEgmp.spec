@@ -39,6 +39,7 @@ BuildRequires: %{pnm_buildrequires_SUNWlibm}
 Requires: %{pnm_requires_SUNWlibm}
 
 %package devel
+IPS_Package_Name:	library/gmp-5/developer
 Summary:	%{summary} - development files
 SUNW_BaseDir:	%{_basedir}/%{_subdir}
 Requires: %name
@@ -111,6 +112,8 @@ rm -rf %{buildroot}
 %{_includedir}/*
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- added suffix "developer" to IPS package name
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - delete sfe prefix from IPS package name
 * Thu 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>

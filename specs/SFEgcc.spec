@@ -207,7 +207,7 @@ Requires: SUNWgnu-mpfr
 %endif
 
 %if %SFElibmpc
-BuildRequires: SFElibmpc-devel
+BuildRequires: library/mpc/developer
 Requires: SFElibmpc
 #workaround on IPS which is wrong with BASEdir as "/" -> then assume /usr/gnu
 %define SFElibmpcbasedir %(pkgparam SFElibmpc BASEDIR 2>/dev/null | sed -e 's+^/$+/usr/gnu+')
@@ -587,6 +587,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Feb 16 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- Fixed dependency
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - delete sfe prefix from IPS package name
 * Tue Jan 29 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>

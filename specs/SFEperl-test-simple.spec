@@ -11,7 +11,8 @@
 
 Name:		SFEperl-test-simple
 IPS_package_name: library/perl-5/test-simple
-Version:	0.98
+Version:	1.001009
+IPS_component_version: 1.1009
 Summary:	Basic utilities for writing tests
 License:	Artistic
 Distribution:   OpenSolaris
@@ -19,7 +20,8 @@ Vendor:         OpenSolaris Community
 Url:		http://search.cpan.org/~mschwern/Test-Simple-%{version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHWERN/Test-Simple-%{version}.tar.gz
+# Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHWERN/Test-Simple-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/E/EX/EXODIST/Test-Simple-%{version}.tar.gz
 
 BuildRequires:  %{pnm_buildrequires_perl_default}
 Requires:  	%{pnm_requires_perl_default}
@@ -88,6 +90,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Wed Nov 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.001009
 * Mon 04 Jun 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify %files to avoid file conflict.
 

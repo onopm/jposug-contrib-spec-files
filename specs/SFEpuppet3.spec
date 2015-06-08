@@ -3,34 +3,41 @@
 %include base.inc
 %define cc_is_gcc 0
 
-%define _bindir /usr/ruby/1.8/bin
-%define _sbindir /usr/ruby/1.8/sbin
-%define _mandir /usr/ruby/1.8/share/man
+%define gemname puppet
+%define generate_executable 1
 
-%{!?ruby_sitelibdir: %define ruby_sitelibdir %(ruby -rrbconfig -e 'puts Config::CONFIG["sitelibdir"]')}
+%define bindir21 /usr/ruby/2.1/bin
+%define sbindir21 /usr/ruby/2.1/sbin
+%define mandir21 /usr/ruby/2.1/share/man
+%define siteruby21 /usr/ruby/2.1/lib/amd64/ruby/site_ruby/2.1.0
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+
 %define confdir conf/solaris
 
-Name:           puppet3
-IPS_package_name:        system/management/puppet3
-Version:        3.0.1
-#Release:        0.1rc1%{?dist}
-Release:        1%{?dist}
-Summary:        A network tool for managing many disparate systems
-Group:		Applications/System
-License:        ASL 2.0
-URL:            http://puppetlabs.com
-Source0:        http://puppetlabs.com/downloads/puppet/puppet-%{version}.tar.gz
+Name:             puppet3
+IPS_package_name: system/management/puppet3
+Version:          3.7.3
+Summary:          A network tool for managing many disparate systems
+Group:		  Applications/System
+License:          ASL 2.0
+URL:              http://puppetlabs.com
+Source0:          http://puppetlabs.com/downloads/puppet/puppet-%{version}.tar.gz
+# Patch0:           puppet-add_mange_shell_to_user_role_add_provider.patch
 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires: runtime/ruby-18
-BuildRequires: runtime/ruby-18/facter
-Requires:      runtime/ruby-18
-Requires:      runtime/ruby-18/facter
-Requires:      library/ruby-18/hiera
-Requires:      library/ruby-18/hiera/puppet
-Requires:      library/ruby-18/hiera/json
-Requires:      archiver/gnu-tar
+BuildRequires:    runtime/ruby-21
+BuildRequires:    library/ruby-21/facter
+BuildRequires:    library/ruby-21/hiera
+Requires:         runtime/ruby-21 >= 2.0.0
+Requires:         library/ruby-21/facter
+Requires:         library/ruby-21/hiera
+Requires:         library/ruby-21/hiera/puppet
+Requires:         library/ruby-21/hiera/json
+Requires:         library/ruby-21/rgen
+Requires:         archiver/gnu-tar
+Requires:         system/management/puppet3/common = %{version}
 
 %description
 Puppet lets you centrally manage every important aspect of your system using a
@@ -43,9 +50,20 @@ IPS_package_name: system/management/puppet3/master
 Group:		  Applications/System
 Summary:          Server for the puppet system management tool
 Requires:         system/management/puppet3 = %{version}
-Requires:         library/ruby-18/hiera
-Requires:         library/ruby-18/hiera/puppet
-Requires:         library/ruby-18/hiera/json
+Requires:         library/ruby-21/hiera
+Requires:         library/ruby-21/hiera/puppet
+Requires:         library/ruby-21/hiera/json
+Requires:         library/ruby-21/rgen
+Requires:         system/management/puppet3/common = %{version}
+
+%description master
+Provides the central puppet server daemon which provides manifests to clients.
+The server can also function as a certificate authority and file server.
+
+%package common
+IPS_package_name: system/management/puppet3/common
+Group:		  Applications/System
+Summary:          the puppet system management tool
 
 %description master
 Provides the central puppet server daemon which provides manifests to clients.
@@ -53,12 +71,15 @@ The server can also function as a certificate authority and file server.
 
 %prep
 %setup -q -n puppet-%{version}
+# %setup -q -n puppet-%{version}-rc1
+
+# %patch0 -p0
 
 %build
 
 %install
 rm -rf %{buildroot}
-ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
+%{bindir21}/ruby install.rb --destdir=%{buildroot} --quick --no-rdoc
 
 install -d -m0755 %{buildroot}%{_sysconfdir}/puppet/manifests
 install -d -m0755 %{buildroot}%{_datadir}/puppet/modules
@@ -91,30 +112,30 @@ install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
 #
 mkdir -p %{buildroot}/usr/bin
 cd %{buildroot}/usr/bin
-ln -s ../../%{_bindir}/extlookup2hiera .
-ln -s ../../%{_bindir}/puppet .
+ln -s ../../%{bindir21}/extlookup2hiera .
+ln -s ../../%{bindir21}/puppet .
 
-%actions master
+%actions common
 group groupname="puppet"
 user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=NP group="puppet"
 
 %files
 %defattr(-, root, bin, 0755)
-%doc LICENSE README.md README_DEVELOPER.md README_HIERA.md CONTRIBUTING.md
+%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) /usr/bin
 /usr/bin/puppet
 /usr/bin/extlookup2hiera
-%{_bindir}/extlookup2hiera
-%{_bindir}/puppet
-%dir %attr (0755, root, sys) /usr
+%attr (0755, root, bin) %{bindir21}/extlookup2hiera
+%attr (0755, root, bin) %{bindir21}/puppet
 %dir %attr (0755, root, sys) %{_localstatedir}
 %dir %attr (0755, root, sys) %{_localstatedir}/svc
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/system
-%attr (0755, root, bin) %{ruby_sitelibdir}/
+%attr (0755, root, bin) %{siteruby21}/
 %dir %attr (0755, root, sys) %{_sysconfdir}
 %dir %attr (0755, root, sys) %{_sysconfdir}/puppet
 %dir %attr (0755, root, sys) /usr/share
-%dir %attr (0755, root, other) /usr/share/doc
+# %dir %attr (0755, root, other) /usr/share/doc
 %ghost %config(noreplace,missingok) %{_sysconfdir}/puppet/puppet.conf
 %config(noreplace,missingok) %{_sysconfdir}/puppet/auth.conf
 # We don't want to require emacs or vim, so we need to own these dirs
@@ -122,42 +143,43 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 %attr (0755, root, bin) %{_datadir}/vim
 %{_datadir}/puppet
 %dir %attr(0755, root, other) %{_localstatedir}/lib
-%{_mandir}/man5/puppet.conf.5.gz
-%{_mandir}/man8/puppet-agent.8.gz
-%{_mandir}/man8/puppet-apply.8.gz
-%{_mandir}/man8/puppet-ca.8.gz
-%{_mandir}/man8/puppet-catalog.8.gz
-%{_mandir}/man8/puppet-cert.8.gz
-%{_mandir}/man8/puppet-certificate.8.gz
-%{_mandir}/man8/puppet-certificate_request.8.gz
-%{_mandir}/man8/puppet-certificate_revocation_list.8.gz
-%{_mandir}/man8/puppet-config.8.gz
-%{_mandir}/man8/puppet-describe.8.gz
-%{_mandir}/man8/puppet-device.8.gz
-%{_mandir}/man8/puppet-doc.8.gz
-%{_mandir}/man8/puppet-facts.8.gz
-%{_mandir}/man8/puppet-file.8.gz
-%{_mandir}/man8/puppet-filebucket.8.gz
-%{_mandir}/man8/puppet-help.8.gz
-%{_mandir}/man8/puppet-inspect.8.gz
-%{_mandir}/man8/puppet-instrumentation_data.8.gz
-%{_mandir}/man8/puppet-instrumentation_listener.8.gz
-%{_mandir}/man8/puppet-instrumentation_probe.8.gz
-%{_mandir}/man8/puppet-key.8.gz
-%{_mandir}/man8/puppet-kick.8.gz
-%{_mandir}/man8/puppet-man.8.gz
-%{_mandir}/man8/puppet-master.8.gz
-%{_mandir}/man8/puppet-module.8.gz
-%{_mandir}/man8/puppet-node.8.gz
-%{_mandir}/man8/puppet-parser.8.gz
-%{_mandir}/man8/puppet-plugin.8.gz
-%{_mandir}/man8/puppet-queue.8.gz
-%{_mandir}/man8/puppet-report.8.gz
-%{_mandir}/man8/puppet-resource.8.gz
-%{_mandir}/man8/puppet-resource_type.8.gz
-%{_mandir}/man8/puppet-secret_agent.8.gz
-%{_mandir}/man8/puppet-status.8.gz
-%{_mandir}/man8/puppet.8.gz
+%{mandir21}/man5/puppet.conf.5.gz
+%{mandir21}/man8/puppet-agent.8.gz
+%{mandir21}/man8/puppet-apply.8.gz
+%{mandir21}/man8/puppet-ca.8.gz
+%{mandir21}/man8/puppet-catalog.8.gz
+%{mandir21}/man8/puppet-cert.8.gz
+%{mandir21}/man8/puppet-certificate.8.gz
+%{mandir21}/man8/puppet-certificate_request.8.gz
+%{mandir21}/man8/puppet-certificate_revocation_list.8.gz
+%{mandir21}/man8/puppet-config.8.gz
+%{mandir21}/man8/puppet-describe.8.gz
+%{mandir21}/man8/puppet-device.8.gz
+%{mandir21}/man8/puppet-doc.8.gz
+%{mandir21}/man8/extlookup2hiera.8.gz
+%{mandir21}/man8/puppet-facts.8.gz
+%{mandir21}/man8/puppet-file.8.gz
+%{mandir21}/man8/puppet-filebucket.8.gz
+%{mandir21}/man8/puppet-help.8.gz
+%{mandir21}/man8/puppet-inspect.8.gz
+%{mandir21}/man8/puppet-instrumentation_data.8.gz
+%{mandir21}/man8/puppet-instrumentation_listener.8.gz
+%{mandir21}/man8/puppet-instrumentation_probe.8.gz
+%{mandir21}/man8/puppet-key.8.gz
+%{mandir21}/man8/puppet-kick.8.gz
+%{mandir21}/man8/puppet-man.8.gz
+%{mandir21}/man8/puppet-master.8.gz
+%{mandir21}/man8/puppet-module.8.gz
+%{mandir21}/man8/puppet-node.8.gz
+%{mandir21}/man8/puppet-parser.8.gz
+%{mandir21}/man8/puppet-plugin.8.gz
+%{mandir21}/man8/puppet-queue.8.gz
+%{mandir21}/man8/puppet-report.8.gz
+%{mandir21}/man8/puppet-resource.8.gz
+%{mandir21}/man8/puppet-resource_type.8.gz
+%{mandir21}/man8/puppet-secret_agent.8.gz
+%{mandir21}/man8/puppet-status.8.gz
+%{mandir21}/man8/puppet.8.gz
 %class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/system/management/puppetagent.xml
 %attr (0555, root, bin) /lib/svc/method/puppet-agent
 
@@ -178,10 +200,44 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 %class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/system/management/puppetmaster.xml
 %attr (0555, root, bin) /lib/svc/method/puppet-master
 
+%files master
+%defattr(-, root, bin, 0755)
+
 %clean
 rm -rf %{buildroot}
 
 %changelog
+* Wed Nov 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.7.3
+* Sun Oct 26 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.7.2
+* Wed Jun 11 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.6.2
+* Fri May 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.6.1
+* Wed Mar 26 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.4.3
+* Wed Jan 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.4.2
+* Thu Dec 12 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- revert to d485c3167adf and specify version
+* Fri Nov 15 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.3.2
+* Tue Sep 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.3.0
+* Tue Jun 16 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.2.3
+* Wed Jun 19 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.2.2
+* Tue May 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.2.1
+- add Requires
+* Fri Apr 19 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add package system/management/puppet3/common
+* Wed Mar 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.1.1
+* Tue Feb 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.1.0
 * Fri Nov 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Tue Nov 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -1,8 +1,8 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
+%define build19 1
+%define build20 1
 %define build21 1
 %define build22 1
 %define generate_executable 0
@@ -46,6 +46,16 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 A DSL for gathering options and parsing command line flags
 
 %if %{build19}
+%package 19-old
+IPS_package_name: library/ruby-19/%{gemname}
+Summary:          A DSL for gathering options and parsing command line flags
+BuildRequires:    runtime/ruby-19 = *
+Requires:         runtime/ruby-19 = *
+Requires:         library/ruby/%{gemname}-19
+
+%description 19-old
+A DSL for gathering options and parsing command line flags
+
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
 Summary:          A DSL for gathering options and parsing command line flags
@@ -57,6 +67,16 @@ A DSL for gathering options and parsing command line flags
 %endif
 
 %if %{build20}
+%package 20-old
+IPS_package_name: library/ruby-20/%{gemname}
+Summary:          A DSL for gathering options and parsing command line flags
+BuildRequires:    runtime/ruby-20 = *
+Requires:         runtime/ruby-20 = *
+Requires:         library/ruby/%{gemname}-20
+
+%description 20-old
+A DSL for gathering options and parsing command line flags
+
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
 Summary:          A DSL for gathering options and parsing command line flags
@@ -177,6 +197,9 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 
 %if %{build19}
+%files 19-old
+%defattr(0755,root,bin,-)
+
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -184,6 +207,9 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build20}
+%files 20-old
+%defattr(0755,root,bin,-)
+
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -207,6 +233,7 @@ rm -rf %{buildroot}
 %changelog
 * Wed Jun 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.1.0
+- generate empty packages for ruby-19 and ruby-20 to avoid dependency problem
 * Wed Dec 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21 instead of ruby-18
 - bump to 3.6.0

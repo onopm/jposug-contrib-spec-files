@@ -103,48 +103,39 @@ A Ruby parser written in pure Ruby.
 %setup -q -c -T
 
 %build
+build_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
+
+    ${bindir}/gem install --local \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0}
+}
+
 %if %{build19}
 # ruby-19
-%{bindir19}/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
+build_for 1.9
 %endif
 
 %if %{build20}
 # ruby-20
-%{bindir20}/gem install --local \
-    --install-dir .%{gemdir20} \
-    --bindir .%{bindir20} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
+build_for 2.0
 %endif
 
 %if %{build21}
 # ruby-21
-%{bindir21}/gem install --local \
-    --install-dir .%{gemdir21} \
-    --bindir .%{bindir21} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
+build_for 2.1
 %endif
 
 %if %{build22}
 # ruby-22
-%{bindir22}/gem install --local \
-    --install-dir .%{gemdir22} \
-    --bindir .%{bindir22} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
+build_for 2.2
 %endif
 
 %install
@@ -154,56 +145,39 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/%{_bindir}
 %endif
 
-%if %{build19}
-# ruby-19
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
+install_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
+
+    mkdir -p %{buildroot}/${gemdir}
+    cp -a .${gemdir}/* \
+        %{buildroot}/${gemdir}/
 
 %if %{generate_executable}
-mkdir -p %{buildroot}%{bindir19}
-cp -a .%{bindir19}/* \
-    %{buildroot}%{bindir19}/
+    mkdir -p %{buildroot}${bindir}
+    cp -a .${bindir}/* \
+        %{buildroot}${bindir}/
 %endif
+}
+
+%if %{build19}
+# ruby-19
+install_for 1.9
 %endif
 
 %if %{build20}
-# ruby-20
-mkdir -p %{buildroot}/%{gemdir20}
-cp -a .%{gemdir20}/* \
-    %{buildroot}/%{gemdir20}/
-
-%if %{generate_executable}
-mkdir -p %{buildroot}%{bindir20}
-cp -a .%{bindir20}/* \
-    %{buildroot}%{bindir20}/
-%endif
+install_for 2.0
 %endif
 
 %if %{build21}
 # ruby-21
-mkdir -p %{buildroot}/%{gemdir21}
-cp -a .%{gemdir21}/* \
-    %{buildroot}/%{gemdir21}/
-
-%if %{generate_executable}
-mkdir -p %{buildroot}%{bindir21}
-cp -a .%{bindir21}/* \
-    %{buildroot}%{bindir21}/
-%endif
+install_for 2.1
 %endif
 
 %if %{build22}
-# ruby-22
-mkdir -p %{buildroot}/%{gemdir22}
-cp -a .%{gemdir22}/* \
-    %{buildroot}/%{gemdir22}/
-
-%if %{generate_executable}
-mkdir -p %{buildroot}%{bindir22}
-cp -a .%{bindir22}/* \
-    %{buildroot}%{bindir22}/
-%endif
+install_for 2.2
 %endif
 
 %clean
@@ -241,5 +215,7 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Wed Jun 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add function 'build_for' and 'install_for'
 * Tue Jun 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

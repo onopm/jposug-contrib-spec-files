@@ -292,5 +292,5 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
-<%= Time.now.strftime('%a %b %d %Y') %> - NAME <MAILADDR>
+* <%= Time.now.strftime('%a %b %d %Y') %> - NAME <MAILADDR>
 - initial commit

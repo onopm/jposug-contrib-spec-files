@@ -165,5 +165,5 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
-<%= Time.now.strftime('%a %b %d %Y') %> - NAME <MAILADDR>
+* <%= Time.now.strftime('%a %b %d %Y') %> - NAME <MAILADDR>
 - initial commit

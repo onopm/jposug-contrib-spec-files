@@ -4,7 +4,7 @@
 
 %define tarball_index P
 %define tarball_name Pillow
-%define tarball_version 2.4.0
+%define tarball_version 2.8.2
 
 Name:                    SFEpython-pillow
 IPS_package_name:        library/python-2/pillow-26
@@ -50,6 +50,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Tue Jun 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.8.2
 * Tue May 12 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.4.0
 * Wed Jan 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -23,7 +23,7 @@ Group:		  Applications/System
 License:          ASL 2.0
 URL:              http://puppetlabs.com
 #Source0:          http://puppetlabs.com/downloads/puppet/puppet-%{version}.tar.gz
-Source0:          https://downloads.puppetlabs.com/puppet/puppet-%{version}.tar.gz
+Source0:          http://downloads.puppetlabs.com/puppet/puppet-%{version}.tar.gz
 # Patch0:           puppet-add_mange_shell_to_user_role_add_provider.patch
 
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
@@ -208,6 +208,8 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
+* Wed Jun 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix download url
 * Tue Jun 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.8.1
 * Wed Nov 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

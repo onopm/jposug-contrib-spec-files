@@ -118,6 +118,7 @@ build_for() {
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
     ${bindir}/gem install --local \
+        --no-env-shebang \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
         --no-ri \
@@ -159,9 +160,9 @@ install_for() {
     gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-    mkdir -p %{buildroot}/${gemdir}
-    cp -a .${gemdir}/* \
-        %{buildroot}/${gemdir}/
+    mkdir -p %{buildroot}/usr/ruby/${ruby_var}
+    cp -a ./usr/ruby/${ruby_var}/* \
+        %{buildroot}/usr/ruby/${ruby_var}/
 
 %if %{generate_executable}
     mkdir -p %{buildroot}${bindir}
@@ -225,3 +226,4 @@ rm -rf %{buildroot}
 %changelog
 * Wed Jun 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- fix shebang

@@ -161,6 +161,7 @@ build_for() {
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
     ${bindir}/gem install --local \
+        --no-env-shebang \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
         --no-ri \

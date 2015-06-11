@@ -35,7 +35,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby/serverspec
-Version:          2.17.1
+Version:          2.18.0
 License:          MIT License
 URL:              http://serverspec.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -64,7 +64,7 @@ Requires:         library/ruby-19/rspec >= 3.0.0
 Requires:         library/ruby-19/rspec-its
 Requires:         library/ruby-19/rake
 Requires:         library/ruby-19/highline
-Requires:         library/ruby/specinfra-19 >= 2.32.0
+Requires:         library/ruby/specinfra-19 >= 2.35.0
 Requires:         library/ruby-19/multi_json
 
 %description 19
@@ -91,7 +91,7 @@ Requires:         library/ruby-20/rspec >= 3.0.0
 Requires:         library/ruby-20/rspec-its
 Requires:         library/ruby-20/rake
 Requires:         library/ruby-20/highline
-Requires:         library/ruby/specinfra-20 >= 2.32.0
+Requires:         library/ruby/specinfra-20 >= 2.35.0
 Requires:         library/ruby-20/multi_json
 
 %description 20
@@ -118,7 +118,7 @@ Requires:         library/ruby-21/rspec >= 3.0.0
 Requires:         library/ruby-21/rspec-its
 Requires:         library/ruby-21/rake
 Requires:         library/ruby-21/highline
-Requires:         library/ruby/specinfra-21 >= 2.32.0
+Requires:         library/ruby/specinfra-21 >= 2.35.0
 Requires:         library/ruby-21/multi_json
 
 %description 21
@@ -145,7 +145,7 @@ Requires:         library/ruby-22/rspec >= 3.0.0
 Requires:         library/ruby-22/rspec-its
 Requires:         library/ruby-22/rake
 Requires:         library/ruby-22/highline
-Requires:         library/ruby/specinfra-22 >= 2.32.0
+Requires:         library/ruby/specinfra-22 >= 2.35.0
 Requires:         library/ruby-22/multi_json
 
 %description 22
@@ -345,6 +345,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Jun 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.18.0
 * Mon Jun 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.17.1
 - change IPS_package_names and keep old IPS_package_names to keep dependency

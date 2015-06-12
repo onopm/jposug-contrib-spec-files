@@ -63,8 +63,8 @@ IPS_package_name: library/ruby/specinfra-19
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-19
 Requires:         runtime/ruby-19 = *
-Requires:         library/ruby-19/net-ssh
-Requires:         library/ruby-19/net-scp
+Requires:         library/ruby/net-ssh-19
+Requires:         library/ruby/net-scp-19
 
 %description 19
 Common layer for serverspec and configspec
@@ -86,8 +86,8 @@ IPS_package_name: library/ruby/specinfra-20
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-20
 Requires:         runtime/ruby-20 = *
-Requires:         library/ruby-20/net-ssh
-Requires:         library/ruby-20/net-scp
+Requires:         library/ruby/net-ssh-20
+Requires:         library/ruby/net-scp-20
 
 %description 20
 Common layer for serverspec and configspec
@@ -109,8 +109,8 @@ IPS_package_name: library/ruby/specinfra-21
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-21
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby-21/net-ssh
-Requires:         library/ruby-21/net-scp
+Requires:         library/ruby/net-ssh-21
+Requires:         library/ruby/net-scp-21
 
 %description 21
 Common layer for serverspec and configspec
@@ -132,8 +132,8 @@ IPS_package_name: library/ruby/specinfra-22
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-22
 Requires:         runtime/ruby-22 = *
-Requires:         library/ruby-22/net-ssh
-Requires:         library/ruby-22/net-scp
+Requires:         library/ruby/net-ssh-22
+Requires:         library/ruby/net-scp-22
 
 %description 22
 Common layer for serverspec and configspec
@@ -266,7 +266,9 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
-* Fri Jun 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Fri Jun 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify Requires according to changes of IPS packagename
+* Thu Jun 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.35.1
 * Tue Jun 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.34.8

@@ -60,12 +60,11 @@ IPS_package_name: library/ruby/serverspec-19
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
-Requires:         library/ruby-19/rspec >= 3.0.0
-Requires:         library/ruby-19/rspec-its
-Requires:         library/ruby-19/rake
-Requires:         library/ruby-19/highline
+Requires:         library/ruby/rspec-19 >= 3.0.0
+Requires:         library/ruby/rspec-its-19
+Requires:         library/ruby/highline-19
 Requires:         library/ruby/specinfra-19 >= 2.35.0
-Requires:         library/ruby-19/multi_json
+Requires:         library/ruby/multi_json-19
 
 %description 19
 RSpec tests for your provisioned servers
@@ -87,12 +86,11 @@ IPS_package_name: library/ruby/serverspec-20
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-Requires:         library/ruby-20/rspec >= 3.0.0
-Requires:         library/ruby-20/rspec-its
-Requires:         library/ruby-20/rake
-Requires:         library/ruby-20/highline
+Requires:         library/ruby/rspec-20 >= 3.0.0
+Requires:         library/ruby/rspec-its-20
+Requires:         library/ruby/highline-20
 Requires:         library/ruby/specinfra-20 >= 2.35.0
-Requires:         library/ruby-20/multi_json
+Requires:         library/ruby/multi_json-20
 
 %description 20
 RSpec tests for your provisioned servers
@@ -114,12 +112,11 @@ IPS_package_name: library/ruby/serverspec-21
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby-21/rspec >= 3.0.0
-Requires:         library/ruby-21/rspec-its
-Requires:         library/ruby-21/rake
-Requires:         library/ruby-21/highline
+Requires:         library/ruby/rspec-21 >= 3.0.0
+Requires:         library/ruby/rspec-its-21
+Requires:         library/ruby/highline-21
 Requires:         library/ruby/specinfra-21 >= 2.35.0
-Requires:         library/ruby-21/multi_json
+Requires:         library/ruby/multi_json-21
 
 %description 21
 RSpec tests for your provisioned servers
@@ -141,12 +138,11 @@ IPS_package_name: library/ruby/serverspec-22
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-Requires:         library/ruby-22/rspec >= 3.0.0
-Requires:         library/ruby-22/rspec-its
-Requires:         library/ruby-22/rake
-Requires:         library/ruby-22/highline
+Requires:         library/ruby/rspec-22 >= 3.0.0
+Requires:         library/ruby/rspec-its-22
+Requires:         library/ruby/highline-22
 Requires:         library/ruby/specinfra-22 >= 2.35.0
-Requires:         library/ruby-22/multi_json
+Requires:         library/ruby/multi_json-22
 
 %description 22
 RSpec tests for your provisioned servers
@@ -345,6 +341,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jun 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify Requires according to changes of IPS packagenames
 * Thu Jun 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.18.0
 * Mon Jun 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

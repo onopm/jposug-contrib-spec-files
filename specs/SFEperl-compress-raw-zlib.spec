@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 2.054
+%define tarball_version 2.068
 %define tarball_name    Compress-Raw-Zlib
 
 Name:		SFEperl-compress-raw-zlib
 IPS_package_name: library/perl-5/compress-raw-zlib
-Version:	2.054
-IPS_component_version: 2.54
+Version:	%{tarball_version}
+IPS_component_version: 2.68
 Summary:	Compress-Raw-Zlib
 License:	Artistic
 Distribution:   OpenSolaris
@@ -89,6 +89,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon May 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.068
 * Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %attr
 * Tue Jun 05 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

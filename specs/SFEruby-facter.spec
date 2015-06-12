@@ -15,13 +15,12 @@
 %define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
-
 %define has_ruby_noarch %has_ruby_abi
 
 Summary: Ruby module for collecting simple facts about a host operating system
 Name: facter
 IPS_package_name:        library/ruby-19/%{gemname}
-Version: 2.3.0
+Version: 2.4.3
 License: ASL 2.0
 Group: System Environment/Base
 URL: http://www.puppetlabs.com/puppet/related-projects/%{name}/
@@ -159,6 +158,10 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Thu May 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.3
+* Fri Feb 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.1
 * Wed Dec 03 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.3.0
 * Mon Sep 01 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

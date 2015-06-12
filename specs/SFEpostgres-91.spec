@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.1.14
+%define tarball_version  9.1.15
 %define major_version	 9.1
 %define prefix_name      SFEpostgres-91
 %define _basedir         %{_prefix}/%{major_version}
@@ -1144,6 +1144,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Sun Feb 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.15
 * Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - With Oracle Solaris 11.2, use library/libedit instead of SFEeditline
 - SFEpostgres-common is no required on Oracle Solaris 11.2

@@ -162,7 +162,7 @@ build_for() {
     # fix shebang
     pushd .${geminstdir}/exe
     mv rspec rspec.bak
-    sed -e "s!^\#\!/usr/bin/env ruby\$!/usr/ruby/${ruby_ver}/bin/ruby!" rspec.bak > rspec
+    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" rspec.bak > rspec
     rm rspec.bak
     popd
 }
@@ -278,6 +278,7 @@ rm -rf %{buildroot}
 %changelog
 * Fri Jun 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.2.3
+- fix shebang modifying sed
 * Mon Oct 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.1.0
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -67,7 +67,7 @@ Requires:         library/ruby/coderay-19
 # method_source ~> 0.8.1
 Requires:         library/ruby/method_source-19
 # slop ~> 3.4
-Requires:         library/ruby/slop-19
+Requires:         library/ruby/slop-3-19
 
 %description 19
 An IRB alternative and runtime developer console
@@ -82,7 +82,7 @@ Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/%{gemname}-20
 Requires:         library/ruby-20/coderay
 Requires:         library/ruby-20/method_source
-Requires:         library/ruby-20/slop
+Requires:         library/ruby/slop-3-20
 
 %description 20-old
 An IRB alternative and runtime developer console
@@ -97,7 +97,7 @@ Requires:         library/ruby/coderay-20
 # method_source ~> 0.8.1
 Requires:         library/ruby/method_source-20
 # slop ~> 3.4
-Requires:         library/ruby/slop-20
+Requires:         library/ruby/slop-3-20
 
 %description 20
 An IRB alternative and runtime developer console
@@ -112,7 +112,7 @@ Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/%{gemname}-21
 Requires:         library/ruby-21/coderay
 Requires:         library/ruby-21/method_source
-Requires:         library/ruby-21/slop
+Requires:         library/ruby/slop-3-21
 
 %description 21-old
 An IRB alternative and runtime developer console
@@ -127,7 +127,7 @@ Requires:         library/ruby/coderay-21
 # method_source ~> 0.8.1
 Requires:         library/ruby/method_source-21
 # slop ~> 3.4
-Requires:         library/ruby/slop-21
+Requires:         library/ruby/slop-3-21
 
 %description 21
 An IRB alternative and runtime developer console
@@ -154,7 +154,7 @@ Requires:         library/ruby/coderay-22
 # method_source ~> 0.8.1
 Requires:         library/ruby/method_source-22
 # slop ~> 3.4
-Requires:         library/ruby/slop-22
+Requires:         library/ruby/slop-3-22
 
 %description 22
 An IRB alternative and runtime developer console
@@ -323,6 +323,7 @@ rm -rf %{buildroot}
 %changelog
 * Sat Jun 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update specfile based on bin/make_rubygem_spec.rb
+- require slop-3 instead of slop which version is over 4.0
 * Wed Dec 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21 instead of ruby-18
 - add symbolic links

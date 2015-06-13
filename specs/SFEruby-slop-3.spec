@@ -36,7 +36,7 @@
 
 Summary:          A DSL for gathering options and parsing command line flags
 Name:             SFEruby-%{sfe_gemname}
-IPS_package_name: library/ruby/%{gemname}
+IPS_package_name: library/ruby/slop-3
 Version:          3.6.0
 License:          MIT
 URL:              http://github.com/leejarvis/slop
@@ -304,3 +304,4 @@ rm -rf %{buildroot}
 %changelog
 * Sat Jun 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- fix IPS_package_name

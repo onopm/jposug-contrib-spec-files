@@ -48,6 +48,16 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 A library for working with Abstract Syntax Trees.
 
 %if %{build19}
+%package 19-old
+IPS_package_name: library/ruby-19/%{gemname}
+Summary:          A library for working with Abstract Syntax Trees.
+BuildRequires:    runtime/ruby-19 = *
+Requires:         runtime/ruby-19 = *
+Requires:         library/ruby/%{gemname}-19
+
+%description 19-old
+A library for working with Abstract Syntax Trees.
+
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
 Summary:          A library for working with Abstract Syntax Trees.
@@ -59,6 +69,16 @@ A library for working with Abstract Syntax Trees.
 %endif
 
 %if %{build20}
+%package 20-old
+IPS_package_name: library/ruby-20/%{gemname}
+Summary:          A library for working with Abstract Syntax Trees.
+BuildRequires:    runtime/ruby-20 = *
+Requires:         runtime/ruby-20 = *
+Requires:         library/ruby/%{gemname}-20
+
+%description 20-old
+A library for working with Abstract Syntax Trees.
+
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
 Summary:          A library for working with Abstract Syntax Trees.
@@ -70,6 +90,16 @@ A library for working with Abstract Syntax Trees.
 %endif
 
 %if %{build21}
+%package 21-old
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          A library for working with Abstract Syntax Trees.
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}-21
+
+%description 21-old
+A library for working with Abstract Syntax Trees.
+
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
 Summary:          A library for working with Abstract Syntax Trees.
@@ -81,6 +111,16 @@ A library for working with Abstract Syntax Trees.
 %endif
 
 %if %{build22}
+%package 22-old
+IPS_package_name: library/ruby-22/%{gemname}
+Summary:          A library for working with Abstract Syntax Trees.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}-22
+
+%description 22-old
+A library for working with Abstract Syntax Trees.
+
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
 Summary:          A library for working with Abstract Syntax Trees.
@@ -179,6 +219,9 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 
 %if %{build19}
+%files 19-old
+%defattr(0755,root,bin,-)
+
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -186,6 +229,9 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build20}
+%files 20-old
+%defattr(0755,root,bin,-)
+
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -193,6 +239,9 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build21}
+%files 21-old
+%defattr(0755,root,bin,-)
+
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -200,6 +249,9 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build22}
+%files 22-old
+%defattr(0755,root,bin,-)
+
 %files 22
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -207,6 +259,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sat Jun 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate empty packages to avoid dependency problem
 * Wed Jun 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add function 'build_for' and 'install_for'
 * Tue Jun 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

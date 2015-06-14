@@ -9,15 +9,15 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 0.38
+%define tarball_version 0.59
 %define tarball_name    YAML-LibYAML
 %define perl_version584 5.8.4
 %define perl_version512 5.12
 
 Name:		SFEperl-yaml-libyaml
 IPS_package_name: library/perl-5/yaml-libyaml
-Version:	0.38
-IPS_component_version: 0.38
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	YAML-LibYAML
 License:	Artistic
 Distribution:   OpenSolaris
@@ -119,6 +119,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jun 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.59
 * Sun Dec 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - define perl_version584 and perl_version512 and use them
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

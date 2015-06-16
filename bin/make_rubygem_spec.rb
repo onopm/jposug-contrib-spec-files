@@ -50,6 +50,7 @@ __END__
 %define generate_executable 0
 
 %define gemname <%= data['name'] %>
+%define sfe_gemname <%= data['name'].gsub(/_/, '-') %>
 
 %if %{build19}
 %define bindir19 /usr/ruby/1.9/bin
@@ -76,7 +77,7 @@ __END__
 %endif
 
 Summary:          <%= data['info'] %>
-Name:             SFEruby-%{gemname}
+Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
 Version:          <%= data['version'] %>
 License:          <%= data['licenses'].join(', ') unless data['licenses'].nil? %>
@@ -203,15 +204,40 @@ install_for() {
     gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-    mkdir -p %{buildroot}/usr/ruby/${ruby_var}
-    cp -a ./usr/ruby/${ruby_var}/* \
-        %{buildroot}/usr/ruby/${ruby_var}/
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
 
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
 %if %{generate_executable}
-    mkdir -p %{buildroot}${bindir}
-    cp -a .${bindir}/* \
-        %{buildroot}${bindir}/
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
 %endif
+
 }
 
 %if %{build19}
@@ -243,6 +269,10 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*19
+%endif
 %endif
 
 %if %{build20}
@@ -250,6 +280,10 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*20
+%endif
 %endif
 
 %if %{build21}
@@ -257,6 +291,10 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
 %endif
 
 %if %{build22}
@@ -264,6 +302,10 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
 %endif
 
 %changelog

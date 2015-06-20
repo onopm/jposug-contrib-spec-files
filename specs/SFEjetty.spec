@@ -1,7 +1,7 @@
 %include Solaris.inc
 
-%define jetty_version 9.2.3
-%define jetty_date 20140905
+%define jetty_version 9.3.0
+%define jetty_date 20150612
 
 Name:			SFEjetty
 IPS_package_name:	web/server/jetty
@@ -10,7 +10,9 @@ Summary:		Jetty provides a Web server and javax.servlet container
 License:		Apache License 2.0
 URL:			http://www.eclipse.org/jetty/
 # Source:		http://ftp.yz.yamagata-u.ac.jp/pub/eclipse//jetty/stable-9/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
-Source: 		http://ftp.yz.yamagata-u.ac.jp/pub/eclipse/jetty/%{jetty_version}.v%{jetty_date}/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
+#Source: 		http://ftp.yz.yamagata-u.ac.jp/pub/eclipse/jetty/%{jetty_version}.v%{jetty_date}/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
+Source: 		http://ftp.daum.net/eclipse//jetty/stable-9/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
+
 Source1:		svc-jetty
 Source2:		jetty.xml
 
@@ -36,7 +38,7 @@ install start.jar %{buildroot}/usr/jetty
 install -d -m 0750 %{buildroot}/var/jetty/webapps
 install -d -m 0640 %{buildroot}/var/jetty/logs
 cp -r etc %{buildroot}/var/jetty
-cp -r start.d %{buildroot}/var/jetty
+cp -r demo-base/start.d %{buildroot}/var/jetty
 install start.ini %{buildroot}/var/jetty
 
 pushd %{buildroot}/usr/jetty
@@ -82,6 +84,8 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/start.ini
 
 %changelog
+* Sat Jun 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.0
 * Wed Sep 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.2.3
 * Wed Jul 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.25
+%define tarball_version  5.5.26
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
@@ -16,7 +16,7 @@ Summary:	         php
 Version:                 %{tarball_version}
 License:		 PHP
 Url:                     http://php.net/
-Source:                  http://jp1.php.net/distributions/php-%{version}.tar.bz2
+Source:                  http://jp2.php.net/distributions/php-%{version}.tar.bz2
 Source1:                 php-fpm55.xml
 Source2:                 php55-opcache.ini
 Source3:                 php5.5.conf
@@ -441,6 +441,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %config(noreplace) /etc/apache2/2.2/conf.d/php/php5.5.conf
 
 %changelog
+* Sat Jun 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.26
 * Fri May 29 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.25
 * Sat Mar 21 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

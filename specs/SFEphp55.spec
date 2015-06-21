@@ -8,7 +8,7 @@
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
 
-%define oracle_solaris_11_2 %(grep 'Oracle Solaris 11.2' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+%define use_libedit %(egrep 'Oracle Solaris (11.2|12)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}
 IPS_package_name:        web/php-55
@@ -27,7 +27,7 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:  library/spell-checking/enchant
 BuildRequires:  text/nkf
-%if %{oracle_solaris_11_2}
+%if %{use_libedit}
 BuildRequires: library/libedit
 %else
 BuildRequires: SFEeditline
@@ -38,7 +38,7 @@ Requires:       system/library/security/libmcrypt
 Requires:       text/tidy
 Requires:       library/libtool/libltdl
 Requires:       web/php-common
-%if %{oracle_solaris_11_2}
+%if %{use_libedit}
 Requires:       library/libedit
 %else
 Requires:       SFEeditline
@@ -443,6 +443,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sat Jun 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.26
+- rename defined macro 'oracle_solaris_11_2' to 'use_libedit'
 * Fri May 29 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.25
 * Sat Mar 21 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

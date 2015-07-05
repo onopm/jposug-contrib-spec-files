@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.14
+Version:   2.0.25
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -23,6 +23,8 @@ Source4:        munin.logadm.conf
 Source5:        munin-node.logadm.conf
 
 Patch1: SFEmunin-SyncDictFile.patch
+# Patch2: SFEmunin-2.0.19-makefile.patch
+Patch3: munin-plugin-mysql_.patch
 
 BuildRequires: library/perl-5/module-build-512
 BuildRequires: library/perl-5/log-log4perl-512
@@ -32,10 +34,22 @@ BuildRequires: library/perl-5/net-snmp-512
 BuildRequires: library/perl-5/io-stringy-512
 BuildRequires: library/perl-5/test-differences-512
 BuildRequires: library/perl-5/test-longstring-512
-
+BuildRequires: library/perl-5/cache-cache-512
+BuildRequires: library/perl-5/cache-memcached-512
+BuildRequires: library/perl-5/date-manip-512
+BuildRequires: library/perl-5/db-file-512
+BuildRequires: library/perl-5/file-copy-recursive-512
+BuildRequires: library/perl-5/io-socket-inet6-512
+BuildRequires: library/perl-5/lwp-512
+BuildRequires: library/perl-5/net-cidr-512
+BuildRequires: library/perl-5/rrdtool-512
+BuildRequires: library/perl-5/uri-512
+BuildRequires: library/perl-5/test-deep-512
+BuildRequires: library/perl-5/test-mockmodule-512
+BuildRequires: library/perl-5/file-slurp-512
 
 # java buildrequires on fedora
-# %if 0%{?rhel} > 4 || 0%{?fedora} > 6 
+# %if 0%{?rhel} > 4 || 0%{?fedora} > 6
 # BuildRequires: java-1.6.0-devel
 # BuildRequires: mx4j
 # BuildRequires: jpackage-utils
@@ -74,7 +88,7 @@ it's aware of for data, which it in turn will use to create graphs and HTML
 pages, suitable for viewing with your graphical web browser of choice.
 
 Munin is written in Perl, and relies heavily on Tobi Oetiker's excellent
-RRDtool. 
+RRDtool.
 
 %package node
 IPS_package_name:        diagnostic/munin/node
@@ -116,7 +130,7 @@ such as a switch or a server running another operating system, by using
 SNMP or similar technology.
 
 Munin is written in Perl, and relies heavily on Tobi Oetiker's excellent
-RRDtool. 
+RRDtool.
 
 %package common
 IPS_package_name:        diagnostic/munin/common
@@ -131,7 +145,7 @@ virtually everything imaginable throughout your network, while still
 maintaining a rattling ease of installation and configuration.
 
 This package contains common files that are used by both the server (munin)
-and node (munin-node) packages. 
+and node (munin-node) packages.
 
 
 %package async
@@ -154,16 +168,17 @@ munin-async
 # BuildArchitectures: noarch
 
 # %description java-plugins
-# java-plugins for munin-node. 
+# java-plugins for munin-node.
 # %endif
 
 %prep
 %setup -q
 %patch1
+# %patch2
 # %if 0%{?rhel} < 6 && 0%{?fedora} < 11
 # %patch2 -p0
 # %endif
-# %patch3 -p1
+%patch3 -p1
 
 %build
 export PATH=/usr/perl5/5.12/bin:$PATH
@@ -214,9 +229,9 @@ install -m0644 dists/tarball/plugins.conf %{buildroot}/etc/munin/plugin-conf.d/m
 install -m0444 build/resources/solaris-smf/munin-node.xml %{buildroot}/var/svc/manifest/site
 install -m0555 build/resources/solaris-smf/munin-node %{buildroot}/lib/svc/method
 
-# 
-# remove the Sybase plugin for now, as they need perl modules 
-# that are not in extras. We can readd them when/if those modules are added. 
+#
+# remove the Sybase plugin for now, as they need perl modules
+# that are not in extras. We can readd them when/if those modules are added.
 #
 rm -f %{buildroot}/usr/share/munin/plugins/sybase_space
 
@@ -281,7 +296,7 @@ rm -rf $RPM_BUILD_ROOT
 # test "$1" != 0 || %{_initrddir}/munin-node stop &>/dev/null || :
 # test "$1" != 0 || /sbin/chkconfig --del munin-node
 
-# # 
+# #
 # # main package scripts
 # #
 # %pre
@@ -294,7 +309,7 @@ rm -rf $RPM_BUILD_ROOT
 %actions common
 group groupname="munin"
 user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP group="munin"
- 
+
 %files
 %defattr(-, root, bin)
 %dir %attr(0755, root, other) %{_docdir}
@@ -427,6 +442,18 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Fri Dec 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add patch3 to make mysql_innodb_insert_buf to work
+* Sun Dec 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
+* Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.25
+* Tue Jun 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.21
+* Wed Mar 05 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.19
+* Sat Jan 25 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.17
 * Thu Jun 06 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add logadm config files
 * Mon May 13 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
@@ -496,7 +523,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 - Add patch for uppercase nodes (fixes 673263)
 
 * Wed Jul 07 2010 Kevin Fenzi <kevin@tummy.com> - 1.4.5-4
-- Move docs to common subpackage to make sure COPYING is installed. 
+- Move docs to common subpackage to make sure COPYING is installed.
 
 * Sat Jul 03 2010 Kevin Fenzi <kevin@tummy.com> - 1.4.5-3
 - Add /etc/munin/node.d dir
@@ -516,7 +543,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 - fw_forwarded_local fixed upstream in 1.4.4. Fixes bug #568500
 
 * Sun Jan 17 2010 Kevin Fenzi <kevin@tummy.com> - 1.4.3-2
-- Fix owner on state files. 
+- Fix owner on state files.
 - Add some BuildRequires.
 - Make munin-node-configure only run on install, not upgrade. bug 540687
 
@@ -526,7 +553,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 * Thu Dec 17 2009 Ingvar Hagelund <ingvar@linpro.no> - 1.4.2-1
 - New upstream release
 - Removed upstream packaged fonts
-- Added a patch that makes rrdtool use the system bitstream vera fonts on 
+- Added a patch that makes rrdtool use the system bitstream vera fonts on
   rhel < 6 and fedora < 11
 
 * Fri Dec 11 2009 Ingvar Hagelund <ingvar@linpro.no> - 1.4.1-3
@@ -544,11 +571,11 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 - Update to final 1.4.0 version
 
 * Sat Nov 21 2009 Kevin Fenzi <kevin@tummy.com> - 1.4.0-0.1.beta
-- Update to beta 1.4.0 version. 
-- Add common subpackage for common files. 
+- Update to beta 1.4.0 version.
+- Add common subpackage for common files.
 
 * Sun Nov 08 2009 Kevin Fenzi <kevin@tummy.com> - 1.4.0-0.1.alpha
-- Initial alpha version of 1.4.0 
+- Initial alpha version of 1.4.0
 
 * Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.6-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
@@ -607,13 +634,13 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 
 * Tue Jun 27 2006 Kevin Fenzi <kevin@tummy.com> - 1.2.4-9
 - Re-enable snmp plugins now that perl-Net-SNMP is available (fixes 196588)
-- Thanks to Herbert Straub <herbert@linuxhacker.at> for patch. 
+- Thanks to Herbert Straub <herbert@linuxhacker.at> for patch.
 - Fix sendmail plugins to look in the right place for the queue
 
 * Sat Apr 22 2006 Kevin Fenzi <kevin@tummy.com> - 1.2.4-8
-- add patch to remove unneeded munin-nagios in cron. 
+- add patch to remove unneeded munin-nagios in cron.
 - add patch to remove buildhostname in munin.conf (fixes #188928)
-- clean up prep section of spec. 
+- clean up prep section of spec.
 
 * Fri Feb 24 2006 Kevin Fenzi <kevin@scrye.com> - 1.2.4-7
 - Remove bogus Provides for perl RRDs (fixes #182702)
@@ -632,7 +659,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 - Fixed libdir messup to allow builds on x86_64
 
 * Mon Dec 12 2005 Kevin Fenzi <kevin@tummy.com> - 1.2.4-2
-- Removed plugins that require Net-SNMP and Sybase 
+- Removed plugins that require Net-SNMP and Sybase
 
 * Tue Dec  6 2005 Kevin Fenzi <kevin@tummy.com> - 1.2.4-1
 - Inital cleanup for fedora-extras

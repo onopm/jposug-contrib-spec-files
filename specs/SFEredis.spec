@@ -10,25 +10,24 @@
 %define _var_prefix      /var/redis
 %define _etc_prefix      /etc/redis
 %define tarball_name     redis
-%define major_version	 3.0
+%define major_version	 2.8
 %define _basedir         %{_prefix}/%{major_version}
 
 
 Name:		SFEredis
-Version:        3.0.2
+Version:        2.8.6
 Summary:	Redis is an open source, advanced key-value store
-IPS_package_name:    service/redis-30
+IPS_package_name:    service/redis-28
 URL:		http://redis.io
 Source:		http://download.redis.io/releases/redis-%{version}.tar.gz
-Source1:	redis_30
-Source2:	redis_30.xml
-Source3:	redis-30-auth_attr
-Source4:	redis-30-prof_attr
-Source5:	redis-30-exec_attr
-Source6:        redis-30-user_attr
-Source7:        redis-30.conf
-Source8:        redis-30_64.conf
-Patch0:         redis30.patch
+Source1:	redis_28
+Source2:	redis_28.xml
+Source3:	redis-28-auth_attr
+Source4:	redis-28-prof_attr
+Source5:	redis-28-exec_attr
+Source6:        redis-28-user_attr
+Source7:        redis-28.conf
+Source8:        redis-28_64.conf
 Group:		Applications/Archivers
 SUNW_Copyright:	SFEredis.copyright
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
@@ -48,9 +47,6 @@ There is no official support for Windows builds, although you may have some opti
 
 %prep
 %setup -c -n %{tarball_name}-%{version}
-pushd %{tarball_name}-%{version}
-%patch0 -p1
-popd
 
 %ifarch amd64 sparcv9
 rm -rf %{tarball_name}-%{version}-64
@@ -93,21 +89,21 @@ mkdir -p $RPM_BUILD_ROOT%{_var_prefix}/%{major_version}/data_64
 mkdir -p $RPM_BUILD_ROOT%{_var_prefix}/%{major_version}/log
 
 mkdir -p $RPM_BUILD_ROOT/lib/svc/method/
-cp %{SOURCE1} $RPM_BUILD_ROOT/lib/svc/method/redis_30
-chmod +x $RPM_BUILD_ROOT/lib/svc/method/redis_30
+cp %{SOURCE1} $RPM_BUILD_ROOT/lib/svc/method/redis_28
+chmod +x $RPM_BUILD_ROOT/lib/svc/method/redis_28
 mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/application/database/
-cp %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application/database/redis_30.xml
+cp %{SOURCE2} $RPM_BUILD_ROOT/var/svc/manifest/application/database/redis_28.xml
 
 
 # attribute
 mkdir -p $RPM_BUILD_ROOT/etc/security/auth_attr.d/
-cp %{SOURCE3} $RPM_BUILD_ROOT/etc/security/auth_attr.d/redis-30
+cp %{SOURCE3} $RPM_BUILD_ROOT/etc/security/auth_attr.d/redis-28
 mkdir -p $RPM_BUILD_ROOT/etc/security/exec_attr.d/
-cp %{SOURCE4} $RPM_BUILD_ROOT/etc/security/exec_attr.d/redis-30
+cp %{SOURCE4} $RPM_BUILD_ROOT/etc/security/exec_attr.d/redis-28
 mkdir -p $RPM_BUILD_ROOT/etc/security/prof_attr.d/
-cp %{SOURCE5} $RPM_BUILD_ROOT/etc/security/prof_attr.d/redis-30
+cp %{SOURCE5} $RPM_BUILD_ROOT/etc/security/prof_attr.d/redis-28
 mkdir -p $RPM_BUILD_ROOT/etc/user_attr.d/
-cp %{SOURCE6} $RPM_BUILD_ROOT/etc/user_attr.d/redis-30
+cp %{SOURCE6} $RPM_BUILD_ROOT/etc/user_attr.d/redis-28
 
 # etc conf
 mkdir -p $RPM_BUILD_ROOT%{_etc_prefix}/%{major_version}/
@@ -147,19 +143,21 @@ user ftpuser=false gcos-field="redis Reserved UID" username="redis" password=NP 
 %dir %attr (0755, root, sys) /var/svc/manifest/application
 %dir %attr (0755, root, sys) /var/svc/manifest/application/database
 
-%attr (0555, root, bin) /lib/svc/method/redis_30
-%attr (0644, root, sys) /etc/security/auth_attr.d/redis-30
-%attr (0644, root, sys) /etc/security/exec_attr.d/redis-30
-%attr (0644, root, sys) /etc/security/prof_attr.d/redis-30
-%attr (0644, root, sys) /etc/user_attr.d/redis-30
+%attr (0555, root, bin) /lib/svc/method/redis_28
+%attr (0644, root, sys) /etc/security/auth_attr.d/redis-28
+%attr (0644, root, sys) /etc/security/exec_attr.d/redis-28
+%attr (0644, root, sys) /etc/security/prof_attr.d/redis-28
+%attr (0644, root, sys) /etc/user_attr.d/redis-28
 
 %dir %attr (0755, root, sys) /etc/redis
-%dir %attr (0755, root, sys) /etc/redis/3.0
-%dir %attr (0755, root, sys) /etc/redis/3.0/redis-30.conf
-%dir %attr (0755, root, sys) /etc/redis/3.0/redis-30_64.conf
-%class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_30.xml
+%dir %attr (0755, root, sys) /etc/redis/2.8
+%dir %attr (0755, root, sys) /etc/redis/2.8/redis-28.conf
+%dir %attr (0755, root, sys) /etc/redis/2.8/redis-28_64.conf
+%class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_28.xml
 
 %changelog
+* Wed Jul 15 2015 - Osamu Tabata <cantimerny.g@gmail.com>
+- 失敗のため戻しました
 * Wed Jul 15 2015 - Osamu Tabata <cantimerny.g@gmail.com>
 - Bumpto 3.0.2
 * Thu Feb 21 2015 - Osamu Tabata <cantimerny.g@gmail.com>

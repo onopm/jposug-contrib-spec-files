@@ -1,2 +1,0 @@
-solaris.smf.value.redis:::Change Redis value properties::
-solaris.smf.manage.redis:::Manage Redis service states::

@@ -35,7 +35,7 @@
 Summary:          Common layer for serverspec and configspec
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby/specinfra
-Version:          2.38.1
+Version:          2.40.0
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -54,6 +54,8 @@ Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-19
 Requires:         runtime/ruby-19 = *
 Requires:         library/ruby/specinfra-19 >= %{version}
+Requires:         library/ruby/net-telnet-19 = *
+Requires:         library/ruby/sfl-19 = *
 
 %description 19-old
 Common layer for serverspec and configspec
@@ -65,6 +67,8 @@ BuildRequires:    runtime/ruby-19
 Requires:         runtime/ruby-19 = *
 Requires:         library/ruby/net-ssh-19
 Requires:         library/ruby/net-scp-19
+Requires:         library/ruby/net-telnet-19 = *
+Requires:         library/ruby/sfl-19 = *
 
 %description 19
 Common layer for serverspec and configspec
@@ -77,6 +81,8 @@ Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-20
 Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/specinfra-20 >= %{version}
+Requires:         library/ruby/net-telnet-20 = *
+Requires:         library/ruby/sfl-20 = *
 
 %description 20-old
 Common layer for serverspec and configspec
@@ -88,6 +94,8 @@ BuildRequires:    runtime/ruby-20
 Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/net-ssh-20
 Requires:         library/ruby/net-scp-20
+Requires:         library/ruby/net-telnet-20 = *
+Requires:         library/ruby/sfl-20 = *
 
 %description 20
 Common layer for serverspec and configspec
@@ -100,6 +108,8 @@ Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-21
 Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/specinfra-21 >= %{version}
+Requires:         library/ruby/net-telnet-21 = *
+Requires:         library/ruby/sfl-21 = *
 
 %description 21-old
 Common layer for serverspec and configspec
@@ -111,6 +121,8 @@ BuildRequires:    runtime/ruby-21
 Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/net-ssh-21
 Requires:         library/ruby/net-scp-21
+Requires:         library/ruby/net-telnet-21 = *
+Requires:         library/ruby/sfl-21 = *
 
 %description 21
 Common layer for serverspec and configspec
@@ -123,6 +135,8 @@ Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-22
 Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/specinfra-22 >= %{version}
+Requires:         library/ruby/net-telnet-22 = *
+Requires:         library/ruby/sfl-22 = *
 
 %description 22-old
 Common layer for serverspec and configspec
@@ -134,6 +148,8 @@ BuildRequires:    runtime/ruby-22
 Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/net-ssh-22
 Requires:         library/ruby/net-scp-22
+Requires:         library/ruby/net-telnet-22 = *
+Requires:         library/ruby/sfl-22 = *
 
 %description 22
 Common layer for serverspec and configspec
@@ -266,6 +282,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Aug 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.40.0
 * Thu Jul 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.38.1
 * Sat Jul 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

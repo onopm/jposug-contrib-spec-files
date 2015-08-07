@@ -122,7 +122,7 @@ cmake . -DBUILD_CONFIG=mysql_release \
     -DENABLED_LOCAL_INFILE=ON \
     -DENABLE_DTRACE=ON \
     -DWITH_EMBEDDED_SERVER=OFF \
-    -DWITH_LIBEDIT=ON \
+    -DWITH_EDITLINE=bundled \
     -DSYSCONFDIR=/etc/mysql \
     -DCMAKE_C_FLAGS="-O3 -m32 -mt -KPIC" \
     -DCMAKE_CXX_FLAGS="-O3 -m32 -mt -KPIC"
@@ -144,7 +144,7 @@ cmake . -DBUILD_CONFIG=mysql_release \
     -DENABLED_LOCAL_INFILE=ON \
     -DENABLE_DTRACE=ON \
     -DWITH_EMBEDDED_SERVER=OFF \
-    -DWITH_LIBEDIT=ON \
+    -DWITH_EDITLINE=bundled \
     -DSYSCONFDIR=/etc/mysql \
     -DCMAKE_C_FLAGS="-O3 -m64 -mt -KPIC" \
     -DCMAKE_CXX_FLAGS="-O3 -m64 -mt -KPIC -library=stlport4"
@@ -536,6 +536,8 @@ ln -s ../../mysql/%{major_version}/bin/amd64/resolveip .
 %attr (0444, root, bin) %{_prefix}/%{major_version}/include/mysql/psi/*.h
 
 %changelog
+* Fri Aug 07 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>
+- change configure option
 * Sun Apr 27 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>
 - files permission change
 * Sun Apr 27 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>

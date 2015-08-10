@@ -37,13 +37,11 @@
 Summary:          Infrastructure Behavior Testing Framework
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          0.2.6
+Version:          0.3.0
 License:          MIT
 URL:              https://github.com/ryotarai/infrataster
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
-
-
 
 %description
 Infrastructure Behavior Testing Framework
@@ -414,6 +412,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Aug 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.3.0
 * Tue Jun 16 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.2.6
 * Fri Mar 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

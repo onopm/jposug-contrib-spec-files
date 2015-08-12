@@ -22,7 +22,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby-22/serverspec
-Version:          2.8.2
+Version:          2.17.0
 License:          MIT License
 # URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
@@ -35,7 +35,7 @@ Requires:         library/ruby-22/rspec >= 3.0.0
 Requires:         library/ruby-22/rspec-its
 Requires:         library/ruby-22/rake
 Requires:         library/ruby-22/highline
-Requires:         library/ruby-22/specinfra >= 2.12.0
+Requires:         library/ruby-22/specinfra >= 2.32.0
 Requires:         library/ruby-22/multi_json
 
 %description
@@ -50,7 +50,7 @@ Requires:         library/ruby-19/rspec >= 3.0.0
 Requires:         library/ruby-19/rspec-its
 Requires:         library/ruby-19/rake
 Requires:         library/ruby-19/highline
-Requires:         library/ruby-19/specinfra >= 2.12.0
+Requires:         library/ruby-19/specinfra >= 2.32.0
 Requires:         library/ruby-19/multi_json
 
 %description 19
@@ -65,7 +65,7 @@ Requires:         library/ruby-20/rspec >= 3.0.0
 Requires:         library/ruby-20/rspec-its
 Requires:         library/ruby-20/rake
 Requires:         library/ruby-20/highline
-Requires:         library/ruby-20/specinfra >= 2.12.0
+Requires:         library/ruby-20/specinfra >= 2.32.0
 Requires:         library/ruby-20/multi_json
 
 %description 20
@@ -80,7 +80,7 @@ Requires:         library/ruby-21/rspec >= 3.0.0
 Requires:         library/ruby-21/rspec-its
 Requires:         library/ruby-21/rake
 Requires:         library/ruby-21/highline
-Requires:         library/ruby-21/specinfra >= 2.12.0
+Requires:         library/ruby-21/specinfra >= 2.32.0
 Requires:         library/ruby-21/multi_json
 
 %description 21
@@ -239,6 +239,19 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Sun May 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.17.0
+* Tue May 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.16.0
+* Tue Mar 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.12.0
+- bump to 2.13.0
+* Sun Mar 22 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.11.0
+* Sat Feb 28 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.10.0
+* Sat Feb 28 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.9.1
 * Wed Feb 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.8.2
 * Sun Feb 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -10,13 +10,13 @@
 
 %define _prefix /usr
 %define php_version 5.3
-%define tarball_version  1.1.0
+%define tarball_version  1.1.1
 %define tarball_name     yaml
 
 Name:                    SFEphp53-yaml
 IPS_package_name:	 web/php-53/extension/php-yaml
 Summary:                 PHP 5.3 module for YAML
-Version:                 1.1.0
+Version:                 %{tarball_version}
 License:		 PHP License
 Url:                     http://pecl.php.net/package/%{tarball_name}
 Source:                  http://pecl.php.net/get/%{tarball_name}-%{tarball_version}.tgz
@@ -96,6 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/%{php_version}/conf.d/*
 
 %changelog
+* Thu Mar 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.1.1
 * Wed Apr 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - specify required version of library/text/yaml (CVE-2014-2525)
 * Wed Jan 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

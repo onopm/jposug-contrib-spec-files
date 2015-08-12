@@ -29,7 +29,7 @@ NODE=${1%.spec}
 VERSION=`uname -v`
 
 case ${VERSION} in
-    11.*)
+    11.*|s12_*)
 	echo "Solaris 11 mode. use IPS."
 	REPTYPE='--ips'
 	;;

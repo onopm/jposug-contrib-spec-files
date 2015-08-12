@@ -9,7 +9,7 @@ getproparg() {
 status_nrpe ()
 {
     pid_nrpe
-    if ps -p $NagiosPID > /dev/null 2>&1; then
+    if ps -p $NrpePID > /dev/null 2>&1; then
 	return 0
     else
 	return 1
@@ -63,6 +63,13 @@ case "$1" in
   start)
 	# Start daemons.
 	echo -n "Starting nrpe: "
+	NrpeRunDir=`dirname $NrpeRunFile`
+	if [ ! -d $NrpeRunDir ]
+	then
+	    mkdir $NrpeRunDir
+	fi
+	chown $NrpeUser:$NrpeGroup $NrpeRunDir
+
 	touch $NrpeRunFile
 	chown $NrpeUser:$NrpeGroup $NrpeRunFile
 	$NrpeBin -c $NrpeCfgFile -d
@@ -74,7 +81,7 @@ case "$1" in
   stop)
 	# Stop daemons.
 	echo -n "Shutting down nrpe: "
-	pid_nrpe	
+	pid_nrpe
 	killproc_nrpe
 	echo
 	rm -f $NrpeLockDir/$NrpeLockFile $NrpeRunFile

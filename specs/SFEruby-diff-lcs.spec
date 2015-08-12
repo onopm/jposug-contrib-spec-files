@@ -80,16 +80,43 @@ Diff::LCS is a port of Perl's Algorithm::Diff that uses the McIlroy-Hunt longest
 rm -rf %{buildroot}
 
 # ruby-19
+pushd .%{gemdir19}/gems/%{gemname}-%{version}/bin/
+for i in ldiff htmldiff
+do
+    mv ${i} ${i}.bak
+    sed -e 's!ruby \-w!%{bindir19}/ruby -w!' < ${i}.bak > ${i}
+    rm ${i}.bak
+done
+popd
+
 mkdir -p %{buildroot}/%{gemdir19}
 cp -a .%{gemdir19}/* \
     %{buildroot}/%{gemdir19}/
 
 # ruby-20
+pushd .%{gemdir20}/gems/%{gemname}-%{version}/bin/
+for i in ldiff htmldiff
+do
+    mv ${i} ${i}.bak
+    sed -e 's!ruby \-w!%{bindir20}/ruby -w!' < ${i}.bak > ${i}
+    rm ${i}.bak
+done
+popd
+
 mkdir -p %{buildroot}/%{gemdir20}
 cp -a .%{gemdir20}/* \
     %{buildroot}/%{gemdir20}/
 
 # ruby-21
+pushd .%{gemdir21}/gems/%{gemname}-%{version}/bin/
+for i in ldiff htmldiff
+do
+    mv ${i} ${i}.bak
+    sed -e 's!ruby \-w!%{bindir21}/ruby -w!' < ${i}.bak > ${i}
+    rm ${i}.bak
+done
+popd
+
 mkdir -p %{buildroot}/%{gemdir21}
 cp -a .%{gemdir21}/* \
     %{buildroot}/%{gemdir21}/
@@ -114,6 +141,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.0
 
 %changelog
+* Wed May 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix shebang to avoid failing dependency check 
 * Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - stop to generate package for ruby-18
 * Wed Feb 26 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

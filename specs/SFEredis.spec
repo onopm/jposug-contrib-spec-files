@@ -13,6 +13,10 @@
 %define major_version	 2.8
 %define _basedir         %{_prefix}/%{major_version}
 
+%define runuser         redis
+%define runuserid       200
+%define runusergroup    redis
+%define runusergroupid  200
 
 Name:		SFEredis
 Version:        2.8.6
@@ -114,8 +118,8 @@ cp %{SOURCE8} $RPM_BUILD_ROOT%{_etc_prefix}/%{major_version}/
 rm -rf ${RPM_BUILD_ROOT}
 
 %actions
-group groupname="redis"
-user ftpuser=false gcos-field="redis Reserved UID" username="redis" password=NP group="redis"
+group groupname="%{runusergroup}" gid="%{runusergroupid}"
+user ftpuser=false gcos-field="redis Reserved UID" username="%{runuser}" uid="%{runuserid}" password=NP group="%{runusergroup}" home-dir="%{_var_prefix}" login-shell="/bin/true" group-list="redis"
 
 %files
 %defattr(0755, root, sys)
@@ -156,6 +160,8 @@ user ftpuser=false gcos-field="redis Reserved UID" username="redis" password=NP 
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_28.xml
 
 %changelog
+* Wed Aug 12 2015 - Osamu Tabata <cantimerny.g@gmail.com>
+- ユーザー、グループID固定化
 * Wed Jul 15 2015 - Osamu Tabata <cantimerny.g@gmail.com>
 - 失敗のため戻しました
 * Wed Jul 15 2015 - Osamu Tabata <cantimerny.g@gmail.com>

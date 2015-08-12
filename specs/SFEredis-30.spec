@@ -13,8 +13,12 @@
 %define major_version	 3.0
 %define _basedir         %{_prefix}/%{major_version}
 
+%define runuser         redis
+%define runuserid       200
+%define runusergroup    redis
+%define runusergroupid  200
 
-Name:		SFEredis
+Name:		SFEredis-30
 Version:        3.0.2
 Summary:	Redis is an open source, advanced key-value store
 IPS_package_name:    service/redis-30
@@ -118,8 +122,8 @@ cp %{SOURCE8} $RPM_BUILD_ROOT%{_etc_prefix}/%{major_version}/
 rm -rf ${RPM_BUILD_ROOT}
 
 %actions
-group groupname="redis"
-user ftpuser=false gcos-field="redis Reserved UID" username="redis" password=NP group="redis"
+group groupname="%{runusergroup}" gid="%{runusergroupid}"
+user ftpuser=false gcos-field="redis Reserved UID" username="%{runuser}" uid="%{runuserid}" password=NP group="%{runusergroup}" home-dir="%{_var_prefix}" login-shell="/bin/true" group-list="redis"
 
 %files
 %defattr(0755, root, sys)
@@ -160,5 +164,7 @@ user ftpuser=false gcos-field="redis Reserved UID" username="redis" password=NP 
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_30.xml
 
 %changelog
+* Wed Aug 12 2015 - Osamu Tabata <cantimerny.g@gmail.com>
+- change user and grou id
 * Wed Jul 15 2015 - Osamu Tabata <cantimerny.g@gmail.com>
 - initial commit

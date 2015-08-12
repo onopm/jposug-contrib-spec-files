@@ -6,6 +6,7 @@
 %include Solaris.inc
 %include usr-gnu.inc
 %include base.inc
+%include packagenamemacros.inc
 
 %define tarball_version  15.8a
 Name:                    SFEcscope
@@ -20,10 +21,10 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 SUNW_Copyright:	         cscope.copyright
 %include default-depend.inc
 # BuildConflicts:        SPROsslnk
-BuildRequires:           SUNWbison
-BuildRequires:           SUNWncurses-devel
-Requires:                SUNWncurses
-Requires:                SUNWtoo
+BuildRequires:           %{pnm_buildrequires_SUNWbison}
+BuildRequires:           %{pnm_buildrequires_SUNWncurses}
+Requires:                %{pnm_buildrequires_SUNWncurses}
+Requires:                %{pnm_requires_SUNWtoo}
 
 %prep
 %setup -q -n cscope-%{tarball_version}
@@ -58,6 +59,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/*/*
 
 %changelog
+* Wed Aug 12 2015 - Osamu Tabata
+- modify require section
 * Fri Jun 14 2013 - Osamu Tabata
 - Support for Solaris11 and bump up to 15.8a
 * Fri Jun 1 2012 - Osamu Tabata

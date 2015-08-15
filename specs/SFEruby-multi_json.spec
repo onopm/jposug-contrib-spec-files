@@ -8,7 +8,7 @@
 %define generate_executable 0
 
 %define gemname multi_json
-%define sfe_gemname %(echo "%{gemname}" | sed -e 's/_/-/g')
+%define sfe_gemname multi-json
 
 %if %{build19}
 %define bindir19 /usr/ruby/1.9/bin
@@ -37,7 +37,7 @@
 Summary:          A common interface to multiple JSON libraries
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.11.1
+Version:          1.11.2
 License:          MIT
 URL:              http://github.com/intridea/multi_json
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -53,9 +53,6 @@ Summary:          A common interface to multiple JSON libraries
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 Requires:         library/ruby/%{gemname}-19
-
-%description 19-old
-A common interface to multiple JSON libraries, including Oj, Yajl, the JSON gem (with C-extensions), the pure-Ruby JSON gem, NSJSONSerialization, gson.rb, JrJackson, and OkJson.
 
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
@@ -75,9 +72,6 @@ BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/%{gemname}-20
 
-%description 20-old
-A common interface to multiple JSON libraries, including Oj, Yajl, the JSON gem (with C-extensions), the pure-Ruby JSON gem, NSJSONSerialization, gson.rb, JrJackson, and OkJson.
-
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
 Summary:          A common interface to multiple JSON libraries
@@ -96,9 +90,6 @@ BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/%{gemname}-21
 
-%description 21-old
-A common interface to multiple JSON libraries, including Oj, Yajl, the JSON gem (with C-extensions), the pure-Ruby JSON gem, NSJSONSerialization, gson.rb, JrJackson, and OkJson.
-
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
 Summary:          A common interface to multiple JSON libraries
@@ -116,9 +107,6 @@ Summary:          A common interface to multiple JSON libraries
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/%{gemname}-22
-
-%description 22-old
-A common interface to multiple JSON libraries, including Oj, Yajl, the JSON gem (with C-extensions), the pure-Ruby JSON gem, NSJSONSerialization, gson.rb, JrJackson, and OkJson.
 
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
@@ -183,15 +171,40 @@ install_for() {
     gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-    mkdir -p %{buildroot}/usr/ruby/${ruby_var}
-    cp -a ./usr/ruby/${ruby_var}/* \
-        %{buildroot}/usr/ruby/${ruby_var}/
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
 
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
 %if %{generate_executable}
-    mkdir -p %{buildroot}${bindir}
-    cp -a .${bindir}/* \
-        %{buildroot}${bindir}/
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
 %endif
+
 }
 
 %if %{build19}
@@ -219,46 +232,52 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 
 %if %{build19}
-%files 19-old
-%defattr(0755,root,bin,-)
-
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*19
+%endif
 %endif
 
 %if %{build20}
-%files 20-old
-%defattr(0755,root,bin,-)
-
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*20
+%endif
 %endif
 
 %if %{build21}
-%files 21-old
-%defattr(0755,root,bin,-)
-
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
 %endif
 
 %if %{build22}
-%files 22-old
-%defattr(0755,root,bin,-)
-
 %files 22
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
 %endif
 
 %changelog
+* Sat Aug 15 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.11.2
 * Fri Jun 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.11.1
 * Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

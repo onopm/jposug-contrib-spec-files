@@ -301,7 +301,7 @@ ln -s ../../mysql/%{major_version}/bin/amd64/resolve_stack_dump .
 ln -s ../../mysql/%{major_version}/bin/amd64/resolveip .
 
 %clean
-# rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr (-, root, bin)

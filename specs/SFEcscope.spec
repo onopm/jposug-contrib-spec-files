@@ -8,7 +8,7 @@
 %include base.inc
 %include packagenamemacros.inc
 
-%define tarball_version  15.8a
+%define tarball_version  15.8b
 Name:                    SFEcscope
 IPS_Package_Name:	 developer/cscope
 License:                 BSD
@@ -36,7 +36,7 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
 fi
 export CFLAGS="%optflags -I/usr/include/ncurses"
 export LDFLAGS="%_ldflags -L/usr/gnu/lib -R/usr/gnu/lib"
-./configure --prefix=%{_prefix}			\
+./configure --prefix=%{_prefix}	\
 	    --mandir=%{_mandir}
 	    
 make -j$CPUS 
@@ -59,6 +59,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/*/*
 
 %changelog
+* Fri Aug 21 2015 - Osamu Tabata <cantimerny.g@gmail.com>
+- Bump to 15.8b
 * Wed Aug 12 2015 - Osamu Tabata
 - modify require section
 * Fri Jun 14 2013 - Osamu Tabata

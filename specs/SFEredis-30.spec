@@ -84,10 +84,12 @@ cd %{tarball_name}-%{version}
 export CC=gcc
 rm -rf ${RPM_BUILD_ROOT}
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL_BIN=$RPM_BUILD_ROOT%{_prefix}/%{major_version}/bin
+install -m 0755 src/redis-trib.rb $RPM_BUILD_ROOT%{_prefix}/%{major_version}/bin/
 
 %ifarch amd64 sparcv9
 cd ../%{tarball_name}-%{version}-64
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL_BIN=$RPM_BUILD_ROOT%{_prefix}/%{major_version}/bin/%{_arch64}
+install -m 0755 src/redis-trib.rb $RPM_BUILD_ROOT%{_prefix}/%{major_version}/bin/%{_arch64}/
 %endif
 
 
@@ -164,6 +166,8 @@ user ftpuser=false gcos-field="redis Reserved UID" username="%{runuser}" uid="%{
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_30.xml
 
 %changelog
+* Tue Aug 25 2015 - Osamu Tabata <cantimerny.g@gmail.com>
+- add redis-trib.rb script
 * Wed Aug 12 2015 - Osamu Tabata <cantimerny.g@gmail.com>
 - change user and grou id
 * Wed Jul 15 2015 - Osamu Tabata <cantimerny.g@gmail.com>

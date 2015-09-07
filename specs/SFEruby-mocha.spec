@@ -1,141 +1,265 @@
 %include Solaris.inc
 %include default-depend.inc
 
+%define build19 0
+%define build20 0
+%define build21 1
+%define build22 1
+%define generate_executable 0
+
 %define gemname mocha
-%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-%define bindir18 /usr/ruby/1.8/bin
+%define sfe_gemname mocha
 
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
+%if %{build19}
 %define bindir19 /usr/ruby/1.9/bin
+%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
+%endif
 
-%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+%if %{build20}
 %define bindir20 /usr/ruby/2.0/bin
+%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+%endif
 
-Summary: Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
-Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby-18/mocha
-Version:          0.14.0
+%if %{build21}
+%define bindir21 /usr/ruby/2.1/bin
+%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+%endif
+
+%if %{build22}
+%define bindir22 /usr/ruby/2.2/bin
+%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
+%endif
+
+Summary:          Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
+Name:             SFEruby-%{sfe_gemname}
+IPS_package_name: library/ruby/%{gemname}
+Version:          1.1.0
 License:          Ruby
-URL:              http://rubygems.org/gems/%{gemname}
+URL:              http://gofreerange.com/mocha/docs
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	  runtime/ruby-18
-Requires:         runtime/ruby-18
-Requires:         library/ruby-18/metaclass
+
 
 %description
 Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
 
+%if %{build19}
 %package 19
-IPS_package_name: library/ruby-19/mocha
+IPS_package_name: library/ruby/%{gemname}-19
 Summary:          Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
-BuildRequires:	  runtime/ruby-19
-Requires:	  runtime/ruby-19
-Requires:         library/ruby-19/metaclass
+BuildRequires:    runtime/ruby-19 = *
+Requires:         runtime/ruby-19 = *
+# metaclass ~> 0.0.1
+Requires:         library/ruby/metaclass-19
 
 %description 19
 Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
+%endif
 
+%if %{build20}
 %package 20
-IPS_package_name: library/ruby-20/mocha
+IPS_package_name: library/ruby/%{gemname}-20
 Summary:          Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
-BuildRequires:	  runtime/ruby-20
-Requires:	  runtime/ruby-20
-Requires:         library/ruby-20/metaclass
+BuildRequires:    runtime/ruby-20 = *
+Requires:         runtime/ruby-20 = *
+# metaclass ~> 0.0.1
+Requires:         library/ruby/metaclass-20
 
 %description 20
 Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
+%endif
+
+%if %{build21}
+%package 21
+IPS_package_name: library/ruby/%{gemname}-21
+Summary:          Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+# metaclass ~> 0.0.1
+Requires:         library/ruby/metaclass-21
+
+%description 21
+Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
+%endif
+
+%if %{build22}
+%package 22
+IPS_package_name: library/ruby/%{gemname}-22
+Summary:          Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+# metaclass ~> 0.0.1
+Requires:         library/ruby/metaclass-22
+
+%description 22
+Mocking and stubbing library with JMock/SchMock syntax, which allows mocking and stubbing of methods on real (non-mock) classes.
+%endif
 
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir18}
-mkdir -p .%{bindir18}
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
-mkdir -p .%{gemdir20}
-mkdir -p .%{bindir20}
 
 %build
-# export CONFIGURE_ARGS="--with-cflags='%{optflags}'"
+build_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-# ruby-18
-/usr/ruby/1.8/bin/gem install --local \
-    --install-dir .%{gemdir18} \
-    --bindir .%{bindir18} \
-    -V \
-    --no-ri \
-    --no-rdoc \
-    --force %{SOURCE0}
+    ${bindir}/gem install --local \
+        --no-env-shebang \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0}
+}
 
+%if %{build19}
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    -V \
-    --no-ri \
-    --no-rdoc \
-    --force %{SOURCE0}
+build_for 1.9
+%endif
 
+%if %{build20}
 # ruby-20
-/usr/ruby/2.0/bin/gem install --local \
-    --install-dir .%{gemdir20} \
-    --bindir .%{bindir20} \
-    -V \
-    --no-ri \
-    --no-rdoc \
-    --force %{SOURCE0}
+build_for 2.0
+%endif
+
+%if %{build21}
+# ruby-21
+build_for 2.1
+%endif
+
+%if %{build22}
+# ruby-22
+build_for 2.2
+%endif
 
 %install
 rm -rf %{buildroot}
 
-# ruby-18
-mkdir -p %{buildroot}/%{gemdir18}
-cp -a .%{gemdir18}/* \
-    %{buildroot}/%{gemdir18}/
+%if %{generate_executable}
+mkdir -p %{buildroot}/%{_bindir}
+%endif
 
-# mkdir -p %{buildroot}%{bindir18}
-# cp -a .%{bindir18}/* \
-#    %{buildroot}%{bindir18}/
+install_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
+
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
+%if %{generate_executable}
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
+%endif
+
+}
+
+%if %{build19}
 # ruby-19
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
+install_for 1.9
+%endif
 
-# mkdir -p %{buildroot}%{bindir19}
-# cp -a .%{bindir19}/* \
-#    %{buildroot}%{bindir19}/
+%if %{build20}
+install_for 2.0
+%endif
 
-# ruby-20
-mkdir -p %{buildroot}/%{gemdir20}
-cp -a .%{gemdir20}/* \
-    %{buildroot}/%{gemdir20}/
+%if %{build21}
+# ruby-21
+install_for 2.1
+%endif
+
+%if %{build22}
+install_for 2.2
+%endif
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
-%dir %attr (0755, root, sys) /usr
-# /usr/ruby/1.8
 
+%if %{build19}
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*19
+%endif
+%endif
 
+%if %{build20}
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*20
+%endif
+%endif
+
+%if %{build21}
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
+%endif
+
+%if %{build22}
+%files 22
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
 
 %changelog
+* Mon Sep 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.1.0
 * Tue May 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.14.0
 - generate package for ruby-20

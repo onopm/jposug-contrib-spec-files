@@ -23,11 +23,11 @@ Version:                 %{tarball_version}
 License:		 GPL v2
 Group:		System/Databases
 Url:                     http://www.mysql.com/
-# Source:                  http://dev.mysql.com/get/Downloads/MySQL-%{major_version}/mysql-%{version}.tar.gz/from/http://cdn.mysql.com/
-Source:                  http://cdn.mysql.com/Downloads/MySQL-%{major_version}/mysql-%{version}.tar.gz
+Source:                  http://dev.mysql.com/get/Downloads/MySQL-%{major_version}/mysql-%{version}.tar.gz
 Source1:                 mysql_56
 Source2:                 mysql_56.xml
 Source3:                 http://github.com/q4m/q4m/archive/%{q4m_ver}.tar.gz
+Source4:                 my-5.6.cnf.master
 Patch1:                  5.6-select-where-queue-wait.patch
 Patch2:                  5.6-queue_cond.cc-0.9.14.patch
 Patch3:                  5.6-queue_cond.h-0.9.14.patch
@@ -161,13 +161,14 @@ cd %{tarball_name}-%{tarball_version}
 make install DESTDIR=$RPM_BUILD_ROOT
 
 mkdir -p $RPM_BUILD_ROOT/etc/mysql/%{major_version}
-install support-files/my-default.cnf $RPM_BUILD_ROOT/etc/mysql/5.6/my.cnf
-install storage/q4m/support-files/install.sql $RPM_BUILD_ROOT/usr/mysql/5.6/share/install.sql
-install storage/q4m/support-files/q4m-forward $RPM_BUILD_ROOT/usr/mysql/5.6/share/q4m-forward
+install support-files/my-default.cnf $RPM_BUILD_ROOT/etc/mysql/%{major_version}/my.cnf
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/mysql/%{major_version}/my-5.6.cnf.master
+install storage/q4m/support-files/install.sql $RPM_BUILD_ROOT/usr/mysql/%{major_version}/share/install.sql
+install storage/q4m/support-files/q4m-forward $RPM_BUILD_ROOT/usr/mysql/%{major_version}/share/q4m-forward
 
 mkdir -p $RPM_BUILD_ROOT/usr/lib
 pushd $RPM_BUILD_ROOT/usr/lib
-ln -s ../mysql/5.6/lib/mysql/libstlport.so.1 .
+ln -s ../mysql/%{major_version}/lib/mysql/libstlport.so.1 .
 popd
 
 # install 64bit
@@ -386,8 +387,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %attr (0755, root, sys) /etc
 %dir %attr (0755, root, bin) /etc/mysql
-%dir %attr (0755, root, bin) /etc/mysql/5.6
-%attr (0444, root, bin) %config(noreplace) /etc/mysql/5.6/my.cnf
+%dir %attr (0755, root, bin) /etc/mysql/%{major_version}
+%attr (0444, root, bin) %config(noreplace) /etc/mysql/%{major_version}/my.cnf
+%attr (0444, root, bin) %config(noreplace) /etc/mysql/%{major_version}/my-5.6.cnf.master
 # %attr (0444, root, bin) %ips_tag (mediator=mysql mediator-version=%{major_version}) /etc/mysql/my.cnf
 
 # /usr/bin
@@ -536,6 +538,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) %{_prefix}/%{major_version}/include/mysql/psi/*.h
 
 %changelog
+* Thu Sep 17 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>
+- add my.cnf sample file
 * Fri Aug 07 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>
 - change configure option
 * Sun Apr 27 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>

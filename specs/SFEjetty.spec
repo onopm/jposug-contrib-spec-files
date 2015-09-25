@@ -1,7 +1,7 @@
 %include Solaris.inc
 
-%define jetty_version 9.3.0
-%define jetty_date 20150612
+%define jetty_version 9.3.3
+%define jetty_date 20150827
 
 Name:			SFEjetty
 IPS_package_name:	web/server/jetty
@@ -84,6 +84,8 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/start.ini
 
 %changelog
+* Fri Sep 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.3
 * Sat Jun 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.3.0
 * Wed Sep 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

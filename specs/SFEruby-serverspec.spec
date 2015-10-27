@@ -35,7 +35,7 @@
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby/serverspec
-Version:          2.21.0
+Version:          2.24.1
 License:          MIT License
 URL:              http://serverspec.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -63,7 +63,7 @@ Requires:         runtime/ruby-19 = *
 Requires:         library/ruby/rspec-19 >= 3.0.0
 Requires:         library/ruby/rspec-its-19
 Requires:         library/ruby/highline-19
-Requires:         library/ruby/specinfra-19 >= 2.38.0
+Requires:         library/ruby/specinfra-19 >= 2.43.0
 Requires:         library/ruby/multi_json-19
 
 %description 19
@@ -89,7 +89,7 @@ Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/rspec-20 >= 3.0.0
 Requires:         library/ruby/rspec-its-20
 Requires:         library/ruby/highline-20
-Requires:         library/ruby/specinfra-20 >= 2.38.0
+Requires:         library/ruby/specinfra-20 >= 2.43.0
 Requires:         library/ruby/multi_json-20
 
 %description 20
@@ -115,7 +115,7 @@ Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/rspec-21 >= 3.0.0
 Requires:         library/ruby/rspec-its-21
 Requires:         library/ruby/highline-21
-Requires:         library/ruby/specinfra-21 >= 2.38.0
+Requires:         library/ruby/specinfra-21 >= 2.43.0
 Requires:         library/ruby/multi_json-21
 
 %description 21
@@ -141,7 +141,7 @@ Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/rspec-22 >= 3.0.0
 Requires:         library/ruby/rspec-its-22
 Requires:         library/ruby/highline-22
-Requires:         library/ruby/specinfra-22 >= 2.38.0
+Requires:         library/ruby/specinfra-22 >= 2.43.0
 Requires:         library/ruby/multi_json-22
 
 %description 22
@@ -341,6 +341,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Oct 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.24.1
 * Sat Aug 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.21.0
 * Thu Jul 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

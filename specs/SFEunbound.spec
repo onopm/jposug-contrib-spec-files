@@ -8,7 +8,7 @@
 Summary:	Validating, recursive, and caching DNS resolver
 IPS_Package_Name:	network/dns/unbound
 Name:		SFEunbound
-Version:	1.4.16
+Version:	1.4.17
 License:	BSD
 URL:		http://www.nlnetlabs.nl/unbound/
 Source:		http://www.unbound.net/downloads/unbound-%{version}.tar.gz
@@ -18,8 +18,8 @@ BuildRoot:	%{_tmppath}/unbound-%{version}-build
 SUNW_Copyright:	unbound.copyright
 SUNW_BaseDir:	/
 BuildRequires: SUNWflexlex
-BuildRequires: SUNWopenssl-include
-Requires: SUNWopenssl-libraries
+BuildRequires: library/security/openssl
+Requires: library/security/openssl
 BuildRequires: SUNWlexpt
 Requires: SUNWlexpt
 BuildRequires: SFEldns-devel
@@ -58,7 +58,8 @@ LDFLAGS="-lsocket -lnsl" \
 	--without-pthreads \
 	--disable-gost \
 	--with-conf-file=%{_sysconfdir}/unbound/unbound.conf \
-	--with-pidfile=%{_localstatedir}/run/unbound.pid
+	--with-pidfile=%{_localstatedir}/run/unbound.pid \
+        --disable-ecdsa
 
 make -j$CPUS
 
@@ -131,6 +132,11 @@ user ftpuser=false gcos-field="Unbound Reserved UID" username="unbound" password
 %{_libdir}/libunbound*
 
 %changelog
+* Fri Dec 07 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify requires to build Solaris 11.1
+* Thu Jun 07 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.4.17
+- add --disable-ecdsa because ecdsa is enabled by default
 * Sun Feb 26 2012 - Satoru MIYAZAKI<s.miyaza@gmail.com>
 - bump to 1.4.16
 * Mon Dec 19 2011 - Milan Jurik

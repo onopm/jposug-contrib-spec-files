@@ -7,9 +7,6 @@
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 
-%define build_with_makefile_pl 1
-%define build_with_build_pl 0
-
 %define cpan_name ExtUtils-Constant
 %define sfe_cpan_name extutils-constant
 
@@ -112,17 +109,15 @@ modify_bin_dir() {
 }
 
 build_for() {
-%if %{build_with_makefile_pl}
-build_with_makefile.pl_for $*
-%endif
+    if [ -f Makefile.PL ];
+    then
+        build_with_makefile.pl_for $*
+    elif [ -f Build.PL ];
+    then
+        build_with_build.pl_for $*
+    fi
 
-%if %{build_with_build_pl}
-build_with_build.pl_for $*
-%endif
-
-%if %{generate_executable}
-modify_bin_dir $*
-%endif
+    modify_bin_dir $*
 }
 
 
@@ -199,3 +194,4 @@ rm -rf %{buildroot}
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - fix IPS package names
+- check existence of Makefile.PL and Build.PL instead of using variable

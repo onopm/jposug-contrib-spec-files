@@ -15,7 +15,7 @@
 
 Summary:          generate XS code to import C header constants
 Name:             SFEperl-%{sfe_cpan_name}
-IPS_package_name: library/perl/%{sfe_cpan_name}
+IPS_package_name: library/perl-5/%{sfe_cpan_name}
 Version:          0.23
 License:          unknown
 URL:              https://metacpan.org/pod/ExtUtils::Constant
@@ -27,7 +27,7 @@ generate XS code to import C header constants
 
 %if %{build584}
 %package 584
-IPS_package_name: library/perl/%{sfe_cpan_name}-584
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
 Summary:          generate XS code to import C header constants
 BuildRequires:    runtime/perl-584 = *
 Requires:         runtime/perl-584 = *
@@ -38,7 +38,7 @@ generate XS code to import C header constants
 
 %if %{build512}
 %package 512
-IPS_package_name: library/perl/%{sfe_cpan_name}-512
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
 Summary:          generate XS code to import C header constants
 BuildRequires:    runtime/perl-512 = *
 Requires:         runtime/perl-512 = *
@@ -49,7 +49,7 @@ generate XS code to import C header constants
 
 %if %{build516}
 %package 516
-IPS_package_name: library/perl/%{sfe_cpan_name}-516
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
 Summary:          generate XS code to import C header constants
 BuildRequires:    runtime/perl-516 = *
 Requires:         runtime/perl-516 = *
@@ -60,7 +60,7 @@ generate XS code to import C header constants
 
 %if %{build520}
 %package 520
-IPS_package_name: library/perl/%{sfe_cpan_name}-520
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
 Summary:          generate XS code to import C header constants
 BuildRequires:    runtime/perl-520 = *
 Requires:         runtime/perl-520 = *
@@ -198,3 +198,4 @@ rm -rf %{buildroot}
 %changelog
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- fix IPS package names

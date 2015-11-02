@@ -5,7 +5,7 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define generate_executable 0
+%define include_executable 0
 
 %define cpan_name Socket
 %define sfe_cpan_name socket
@@ -167,7 +167,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.8.4
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.8.4
 %endif
 %endif
@@ -177,7 +177,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.12
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.12
 %endif
 %endif
@@ -187,7 +187,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.16
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.16
 %endif
 %endif
@@ -197,7 +197,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.20
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.20
 %endif
 %endif
@@ -208,3 +208,4 @@ rm -rf %{buildroot}
 - initial commit
 - fix IPS package names
 - check existence of Makefile.PL and Build.PL instead of using variable
+- modify variable name, s/generate_executable/include_executable/

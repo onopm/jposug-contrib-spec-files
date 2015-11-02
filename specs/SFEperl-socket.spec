@@ -15,7 +15,7 @@
 
 Summary:               networking constants and support functions
 Name:                  SFEperl-%{sfe_cpan_name}
-IPS_package_name:      library/perl/%{sfe_cpan_name}
+IPS_package_name:      library/perl-5/%{sfe_cpan_name}
 Version:               2.020
 IPS_component_version: 2.20
 License:               perl_5
@@ -28,12 +28,12 @@ networking constants and support functions
 
 %if %{build584}
 %package 584
-IPS_package_name: library/perl/%{sfe_cpan_name}-584
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-584 = *
-Requires:         library/perl/extutils-cbuilder-584
-Requires:         library/perl/extutils-constant-584
-Requires:         library/perl/extutils-makemaker-584
+Requires:         library/perl-5/extutils-cbuilder-584
+Requires:         library/perl-5/extutils-constant-584
+Requires:         library/perl-5/extutils-makemaker-584
 Requires:         runtime/perl-584 = *
 
 %description 584
@@ -42,12 +42,12 @@ networking constants and support functions
 
 %if %{build512}
 %package 512
-IPS_package_name: library/perl/%{sfe_cpan_name}-512
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-512 = *
-Requires:         library/perl/extutils-cbuilder-512
-Requires:         library/perl/extutils-constant-512
-Requires:         library/perl/extutils-makemaker-512
+Requires:         library/perl-5/extutils-cbuilder-512
+Requires:         library/perl-5/extutils-constant-512
+Requires:         library/perl-5/extutils-makemaker-512
 Requires:         runtime/perl-512 = *
 
 %description 512
@@ -56,12 +56,12 @@ networking constants and support functions
 
 %if %{build516}
 %package 516
-IPS_package_name: library/perl/%{sfe_cpan_name}-516
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-516 = *
-Requires:         library/perl/extutils-cbuilder-516
-Requires:         library/perl/extutils-constant-516
-Requires:         library/perl/extutils-makemaker-516
+Requires:         library/perl-5/extutils-cbuilder-516
+Requires:         library/perl-5/extutils-constant-516
+Requires:         library/perl-5/extutils-makemaker-516
 Requires:         runtime/perl-516 = *
 
 %description 516
@@ -70,12 +70,12 @@ networking constants and support functions
 
 %if %{build520}
 %package 520
-IPS_package_name: library/perl/%{sfe_cpan_name}-520
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-520 = *
-Requires:         library/perl/extutils-cbuilder-520
-Requires:         library/perl/extutils-constant-520
-Requires:         library/perl/extutils-makemaker-520
+Requires:         library/perl-5/extutils-cbuilder-520
+Requires:         library/perl-5/extutils-constant-520
+Requires:         library/perl-5/extutils-makemaker-520
 Requires:         runtime/perl-520 = *
 
 %description 520
@@ -211,3 +211,4 @@ rm -rf %{buildroot}
 %changelog
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- fix IPS package names

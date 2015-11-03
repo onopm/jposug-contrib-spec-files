@@ -7,80 +7,68 @@
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
-%define cpan_name Encode-Locale
-%define sfe_cpan_name encode-locale
+%define cpan_name TimeDate
+%define sfe_cpan_name timedate
 
-Summary:               Determine the locale encoding
+Summary:               Date formating subroutines
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{sfe_cpan_name}
-Version:               1.05
-IPS_component_version: 1.5
+Version:               2.30
+IPS_component_version: 2.30
 License:               perl_5
-URL:                   https://metacpan.org/pod/Encode::Locale
-Source0:               http://cpan.metacpan.org/authors/id/G/GA/GAAS/Encode-Locale-%{version}.tar.gz
+URL:                   https://metacpan.org/pod/TimeDate
+Source0:               http://cpan.metacpan.org/authors/id/G/GB/GBARR/TimeDate-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
-Determine the locale encoding
+Date formating subroutines
 
 %if %{build584}
 %package 584
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
-Summary:          Determine the locale encoding
+Summary:          Date formating subroutines
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
-BuildRequires:    library/perl-5/test-simple-584
-BuildRequires:    library/perl-5/extutils-makemaker-584
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/encode-584
 
 %description 584
-Determine the locale encoding
+Date formating subroutines
 %endif
 
 %if %{build512}
 %package 512
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
-Summary:          Determine the locale encoding
+Summary:          Date formating subroutines
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
-BuildRequires:    library/perl-5/test-simple-512
-BuildRequires:    library/perl-5/extutils-makemaker-512
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/encode-512
 
 %description 512
-Determine the locale encoding
+Date formating subroutines
 %endif
 
 %if %{build516}
 %package 516
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
-Summary:          Determine the locale encoding
+Summary:          Date formating subroutines
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
-BuildRequires:    library/perl-5/test-simple-516
-BuildRequires:    library/perl-5/extutils-makemaker-516
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/encode-516
 
 %description 516
-Determine the locale encoding
+Date formating subroutines
 %endif
 
 %if %{build520}
 %package 520
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
-Summary:          Determine the locale encoding
+Summary:          Date formating subroutines
 BuildRequires:    runtime/perl-520 = *
 Buildrequires:    library/perl-5/extutils-makemaker-520
-Buildrequires:    library/perl-5/test-simple-520
-Buildrequires:    library/perl-5/extutils-makemaker-520
 Requires:         runtime/perl-520 = *
-Requires:         library/perl-5/encode-520
 
 %description 520
-Determine the locale encoding
+Date formating subroutines
 %endif
 
 
@@ -219,6 +207,4 @@ rm -rf %{buildroot}
 
 %changelog
 * Tue Nov 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 1.05 and build pakcages for perl-516 and perl-520
-* Sun Jun 10 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

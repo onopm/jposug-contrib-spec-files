@@ -7,80 +7,72 @@
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
-%define cpan_name Encode-Locale
-%define sfe_cpan_name encode-locale
+%define cpan_name Data-Dumper
+%define sfe_cpan_name data-dumper
 
-Summary:               Determine the locale encoding
+Summary:               stringified perl data structures, suitable for both printing and eval
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{sfe_cpan_name}
-Version:               1.05
-IPS_component_version: 1.5
-License:               perl_5
-URL:                   https://metacpan.org/pod/Encode::Locale
-Source0:               http://cpan.metacpan.org/authors/id/G/GA/GAAS/Encode-Locale-%{version}.tar.gz
+Version:               2.154
+IPS_component_version: 2.154
+License:               unknown
+URL:                   https://metacpan.org/pod/Data::Dumper
+Source0:               http://cpan.metacpan.org/authors/id/S/SM/SMUELLER/Data-Dumper-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
-Determine the locale encoding
+stringified perl data structures, suitable for both printing and eval
 
 %if %{build584}
 %package 584
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
-Summary:          Determine the locale encoding
+Summary:          stringified perl data structures, suitable for both printing and eval
 BuildRequires:    runtime/perl-584 = *
-BuildRequires:    library/perl-5/extutils-makemaker-584
+#BuildRequires:    library/perl-5/extutils-makemaker-584
 BuildRequires:    library/perl-5/test-simple-584
-BuildRequires:    library/perl-5/extutils-makemaker-584
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/encode-584
 
 %description 584
-Determine the locale encoding
+stringified perl data structures, suitable for both printing and eval
 %endif
 
 %if %{build512}
 %package 512
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
-Summary:          Determine the locale encoding
+Summary:          stringified perl data structures, suitable for both printing and eval
 BuildRequires:    runtime/perl-512 = *
-BuildRequires:    library/perl-5/extutils-makemaker-512
+# BuildRequires:    library/perl-5/extutils-makemaker-512
 BuildRequires:    library/perl-5/test-simple-512
-BuildRequires:    library/perl-5/extutils-makemaker-512
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/encode-512
 
 %description 512
-Determine the locale encoding
+stringified perl data structures, suitable for both printing and eval
 %endif
 
 %if %{build516}
 %package 516
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
-Summary:          Determine the locale encoding
+Summary:          stringified perl data structures, suitable for both printing and eval
 BuildRequires:    runtime/perl-516 = *
-BuildRequires:    library/perl-5/extutils-makemaker-516
+# BuildRequires:    library/perl-5/extutils-makemaker-516
 BuildRequires:    library/perl-5/test-simple-516
-BuildRequires:    library/perl-5/extutils-makemaker-516
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/encode-516
 
 %description 516
-Determine the locale encoding
+stringified perl data structures, suitable for both printing and eval
 %endif
 
 %if %{build520}
 %package 520
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
-Summary:          Determine the locale encoding
+Summary:          stringified perl data structures, suitable for both printing and eval
 BuildRequires:    runtime/perl-520 = *
-Buildrequires:    library/perl-5/extutils-makemaker-520
+#Buildrequires:    library/perl-5/extutils-makemaker-520
 Buildrequires:    library/perl-5/test-simple-520
-Buildrequires:    library/perl-5/extutils-makemaker-520
 Requires:         runtime/perl-520 = *
-Requires:         library/perl-5/encode-520
 
 %description 520
-Determine the locale encoding
+stringified perl data structures, suitable for both printing and eval
 %endif
 
 
@@ -91,7 +83,6 @@ rm -rf %{buildroot}
 %build
 build_with_makefile.pl_for() {
     perl_ver=$1
-    test=$2
     bindir="/usr/perl5/${perl_ver}/bin"
     vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
 
@@ -100,13 +91,12 @@ build_with_makefile.pl_for() {
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
     make
-    [ ${test} == 'without_test' ] || make test
+    make test
     make pure_install
 }
 
 build_with_build.pl_for() {
     perl_ver=$1
-    test=$2
     bindir="/usr/perl5/${perl_ver}/bin"
     vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
 
@@ -115,7 +105,7 @@ build_with_build.pl_for() {
                    --installdirs vendor \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ ${test} == 'without_test' ] || ${bindir}/perl ./Build test
+    ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
 }
 
@@ -140,8 +130,7 @@ build_for() {
     modify_bin_dir $*
 }
 
-# To build without test, pass 'without_test' to build_for commaond.
-# like 'build_for version without_test'
+
 %if %{build584}
 build_for 5.8.4
 %endif
@@ -159,9 +148,9 @@ build_for 5.20
 %endif
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_datadir}
 if [ -d $RPM_BUILD_ROOT%{_prefix}/man ]
 then
+    mkdir -p $RPM_BUILD_ROOT%{_datadir}
     mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 fi
 if [ -d $RPM_BUILD_ROOT%{_datadir}/man/man3 ]
@@ -174,7 +163,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-%{_datadir}/man/man3perl
+# %{_datadir}/man/man3perl
 
 %if %{build584}
 %files 584
@@ -219,6 +208,4 @@ rm -rf %{buildroot}
 
 %changelog
 * Tue Nov 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 1.05 and build pakcages for perl-516 and perl-520
-* Sun Jun 10 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -147,6 +147,7 @@ build_for() {
   rm -rf $RPM_BUILD_ROOT/usr/bin
 }
 
+export BUILDING_AS_PACKAGE=true
 
 %if %{build584}
 build_for 5.8.4
@@ -221,6 +222,7 @@ rm -rf %{buildroot}
 %changelog
 * Tue Nov 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.10 and modify specfile to build packages for perl-516 and perl-520
+- use BUILDING_AS_PACKAGE to avoid including bundled modules
 * Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 6.64
 * Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

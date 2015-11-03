@@ -1,0 +1,11 @@
+--- lib/rdoc/ri/driver.rb.orig	2012-10-18 22:40:12.811394712 +0900
++++ lib/rdoc/ri/driver.rb	2012-10-18 22:40:40.896552403 +0900
+@@ -723,7 +723,7 @@
+     page do |io|
+       io.puts "#{name} not found, maybe you meant:"
+       io.puts
+-      io.puts matches.join("\n")
++      io.puts matches.sort.join("\n")
+     end
+ 
+     false

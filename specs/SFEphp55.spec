@@ -33,6 +33,8 @@ BuildRequires: library/libedit
 BuildRequires: SFEeditline
 %endif
 BuildRequires:  developer/icu
+BuildRequires:  system/library/security/libmcrypt
+BuildRequires:  text/tidy
 
 Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       system/library/security/libmcrypt
@@ -451,6 +453,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %config(noreplace) /etc/apache2/2.2/conf.d/php/php5.5.conf
 
 %changelog
+* Wed Nov 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Tue Oct 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - enable intl
 * Tue Oct 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

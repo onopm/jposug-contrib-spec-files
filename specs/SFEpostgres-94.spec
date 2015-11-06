@@ -16,10 +16,10 @@
 %define prefix_name      SFEpostgres-94
 %define _basedir         %{_prefix}/%{major_version}
 
-# with Oracle Solaris 11.2,
+# after Oracle Solaris 11.2,
 # - use library/libedit
 # - SFEpostgres-common is not needed, because user and group 'postgres' exist.
-%define oracle_solaris_11_2 %(grep 'Oracle Solaris 11.2' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+%define after_oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[23]|12)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-94
@@ -50,7 +50,7 @@ BuildRequires: %{pnm_buildrequires_SUNWcsl}
 BuildRequires: %{pnm_buildrequires_SUNWlibms}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWTcl}
-%if %{oracle_solaris_11_2}
+%if %{after_oracle_solaris_11_2}
 BuildRequires: library/libedit
 %else
 BuildRequires: SFEeditline
@@ -63,7 +63,7 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWgss}
-%if %{oracle_solaris_11_2}
+%if %{after_oracle_solaris_11_2}
 Requires: library/libedit
 %else
 Requires: SFEeditline
@@ -133,7 +133,7 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{prefix_name}-libs
-%if %{oracle_solaris_11_2}
+%if %{after_oracle_solaris_11_2}
 #
 %else
 Requires: SFEpostgres-common
@@ -1225,6 +1225,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_recvlogical
 
 %changelog
+* Fri Nov 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- change definition 'oracle_solaris_11_2' to 'after_oracle_solaris_11_2' because it is used also with Oracle Solaris 11.3.
 * Sat Feb 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.4.4
 * Sat Feb 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

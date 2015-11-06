@@ -48,6 +48,7 @@ __END__
 %define build21 1
 %define build22 1
 %define generate_executable 0
+%define keep_dependency 1
 
 %define gemname <%= data['name'] %>
 %define sfe_gemname <%= data['name'].gsub(/_/, '-') %>
@@ -92,6 +93,21 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 <%= data['info'] %>
 
 %if %{build19}
+%if %{keep_dependency}
+%package 19-old
+IPS_package_name: library/ruby-19/%{gemname}
+Summary:          <%= data['info'] %>
+BuildRequires:    runtime/ruby-19 = *
+Requires:         runtime/ruby-19 = *
+<% data['dependencies']['runtime'].each do |req| -%>
+# <%= req['name'] %> <%= req['requirements'] %>
+Requires:         library/ruby/%{gemname}-19
+<% end -%>
+
+%description 19-old
+<%= data['info'] %>
+%endif
+
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
 Summary:          <%= data['info'] %>
@@ -107,6 +123,21 @@ Requires:         library/ruby/<%= req['name'] %>-19
 %endif
 
 %if %{build20}
+%if %{keep_dependency}
+%package 20-old
+IPS_package_name: library/ruby-20/%{gemname}
+Summary:          <%= data['info'] %>
+BuildRequires:    runtime/ruby-20 = *
+Requires:         runtime/ruby-20 = *
+<% data['dependencies']['runtime'].each do |req| -%>
+# <%= req['name'] %> <%= req['requirements'] %>
+Requires:         library/ruby/%{gemname}-20
+<% end -%>
+
+%description 20-old
+<%= data['info'] %>
+%endif
+
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
 Summary:          <%= data['info'] %>
@@ -122,6 +153,21 @@ Requires:         library/ruby/<%= req['name'] %>-20
 %endif
 
 %if %{build21}
+%if %{keep_dependency}
+%package 21-old
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          <%= data['info'] %>
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+<% data['dependencies']['runtime'].each do |req| -%>
+# <%= req['name'] %> <%= req['requirements'] %>
+Requires:         library/ruby/%{gemname}-21
+<% end -%>
+
+%description 21-old
+<%= data['info'] %>
+%endif
+
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
 Summary:          <%= data['info'] %>
@@ -137,6 +183,21 @@ Requires:         library/ruby/<%= req['name'] %>-21
 %endif
 
 %if %{build22}
+%if %{keep_dependency}
+%package 22-old
+IPS_package_name: library/ruby-22/%{gemname}
+Summary:          <%= data['info'] %>
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+<% data['dependencies']['runtime'].each do |req| -%>
+# <%= req['name'] %> <%= req['requirements'] %>
+Requires:         library/ruby/%{gemname}-22
+<% end -%>
+
+%description 22-old
+<%= data['info'] %>
+%endif
+
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
 Summary:          <%= data['info'] %>

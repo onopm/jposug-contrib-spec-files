@@ -10,7 +10,7 @@
 %define _prefix /usr/mysql
 %define _var_prefix /var/mysql
 %define tarball_name     mysql
-%define tarball_version  5.6.24
+%define tarball_version  5.6.27
 %define major_version	 5.6
 %define q4m_ver          0.9.14
 %define prefix_name      SFEmysql-56
@@ -538,6 +538,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) %{_prefix}/%{major_version}/include/mysql/psi/*.h
 
 %changelog
+* Fri Nov 07 JST 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.6.27
 * Thu Sep 17 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>
 - add my.cnf sample file
 * Fri Aug 07 JST 2015 Osamu Tabata <cantimerny.g@gmail.com>

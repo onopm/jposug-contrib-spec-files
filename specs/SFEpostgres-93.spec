@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.3.9
+%define tarball_version  9.3.10
 %define major_version	 9.3
 %define prefix_name      SFEpostgres-93
 %define _basedir         %{_prefix}/%{major_version}
@@ -1204,6 +1204,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Fri Nov 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - change definition 'oracle_solaris_11_2' to 'after_oracle_solaris_11_2' because it is used also with Oracle Solaris 11.3.
+- bump to 9.3.10
 * Sat Jun 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.3.9
 * Sun May 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

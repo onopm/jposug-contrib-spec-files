@@ -40,12 +40,14 @@ Utilities for managing MANIFEST files
 IPS_package_name: library/perl-5/extutils-manifest-584
 Summary: Utilities for managing MANIFEST files for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:  library/perl-5/extutils-makemaker-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/extutils-manifest-512
 Summary: Utilities for managing MANIFEST files for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:  library/perl-5/extutils-makemaker-512
 Requires:	runtime/perl-512
 
 
@@ -98,5 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sat Jun 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

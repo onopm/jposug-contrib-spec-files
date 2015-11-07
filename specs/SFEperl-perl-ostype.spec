@@ -36,6 +36,7 @@ Map Perl operating system names to generic types
 IPS_package_name: library/perl-5/perl-ostype-584
 Summary: Map Perl operating system names to generic types for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:  library/perl-5/extutils-makemaker-584
 # BuildRequires:	library/perl-5/test-more-584
 Requires:	runtime/perl-584
 
@@ -43,6 +44,7 @@ Requires:	runtime/perl-584
 IPS_package_name: library/perl-5/perl-ostype-512
 Summary: Map Perl operating system names to generic types for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:  library/perl-5/extutils-makemaker-512
 # BuildRequires:	library/perl-5/test-more-512
 Requires:	runtime/perl-512
 
@@ -79,7 +81,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,bin)
 # %{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
@@ -93,5 +95,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate packages for perl-584 and perl-512

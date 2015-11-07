@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 0.78
+%define tarball_version 0.86
 %define tarball_name    IPC-Cmd
 
 Name:		SFEperl-ipc-cmd
 IPS_package_name: library/perl-5/ipc-cmd
-Version:	0.78
-IPS_component_version: 0.78
+Version:	0.86
+IPS_component_version: 0.86
 Summary:	IPC::Cmd - finding and running system commands made easy
 License:	Artistic
 Distribution:   OpenSolaris
@@ -101,3 +101,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.86

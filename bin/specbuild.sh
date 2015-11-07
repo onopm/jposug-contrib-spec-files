@@ -29,7 +29,7 @@ NODE=${1%.spec}
 VERSION=`uname -v`
 
 case ${VERSION} in
-    11.*)
+    11.*|s12_*)
 	echo "Solaris 11 mode. use IPS."
 	REPTYPE='--ips'
 	;;
@@ -41,6 +41,10 @@ case ${VERSION} in
 	echo "OpenIndiana mode. use IPS."
 	REPTYPE='--ips'
 	;;
+    omnios*)
+        echo "OpenIndiana(OmniOS) mode. use IPS."
+        REPTYPE='--ips'
+        ;;
     Generic*)
 	echo "Solaris 10 mode. use SVr4."
 	REPTYPE='--svr4'
@@ -53,7 +57,7 @@ esac
 
 
 LC_ALL=C ${PKGTOOL} build-only \
-  --autodeps --nonotify --specdirs=`pwd`:`pwd`/include\
+  --autodeps --nonotify --specdirs=`pwd`:`pwd`/include:`pwd`/base-specs \
   --patchdirs=`pwd`/patches \
   --sourcedirs=`pwd`/ext-sources:`pwd`/copyright:`pwd`/include \
   ${REPTYPE} \

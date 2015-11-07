@@ -9,13 +9,70 @@ use warnings;
 use Pod::Usage;
 # Debug (dumper
 use Data::Dumper;
-sub p { print Dumper shift }
+use Digest::MD5 qw/md5_hex/;
+use Storable;
+use File::Basename;
+use constant CACHEDIR => "./cache_spec_depend";
+use constant SPEC2IPSNAME => "spec2ipsname.list";
 
+sub p { print Dumper shift }
 
 sub spectool($$)
 {
     my ($command, $spec) = @_;
-    split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips $command $spec`);
+    my (@retval, $res, $line, @lines, $md5, $md5_cached, @cache, $cache_ar, $fh, $spec_base, $ext);
+    $spec_base = basename($spec, ('.spec'));
+    @retval = ();
+    $res = open $fh, "<", "$spec";
+    if(!$res){
+        die "ERROR: spec-file open error [$spec]: $!";
+    } else {
+        @lines = <$fh>;
+        close $fh;
+    }
+    $md5 = md5_hex(@lines);
+    $res = open $fh, "<", CACHEDIR."/$spec_base.$command";
+    if($res) {
+        $cache_ar = Storable::fd_retrieve($fh);
+        close $fh;
+        @cache = @$cache_ar;   
+        $md5_cached = shift(@cache);
+        if ($md5 eq $md5_cached) {
+            print STDERR "$spec_base.$command (cached)\n";
+            return @cache; 
+        }
+    }
+    if ($command =~ /get_copyright/) {
+        for $line (@lines) { 
+            $line =~ s/\r?\n//g;
+            if( $line =~ /^SUNW_Copyright\s*:\s*([\/\w\-%\.{}\(\)]+)/i ){
+                @retval = (@retval, split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include:\`pwd\`/base-specs --ips eval '$1' $spec`));
+                #print STDERR "found: SUNW_Copyright\n";
+            }
+        } 
+        if ($#retval < 0) {
+            @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include:\`pwd\`/base-specs --ips eval '%{name}.copyright' $spec`);
+            #print STDERR "not found: SUNW_Copyright\n";
+        } 
+    } else {
+        @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include:\`pwd\`/base-specs --ips $command $spec`);
+    }
+    mkdir CACHEDIR if (! -d CACHEDIR);
+    $res = open $fh, ">", CACHEDIR."/$spec_base.$command";
+    if(!$res){
+        die "ERROR: cache-file open error [$spec_base.$command]: $!";
+    } else {
+        @cache = ($md5, @retval);
+        Storable::store_fd \@cache, $fh;
+        close $fh;
+        for $ext ('info', 'proto') {
+            if (-f "$spec_base.$ext") {
+	        print STDERR "/bin/rm -rf $spec_base.$ext\n";
+	        `/bin/rm -rf $spec_base.$ext`;
+            }
+        }
+    }
+    @retval; 
 }
 
 sub search_depend_files($$) {
@@ -23,7 +80,7 @@ sub search_depend_files($$) {
     my (@files, $key);
     return if ! -r $spec;
 
-    for $key ('buildrequires', 'patches', 'sources') {
+    for $key ('buildrequires', 'patches', 'sources', 'copyright', 'used_spec_files') {
 	@files = spectool("get_$key", $spec);
 	@{$requires->{$key}} = @files if ($#files >= 0);
     }
@@ -72,7 +129,7 @@ foreach (@spec_file_lines){
     $sfe_pkg_list{$spec}=1;
 }
 # このファイルは、install_spec.shでspecファイルからipsの名前でインストールするのに使う。
-open my $s2ifh, ">./spec2ipsname.list" or die("file write error");
+open my $s2ifh, ">./".SPEC2IPSNAME or die("file write error");
 for my $key (keys(%ips_spec_name)) {
     print $s2ifh "$ips_spec_name{$key}.spec:$key\n" if ($key !~ /^SFE/);
 }
@@ -128,6 +185,25 @@ foreach my $spec_file (@spec_file_lines){
 		if(! /^(http|https|ftp):\/\//){
 		    $sources.='ext-sources/'.$_.' ';
 		}
+	    }
+	    $depend_sources.=' '.${sources} if(${sources});
+	}
+        if(defined($requires{'copyright'})){
+	    my $sources='';
+	    foreach (@{$requires{'copyright'}}){
+		if(! /^(http|https|ftp):\/\//){
+		    $sources.='copyright/'.$_.' ';
+		}
+	    }
+	    $depend_sources.=' '.${sources} if(${sources});
+	}
+        if(defined($requires{'used_spec_files'})){
+	    my $sources='';
+	    foreach (@{$requires{'used_spec_files'}}){
+		my ($pwd) = `pwd`;
+		$pwd =~ s/\r?\n//g;
+		s/^${pwd}\///;
+	        $sources.= $_.' ';
 	    }
 	    $depend_sources.=' '.${sources} if(${sources});
 	}

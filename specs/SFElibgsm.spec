@@ -35,12 +35,12 @@ including 'rplay', but has never been packaged as a stand-alone shared
 library. GSM encoding has specific uses in transmission of packetized
 audio over the Internet.
 
-%package developer
+%package devel
 Summary:                 %{summary} - development files
 SUNW_BaseDir:            %{_basedir}
 IPS_package_name:   library/media/gsm/developer
 %include default-depend.inc
-#Requires: %name
+Requires: %name
 
 %prep
 rm -rf %name-%version
@@ -104,7 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_mandir}
 %{_mandir}/man1
 
-%files developer
+%files devel
 %defattr (-, root, bin)
 %{_includedir}
 %dir %attr (0755, root, sys) %{_datadir}

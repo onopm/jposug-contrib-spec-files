@@ -1,81 +1,100 @@
 #
-# spec file for package SFEperl-yaml
+# spec file for package: SFEperl-yaml
 #
-# includes module(s): YAML perl module
+# This file and all modifications and additions to the pristine
+# package are under the same license as the package itself.
 #
-
+# includes module(s):
+#
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define yaml_version 0.72
+%define tarball_version 0.81
+%define tarball_name    YAML
 
-Name:                    SFEperl-yaml
-IPS_package_name:        library/perl-5/yaml
-Summary:                 YAML-%{yaml_version} PERL module
-Version:                 %{perl_version}.%{yaml_version}
-Source:                  http://search.cpan.org/CPAN/authors/id/A/AD/ADAMK/YAML-%{yaml_version}.tar.gz
-SUNW_BaseDir:            %{_basedir}
-BuildRoot:               %{_tmppath}/%{name}-%{version}-build
-BuildRequires:  %{pnm_buildrequires_perl_default}
-Requires:  	%{pnm_requires_perl_default}
+Name:		SFEperl-yaml
+IPS_package_name: library/perl-5/yaml
+Version:	0.81
+IPS_component_version: 0.81
+Summary:	YAML Ain't Markup Language (tm)
+License:	Artistic
+Url:		http://search.cpan.org/~ingy/%{tarball_name}-%{tarball_version}
+SUNW_Basedir:	%{_basedir}
+SUNW_Copyright: %{name}.copyright
+Source0:	http://search.cpan.org/CPAN/authors/id/I/IN/INGY/YAML-%{tarball_version}.tar.gz
 
+BuildRequires:	runtime/perl-584
+BuildRequires:	runtime/perl-512
 
-%ifarch sparc
-%define perl_dir sun4-solaris-64int
-%else
-%define perl_dir i86pc-solaris-64int 
-%endif
-%include default-depend.inc
+%description
+YAML Ain't Markup Language (tm)
+
+%package 584
+IPS_package_name: library/perl-5/yaml-584
+Summary: YAML Ain't Markup Language (tm) for perl-584
+BuildRequires:	runtime/perl-584
+Requires:	runtime/perl-584
+Requires:	%{name}
+
+%package 512
+IPS_package_name: library/perl-5/yaml-512
+Summary: YAML Ain't Markup Language (tm) for perl-512
+BuildRequires:	runtime/perl-512
+Requires:	runtime/perl-512
+Requires:	%{name}
+
 
 %prep
-%setup -q            -c -n %name-%version
+%setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-cd YAML-%{yaml_version}
-perl Makefile.PL \
-    PREFIX=$RPM_BUILD_ROOT%{_prefix} \
-    INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version} \
-    INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir} \
-    INSTALLSITEMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-    INSTALLSITEMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
-    INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-    INSTALLMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3
-make CC=$CC CCCDLFLAGS="%picflags" OPTIMIZE="%optflags" LD=$CC
+export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+/usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.8.4
+make
+make test
+
+rm -rf $RPM_BUILD_ROOT
+make pure_install
+
+export PERL5LIB=/usr/perl5/vendor_perl/5.12
+/usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.12
+make
+make test
 
 %install
-rm -rf $RPM_BUILD_ROOT
-cd YAML-%{yaml_version}
-make install
-
-rm -rf $RPM_BUILD_ROOT%{_prefix}/lib
-
-%{?pkgbuild_postprocess: %pkgbuild_postprocess -v -c "%{version}:%{jds_version}:%{name}:$RPM_ARCH:%(date +%%Y-%%m-%%d):%{support_level}" $RPM_BUILD_ROOT}
+make pure_install
+mkdir -p $RPM_BUILD_ROOT%{_datadir}
+mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
+mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr (-, root, bin)
-#%dir %attr (0755, root, bin) %{_bindir}
+%defattr(-,root,bin)
+#%{_prefix}/perl5
+%attr(0755,root,sys) %dir %{_datadir}
+%{_mandir}
+#%attr(0755,root,bin) %dir %{_bindir}
 #%{_bindir}/*
-%dir %attr(0755, root, bin) %{_prefix}/perl5
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl/%{perl_version}
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl/%{perl_version}/Test
-%{_prefix}/perl5/vendor_perl/%{perl_version}/Test/*
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl/%{perl_version}/YAML
-%{_prefix}/perl5/vendor_perl/%{perl_version}/YAML/*
-%{_prefix}/perl5/vendor_perl/%{perl_version}/*.pm
-%dir %attr(0755, root, bin) %{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir}/auto
-%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir}/auto/*
-%dir %attr(0755, root, sys) %{_datadir}
-%dir %attr(0755, root, bin) %{_mandir}
-#%dir %attr(0755, root, bin) %{_mandir}/man1
-%dir %attr(0755, root, bin) %{_mandir}/man3
-#%{_mandir}/man1/*
-%{_mandir}/man3/*
+
+%files 584
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.8.4
+
+%files 512
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Jan 20 2013 - TAKI,Yasushi <taki@justplayer.com>
+* Sun Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.81
+- generate packages for perl-584 and perl-512
 * Wed Oct 17 2007 - laca@sun.com
 - bump to 0.66
 * Sun Jan 28 2007 - mike kiedrowski (lakeside-AT-cybrzn-DOT-com)

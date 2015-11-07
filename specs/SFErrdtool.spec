@@ -56,6 +56,9 @@ Requires:                image/library/libpng
 Requires:                library/desktop/pango
 BuildRequires:           runtime/perl-512
 
+#
+BuildRequires:           text/groff
+
 #bug and lacks perl modules (, ruby, python too)
 Conflicts: SUNWrrdtool
 
@@ -144,6 +147,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Nov 07 2015 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Wed Dec 03 2014 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
 - bump to 1.4.9
 * Mon Aug 05 2013 - Fumihisa Tonaka <fumi.ftnk@gmail.com>

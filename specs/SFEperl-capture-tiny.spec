@@ -38,7 +38,7 @@ Requires:         library/perl-5/exporter-584
 Requires:         library/perl-5/file-temp-584
 Requires:         library/perl-5/io-584
 Requires:         library/perl-5/pathtools-584
-Requires:         library/perl-5/scalar-util-584
+Requires:         library/perl-5/scalar-list-utils-584
 
 %description 584
 Capture STDOUT and STDERR from Perl, XS or external programs
@@ -60,7 +60,7 @@ Requires:         library/perl-5/exporter-512
 Requires:         library/perl-5/file-temp-512
 Requires:         library/perl-5/io-512
 Requires:         library/perl-5/pathtools-512
-Requires:         library/perl-5/scalar-util-512
+Requires:         library/perl-5/scalar-list-utils-512
 
 %description 512
 Capture STDOUT and STDERR from Perl, XS or external programs
@@ -82,7 +82,7 @@ Requires:         library/perl-5/exporter-516
 Requires:         library/perl-5/file-temp-516
 Requires:         library/perl-5/io-516
 Requires:         library/perl-5/pathtools-516
-Requires:         library/perl-5/scalar-util-516
+Requires:         library/perl-5/scalar-list-utils-516
 
 %description 516
 Capture STDOUT and STDERR from Perl, XS or external programs
@@ -104,7 +104,7 @@ Requires:         library/perl-5/exporter-520
 Requires:         library/perl-5/file-temp-520
 Requires:         library/perl-5/io-520
 Requires:         library/perl-5/pathtools-520
-Requires:         library/perl-5/scalar-util-520
+Requires:         library/perl-5/scalar-list-utils-520
 
 %description 520
 Capture STDOUT and STDERR from Perl, XS or external programs
@@ -245,6 +245,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update Requires
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.30 and build packages for perl-516 and perl-520
 * Sat Jun 16 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -44,7 +44,7 @@ Requires:         library/perl-5/io-seekable-584
 Requires:         library/perl-5/parent-584
 Requires:         library/perl-5/pathtools-584
 Requires:         library/perl-5/posix-584
-Requires:         library/perl-5/scalar-util-584
+Requires:         library/perl-5/scalar-list-utils-584
 Requires:         library/perl-5/symbol-584
 
 %description 584
@@ -73,7 +73,7 @@ Requires:         library/perl-5/io-seekable-512
 Requires:         library/perl-5/parent-512
 Requires:         library/perl-5/pathtools-512
 Requires:         library/perl-5/posix-512
-Requires:         library/perl-5/scalar-util-512
+Requires:         library/perl-5/scalar-list-utils-512
 Requires:         library/perl-5/symbol-512
 
 %description 512
@@ -102,7 +102,7 @@ Requires:         library/perl-5/io-seekable-516
 Requires:         library/perl-5/parent-516
 Requires:         library/perl-5/pathtools-516
 Requires:         library/perl-5/posix-516
-Requires:         library/perl-5/scalar-util-516
+Requires:         library/perl-5/scalar-list-utils-516
 Requires:         library/perl-5/symbol-516
 
 %description 516
@@ -131,7 +131,7 @@ Requires:         library/perl-5/io-seekable-520
 Requires:         library/perl-5/parent-520
 Requires:         library/perl-5/pathtools-520
 Requires:         library/perl-5/posix-520
-Requires:         library/perl-5/scalar-util-520
+Requires:         library/perl-5/scalar-list-utils-520
 Requires:         library/perl-5/symbol-520
 
 %description 520
@@ -273,6 +273,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update Requires
 * Wed Nov 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.2304 and build packages for perl-516 and perl520
 * Sat Jun 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -33,8 +33,8 @@ IPS_package_name:        diagnostic/nagios/plugins/dig
 Group:		Applications/System
 Summary:	Provides check_dig plugin.
 SUNW_BaseDir:	/
-BuildRequires:  network/dns/bind
-Requires:       network/dns/bind
+# BuildRequires:  pkg:/network/dns/bind
+Requires:       pkg:/network/dns/bind
 
 %description dig
 Provides check_dig plugin.
@@ -44,8 +44,8 @@ IPS_package_name:        diagnostic/nagios/plugins/dns
 Group:		Applications/System
 Summary:	Provides check_dns plugin.
 SUNW_BaseDir:	/
-BuildRequires:  network/dns/bind
-Requires:       network/dns/bind
+# BuildRequires:  pkg:/network/dns/bind
+Requires:       pkg:/network/dns/bind
 
 %description dns
 Provides check_dns plugin.
@@ -152,7 +152,9 @@ done
 rm -rf %{buildroot}
 
 %files
-%defattr(-, root, bin)
+%defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_apt
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_breeze
@@ -231,15 +233,24 @@ rm -rf %{buildroot}
 
 
 %files dig
-%defattr(-, root, bin)
+%defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
+%dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_dig
 
 %files dns
-%defattr(-, root, bin)
+%defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
+%dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_dns
 
 %files fping
-%defattr(-, root, bin)
+%defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
+%dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
@@ -255,6 +266,10 @@ rm -rf %{buildroot}
 - fix %defattr
 * Tue Jan 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.5
+* Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
+* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify Requires and BuildRequires
 * Tue Jul 17 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.4.16
 

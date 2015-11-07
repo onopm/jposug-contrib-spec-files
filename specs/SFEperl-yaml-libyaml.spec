@@ -11,6 +11,8 @@
 
 %define tarball_version 0.38
 %define tarball_name    YAML-LibYAML
+%define perl_version584 5.8.4
+%define perl_version512 5.12
 
 Name:		SFEperl-yaml-libyaml
 IPS_package_name: library/perl-5/yaml-libyaml
@@ -45,36 +47,79 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
 
+# %package 584
+# IPS_package_name: library/perl-5/yaml-libyaml-584
+# Summary:  for perl-584
+# BuildRequires:	runtime/perl-584
+# BuildRequires:	library/perl-5/json-pp-584 # not builded yet
+# Requires:	runtime/perl-584
+
+%package 512
+IPS_package_name: library/perl-5/yaml-libyaml-512
+Summary:  for perl-512
+BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/json-pp-512
+Requires:	runtime/perl-512
+
+
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-perl Makefile.PL \
+# export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+# /usr/perl5/5.8.4/bin/perl Makefile.PL \
+#     PREFIX=$RPM_BUILD_ROOT%{_prefix} \
+#     INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version584} \
+#     INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version584}/%{perl_dir} \
+#     INSTALLSITEMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
+#     INSTALLSITEMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
+#     INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
+#     INSTALLMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3
+# make
+# make test
+
+# rm -rf $RPM_BUILD_ROOT
+# make pure_install
+
+export PERL5LIB=/usr/perl5/vendor_perl/5.12
+/usr/perl5/5.12/bin/perl Makefile.PL \
     PREFIX=$RPM_BUILD_ROOT%{_prefix} \
-    INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version} \
-    INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir} \
+    INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version512} \
+    INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version512}/%{perl_dir} \
     INSTALLSITEMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
     INSTALLSITEMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
     INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
     INSTALLMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3
 make
+make test
 
 %install
 rm -rf $RPM_BUILD_ROOT
 make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
-#mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
-#mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+#%{_prefix}/perl5
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
-#%attr(755,root,sys) %dir %{_bindir}
+#%attr(0755,root,bin) %dir %{_bindir}
 #%{_bindir}/*
 
+# %files 584
+# %defattr (-, root, bin)
+# %{_prefix}/perl5/vendor_perl/%{perl_version584}
+
+%files 512
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/%{perl_version512}
+
+
 %changelog
+* Sun Dec 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- define perl_version584 and perl_version512 and use them
+* Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate package for perl-512

@@ -48,6 +48,7 @@ IPS_package_name: library/perl-5/extutils-cbuilder-512
 Summary: ExtUtils::CBuilder for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/ipc-cmd-512
+BuildRequires:	library/perl-5/perl-ostype-512
 Requires:	runtime/perl-512
 
 
@@ -101,5 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Nov 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequries because 'make test' rquires Perl/OSType.pm
 * Sat Jun 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -40,6 +40,7 @@ IPS_package_name: library/perl-5/test-output-584
 Summary: Test::Output for perl-584
 BuildRequires:	runtime/perl-584
 BuildRequires:	library/perl-5/test-tester-584
+BuildRequires:	library/perl-5/sub-exporter-512
 Requires:	runtime/perl-584
 
 %package 512
@@ -47,6 +48,7 @@ IPS_package_name: library/perl-5/test-output-512
 Summary: Test::Output for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/test-tester-512
+BuildRequires:	library/perl-5/sub-exporter-512
 Requires:	runtime/perl-512
 
 %prep
@@ -96,5 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

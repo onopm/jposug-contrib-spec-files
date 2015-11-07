@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.0.4
+%define tarball_version  9.0.11
 %define major_version	 9.0
 
 %define _basedir         %{_prefix}/%{major_version}
@@ -19,10 +19,11 @@
 Name:                    SFEpostgres-90
 IPS_package_name:        database/postgres-90
 Summary:	         PostgreSQL client tools
-Version:                 9.0.4
+Version:                 9.0.11
 License:		 PostgreSQL
+Group:		System/Databases
 Url:                     http://www.postgresql.org/
-Source:			 http://wwwmaster.postgresql.org/redir/311/h/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
+Source:                  http://ftp.postgresql.org/pub/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
 Source1:		 postgres-90-postgres_90
 Source2:		 postgres-90-postgresql_90.xml
 Source3:		 postgres-90-auth_attr
@@ -31,7 +32,7 @@ Source5:		 postgres-90-exec_attr
 Source6:		 postgres-90-user_attr
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
-SUNW_Basedir:            %{_basedir}
+SUNW_Basedir:            /usr
 SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
@@ -107,8 +108,7 @@ Summary: PostgreSQL documentation and man pages
 IPS_package_name: service/database/postgres-90
 Summary: PostgreSQL database server
 
-%define _basedir         /
-SUNW_Basedir:            %{_basedir}
+SUNW_Basedir:            /
 
 Requires: %{pnm_requires_SUNWlxsl}
 Requires: %{pnm_requires_SUNWlxml}
@@ -119,6 +119,7 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{name}-library
+Requires: SFEpostgres-common
 
 %package contrib
 IPS_package_name: database/postgres-90/contrib
@@ -254,9 +255,9 @@ gmake install-world DESTDIR=$RPM_BUILD_ROOT
 
 #export OLD_PATH=`pwd`
 #cd $RPM_BUILD_ROOT%{_prefix}/%{major_version}/bin
-#ln -s %{_arch64} 64
+#ln -fs %{_arch64} 64
 #cd ../lib
-#ln -s %{_arch64} 64
+#ln -fs %{_arch64} 64
 #cd ${OLD_PATH}
 #cd ..
 %endif
@@ -298,14 +299,80 @@ rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/amd64/libecpg_compat.a
 # make symbolic link
 
 cd $RPM_BUILD_ROOT/%{_prefix}/%{major_version}/bin/
-[ -r 64 ] || ln -s amd64 64
+[ -r 64 ] || ln -fs amd64 64
+
+mkdir -p $RPM_BUILD_ROOT/usr/bin/amd64
+cd $RPM_BUILD_ROOT/usr/bin/
+ln -fs ../postgres/%{major_version}/bin/clusterdb .
+ln -fs ../postgres/%{major_version}/bin/createdb .
+ln -fs ../postgres/%{major_version}/bin/createlang .
+ln -fs ../postgres/%{major_version}/bin/createuser .
+ln -fs ../postgres/%{major_version}/bin/dropdb .
+ln -fs ../postgres/%{major_version}/bin/droplang .
+ln -fs ../postgres/%{major_version}/bin/dropuser .
+ln -fs ../postgres/%{major_version}/bin/ecpg .
+ln -fs ../postgres/%{major_version}/bin/initdb .
+ln -fs ../postgres/%{major_version}/bin/oid2name .
+ln -fs ../postgres/%{major_version}/bin/pg_archivecleanup .
+ln -fs ../postgres/%{major_version}/bin/pg_config .
+ln -fs ../postgres/%{major_version}/bin/pg_controldata .
+ln -fs ../postgres/%{major_version}/bin/pg_ctl .
+ln -fs ../postgres/%{major_version}/bin/pg_dump .
+ln -fs ../postgres/%{major_version}/bin/pg_dumpall .
+ln -fs ../postgres/%{major_version}/bin/pg_resetxlog .
+ln -fs ../postgres/%{major_version}/bin/pg_restore .
+ln -fs ../postgres/%{major_version}/bin/pg_standby .
+ln -fs ../postgres/%{major_version}/bin/pg_upgrade .
+ln -fs ../postgres/%{major_version}/bin/pgbench .
+ln -fs ../postgres/%{major_version}/bin/pltcl_delmod .
+ln -fs ../postgres/%{major_version}/bin/pltcl_listmod .
+ln -fs ../postgres/%{major_version}/bin/pltcl_loadmod .
+ln -fs ../postgres/%{major_version}/bin/postgres .
+ln -fs ../postgres/%{major_version}/bin/postmaster .
+ln -fs ../postgres/%{major_version}/bin/psql .
+ln -fs ../postgres/%{major_version}/bin/reindexdb .
+ln -fs ../postgres/%{major_version}/bin/vacuumdb .
+ln -fs ../postgres/%{major_version}/bin/vacuumlo .
+
+cd $RPM_BUILD_ROOT/usr/bin/amd64
+ln -fs ../postgres/%{major_version}/bin/amd64/clusterdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/createdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/createlang .
+ln -fs ../postgres/%{major_version}/bin/amd64/createuser .
+ln -fs ../postgres/%{major_version}/bin/amd64/dropdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/droplang .
+ln -fs ../postgres/%{major_version}/bin/amd64/dropuser .
+ln -fs ../postgres/%{major_version}/bin/amd64/ecpg .
+ln -fs ../postgres/%{major_version}/bin/amd64/initdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/oid2name .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_archivecleanup .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_config .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_controldata .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_ctl .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_dump .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_dumpall .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_resetxlog .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_restore .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_standby .
+ln -fs ../postgres/%{major_version}/bin/amd64/pg_upgrade .
+ln -fs ../postgres/%{major_version}/bin/amd64/pgbench .
+ln -fs ../postgres/%{major_version}/bin/amd64/pltcl_delmod .
+ln -fs ../postgres/%{major_version}/bin/amd64/pltcl_listmod .
+ln -fs ../postgres/%{major_version}/bin/amd64/pltcl_loadmod .
+ln -fs ../postgres/%{major_version}/bin/amd64/postgres .
+ln -fs ../postgres/%{major_version}/bin/amd64/postmaster .
+ln -fs ../postgres/%{major_version}/bin/amd64/psql .
+ln -fs ../postgres/%{major_version}/bin/amd64/reindexdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/vacuumdb .
+ln -fs ../postgres/%{major_version}/bin/amd64/vacuumlo .
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%actions server
-group groupname="postgres"
-user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" password=NP group="postgres"
+#%actions server
+#group groupname="postgres"
+#user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" password=NP group="postgres"
 
 %files
 %defattr (-, root, bin)
@@ -316,7 +383,7 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale/*
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES
-%{_prefix}/%{major_version}/bin/64
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/psql
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/clusterdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/createdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/createlang
@@ -329,7 +396,19 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_restore
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/vacuumdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/reindexdb
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/psql
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/psql
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/clusterdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/createdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/createlang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/createuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/dropdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/droplang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/dropuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_dump
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_dumpall
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_restore
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/reindexdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/psql
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/clusterdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/createdb
@@ -343,64 +422,84 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_restore
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/reindexdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/vacuumdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/psql
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/clusterdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/createdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/createlang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/createuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/dropdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/droplang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/dropuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_dump
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_dumpall
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_restore
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/reindexdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/vacuumdb
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/psqlrc.sample
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/psql-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/psql-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/es/LC_MESSAGES/pg_dump-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/es/LC_MESSAGES/pgscripts-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/pg_dump-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/psql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/psql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/pgscripts-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/pg_dump-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/psql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/initdb-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/plpgsql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/psql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/pg_config-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/pg_dump-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/psql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/plpgsql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/psql-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/pg_dump-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/psql-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/sv/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/sv/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/sv/LC_MESSAGES/psql-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ta/LC_MESSAGES/pgscripts-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/pg_dump-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/pgscripts-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/postgres-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pgscripts-%{major_version}.mo
-#%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/psql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_dump-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_config-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_controldata-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/initdb-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_ctl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/plpgsql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pltcl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/psql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/psql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/initdb-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pg_config-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pg_controldata-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pg_ctl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pg_dump-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/plperl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/plpgsql-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/plpython-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pltcl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/postgres-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/initdb-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/plperl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pg_dump-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pg_ctl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pgscripts-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/pg_controldata-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/psql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/psql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/sv/LC_MESSAGES/psql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/plpgsql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/initdb-%{major_version}.mo
-#%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/psql-%{major_version}.mo
-#%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/postgres-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/pg_dump-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/psql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/psql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/plpgsql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/psql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/psql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/pg_dump-%{major_version}.mo
-#%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/psql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/psql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/initdb-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_config-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_controldata-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_ctl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_dump-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pgscripts-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/plpgsql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/postgres-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/psql-%{major_version}.mo
 
 
 
@@ -411,7 +510,6 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
 %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/64
-#%dir %attr (0755, root, sys) /usr/share
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale/*
@@ -429,39 +527,48 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/libecpg.a
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/libpgtypes.a
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/libecpg_compat.a
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/libpq5-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/ecpg-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/libpq5-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/es/LC_MESSAGES/ecpg-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/es/LC_MESSAGES/ecpglib6-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/ecpg-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/ecpglib6-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/ecpg-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/ecpglib6-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/ecpg-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/ecpglib6-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/ecpg-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/ecpglib6-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/ecpg-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/ecpglib6-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/es/LC_MESSAGES/libpq5-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/es/LC_MESSAGES/psql-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/ecpglib6-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/sv/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/ecpglib6-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ta/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/ecpg-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/ecpglib6-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/libpq5-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/sv/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ta/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_CN/LC_MESSAGES/libpq5-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/ecpg-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/ecpglib6-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/libpq5-%{major_version}.mo
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libecpg.so.6
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpq.so.5.3
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpq.so
@@ -495,22 +602,19 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pltcl_listmod
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pltcl_loadmod
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pltcl_delmod
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/pltcl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/plpython-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/pltcl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/plperl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/plpython-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/pltcl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/plperl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/plpython-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/pltcl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/plperl-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/plpython-%{major_version}.mo
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/plpython.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/pltcl.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/plperl.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/plpython.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/pltcl.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pltcl_delmod
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pltcl_listmod
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pltcl_loadmod
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pltcl_listmod
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pltcl_loadmod
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pltcl_delmod
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pltcl_delmod
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pltcl_listmod
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pltcl_loadmod
+
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/plperl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/plpython-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/pltcl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/plperl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/plpython-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/pltcl-%{major_version}.mo
@@ -521,9 +625,34 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/plpython-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/pltcl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/plperl-%{major_version}.mo
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pltcl_delmod
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pltcl_listmod
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pltcl_loadmod
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/plpython-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/it/LC_MESSAGES/pltcl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/plperl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/plpython-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ja/LC_MESSAGES/pltcl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/plperl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/plpython-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/pltcl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/plperl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/plpython-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/pltcl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/plperl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/plpython-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/pltcl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/plperl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/plpython-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/pltcl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/plperl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/plpython-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/pltcl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/plperl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/plpython-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/zh_TW/LC_MESSAGES/pltcl-%{major_version}.mo
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/plpython.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/pltcl.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/plperl.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/plpython.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/pltcl.so
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/unknown.pltcl
 
 
@@ -924,10 +1053,14 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/Makefile.shlib
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/makefiles/pgxs.mk
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/nls-global.mk
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/ecpg
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_config
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/ecpg
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_config
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/ecpg
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_config
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/ecpg
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_config
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/ecpg
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_config
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/pg_config.h
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/pg_config.h
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config/install-sh
@@ -939,6 +1072,7 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test/regress/pg_regress
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/Makefile.global
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/test/regress/pg_regress
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/pg_config-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/pg_config-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/es/LC_MESSAGES/pg_config-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/fr/LC_MESSAGES/pg_config-%{major_version}.mo
@@ -1181,18 +1315,31 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0644, root, sys) /etc/security/prof_attr.d/service\%2Fdatabase\%2Fpostgres-90
 %attr (0644, root, sys) /etc/user_attr.d/service\%2Fdatabase\%2Fpostgres-90
 %attr (0444, root, sys) /var/svc/manifest/application/database/postgresql_90.xml
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/initdb
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_controldata
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_ctl
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_resetxlog
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/postgres
+
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/initdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_controldata
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_ctl
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_resetxlog
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/postgres
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/postmaster
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/postmaster
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/initdb
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_controldata
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_ctl
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_resetxlog
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/postgres
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/postmaster
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/initdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_controldata
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_ctl
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_resetxlog
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/postgres
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/postmaster
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/initdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_controldata
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_ctl
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_resetxlog
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/postgres
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/postmaster
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/ascii_and_mic.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/cyrillic_and_mic.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/dict_snowball.so
@@ -1260,6 +1407,10 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/plpython2.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpqwalreceiver.so
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/initdb-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/pg_controldata-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/pg_ctl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/cs/LC_MESSAGES/plpgsql-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/initdb-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/pg_controldata-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/de/LC_MESSAGES/pg_ctl-%{major_version}.mo
@@ -1292,21 +1443,31 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/pg_controldata-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/pg_ctl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ko/LC_MESSAGES/postgres-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/initdb-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/pg_controldata-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/pg_ctl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/plpgsql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pl/LC_MESSAGES/postgres-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/initdb-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/pg_controldata-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/pg_ctl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/pt_BR/LC_MESSAGES/postgres-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/plpgsql-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/initdb-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/pg_controldata-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/plperl-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/plpgsql-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/plpython-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ro/LC_MESSAGES/pltcl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/initdb-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/pg_controldata-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/pg_ctl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/plpgsql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/ru/LC_MESSAGES/postgres-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/sv/LC_MESSAGES/initdb-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/sv/LC_MESSAGES/pg_controldata-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/sv/LC_MESSAGES/pg_ctl-%{major_version}.mo
@@ -1319,8 +1480,8 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/pg_controldata-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/pg_ctl-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/pg_resetxlog-%{major_version}.mo
-%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/postgres-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/plpgsql-%{major_version}.mo
+%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/tr/LC_MESSAGES/postgres-%{major_version}.mo
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/conversion_create.sql
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/information_schema.sql
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/pg_hba.conf.sample
@@ -1526,7 +1687,37 @@ user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" pass
 %{_prefix}/%{major_version}/bin/amd64/pgbench
 %{_prefix}/%{major_version}/bin/amd64/vacuumlo
 
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/oid2name
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_archivecleanup
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_standby
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_upgrade
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pgbench
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/vacuumlo
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/oid2name
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_archivecleanup
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_standby
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_upgrade
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pgbench
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
+
 %changelog
+* Thu Jan 23 JST 2013 TAKI, Yasushi <taki@justplayer.com>
+- merge SFE and jposug.
+* Thu Jan 17 PST 2013 TAKI, Yasushi <taki@justplayer.com>
+- support mediator.
+* Thu Dec 13 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.0.11
+* Thu Sep 27 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.0.10
+* Thu Aug 30 - Milan Jurik
+- redo packaging
+* Fri Aug 24 2012 Ken Mays <kmays2000@gmail.com>
+- Bump to 9.0.9
+* Mon Sep 10 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.0.9
+* Thu Jun 14 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.0.8
+- modify Source URL
 * Sun Jun  5 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - fix dependency using for pnm.
 * Mon Apr 18 JST 2011 TAKI, Yasushi <taki@justplayer.com>

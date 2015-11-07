@@ -28,8 +28,8 @@ BuildRequires:	SUNWjpg-devel
 Requires:	SUNWjpg
 BuildRequires:	library/gd
 Requires:	library/gd
-Requires:	pkg:/diagnostic/nagios/plugins
-Requires:	%{name}-common
+Requires:	diagnostic/nagios/common
+Requires:	diagnostic/nagios/plugins
 
 %description
 Nagios is a program that will monitor hosts and services on your
@@ -228,6 +228,7 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %changelog
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - delete apache-22 from Requries and BuildRequires because Oracle Solaris 11.3 provides apache-22 and apache-24
+- fix Requires
 * Tue Nov 05 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.5.1
 

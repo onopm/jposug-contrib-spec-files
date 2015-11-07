@@ -102,7 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Nov 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - not include perllocal.pod
-* Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Mon Nov 25 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9904
 * Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %attr

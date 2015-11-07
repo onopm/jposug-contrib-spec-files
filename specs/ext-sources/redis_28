@@ -49,6 +49,7 @@ case "$1" in
         else
                 echo "Starting Redis server..."
                 $EXEC/redis-server $CONF
+		sleep 3
         fi
         ;;
     stop)
@@ -68,7 +69,9 @@ case "$1" in
         fi
         ;;
     restart)
-        echo "Yettemite"
+        $0 stop
+        sleep 3
+        $0 start
         ;;
     *)
         echo "Please use start or stop as first argument"

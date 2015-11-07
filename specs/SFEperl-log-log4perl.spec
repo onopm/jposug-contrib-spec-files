@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 1.36
+%define tarball_version 1.42
 %define tarball_name    Log-Log4perl
 
 Name:		SFEperl-log-log4perl
 IPS_package_name: library/perl-5/log-log4perl
-Version:	1.36
-IPS_component_version: 1.36
+Version:	1.42
+IPS_component_version: 1.42
 Summary:	Log4j implementation in Perl
 License:	Artistic
 Distribution:   OpenSolaris
@@ -101,6 +101,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/5.12/bin
 
 %changelog
+* Thu Nov 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.42
 * Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %attr
 * Sun Jan 20 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

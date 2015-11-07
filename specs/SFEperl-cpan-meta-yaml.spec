@@ -25,7 +25,6 @@ SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/CPAN-Meta-YAML-%{tarball_version}.tar.gz
 
 BuildRequires:	runtime/perl-512
-BuildRequires:	library/perl-5/test-simple-512 >= 0.99
 Requires:	runtime/perl-512
 
 Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
@@ -41,6 +40,7 @@ IPS_package_name: library/perl-5/cpan-meta-yaml-584
 Summary: Read and write a subset of YAML for CPAN Meta files  for perl-584
 BuildRequires:  runtime/perl-584
 BuildRequires:	library/perl-5/test-simple-584 >= 0.99
+BuildRequires:	library/perl-5/version-584
 Requires:       runtime/perl-584
 
 %package 512
@@ -48,6 +48,7 @@ IPS_package_name: library/perl-5/cpan-meta-yaml-512
 Summary: Read and write a subset of YAML for CPAN Meta files  for perl-512
 BuildRequires:  runtime/perl-512
 BuildRequires:	library/perl-5/test-simple-512 >= 0.99
+BuildRequires:	library/perl-5/version-512
 Requires:       runtime/perl-512
 
 %prep
@@ -98,6 +99,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Dec 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Buildrequires
 * Wed Nov 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 - bump to 0.012

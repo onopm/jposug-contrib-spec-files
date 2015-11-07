@@ -9,13 +9,13 @@
 
 %define tarball_index f
 %define tarball_name funcparserlib
-%define tarball_version 0.3.5
+%define tarball_version 0.3.6
 
 Name:                    SFEpython-funcparserlib
 IPS_package_name:        library/python-2/funcparserlib-26
 Summary:                 Recursive descent parsing library based on functional combinators
 URL:                     http://pypi.python.org/pypi/funcparserlib/
-Version:                 0.3.5
+Version:                 %{tarball_version}
 License:                 MIT License
 Source:                  http://pypi.python.org/packages/source/%{tarball_index}/%{tarball_name}/%{tarball_name}-%{tarball_version}.tar.gz
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
@@ -62,5 +62,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Fri Jan 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.3.6
 * Sun Oct 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

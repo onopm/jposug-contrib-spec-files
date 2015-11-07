@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 1.002
+%define tarball_version 1.009
 %define tarball_name    Perl-OSType
 
 Name:		SFEperl-perl-ostype
 IPS_package_name: library/perl-5/perl-ostype
-Version:	1.002
-IPS_component_version: 1.0
+Version:	1.009
+IPS_component_version: 1.9
 Summary:	Map Perl operating system names to generic types 
 License:	Artistic
 Distribution:   OpenSolaris
@@ -95,6 +95,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Nov 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.009
 * Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %attr
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -15,6 +15,8 @@
 %define major_version	 9.0
 %define prefix_name      SFEpostgres-90
 
+%define oracle_solaris_11_2 %(grep 'Oracle Solaris 11.2' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+
 %define _basedir         %{_prefix}/%{major_version}
 
 Name:                    %{prefix_name}-client
@@ -46,7 +48,11 @@ BuildRequires: %{pnm_buildrequires_SUNWcsl}
 BuildRequires: %{pnm_buildrequires_SUNWlibms}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWTcl}
+%if %{oracle_solaris_11_2}
+BuildRequires: library/libedit
+%else
 BuildRequires: SFEeditline
+%endif
 
 Requires: %{pnm_requires_SUNWlxsl}
 Requires: %{pnm_requires_SUNWlxml}
@@ -55,9 +61,13 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWgss}
-Requires: SFEeditline
-
 Requires: %{prefix_name}-libs
+%if %{oracle_solaris_11_2}
+Requires: library/libedit
+%else
+Requires: SFEeditline
+%endif
+
 
 # OpenSolaris IPS Package Manifest Fields
 Meta(info.upstream):	 	PostgreSQL Global Development Group
@@ -120,7 +130,11 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{prefix_name}-libs
+%if %{oracle_solaris_11_2}
+#On Oracle Soalris 11.2, user postgres exists by default.
+%else
 Requires: SFEpostgres-common
+%endif
 
 %package -n %{prefix_name}-contrib
 IPS_package_name: database/postgres-90/contrib
@@ -1703,6 +1717,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- With Oracle Solaris 11.2, use library/libedit instead of SFEeditline
+- SFEpostgres-common is no required on Oracle Solaris 11.2
 * Fri Feb 21 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 9.0.16
 * Tue Feb 18 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

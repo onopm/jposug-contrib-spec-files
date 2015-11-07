@@ -31,7 +31,7 @@ BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/carp-584
-Requires:         library/perl-5/scalar-util-584
+Requires:         library/perl-5/scalar-list-utils-584
 
 %description 584
 get pathname of current working directory
@@ -45,7 +45,7 @@ BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/carp-512
-Requires:         library/perl-5/scalar-util-512
+Requires:         library/perl-5/scalar-list-utils-512
 
 %description 512
 get pathname of current working directory
@@ -59,7 +59,7 @@ BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/carp-516
-Requires:         library/perl-5/scalar-util-516
+Requires:         library/perl-5/scalar-list-utils-516
 
 %description 516
 get pathname of current working directory
@@ -73,7 +73,7 @@ BuildRequires:    runtime/perl-520 = *
 BuildRequires:    library/perl-5/extutils-makemaker-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/carp-520
-Requires:         library/perl-5/scalar-util-520
+Requires:         library/perl-5/scalar-list-utils-520
 
 %description 520
 get pathname of current working directory
@@ -214,6 +214,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update Requires
 * Tue Nov 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.47 and build packages for perl-516 and perl-520
 - extutils-makemaker is not required at runtime

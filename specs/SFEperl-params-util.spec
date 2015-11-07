@@ -32,7 +32,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-584
 BuildRequires:    library/perl-5/pathtools-584
 BuildRequires:    library/perl-5/test-simple-584
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/scalar-util-584
+Requires:         library/perl-5/scalar-list-utils-584
 
 %description 584
 Simple, compact and correct param-checking functions
@@ -48,7 +48,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-512
 BuildRequires:    library/perl-5/pathtools-512
 BuildRequires:    library/perl-5/test-simple-512
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/scalar-util-512
+Requires:         library/perl-5/scalar-list-utils-512
 
 %description 512
 Simple, compact and correct param-checking functions
@@ -64,7 +64,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-516
 BuildRequires:    library/perl-5/pathtools-516
 BuildRequires:    library/perl-5/test-simple-516
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/scalar-util-516
+Requires:         library/perl-5/scalar-list-utils-516
 
 %description 516
 Simple, compact and correct param-checking functions
@@ -80,7 +80,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-520
 BuildRequires:    library/perl-5/pathtools-520
 BuildRequires:    library/perl-5/test-simple-520
 Requires:         runtime/perl-520 = *
-Requires:         library/perl-5/scalar-util-520
+Requires:         library/perl-5/scalar-list-utils-520
 
 %description 520
 Simple, compact and correct param-checking functions
@@ -221,6 +221,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update Requires
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build packages for perl-516 and perl-520
 * Sat Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

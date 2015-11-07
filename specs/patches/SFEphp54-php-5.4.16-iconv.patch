@@ -1,0 +1,31 @@
+--- php-5.4.16.orig/ext/iconv/config.m4	2013-06-05 14:03:57.000000000 +0900
++++ php-5.4.16/ext/iconv/config.m4	2014-05-28 15:01:04.126170935 +0900
+@@ -15,7 +15,7 @@
+ 
+   if test "$iconv_avail" != "no"; then
+     if test -z "$ICONV_DIR"; then
+-      for i in /usr/local /usr; do
++      for i in /usr/local /usr/gnu; do
+         if test -f "$i/include/iconv.h" || test -f "$i/include/giconv.h"; then
+           PHP_ICONV_PREFIX="$i"
+           break
+@@ -29,7 +29,9 @@
+     fi
+ 
+     CFLAGS="-I$PHP_ICONV_PREFIX/include $CFLAGS"
+-    LDFLAGS="-L$PHP_ICONV_PREFIX/$PHP_LIBDIR $LDFLAGS"
++    LDFLAGS="-L$PHP_ICONV_PREFIX/$PHP_LIBDIR -R$PHP_ICONV_PREFIX/$PHP_LIBDIR $LDFLAGS"
++    echo "CFLAGS=$CFLAGS"
++    echo "LDFLAGS=$LDFLAGS"
+ 
+     if test -r "$PHP_ICONV_PREFIX/include/giconv.h"; then
+       PHP_ICONV_H_PATH="$PHP_ICONV_PREFIX/include/giconv.h"
+@@ -67,7 +69,7 @@
+         LDFLAGS="$php_iconv_old_ld"
+       ])
+     fi
+-
++    iconv_impl_name="gnu_libiconv"
+     if test -z "$iconv_impl_name"; then
+       AC_MSG_CHECKING([if iconv is Konstantin Chuguev's])
+       AC_TRY_LINK([#include <iconv.h>],[iconv_ccs_init(NULL, NULL);],

@@ -39,7 +39,7 @@ Requires:         library/perl-5/b-584
 Requires:         library/perl-5/carp-584
 Requires:         library/perl-5/exporter-584
 Requires:         library/perl-5/fcntl-584
-Requires:         library/perl-5/scalar-util-584
+Requires:         library/perl-5/scalar-list-utils-584
 
 %description 584
 Read and write a subset of YAML for CPAN Meta files
@@ -61,7 +61,7 @@ Requires:         library/perl-5/b-512
 Requires:         library/perl-5/carp-512
 Requires:         library/perl-5/exporter-512
 Requires:         library/perl-5/fcntl-512
-Requires:         library/perl-5/scalar-util-512
+Requires:         library/perl-5/scalar-list-utils-512
 
 %description 512
 Read and write a subset of YAML for CPAN Meta files
@@ -83,7 +83,7 @@ Requires:         library/perl-5/b-516
 Requires:         library/perl-5/carp-516
 Requires:         library/perl-5/exporter-516
 Requires:         library/perl-5/fcntl-516
-Requires:         library/perl-5/scalar-util-516
+Requires:         library/perl-5/scalar-list-utils-516
 
 %description 516
 Read and write a subset of YAML for CPAN Meta files
@@ -105,7 +105,7 @@ Requires:         library/perl-5/b-520
 Requires:         library/perl-5/carp-520
 Requires:         library/perl-5/exporter-520
 Requires:         library/perl-5/fcntl-520
-Requires:         library/perl-5/scalar-util-520
+Requires:         library/perl-5/scalar-list-utils-520
 
 %description 520
 Read and write a subset of YAML for CPAN Meta files
@@ -246,6 +246,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update Requires
 * Wed Nov 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.016 and build packages for perl-516 and perl-520
 * Wed Nov 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -1,5 +1,4 @@
 %include Solaris.inc
-%include default-depend.inc
 
 %define build584 0
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
@@ -7,76 +6,96 @@
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
-%define cpan_name PathTools
-%define sfe_cpan_name pathtools
+%define cpan_name Devel-StackTrace
+%define sfe_cpan_name devel-stacktrace
 
-Summary:               get pathname of current working directory
+Summary:               An object representing a stack trace
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{sfe_cpan_name}
-Version:               3.47
-IPS_component_version: 3.47
-License:               unknown
-URL:                   https://metacpan.org/pod/PathTools
-Source0:               http://cpan.metacpan.org/authors/id/S/SM/SMUELLER/PathTools-%{version}.tar.gz
+Version:               2.00
+IPS_component_version: 2.0
+License:               artistic_2
+URL:                   https://metacpan.org/pod/Devel::StackTrace
+Source0:               http://cpan.metacpan.org/authors/id/D/DR/DROLSKY/Devel-StackTrace-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
-get pathname of current working directory
+An object representing a stack trace
 
 %if %{build584}
 %package 584
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
-Summary:          get pathname of current working directory
+Summary:          An object representing a stack trace
 BuildRequires:    runtime/perl-584 = *
+#BuildRequires:    library/perl-5/base-584
+BuildRequires:    library/perl-5/cpan-meta-584
 BuildRequires:    library/perl-5/extutils-makemaker-584
+BuildRequires:    library/perl-5/io-584
+BuildRequires:    library/perl-5/pathtools-584
+BuildRequires:    library/perl-5/test-simple-584
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/carp-584
-Requires:         library/perl-5/scalar-util-584
+Requires:         library/perl-5/pathtools-584
+Requires:         library/perl-5/scalar-list-utils-584
 
 %description 584
-get pathname of current working directory
+An object representing a stack trace
 %endif
 
 %if %{build512}
 %package 512
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
-Summary:          get pathname of current working directory
+Summary:          An object representing a stack trace
 BuildRequires:    runtime/perl-512 = *
+#BuildRequires:    library/perl-5/base-512
+BuildRequires:    library/perl-5/cpan-meta-512
 BuildRequires:    library/perl-5/extutils-makemaker-512
+BuildRequires:    library/perl-5/io-512
+BuildRequires:    library/perl-5/pathtools-512
+BuildRequires:    library/perl-5/test-simple-512
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/carp-512
-Requires:         library/perl-5/scalar-util-512
+Requires:         library/perl-5/pathtools-512
+Requires:         library/perl-5/scalar-list-utils-512
 
 %description 512
-get pathname of current working directory
+An object representing a stack trace
 %endif
 
 %if %{build516}
 %package 516
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
-Summary:          get pathname of current working directory
+Summary:          An object representing a stack trace
 BuildRequires:    runtime/perl-516 = *
+#BuildRequires:    library/perl-5/base-516
+BuildRequires:    library/perl-5/cpan-meta-516
 BuildRequires:    library/perl-5/extutils-makemaker-516
+BuildRequires:    library/perl-5/io-516
+BuildRequires:    library/perl-5/pathtools-516
+BuildRequires:    library/perl-5/test-simple-516
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/carp-516
-Requires:         library/perl-5/scalar-util-516
+Requires:         library/perl-5/pathtools-516
+Requires:         library/perl-5/scalar-list-utils-516
 
 %description 516
-get pathname of current working directory
+An object representing a stack trace
 %endif
 
 %if %{build520}
 %package 520
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
-Summary:          get pathname of current working directory
+Summary:          An object representing a stack trace
 BuildRequires:    runtime/perl-520 = *
+#BuildRequires:    library/perl-5/base-520
+BuildRequires:    library/perl-5/cpan-meta-520
 BuildRequires:    library/perl-5/extutils-makemaker-520
+BuildRequires:    library/perl-5/io-520
+BuildRequires:    library/perl-5/pathtools-520
+BuildRequires:    library/perl-5/test-simple-520
 Requires:         runtime/perl-520 = *
-Requires:         library/perl-5/carp-520
-Requires:         library/perl-5/scalar-util-520
+Requires:         library/perl-5/pathtools-520
+Requires:         library/perl-5/scalar-list-utils-520
 
 %description 520
-get pathname of current working directory
+An object representing a stack trace
 %endif
 
 
@@ -214,8 +233,9 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Tue Nov 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 3.47 and build packages for perl-516 and perl-520
-- extutils-makemaker is not required at runtime
-* Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update Requires
+* Wed Nov 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.00 and generate packages for perl-516 and perl-520
+* Sun Jun 10 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

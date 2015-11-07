@@ -31,7 +31,7 @@ BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/test-simple-584
 BuildRequires:    library/perl-5/extutils-makemaker-584
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/scalar-util-584
+Requires:         library/perl-5/scalar-list-utils-584
 Requires:         library/perl-5/mime-base64-584
 Requires:         library/perl-5/exporter-584
 Requires:         library/perl-5/utf8-584
@@ -49,7 +49,7 @@ BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/test-simple-512
 BuildRequires:    library/perl-5/extutils-makemaker-512
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/scalar-util-512
+Requires:         library/perl-5/scalar-list-utils-512
 Requires:         library/perl-5/mime-base64-512
 Requires:         library/perl-5/exporter-512
 Requires:         library/perl-5/utf8-512
@@ -67,7 +67,7 @@ BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/test-simple-516
 BuildRequires:    library/perl-5/extutils-makemaker-516
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/scalar-util-516
+Requires:         library/perl-5/scalar-list-utils-516
 Requires:         library/perl-5/mime-base64-516
 Requires:         library/perl-5/exporter-516
 Requires:         library/perl-5/utf8-516
@@ -85,7 +85,7 @@ BuildRequires:    runtime/perl-520 = *
 Buildrequires:    library/perl-5/test-simple-520
 Buildrequires:    library/perl-5/extutils-makemaker-520
 Requires:         runtime/perl-520 = *
-Requires:         library/perl-5/scalar-util-520
+Requires:         library/perl-5/scalar-list-utils-520
 Requires:         library/perl-5/mime-base64-520
 Requires:         library/perl-5/exporter-520
 Requires:         library/perl-5/utf8-520
@@ -230,6 +230,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update Requries
 * Tue Nov 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.69 and build packages for perl-516 and perl-520
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

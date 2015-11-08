@@ -156,10 +156,6 @@ Store and query Hiera data from Puppet
 %prep
 %setup -q -c -T
 
-
-%prep
-%setup -q -c -T
-
 %build
 build_for() {
     ruby_ver=$1
@@ -318,6 +314,7 @@ rm -rf %{buildroot}
 
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update spec file
+- fix mistake while merging
 * Sat Mar 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-22
 * Tue Apr 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

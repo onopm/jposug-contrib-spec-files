@@ -34,12 +34,11 @@
 %define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
 %endif
 
-Summary:          Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
 Version:          1.1.0
-License:          
+License:          MIT License
 URL:              https://github.com/rodjek/puppet-lint/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
@@ -47,59 +46,50 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 
 %description
-Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 
 %if %{build19}
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
-Summary:          Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 
 %description 19
-Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 %endif
 
 %if %{build20}
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
-Summary:          Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 
 %description 20
-Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 %endif
 
 %if %{build21}
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
-Summary:          Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 
 %description 21
-Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 %endif
 
 %if %{build22}
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
-Summary:          Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 
 %description 22
-Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
+Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 %endif
 
 %prep
@@ -260,6 +250,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix license, summary and description
 * Mon Sep 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update specfile based on bin/make_rubygem_spec.rb
 * Wed Nov 12 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -36,7 +36,7 @@
 Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
 Name:             SFEruby-%{gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.7.2
+Version:          1.7.8
 License:          Ruby
 URL:              https://github.com/JEG2/highline
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -292,6 +292,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7.8
 * Fri Jun 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update spec file based on bin/make_rubygem_spec.rb
 * Sat Feb 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

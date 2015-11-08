@@ -51,10 +51,10 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 # %endif
 
 #want perl modules, right.
-Requires:                runtime/perl-512
+Requires:                runtime/perl-512 = *
 Requires:                image/library/libpng
 Requires:                library/desktop/pango
-BuildRequires:           runtime/perl-512
+BuildRequires:           runtime/perl-512 = *
 
 #
 BuildRequires:           text/groff
@@ -63,10 +63,10 @@ BuildRequires:           text/groff
 Conflicts: SUNWrrdtool
 
 %package perl
-IPS_package_name:        library/perl-5/rrdtool
+IPS_package_name:        library/perl-5/rrdtool-512
 Summary: perl-rrdtool
 Requires: %{name} = %{version}
-Requires: runtime/perl-512
+Requires: runtime/perl-512 = *
 
 
 %prep

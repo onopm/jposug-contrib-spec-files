@@ -34,6 +34,7 @@ BuildRequires:    library/perl-5/file-temp-584
 BuildRequires:    library/perl-5/io-584
 BuildRequires:    library/perl-5/pathtools-584
 BuildRequires:    library/perl-5/test-simple-584
+BuildRequires:    library/perl-5/parse-cpan-meta-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/carp-584
 Requires:         library/perl-5/cpan-meta-requirements-584
@@ -59,6 +60,7 @@ BuildRequires:    library/perl-5/file-temp-512
 BuildRequires:    library/perl-5/io-512
 BuildRequires:    library/perl-5/pathtools-512
 BuildRequires:    library/perl-5/test-simple-512
+BuildRequires:    library/perl-5/parse-cpan-meta-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/carp-512
 Requires:         library/perl-5/cpan-meta-requirements-512
@@ -84,6 +86,7 @@ BuildRequires:    library/perl-5/file-temp-516
 BuildRequires:    library/perl-5/io-516
 BuildRequires:    library/perl-5/pathtools-516
 BuildRequires:    library/perl-5/test-simple-516
+BuildRequires:    library/perl-5/parse-cpan-meta-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/carp-516
 Requires:         library/perl-5/cpan-meta-requirements-516
@@ -109,6 +112,7 @@ BuildRequires:    library/perl-5/file-temp-520
 BuildRequires:    library/perl-5/io-520
 BuildRequires:    library/perl-5/pathtools-520
 BuildRequires:    library/perl-5/test-simple-520
+BuildRequires:    library/perl-5/parse-cpan-meta-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/carp-520
 Requires:         library/perl-5/cpan-meta-requirements-520
@@ -259,6 +263,7 @@ rm -rf %{buildroot}
 %changelog
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bumpt to 2.150005 and build packages for perl-516 and perl-520
+- add BuildRequires
 * Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.132510
 * Tue Jun 12 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

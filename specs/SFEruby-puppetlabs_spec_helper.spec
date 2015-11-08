@@ -37,7 +37,7 @@
 Summary:          Contains rake tasks and a standard spec_helper for running spec tests on puppet modules
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          0.10.3
+Version:          1.0.1
 License:          Apache-2.0
 URL:              http://github.com/puppetlabs/puppetlabs_spec_helper
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -290,5 +290,7 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.1
 * Mon Sep 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

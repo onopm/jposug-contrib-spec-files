@@ -8,9 +8,10 @@
 
 %define cpan_name Scalar-List-Utils
 %define sfe_cpan_name scalar-list-utils
+%define sfe_cpan_name_old scalar-utils
 
 Summary:               Common Scalar and List utility subroutines
-Name:                  SFEperl-%{sfe_cpan_name}
+Name:                  perl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{sfe_cpan_name}
 Version:               1.42
 IPS_component_version: 1.42
@@ -23,6 +24,12 @@ BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 Common Scalar and List utility subroutines
 
 %if %{build584}
+%package 584-old
+IPS_package_name: library/perl-5/{sfe_cpan_name_old}-584
+Summary:          Common Scalar and List utility subroutines (empty package to keep dependency)
+BuildRequires:    runtime/perl-584 = *
+Requires:         runtime/perl-584 = *
+
 %package 584
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
 Summary:          Common Scalar and List utility subroutines
@@ -36,6 +43,12 @@ Common Scalar and List utility subroutines
 %endif
 
 %if %{build512}
+%package 512-old
+IPS_package_name: library/perl-5/%{sfe_cpan_name_old}-512
+Summary:          Common Scalar and List utility subroutines (empty package to keep dependency)
+BuildRequires:    runtime/perl-512 = *
+Requires:         runtime/perl-512 = *
+
 %package 512
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
 Summary:          Common Scalar and List utility subroutines
@@ -209,5 +222,7 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Nov 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- create empty packages library/perl-5/scalar-utils-{584,512} to keep dependency
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

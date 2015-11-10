@@ -23,13 +23,16 @@ Version:	2.2.2
 Source:		http://swupdate.openvpn.net/community/releases/%srcname-%version.tar.gz
 Source1:        SFEopenvpn-openvpn.xml
 Source2:        SFEopenvpn-openvpn 
-Source3:	http://github.com/OpenVPN/easy-rsa/archive/master.tar.gz
+#Source3:	https://github.com/OpenVPN/easy-rsa/archive/release/2.x.zip
+%define easyrsa2_url https://github.com/OpenVPN/easy-rsa/archive/release/2.x.zip
+%define easyrsa2_source 2.x.zip
 #Patch1:         openvpn231-solaris.patch
 # http://comments.gmane.org/gmane.os.solaris.opensolaris.pkg.sfe/28
 %define _basedir  /
 SUNW_BaseDir:   %{_basedir}
 SUNW_Copyright: %{name}.copyright
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+BuildRequires:  %pnm_buildrequires_wget
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
@@ -49,7 +52,8 @@ Requires: %{pnm_requires_SUNWopenssl}
 %prep
 %setup -q -n %srcname-%version
 #%patch1 -p0
-gzcat %{SOURCE3} | tar xf -
+wget %easyrsa2_url
+unzip %easyrsa2_source
 
 %build
 CPUS=$(psrinfo | awk '$2=="on-line"{cpus++}END{print (cpus==0)?1:cpus}')
@@ -57,7 +61,7 @@ CPUS=$(psrinfo | awk '$2=="on-line"{cpus++}END{print (cpus==0)?1:cpus}')
 %if %{cc_is_gcc}
     export CC=gcc
     export CXX=g++
-    export CFLAGS="%optflags -fno-strict-aliasing -Wno-pointer-sign"
+    export CFLAGS="%optflags -fno-strict-aliasing"
 %else
     export CFLAGS="%optflags"
 %endif
@@ -80,7 +84,7 @@ mkdir -p %{buildroot}/%{sysconfdir}/openvpn/ccd
 mkdir -p %{buildroot}/%{sysconfdir}/openvpn/easy-rsa
 mkdir -p %{buildroot}/%{sysconfdir}/openvpn/easy-rsa/keys
 touch %{buildroot}/%{sysconfdir}/openvpn/easy-rsa/keys/index.txt
-install -m 0644 easy-rsa-master/easy-rsa/2.0/* %{buildroot}/%{sysconfdir}/openvpn/easy-rsa
+install -m 0644 easy-rsa-release-2.x/easy-rsa/2.0/* %{buildroot}/%{sysconfdir}/openvpn/easy-rsa
 install -m 0644 %{sampledir}/sample-scripts/bridge-start %{buildroot}/%{sysconfdir}/openvpn
 install -m 0644 %{sampledir}/sample-scripts/bridge-stop %{buildroot}/%{sysconfdir}/openvpn
 # for V2.3
@@ -118,6 +122,7 @@ rm -rf %{SOURCE3}
 %attr (0755, root, sys) %{sysconfdir}/openvpn/easy-rsa/pkitool
 %attr (0755, root, sys) %{sysconfdir}/openvpn/easy-rsa/revoke-full
 %attr (0755, root, sys) %{sysconfdir}/openvpn/easy-rsa/sign-req
+%attr (0755, root, sys) %{sysconfdir}/openvpn/easy-rsa/sign-server-req
 %attr (0755, root, sys) %{sysconfdir}/openvpn/easy-rsa/whichopensslcnf
 %attr (0664, root, sys) %{sysconfdir}/openvpn/easy-rsa/openssl*
 %attr (0664, root, sys) %config(noreplace) %{sysconfdir}/openvpn/easy-rsa/vars
@@ -152,6 +157,8 @@ rm -rf %{SOURCE3}
 %dir %attr (0555, root, root) /var/run/openvpn
 
 %changelog
+* Sat Jul 19 2014 - YAMAMOTO Takashi
+- Bumped to final easy-rsa version 2.final
 * Sun Apr 28 2013 - YAMAMOTO Takashi
 - Bumped to 2.2.2
 * Wed Mar 20 2013 - YAMAMOTO Takashi

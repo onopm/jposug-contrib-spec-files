@@ -21,6 +21,7 @@ SUNW_Copyright:	tuntap.copyright
 Meta(info.upstream): Kazuyoshi Aizawa <admin2@whiteboard.ne.jp>
 Version:	1.4.201207
 Source:		%{src_url}/%{src_name}.tar.gz
+Patch1:		%name-configure.in.patch
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
@@ -41,6 +42,7 @@ Requires:                %{name}
 
 %prep
 %setup -q -n tuntap-%{src_name}
+%patch1 -p0 -b .orig
 
 %build
 autoconf -f
@@ -105,6 +107,8 @@ driver name=tap
 %endif
 
 %changelog
+* Sun Jul 19 2014 - YAMAMOTO Takashi
+- Support for oi_151a9
 * Sun Apr 28 2013 - YAMAMOTO Takashi
 - Bump to 1.4 (2012/7)
 * Thu Nov 27 2012 - YAMAMOTO Takashi

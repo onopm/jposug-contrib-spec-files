@@ -6,88 +6,80 @@
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
-%define cpan_name Cache-Cache
-%define sfe_cpan_name cache-cache
+%define cpan_name File-Path
+%define sfe_cpan_name file-path
 
-Summary:               data about objects in the cache
+Summary:               Create or remove directory trees
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{sfe_cpan_name}
-Version:               1.08
-IPS_component_version: 1.8
-License:               unknown
-URL:                   https://metacpan.org/pod/Cache::Cache
-Source0:               http://cpan.metacpan.org/authors/id/R/RJ/RJBS/Cache-Cache-%{version}.tar.gz
+Version:               2.12
+IPS_component_version: 2.12
+License:               perl_5
+URL:                   https://metacpan.org/pod/File::Path
+Source0:               http://cpan.metacpan.org/authors/id/R/RI/RICHE/File-Path-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
-data about objects in the cache
+Create or remove directory trees
 
 %if %{build584}
 %package 584
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
-Summary:          data about objects in the cache
+Summary:          Create or remove directory trees
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/digest-sha1-584
-Requires:         library/perl-5/error-584
-Requires:         library/perl-5/ipc-sharelite-584
+Requires:         library/perl-5/carp-584
 Requires:         library/perl-5/pathtools-584
-Requires:         library/perl-5/storable-584
+Requires:         library/perl-5/selectsaver-584
 
 %description 584
-data about objects in the cache
+Create or remove directory trees
 %endif
 
 %if %{build512}
 %package 512
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
-Summary:          data about objects in the cache
+Summary:          Create or remove directory trees
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/digest-sha1-512
-Requires:         library/perl-5/error-512
-Requires:         library/perl-5/ipc-sharelite-512
+Requires:         library/perl-5/carp-512
 Requires:         library/perl-5/pathtools-512
-Requires:         library/perl-5/storable-512
+Requires:         library/perl-5/selectsaver-512
 
 %description 512
-data about objects in the cache
+Create or remove directory trees
 %endif
 
 %if %{build516}
 %package 516
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
-Summary:          data about objects in the cache
+Summary:          Create or remove directory trees
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/digest-sha1-516
-Requires:         library/perl-5/error-516
-Requires:         library/perl-5/ipc-sharelite-516
+Requires:         library/perl-5/carp-516
 Requires:         library/perl-5/pathtools-516
-Requires:         library/perl-5/storable-516
+Requires:         library/perl-5/selectsaver-516
 
 %description 516
-data about objects in the cache
+Create or remove directory trees
 %endif
 
 %if %{build520}
 %package 520
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
-Summary:          data about objects in the cache
+Summary:          Create or remove directory trees
 BuildRequires:    runtime/perl-520 = *
 BuildRequires:    library/perl-5/extutils-makemaker-520
 Requires:         runtime/perl-520 = *
-Requires:         library/perl-5/digest-sha1-520
-Requires:         library/perl-5/error-520
-Requires:         library/perl-5/ipc-sharelite-520
+Requires:         library/perl-5/carp-520
 Requires:         library/perl-5/pathtools-520
-Requires:         library/perl-5/storable-520
+Requires:         library/perl-5/selectsaver-520
 
 %description 520
-data about objects in the cache
+Create or remove directory trees
 %endif
 
 
@@ -107,7 +99,7 @@ build_with_makefile.pl_for() {
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
     make
-    [ ${test} = 'without_test' ] || make test
+    [ ${test} == 'without_test' ] || make test
     make pure_install
 }
 
@@ -122,7 +114,7 @@ build_with_build.pl_for() {
                    --installdirs vendor \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ ${test} = 'without_test' ] || ${bindir}/perl ./Build test
+    [ ${test} == 'without_test' ] || ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
 }
 
@@ -226,11 +218,4 @@ rm -rf %{buildroot}
 
 %changelog
 * Wed Nov 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 1.08 and build packages for perl-516 and perl-520
-* Thu Feb 20 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- add Requires
-* Sat Jan 18 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
-* Sun Sep 09 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- add Requires
-* Mon May 13 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

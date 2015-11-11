@@ -46,16 +46,16 @@ sub spectool($$)
         for $line (@lines) { 
             $line =~ s/\r?\n//g;
             if( $line =~ /^SUNW_Copyright\s*:\s*([\/\w\-%\.{}\(\)]+)/i ){
-                @retval = (@retval, split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips eval '$1' $spec`));
+                @retval = (@retval, split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include:\`pwd\`/base-specs --ips eval '$1' $spec`));
                 #print STDERR "found: SUNW_Copyright\n";
             }
         } 
         if ($#retval < 0) {
-            @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips eval '%{name}.copyright' $spec`);
+            @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include:\`pwd\`/base-specs --ips eval '%{name}.copyright' $spec`);
             #print STDERR "not found: SUNW_Copyright\n";
         } 
     } else {
-        @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include --ips $command $spec`);
+        @retval = split("\n", `spectool --specdirs=\`pwd\`:\`pwd\`/include:\`pwd\`/base-specs --ips $command $spec`);
     }
     mkdir CACHEDIR if (! -d CACHEDIR);
     $res = open $fh, ">", CACHEDIR."/$spec_base.$command";
@@ -80,7 +80,7 @@ sub search_depend_files($$) {
     my (@files, $key);
     return if ! -r $spec;
 
-    for $key ('buildrequires', 'patches', 'sources', 'copyright') {
+    for $key ('buildrequires', 'patches', 'sources', 'copyright', 'used_spec_files') {
 	@files = spectool("get_$key", $spec);
 	@{$requires->{$key}} = @files if ($#files >= 0);
     }
@@ -194,6 +194,16 @@ foreach my $spec_file (@spec_file_lines){
 		if(! /^(http|https|ftp):\/\//){
 		    $sources.='copyright/'.$_.' ';
 		}
+	    }
+	    $depend_sources.=' '.${sources} if(${sources});
+	}
+        if(defined($requires{'used_spec_files'})){
+	    my $sources='';
+	    foreach (@{$requires{'used_spec_files'}}){
+		my ($pwd) = `pwd`;
+		$pwd =~ s/\r?\n//g;
+		s/^${pwd}\///;
+	        $sources.= $_.' ';
 	    }
 	    $depend_sources.=' '.${sources} if(${sources});
 	}

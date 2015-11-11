@@ -122,11 +122,14 @@ export LDFLAGS="%_ldflags -lkrb5"
 export install_user=$LOGNAME
 export install_group=`groups | awk '{print $1}'`
 
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
 pushd mod_gss-%{gss_version}
 ./configure
 popd
 cp mod_gss-%{gss_version}/mod_gss.h include
 cp mod_gss-%{gss_version}/mod_gss.c contrib
+%endif
 
 cd %{tarball_name}-%{tarball_version}
 %ifarch sparc
@@ -224,7 +227,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, sys) /var/proftpd
 %dir %attr (0755, root, sys) /var/proftpd/%{major_version}
 %dir %attr (0755, root, bin) /var/proftpd/%{major_version}/pub
-%dir %attr (0755, root, bin) /var/proftpd/%{major_version}/logs
+%dir %attr (0755, nobody, nogroup) /var/proftpd/%{major_version}/logs
 %dir %attr (0755, root, sys) %{_localstatedir}
 %dir %attr (0755, root, sys) /var/svc
 %dir %attr (0755, root, sys) /var/svc/manifest
@@ -287,6 +290,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun May 11 2014 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- disable GSSAPI when compile on the OpenIndiana
+- change log directory owner
 * Tue Aug 27 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add service/network/proftpd-13/module/tls
 * Thu Aug 08 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

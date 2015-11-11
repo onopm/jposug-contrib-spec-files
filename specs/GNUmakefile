@@ -2,8 +2,7 @@
 -include common.mak
 -include target.mak
 
-BUILDLIST=build.list.`uname -v`
-
+BUILDLIST=$(shell if egrep -i "omnios" /etc/release>/dev/null; then echo "build.list."`egrep -o r[0-9][0-9][0-9][0-9][0-9][0-9] /etc/release`; else echo "build.list."`uname -r`; fi)
 predepend::
 	rm -f $(TARGETMAK)
 	if [ -z $${PKGBUILD_IPS_REPO} ];then \

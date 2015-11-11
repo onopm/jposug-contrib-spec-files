@@ -40,14 +40,14 @@ Utilities for managing MANIFEST files
 IPS_package_name: library/perl-5/extutils-manifest-584
 Summary: Utilities for managing MANIFEST files for perl-584
 BuildRequires:	runtime/perl-584
-BuildRequires:  library/perl-5/extutils-makemaker-584
+#BuildRequires:  library/perl-5/extutils-makemaker-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/extutils-manifest-512
 Summary: Utilities for managing MANIFEST files for perl-512
 BuildRequires:	runtime/perl-512
-BuildRequires:  library/perl-5/extutils-makemaker-512
+#BuildRequires:  library/perl-5/extutils-makemaker-512
 Requires:	runtime/perl-512
 
 

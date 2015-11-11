@@ -10,13 +10,13 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  20121213-3.0
+%define tarball_version  20140620-3.1
 %define tarball_name	 libedit
 
 Name:                    SFEeditline
 IPS_package_name:	 library/editline
 Summary:                 A command line editing and history library
-Version:                 3.0
+Version:                 3.1
 License:		 BSDL
 Url:                     http://www.thrysoee.dk/editline/
 Source:                  http://www.thrysoee.dk/editline/%{tarball_name}-%{tarball_version}.tar.gz
@@ -77,7 +77,7 @@ export LDFLAGS="%_ldflags"
  --includedir=%{_includedir} \
  --mandir=%{_mandir}
 
-gmake -j$CPUS 
+gmake -j$CPUS
 
 %ifarch amd64 sparcv9
 export CFLAGS
@@ -96,7 +96,7 @@ export LDFLAGS="%_ldflags"
  --includedir=%{_includedir} \
  --mandir=%{_mandir}
 
-gmake -j$CPUS 
+gmake -j$CPUS
 %endif
 
 %install
@@ -139,6 +139,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/include/*
 
 %changelog
+* Tue Sep 09 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 20140620-3.1
 * Wed Jan 09 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Fix error "identifier redeclared: tgetent" for OI
 * Sat Dec 15 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -9,7 +9,13 @@
 
 %include Solaris.inc
 %include packagenamemacros.inc
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
+%define with_mysql 0
+%else
+# OI
 %define with_mysql 1
+%endif
 %define src_name postfix
 %define postfix_usr_dir  %{_prefix}/postfix
 %define postfix_var_dir  %{_var}/postfix
@@ -69,10 +75,17 @@ BuildRequires:  %{pnm_buildrequires_library_pcre}
 BuildRequires:  consolidation/sfw/sfw-incorporation
 Requires:       %{pnm_requires_library_pcre}
 Requires:       consolidation/sfw/sfw-incorporation
-BuildRequires:  database/berkeleydb-48
 Requires:       library/security/cyrus-sasl
 BuildRequires:  library/security/cyrus-sasl
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
+BuildRequires:  database/berkeleydb-5
+Requires:       database/berkeleydb-5
+%else
+# OI
+BuildRequires:  database/berkeleydb-48
 Requires:       database/berkeleydb-48
+%endif
 %if %{with_mysql}
 BuildRequires:  %{pnm_buildrequires_database_mysql_51_library}
 BuildRequires:  %{pnm_buildrequires_mysql51}
@@ -277,6 +290,9 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 
 
 %changelog
+* Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- disable MySQL with Oracle Solaris because build fails
+- use database/berkeleydb-5 on Oracle Solaris
 * Sun May 11 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - added gcc dependencies
 * Fri May 02 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>

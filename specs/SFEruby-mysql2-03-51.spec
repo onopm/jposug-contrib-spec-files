@@ -102,8 +102,8 @@ gempath=%{S:0}
 %setup -q -c -T
 cp %{S:0} ${gempath##*/}
 /usr/ruby/1.9/bin/gem unpack ${gempath##*/}
-%patch1 -p0 -b .orig
 cd %gemname-%version
+%patch1 -p0 -b .orig
 cp %{S:1} %gemname.gemspec
 sed -i -e 's/git ls-files/find/' %gemname.gemspec
 /usr/ruby/1.9/bin/gem build %gemname.gemspec
@@ -124,6 +124,16 @@ mkdir -p .%{bindir19}
 %endif
 gempath=%{S:0}
 export PATH=/usr/mysql/%{mysql_ver}/bin:$PATH
+%if %( expr %{osbuild} '=' 175 )
+export CC=gcc
+export CXX=g++
+%else
+export CC=/usr/gcc/4.6/bin/gcc
+export CXX=/usr/gcc/4.6/bin/g++
+%endif
+export CFLAGS="%optflags -fno-strict-aliasing -Wno-pointer-sign"
+export CPPFLAGS=""
+export LDFLAGS="%{_ldflags}"
 # ruby-18
 %if %with_ruby18
 /usr/ruby/1.8/bin/gem install --local \
@@ -223,6 +233,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* SUn Aug 07 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- To use gcc4.6 at the OpenIndiana
 * Sat June 07 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Change dependencies
 * Fri June 06 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>

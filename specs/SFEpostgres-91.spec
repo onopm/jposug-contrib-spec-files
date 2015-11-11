@@ -11,10 +11,11 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.1.13
+%define tarball_version  9.1.15
 %define major_version	 9.1
 %define prefix_name      SFEpostgres-91
 %define _basedir         %{_prefix}/%{major_version}
+%define oracle_solaris_11_2 %(grep 'Oracle Solaris 11.2' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-91
@@ -45,7 +46,11 @@ BuildRequires: %{pnm_buildrequires_SUNWcsl}
 BuildRequires: %{pnm_buildrequires_SUNWlibms}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWTcl}
+%if %{oracle_solaris_11_2}
+BuildRequires: library/libedit
+%else
 BuildRequires: SFEeditline
+%endif
 
 Requires: %{pnm_requires_SUNWlxsl}
 Requires: %{pnm_requires_SUNWlxml}
@@ -54,7 +59,11 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWgss}
+%if %{oracle_solaris_11_2}
+Requires: library/libedit
+%else
 Requires: SFEeditline
+%endif
 
 Requires: %{prefix_name}-libs
 
@@ -119,7 +128,11 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{prefix_name}-libs
+%if %{oracle_solaris_11_2}
+#On Oracle Soalris 11.2, user postgres exists by default.
+%else
 Requires: SFEpostgres-common
+%endif
 
 %package -n %{prefix_name}-contrib
 IPS_package_name: database/postgres-91/contrib
@@ -1131,6 +1144,13 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Sun Feb 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.15
+* Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- With Oracle Solaris 11.2, use library/libedit instead of SFEeditline
+- SFEpostgres-common is no required on Oracle Solaris 11.2
+* Fri Jul 25 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.14
 * Sun Mar 23 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.1.13
 * Fri Feb 21 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

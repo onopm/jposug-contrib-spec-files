@@ -115,6 +115,16 @@ mkdir -p .%{bindir19}
  cd %name-%version
 %endif
 gempath=%{S:0}
+%if %( expr %{osbuild} '=' 175 )
+export CC=gcc
+export CXX=g++
+%else
+export CC=/usr/gcc/4.6/bin/gcc
+export CXX=/usr/gcc/4.6/bin/g++
+%endif
+export CFLAGS="%optflags -fno-strict-aliasing -Wno-pointer-sign"
+export CPPFLAGS=""
+export LDFLAGS="%{_ldflags}"
 # ruby-18
 %if %with_ruby18
 /usr/ruby/1.8/bin/gem install --local \
@@ -195,6 +205,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sun Aug 7 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- To use gcc4.6 at the OpenIndiana.
 * Sat Jun 7 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Change dependencies
 * Sat Jun 7 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>

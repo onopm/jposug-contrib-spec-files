@@ -6,15 +6,17 @@
 #
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  5.2.12
+%define tarball_version  5.2.17
 %define tarball_name     php
+%define major_version	 9.0
 
 Name:                    SFEphp52-pgsql90
 IPS_package_name:	 web/php-52/extension/php-pgsql90
 Summary:                 PHP 5.2 module for PostgreSQL
-Version:                 5.2.12
+Version:                 5.2.17
 License:		 PHP License
 Url:                     http://www.php.net/
 Source:			 http://museum.php.net/php5/%{tarball_name}-%{tarball_version}.tar.bz2
@@ -24,16 +26,19 @@ SUNW_Basedir:            /
 #SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires: SUNWphp52r
-BuildRequires: SUNWphp52u
-BuildRequires: SUNWgsed
+BuildRequires: %{pnm_buildrequires_SUNWphp52_devel}
+#BuildRequires: SUNWphp52r
+#BuildRequires: SUNWphp52u
+BuildRequires: %{pnm_buildrequires_SUNWgsed_devel}
+#BuildRequires: SUNWgsed
 BuildRequires: database/postgres-90/library
 BuildRequires: database/postgres-90/developer
 BuildRequires: SFEre2c
 
 Requires: database/postgres-90/library
-Requires: SUNWphp52r
-Requires: SUNWphp52u
+Requires: %{pnm_requires_SUNWphp52}
+#Requires: SUNWphp52r
+#Requires: SUNWphp52u
 
 # OpenSolaris IPS Package Manifest Fields
 #Meta(info.upstream):	 	
@@ -80,7 +85,7 @@ pushd ext/pgsql/
  --bindir=%{_bindir} \
  --includedir=%{_includedir} \
  --with-php-config=/usr/php/5.2/bin/php-config \
- --with-pgsql=/usr/postgres/9.0
+ --with-pgsql=/usr/postgres/%{major_version}
 gmake -j$CPUS
 popd
 
@@ -94,7 +99,7 @@ pushd ext/pdo_pgsql/
  --bindir=%{_bindir} \
  --includedir=%{_includedir} \
  --with-php-config=/usr/php/5.2/bin/php-config \
- --with-pdo-pgsql=/usr/postgres/9.0
+ --with-pdo-pgsql=/usr/postgres/%{major_version}
 gmake -j$CPUS
 popd
 
@@ -108,10 +113,17 @@ for mod in pgsql pdo_pgsql; do
  pushd ext/${mod}/
   make install INSTALL_ROOT=$RPM_BUILD_ROOT PECL_EXTENSION_DIR=%{_prefix}/php/5.2/modules PECL_INCLUDE_DIR=%{_prefix}/php/5.2/include
  popd
- cat > $RPM_BUILD_ROOT/etc/php/5.2/conf.d/${mod}.ini <<EOF
+ pushd $RPM_BUILD_ROOT/%{_prefix}/php/5.2/modules/
+  mv ${mod}.so ${mod}.so.%{major_version} 
+  ln -s ${mod}.so.%{major_version} ${mod}.so 
+ popd
+ pushd $RPM_BUILD_ROOT/etc/php/5.2/conf.d/
+ cat > ${mod}.ini.%{major_version} <<EOF
 ; Enable ${mod} extension module
-extension=${mod}.so
+extension=${mod}.so.%{major_version}
 EOF
+ ln -s ${mod}.ini.%{major_version} ${mod}.ini
+ popd
 done
 
 #mkdir -p $RPM_BUILD_ROOT/%{_prefix}/php/5.2/modules/
@@ -126,11 +138,21 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, sys) %{_prefix}
 %dir %attr(0755, root, bin) %{_prefix}/php/5.2/modules
-%{_prefix}/php/5.2/modules/*
+%{_prefix}/php/5.2/modules/pdo_pgsql.so.%{major_version}
+%{_prefix}/php/5.2/modules/pgsql.so.%{major_version}
+%ips_tag (mediator=postgres mediator-version=%{major_version}) %{_prefix}/php/5.2/modules/pdo_pgsql.so
+%ips_tag (mediator=postgres mediator-version=%{major_version}) %{_prefix}/php/5.2/modules/pgsql.so
 %dir %attr(0755, root, sys) %{_sysconfdir}
-%{_sysconfdir}/php/5.2/conf.d/*
+# %config(noreplace) 
+%{_sysconfdir}/php/5.2/conf.d/pdo_pgsql.ini.%{major_version}
+%{_sysconfdir}/php/5.2/conf.d/pgsql.ini.%{major_version}
+%ips_tag (mediator=postgres mediator-version=%{major_version}) %{_sysconfdir}/php/5.2/conf.d/pdo_pgsql.ini
+%ips_tag (mediator=postgres mediator-version=%{major_version}) %{_sysconfdir}/php/5.2/conf.d/pgsql.ini
 
 %changelog
+* Sun Jan 27 2013 TAKI, Yasushi <taki@justplayer.com>
+- add mediator
+- add config
 * Sun Mar 27 2011 TAKI, Yasushi <taki@justplayer.com>
 - Change Permission at /etc
 * Tue Jun 30 2011 TAKI, Yasushi <taki@justplayer.com>

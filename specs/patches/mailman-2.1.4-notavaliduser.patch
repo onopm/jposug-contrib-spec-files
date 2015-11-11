@@ -1,0 +1,13 @@
+--- mailman-2.1.4/Mailman/Cgi/options.py
++++ mailman-2.1.4/Mailman/Cgi/options.py
+@@ -626,6 +626,10 @@
+             msg += _('You may get one last digest.')
+ 
+         options_page(mlist, doc, user, cpuser, userlang, msg)
++        if mlist.isMember(user):
++            options_page(mlist, doc, user, cpuser, userlang)
++        else:
++            loginpage(mlist, doc, user, userlang)
+         print doc.Format()
+         return
+ 

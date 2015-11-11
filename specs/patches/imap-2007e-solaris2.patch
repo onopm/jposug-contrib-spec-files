@@ -1,0 +1,15 @@
+--- src/osdep/unix/Makefile.gss.orig	2013-04-16 10:56:09.371269686 +0900
++++ src/osdep/unix/Makefile.gss	2013-04-16 10:56:59.105352718 +0900
+@@ -30,8 +30,10 @@
+ GSSINCLUDE=$(GSSDIR)/include
+ GSSLIB=$(GSSDIR)/lib
+ GSSCFLAGS= -I$(GSSINCLUDE) -DGSS_C_NT_HOSTBASED_SERVICE=gss_nt_service_name -DKRB5_DEPRECATED=1
+-GSSOLDLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lcrypto -lcom_err
+-GSSNEWLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err
++#GSSOLDLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lcrypto -lcom_err
++#GSSNEWLDFLAGS= -L$(GSSLIB) -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err
++GSSOLDLDFLAGS= -L$(GSSLIB) -lkrb5 -lcrypto -lgss
++GSSNEWLDFLAGS= -L$(GSSLIB) -lkrb5 -lk5crypto -lgss
+ 
+ gss:	# GSSAPI Kerberos V flags
+ 	echo $(GSSCFLAGS) >> OSCFLAGS

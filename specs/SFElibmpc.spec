@@ -1,4 +1,4 @@
-
+#
 # spec file for package SFElibmpc
 #
 # includes module(s): GNU mpc
@@ -38,8 +38,8 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
 
 %if %SFEgmp
-BuildRequires: SFEgmp-devel
-Requires: SFEgmp
+BuildRequires: library/gmp-5/developer
+Requires: library/gmp-5
 #IPS doesn't honour SUNW_BaseDir
 ##TODO## ##FIXME##
 #%define SFEgmpbasedir %(pkgparam SFEgmp BASEDIR)
@@ -64,6 +64,7 @@ Requires: SUNWgnu-mp
 Requires: %{pnm_requires_SUNWpostrun}
 
 %package devel
+IPS_Package_Name:	library/mpc/developer
 Name:		%{name}-devel
 Summary:	%{summary} - developer files
 SUNW_BaseDir:	%{_basedir}/%{_subdir}
@@ -136,6 +137,10 @@ rm -rf %{buildroot}
 %{_includedir}
 
 %changelog
+* Sun Feb 16 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- Added IPS_Package_Name
+* Sun May 19 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change dependency
 * Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
 - delete sfe prefix from IPS package name
 * Thu 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>

@@ -1,0 +1,96 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+
+<!--
+
+   Solaris SMF method for site/munin-asyncd
+
+   2012-10-02 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+
+   based on site/munin-node by Stig Sandbeck Mathisen <ssm@fnord.no>
+   
+   ==============================================================
+   Solaris SMF method for site/munin-node
+
+   2010-06-02 Stig Sandbeck Mathisen <ssm@fnord.no>
+   
+   Usage
+   =====
+   
+   Copy the munin-node script to /lib/svc/method/, and
+   make it executale
+   
+   Copy the munin-node.xml manifest to /var/svc/manifest/site/, and
+   then run:
+   
+   # svccfg import /var/svc/manifest/site/munin-node.xml
+
+   Check
+   =====
+
+   Check the status of your running munin-node with:
+
+   # svcs site/munin-node
+     
+  -->
+
+<service_bundle type='manifest' name='export'>
+  <service name='site/munin-asyncd' type='service' version='0'>
+
+    <create_default_instance enabled='false'/>
+    <single_instance/>
+
+    <dependency name='fs' grouping='require_all' restart_on='refresh' type='service'>
+      <service_fmri value='svc:/system/filesystem/local'/>
+    </dependency>
+
+    <dependency name='net' grouping='require_all' restart_on='refresh' type='service'>
+      <service_fmri value='svc:/milestone/network'/>
+    </dependency>
+
+    <exec_method name='start' type='method' exec='/lib/svc/method/svc-munin-asyncd start' timeout_seconds='30'>
+      <method_context>
+        <method_credential user='root' group='root'/>
+      </method_context>
+    </exec_method>
+
+    <exec_method name='stop' type='method' exec='/lib/svc/method/svc-munin-asyncd stop' timeout_seconds='30'>
+      <method_context>
+        <method_credential user='root' group='root'/>
+      </method_context>
+    </exec_method>
+
+    <property_group name='munin-asyncd' type='application'>
+      <propval name='bin' type='astring'
+	       value='/usr/share/munin/munin-asyncd' />
+      <propval name='host' type='astring'
+	       value='localhost' />
+      <propval name='port' type='count'
+	       value='4949' />
+      <propval name='spooldir' type='astring'
+	       value='/var/lib/munin/spool' />
+      <propval name='interval' type='count'
+	       value='86400' />
+      <propval name='retain' type='count'
+	       value='7' />
+      <propval name='lockdir' type='astring'
+	       value='/var/lock/subsys' />
+      <propval name='lockfile' type='astring'
+	       value='munin-asyncd' />
+      <propval name='runfile' type='astring'
+	       value='/var/run/munin/munin-asyncd.pid' />
+    </property_group>
+    
+    <stability value='Unstable'/>
+
+    <template>
+      <common_name>
+        <loctext xml:lang='C'>munin-asyncd</loctext>
+      </common_name>
+      <documentation>
+        <doc_link name='Munin Documentation' uri='http://munin-monitoring.org/wiki/Documentation'/>
+      </documentation>
+    </template>
+
+  </service>
+</service_bundle>

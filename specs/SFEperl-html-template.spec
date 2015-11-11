@@ -35,15 +35,44 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
 a simple HTML templating system
+
+%package 584
+IPS_package_name: library/perl-5/html-template-584
+Summary: a simple HTML templating system for perl-584
+BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/file-temp-584
+Requires:	runtime/perl-584
+
+%package 512
+IPS_package_name: library/perl-5/html-template-512
+Summary: a simple HTML templating system for perl-512
+BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/file-temp-512
+Requires:	runtime/perl-512
+
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-perl Makefile.PL PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/%{perl_version}
+export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+/usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.8.4
 make
+make test
+
+rm -rf $RPM_BUILD_ROOT
+make pure_install
+make clean
+
+export PERL5LIB=/usr/perl5/vendor_perl/5.12
+/usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
+  DESTDIR=$RPM_BUILD_ROOT \
+  LIB=/usr/perl5/vendor_perl/5.12
+make
+make test
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
@@ -54,15 +83,26 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
-#%attr(755,root,sys) %dir %{_bindir}
-#%{_bindir}/*
+
+%files 584
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.8.4
+
+%files 512
+%defattr (-, root, bin)
+%{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Wed Jan 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %files to avoid conflict
+* Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
+* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- generate packages for perl-584 and perl-512
+- fix IPS_package_name
 * Thu May  3 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - define perl_version and use %{perl_version}
-
 * Sun Apr 29 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial

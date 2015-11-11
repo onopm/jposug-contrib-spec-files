@@ -1,0 +1,22 @@
+diff -urN Fileinfo-1.0.4.orig/config.m4 Fileinfo-1.0.4/config.m4
+--- Fileinfo-1.0.4.orig/config.m4	2006-11-08 06:31:19.000000000 +0900
++++ Fileinfo-1.0.4/config.m4	2009-06-30 23:32:24.659538457 +0900
+@@ -47,17 +47,7 @@
+     -L$FILEINFO_DIR/lib
+   ])
+ 
+-  MAGIC_MIME_DIRS="/usr/local/share/file /usr/share/file /usr/share/misc/file /etc /usr/share/misc"
+-  MAGIC_MIME_FILENAMES="magic magic.mime"
+-  
+-  for i in $MAGIC_MIME_DIRS; do
+-    for j in $MAGIC_MIME_FILENAMES; do
+-      if test -f "$i/$j"; then
+-        PHP_DEFAULT_MAGIC_FILE="$i/$j"
+-        break
+-      fi
+-    done
+-  done
++  PHP_DEFAULT_MAGIC_FILE="/usr/share/misc/magic"
+   
+   AC_DEFINE_UNQUOTED(PHP_DEFAULT_MAGIC_FILE,"$PHP_DEFAULT_MAGIC_FILE",[magic file path])
+ 

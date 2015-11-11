@@ -13,13 +13,13 @@ Name:                SFElsof
 IPS_Package_Name:    developer/lsof
 Summary:             List open files
 Version:             4.84
-Source:              http://downloads.sourceforge.net/project/mcj/mcj_dist_src/3.0/lsof-%{version}.tar.bz2
+Source:              ftp://sunsite.ualberta.ca/pub/Mirror/lsof/OLD/lsof_%{version}.tar.gz
 Patch1:              lsof-01-machine.diff
 Patch2:              lsof-02-dlsof.diff
 Patch3:              lsof-03-dnode.diff
 Patch4:              lsof-04-dsock.diff
 Patch5:              lsof-05-print.diff
-SUNW_Copyright:          %{name}.copyright
+SUNW_Copyright:      %{name}.copyright
 SUNW_BaseDir:        %{_basedir}
 BuildRoot:           %{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
@@ -68,6 +68,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/lsof.8
 
 %changelog
+* Wed Dec 19 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- change source file URL
 * Tue Mar 20 2012 - yamachan <yamachan@selfnavi.com>
 - Maybe it does not work under kernel xen
 - bump to 4.84 because 4.83 does not work under oi_151a2

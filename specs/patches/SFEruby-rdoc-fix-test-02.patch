@@ -1,0 +1,11 @@
+--- test/test_rdoc_context.rb.orig	2012-10-18 22:43:11.787026164 +0900
++++ test/test_rdoc_context.rb	2012-10-18 22:43:29.957602591 +0900
+@@ -340,7 +340,7 @@
+ 
+   def test_classes
+     assert_equal %w[C2::C3], @c2.classes.map { |k| k.full_name }
+-    assert_equal %w[C3::H1 C3::H2], @c3.classes.map { |k| k.full_name }
++    assert_equal %w[C3::H1 C3::H2], @c3.classes.map { |k| k.full_name }.sort
+   end
+ 
+   def test_current_section

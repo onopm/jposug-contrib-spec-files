@@ -5,7 +5,7 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define include_executable 1
+%define include_executable 0
 
 %define cpan_name Digest-SHA
 %define sfe_cpan_name digest-sha
@@ -116,11 +116,14 @@ build_with_build.pl_for() {
 
 modify_bin_dir() {
   perl_ver=$1
-  if [ -d $RPM_BUILD_ROOT/usr/bin ]
-  then
-    [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
-    mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
-  fi
+  # if [ -d $RPM_BUILD_ROOT/usr/bin ]
+  # then
+  #   [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+  #   mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
+  # fi
+
+  # perl-{512,516,520} provides bin/shasum
+  [ -d $RPM_BUILD_ROOT/usr/bin ] && rm -rf $RPM_BUILD_ROOT/usr/bin
 }
 
 build_for() {
@@ -227,6 +230,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Nov 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete bin/shasum because runtime/perl-5{12,16,20} provide it
 * Wed Nov 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build pakcages for perl-510, perl-516 and perl-520
 * Fri 20 Feb 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

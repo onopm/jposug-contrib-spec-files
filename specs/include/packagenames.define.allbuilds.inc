@@ -726,6 +726,49 @@
 %endif
 #END <130
 
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+#sunw
+%define pnm_buildrequires_SUNWgnupg_devel	omniti/security/gnupg
+%define pnm_buildrequires_SUNWgnupg		omniti/security/gnupg
+%define pnm_requires_SUNWgnupg			omniti/security/gnupg
+%define pnm_buildrequires_crypto_gnupg		omniti/security/gnupg        
+%define pnm_requires_crypto_gnupg		omniti/security/gnupg
+#sfe
+%define pnm_buildrequires_SFEgnupg2_devel	omniti/security/gnupg
+%define pnm_buildrequires_SFEgnupg2		omniti/security/gnupg
+%define pnm_requires_SFEgnupg2			omniti/security/gnupg
+%define pnm_buildrequires_sfe_crypto_gnupg	omniti/security/gnupg
+%define pnm_requires_sfe_crypto_gnupg		omniti/security/gnupg 
+#sunw
+%define pnm_buildrequires_SUNWlibgcrypt_devel	omniti/security/libgcrypt
+%define pnm_buildrequires_SUNWlibgcrypt		omniti/security/libgcrypt
+%define pnm_requires_SUNWlibgcrypt		omniti/security/libgcrypt
+%define pnm_buildrequires_system_library_security_libgcrypt	omniti/security/libgcrypt
+%define pnm_requires_system_library_security_libgcrypt		omniti/security/libgcrypt
+#sfe
+#note: SUNWlibgcrypt(-devel) is in Solaris since a while (which osbuild number?)
+#not set %define pnm_buildrequires_SUNWlibgcrypt_devel	omniti/security/libgcrypt
+#not set %define pnm_buildrequires_SUNWlibgcrypt	omniti/security/libgcrypt
+#not set %define pnm_requires_SUNWlibgcrypt		omniti/security/libgcrypt
+#not set %define pnm_buildrequires_system_library_security_libgcrypt	omniti/security/libgcrypt
+#not set %define pnm_requires_system_library_security_libgcrypt		omniti/security/libgcrypt
+#sunw
+%define pnm_buildrequires_SUNWlibgpg_error_devel	omniti/security/libgpg-error
+%define pnm_buildrequires_SUNWlibgpg_error		omniti/security/libgpg-error
+%define pnm_requires_SUNWlibgpg_error			omniti/security/libgpg-error
+%define pnm_buildrequires_library_security_libgpg_error	omniti/security/libgpg-error
+%define pnm_requires_library_security_libgpg_error	omniti/security/libgpg-error
+#sfe
+%define pnm_buildrequires_SFElibgpg_error_devel		omniti/security/libgpg-error
+%define pnm_buildrequires_SFElibgpg_error		omniti/security/libgpg-error
+%define pnm_requires_SFElibgpg_error			omniti/security/libgpg-error
+%define pnm_buildrequires_sfe_library_security_libgpg_error	omniti/security/libgpg-error
+%define pnm_requires_sfe_library_security_libgpg_error		omniti/security/libgpg-error
+%endif
+#END >=151002
+%endif
+#END omnios
 
 #SPECIAL CASE: SFE package was replacved with a SUNW package - one day this will
 #be migrated to translation table in an exteral file
@@ -816,6 +859,21 @@
 %endif
 #END < 133
 
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define pnm_buildrequires_SUNWfreetype2		omniti/library/freetype2	
+%define pnm_requires_SUNWfreetype2		omniti/library/freetype2
+%define pnm_buildrequires_freetype2		omniti/library/freetype2
+%define pnm_requires_freetype2			omniti/library/freetype2
+#SFEfreetype replaced with SUNWfreetype2 
+#NOTE: no "2" at the end!
+%define pnm_buildrequires_SUNWfreetype_devel 	omniti/library/freetype2
+%define pnm_requires_SUNWfreetype		omniti/library/freetype2
+%endif
+#END >=151002
+%endif
+#END omnios
+
 #defaults for all builds >= 99 - let pkg do the names translation if needed
 %define pnm_buildrequires_SFElibmikmod_devel	SUNWlibmikmod-devel
 %define pnm_buildrequires_SFElibmikmod		SUNWlibmikmod-devel
@@ -850,7 +908,16 @@
 %endif
 #END <116
 
-
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define pnm_buildrequires_SFEgdbm		omniti/library/libgdbm
+%define pnm_requires_SFEgdbm			omniti/library/libgdbm
+%define pnm_buildrequires_SUNWgnu_dbm		omniti/library/libgdbm
+%define pnm_requires_SUNWgnu_dbm		omniti/library/libgdbm
+%endif
+#END >=151002
+%endif
+#END omnios
 
 #special case, pkgtool/pkgbuild can't see if packages are installed if
 #meta-package data/docbook is requested (it shows never as being installed).
@@ -949,6 +1016,16 @@
 %endif
 #END openindiana
 
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define pnm_buildrequires_SFExz			compress/xz
+%define pnm_requires_SFExz			compress/xz
+%define pnm_buildrequires_compress_xz		compress/xz
+%define pnm_requires_compress_xz		compress/xz
+%endif
+#END >=151002
+%endif
+#END omnios
 
 #-----------------------------------------------------------------
 # this section overwrites settings form above originally applying to 
@@ -964,6 +1041,17 @@
 #END >= 151
 %endif
 #END openindiana
+
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define pnm_buildrequires_SUNWlibC_devel		system/library/c++/sunpro
+%define pnm_buildrequires_SUNWlibC			system/library/c++/sunpro
+%define pnm_requires_SUNWlibC				system/library/c++/sunpro
+%endif
+#END >=151002
+%endif
+#END omnios
+
 
 #-----------------------------------------------------------------
 #packages no longer available, we could bail out or just require a core package
@@ -1108,6 +1196,21 @@
 
 #add more distro here
 
+#set perl5 for OmniOS
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define perl_version 5.16.0
+%define perl_major_minor_version 5.16
+##TODO## determine correct version %define perl_major_minor_micro_version 5.10.x
+%define perl_major_minor_micro_version 5.16.1
+#runtime/perl-510
+%define pnm_buildrequires_perl_default	runtime/perl
+%define pnm_requires_perl_default	runtime/perl
+%endif
+#END >=151002
+%endif
+#END omnios
+
 #END setting perl5, changes with specific builds and distros  - Part 2 of 3
 
 
@@ -1175,6 +1278,18 @@
 %define python_major_version 2
 %define python_major_minor_version 2.6
 %define python_major_minor_micro_version 2.6.4
+
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define python_version 2.6
+%define python_major_version 2
+%define python_major_minor_version 2.6
+%define python_major_minor_micro_version 2.6.8
+%endif
+#END >=151002
+%endif
+#END omnios
+
 #
 #draft: NOTE: names/values subject to change - update all spec files 
 #             accordingly if you change this!
@@ -1185,6 +1300,14 @@
 #_default string is not meant to be a part of the package name...
 %define pnm_buildrequires_python_default	SUNWPython26-devel,SUNWPython26
 %define pnm_requires_python_default	SUNWPython26
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define pnm_buildrequires_python_default	runtime/python-26
+%define pnm_requires_python_default		runtime/python-26
+%endif
+#END >=151002
+%endif
+#END omnios
 
 # add sub-packagenames like "SUNWPython26-extra" and "-cherrypy" to the end, see examples:
 #  BuildRequires:	%{pnm_buildrequires_python_default}-extra 
@@ -1265,8 +1388,6 @@
 %endif
 #END os2nnn
 
-#add more distro here
-
 #END setting mysql, changes with specific builds and distros  - Part 2 of 3
 
 #START setting mysql, all builds, evaluated paths  - Part 3 of 3
@@ -1291,9 +1412,23 @@
 #you might need to keep an eye on 32-/64-bit locations of mysql libs
 #you might need to use -L%{_prefix}/%{mysql_default_libdir}/mysql to get libraries found
 
+#add more distro here
+
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define mysql_version 5.5
+%define mysql_major_version 5
+%define mysql_major_minor_version 5.5
+%define pnm_buildrequires_mysql_default	omniti/database/mysql-55,omniti/database/mysql-55/library
+%define pnm_requires_mysql_default	omniti/database/mysql-55,omniti/database/mysql-55/library
+%define mysql_default_includedir	../opt/mysql55/include
+%define mysql_default_libdir		../opt/mysql55/lib
+%endif
+#END >=151002
+%endif
+#END omnios
+
 #END setting mysql, all builds, evaluated paths  - Part 3 of 3
-
-
 
 #START setting java, defaults  - Part 1 of 3
 #define java defaults, primarily shared settings and default version, paths
@@ -1353,9 +1488,28 @@
 # intentionally left empty. maybe enhanced later with filesystempaths
 #
 #
+
+#add more distro here
+
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define java_version 1.7.0_76
+%define java_major_version 1
+%define java_major_minor_version 1.7
+%define pnm_buildrequires_java_runtime_default		runtime/java
+%define pnm_requires_java_runtime_default		runtime/java
+#in case 32 bit is good enough
+%define pnm_buildrequires_java_runtime_default_32	runtime/java
+%define pnm_requires_java_runtime_default_32		runtime/java
+#not support on OmniOS
+#%define pnm_buildrequires_java_runtime_default_64	runtime/java/runtime64
+#%define pnm_requires_java_runtime_default_64		runtime/java/runtime64
+%endif
+#END >=151002
+%endif
+#END omnios
+
 #END setting java, all builds, evaluated paths  - Part 3 of 3
-
-
 
 #START setting apache2, defaults  - Part 1 of 3
 #define apache2 defaults, primarily shared settings and default version, paths
@@ -1439,8 +1593,29 @@
 #there is no nice workaround to get switched form 32- to 64-bits
 %define apache2_default_apxs_64	apache2/%{apache2_major_minor_version}/bin/64/apxs
 
-#END setting apache2, all builds, evaluated paths  - Part 3 of 3
+#add more distro here
 
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define apache2_version 2.2
+%define apache2_major_version 2
+%define apache2_major_minor_version 2.2
+%define apache2_version_package_string 22
+%define pnm_buildrequires_apache2_default	omniti/server/apache22
+%define pnm_requires_apache2_default		omniti/server/apache22
+%define apache2_default_includedir		../opt/apache%{apache2_version_package_string}/include
+#there is no such directory on OmniOS
+#%define apache2_default_libdir			apache2/%{apache2_major_minor_version}/lib
+#here go the apache loadable modules!
+%define apache2_default_libexecdir		../opt/apache%{apache2_version_package_string}/libexec
+%define apache2_default_apxs			../opt/apache%{apache2_version_package_string}/apxs
+%define apache2_default_apxs_64			../opt/apache%{apache2_version_package_string}/apxs
+%endif
+#END >=151002
+%endif
+#END omnios
+
+#END setting apache2, all builds, evaluated paths  - Part 3 of 3
 
 #START setting postgres, defaults  - Part 1 of 3
 #define postgres defaults, primarily shared settings and default version, paths
@@ -1490,6 +1665,15 @@
 #END os2nnn
 
 #add more distro here
+
+%if %{omnios}
+%if %( expr %{osbuild} '>=' 151002 )
+%define pnm_buildrequires_postgres_default	omniti/database/postgresql-8417
+%define pnm_requires_postgres_default		omniti/database/postgresql-8417
+%endif
+#END >=151002
+%endif
+#END omnios
 
 #END setting postgres, changes with specific builds and distros  - Part 2 of 3
 

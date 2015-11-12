@@ -1,102 +1,220 @@
-#
-# spec file for package: SFEperl-test-nowarnings
-#
-# This file and all modifications and additions to the pristine
-# package are under the same license as the package itself.
-#
-# includes module(s):
-#
 %include Solaris.inc
 
-%define tarball_version 1.04
-%define tarball_name    Test-NoWarnings
+%define build584 0
+%define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define include_executable 0
 
-Name:		SFEperl-test-nowarnings
-IPS_package_name: library/perl-5/test-nowarnings
-Version:	1.04
+%define cpan_name Test-NoWarnings
+%define sfe_cpan_name test-nowarnings
+
+Summary:               Make sure you didn't emit any warnings while testing
+Name:                  SFEperl-%{sfe_cpan_name}
+IPS_package_name:      library/perl-5/%{sfe_cpan_name}
+Version:               1.04
 IPS_component_version: 1.4
-Summary:	Test-NoWarnings
-License:	Artistic
-Distribution:   OpenSolaris
-Vendor:         OpenSolaris Community
-Url:		http://search.cpan.org/~adamk/%{tarball_name}-%{tarball_version}
-SUNW_Basedir:	%{_basedir}
-SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/A/AD/ADAMK/Test-NoWarnings-%{tarball_version}.tar.gz
-
-BuildRequires:	runtime/perl-584
-BuildRequires:	runtime/perl-512
-
-Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
-Meta(info.upstream):            Adam Kennedy <adamk@cpan.org>
-Meta(info.upstream_url):        http://search.cpan.org/~adamk/%{tarball_name}-%{tarball_version}
-Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
+License:               open_source
+URL:                   https://metacpan.org/pod/Test::NoWarnings
+Source0:               http://cpan.metacpan.org/authors/id/A/AD/ADAMK/Test-NoWarnings-%{version}.tar.gz
+BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
-Test-NoWarnings
+Make sure you didn't emit any warnings while testing
 
+%if %{build584}
 %package 584
-IPS_package_name: library/perl-5/test-nowarnings-584
-Summary: Test-NoWarnings for perl-584
-BuildRequires:	runtime/perl-584
-BuildRequires:	library/perl-5/test-tester-584
-Requires:	runtime/perl-584
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
+Summary:          Make sure you didn't emit any warnings while testing
+BuildRequires:    runtime/perl-584 = *
+BuildRequires:    library/perl-5/extutils-makemaker-584
+BuildRequires:    library/perl-5/test-simple-584
+Requires:         runtime/perl-584 = *
+Requires:         library/perl-5/test-builder-584
 
+%description 584
+Make sure you didn't emit any warnings while testing
+%endif
+
+%if %{build512}
 %package 512
-IPS_package_name: library/perl-5/test-nowarnings-512
-Summary: Test-NoWarnings for perl-512
-BuildRequires:	runtime/perl-512
-BuildRequires:	library/perl-5/test-tester-512
-Requires:	runtime/perl-512
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
+Summary:          Make sure you didn't emit any warnings while testing
+BuildRequires:    runtime/perl-512 = *
+BuildRequires:    library/perl-5/extutils-makemaker-512
+BuildRequires:    library/perl-5/test-simple-512
+Requires:         runtime/perl-512 = *
+Requires:         library/perl-5/test-builder-512
+
+%description 512
+Make sure you didn't emit any warnings while testing
+%endif
+
+%if %{build516}
+%package 516
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
+Summary:          Make sure you didn't emit any warnings while testing
+BuildRequires:    runtime/perl-516 = *
+BuildRequires:    library/perl-5/extutils-makemaker-516
+BuildRequires:    library/perl-5/test-simple-516
+Requires:         runtime/perl-516 = *
+Requires:         library/perl-5/test-builder-516
+
+%description 516
+Make sure you didn't emit any warnings while testing
+%endif
+
+%if %{build520}
+%package 520
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
+Summary:          Make sure you didn't emit any warnings while testing
+BuildRequires:    runtime/perl-520 = *
+BuildRequires:    library/perl-5/extutils-makemaker-520
+BuildRequires:    library/perl-5/test-simple-520
+Requires:         runtime/perl-520 = *
+Requires:         library/perl-5/test-builder-520
+
+%description 520
+Make sure you didn't emit any warnings while testing
+%endif
 
 
 %prep
-%setup -q -n %{tarball_name}-%{tarball_version}
+%setup -q -n %{cpan_name}-%{version}
+rm -rf %{buildroot}
 
 %build
-export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
-/usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
-  DESTDIR=$RPM_BUILD_ROOT \
-  LIB=/usr/perl5/vendor_perl/5.8.4
-make
-make test
+build_with_makefile.pl_for() {
+    perl_ver=$1
+    test=$2
+    bindir="/usr/perl5/${perl_ver}/bin"
+    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
 
-rm -rf $RPM_BUILD_ROOT
-make pure_install
+    export PERL5LIB=${vendor_dir}
+    ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
+                   DESTDIR=$RPM_BUILD_ROOT \
+                   LIB=${vendor_dir}
+    make
+    [ ${test} == 'without_test' ] || make test
+    make pure_install
+}
 
-export PERL5LIB=/usr/perl5/vendor_perl/5.12
-/usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
-  DESTDIR=$RPM_BUILD_ROOT \
-  LIB=/usr/perl5/vendor_perl/5.12
-make
-make test
+build_with_build.pl_for() {
+    perl_ver=$1
+    test=$2
+    bindir="/usr/perl5/${perl_ver}/bin"
+    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+
+    export PERL5LIB=${vendor_dir}
+    ${bindir}/perl Build.PL \
+                   --installdirs vendor \
+                   --destdir $RPM_BUILD_ROOT
+    ${bindir}/perl ./Build
+    [ ${test} == 'without_test' ] || ${bindir}/perl ./Build test
+    ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
+}
+
+modify_bin_dir() {
+  perl_ver=$1
+  if [ -d $RPM_BUILD_ROOT/usr/bin ]
+  then
+    [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+    mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
+  fi
+}
+
+build_for() {
+  if [ -f Makefile.PL ];
+  then
+    build_with_makefile.pl_for $*
+  elif [ -f Build.PL ];
+  then
+    build_with_build.pl_for $*
+  fi
+
+    modify_bin_dir $*
+}
+
+# To build without test, pass 'without_test' to build_for commaond.
+# like 'build_for version without_test'
+%if %{build584}
+build_for 5.8.4
+%endif
+
+%if %{build512}
+build_for 5.12
+%endif
+
+%if %{build516}
+build_for 5.16
+%endif
+
+%if %{build520}
+build_for 5.20
+%endif
 
 %install
-make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
-mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
-mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
+if [ -d $RPM_BUILD_ROOT%{_prefix}/man ]
+then
+    mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
+fi
+if [ -d $RPM_BUILD_ROOT%{_datadir}/man/man3 ]
+then
+    mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
+fi
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
-%defattr(-,root,bin)
-#%{_prefix}/perl5
-%attr(0755,root,sys) %dir %{_datadir}
-%{_mandir}
-#%attr(0755,root,bin) %dir %{_bindir}
-#%{_bindir}/*
+%defattr(0755,root,bin,-)
+%{_datadir}/man
 
+%if %{build584}
 %files 584
-%defattr (-, root, bin)
-%{_prefix}/perl5/vendor_perl/5.8.4
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.8.4
+%if %{include_executable}
+/usr/perl5/5.8.4
+%endif
+%endif
 
+%if %{build512}
 %files 512
-%defattr (-, root, bin)
-%{_prefix}/perl5/vendor_perl/5.12
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.12
+%if %{include_executable}
+/usr/perl5/5.12
+%endif
+%endif
+
+%if %{build516}
+%files 516
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.16
+%if %{include_executable}
+/usr/perl5/5.16
+%endif
+%endif
+
+%if %{build520}
+%files 520
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.20
+%if %{include_executable}
+/usr/perl5/5.20
+%endif
+%endif
+
 
 %changelog
+* Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build packages for perl-516 and perl-520
 * Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -8,13 +8,13 @@
 #
 %include Solaris.inc
 
-%define tarball_version 3.69
+%define tarball_version 3.71
 %define tarball_name    HTML-Parser
 
 Name:		SFEperl-html-parser
 IPS_package_name: library/perl-5/html-parser
-Version:	3.69
-IPS_component_version: 3.69
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	Basic HTML Parser
 License:	Artistic
 Distribution:   OpenSolaris
@@ -98,5 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon May 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.71
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

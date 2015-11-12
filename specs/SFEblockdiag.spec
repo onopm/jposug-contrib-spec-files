@@ -1,15 +1,14 @@
 %include Solaris.inc
 %include packagenamemacros.inc
-%include default-depend.inc
 
 %define tarball_name blockdiag
-%define tarball_version 1.3.2
+%define tarball_version 1.5.0
 
 Name:                    SFEblockdiag
 IPS_package_name:        image/blockdiag
 Summary:                 blockdiag generate block-diagram image file from spec-text file.
 URL:                     http://pypi.python.org/pypi/blockdiag/
-Version:                 1.3.2
+Version:                 %{tarball_version}
 License:                 Apache License 2.0
 Source:                  http://pypi.python.org/packages/source/b/%{tarball_name}/%{tarball_name}-%{tarball_version}.tar.gz
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
@@ -17,9 +16,10 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 BuildRequires:           runtime/python-26
 BuildRequires:           library/python-2/setuptools-26
 Requires:                runtime/python-26
-Requires:                library/python-2/funcparserlib-26
+Requires:                library/python-2/setuptools-26
+Requires:                library/python-2/funcparserlib-26 >= 0.3.6
 Requires:                library/python-2/ordereddict-26
-Requires:                library/python-2/pillow-26
+Requires:                library/python-2/pillow-26 >= 2.2.1
 Requires:                library/python-2/webcolors-26
 
 %description
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/python2.6/site-packages
 
 %changelog
+* Fri Jan 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.0
+- add Requires
 * Wed Jan 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - blockdiag 1.3.2 requires Pillow instead of PIL
 * Tue Jan 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

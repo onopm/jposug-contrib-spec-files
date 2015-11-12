@@ -1,0 +1,10 @@
+--- common/lib/Munin/Common/SyncDictFile.pm~	2012-09-01 00:22:50.000000000 +0900
++++ common/lib/Munin/Common/SyncDictFile.pm	2012-09-29 12:40:13.342258023 +0900
+@@ -170,6 +170,7 @@
+ 
+ sub _lock_write {
+ 	my ($filename, $mode) = @_;
++	$mode = "w+" if $filename =~ /SPOOL-META/;
+ 	$mode ||= "a+";
+ 
+ 	use Fcntl qw(:flock);

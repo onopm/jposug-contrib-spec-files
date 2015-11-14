@@ -1,0 +1,10 @@
+--- configure.orig	2013-05-13 18:50:23.071292613 +0900
++++ configure	2013-05-13 18:51:51.037585262 +0900
+@@ -4082,7 +4082,6 @@
+ 
+ # add some linker flags
+ check_ldflags -Wl,--warn-common
+-check_ldflags -Wl,-rpath-link=libpostproc:libswresample:libswscale:libavfilter:libavdevice:libavformat:libavcodec:libavutil:libavresample
+ test_ldflags -Wl,-Bsymbolic && append SHFLAGS -Wl,-Bsymbolic
+ 
+ enabled xmm_clobber_test &&

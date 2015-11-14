@@ -1,0 +1,23 @@
+http://grokbase.com/t/php/php-internals/0876hq9t76/rfc-zend-signal-handling
+http://ml.php.gr.jp/pipermail/php-users/2003-October/018740.html
+
+--- Zend/zend_execute_API.c.orig	2013-01-19 09:01:42.324429881 +0900
++++ Zend/zend_execute_API.c	2013-01-19 09:04:27.762162929 +0900
+@@ -1487,7 +1487,7 @@
+ 			sigaddset(&sigset, SIGALRM);
+ 		}
+ #	else
+-			setitimer(ITIMER_PROF, &t_r, NULL);
++			setitimer(ITIMER_REAL, &t_r, NULL);
+ 		}
+ 		if(reset_signals) {
+ 			signal(SIGPROF, zend_timeout);
+@@ -1520,7 +1520,7 @@
+ #ifdef __CYGWIN__
+ 		setitimer(ITIMER_REAL, &no_timeout, NULL);
+ #else
+-		setitimer(ITIMER_PROF, &no_timeout, NULL);
++		setitimer(ITIMER_REAL, &no_timeout, NULL);
+ #endif
+ 	}
+ #	endif

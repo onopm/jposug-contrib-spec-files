@@ -38,7 +38,7 @@ audio over the Internet.
 %package devel
 Summary:                 %{summary} - development files
 SUNW_BaseDir:            %{_basedir}
-IPS_package_name:  library/media/header-gsm
+IPS_package_name:   library/media/gsm/developer
 %include default-depend.inc
 Requires: %name
 
@@ -112,6 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3
 
 %changelog
+* Tue Jan 29 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change IPS package name
 * Thu Mar  3 2011 - Satoru MIYAZAKI<s.miyaza@gmail.com>
 - Support for Solaris11 Express.
 * Sun Nov 28 2010 - Milan Jurik

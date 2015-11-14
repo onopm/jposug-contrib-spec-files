@@ -1,0 +1,58 @@
+--- bin/list_lists
++++ bin/list_lists
+@@ -34,6 +34,12 @@
+     -b / --bare
+         Displays only the list name, with no description.
+ 
++    -r / --private-archives
++        Displays only lists with private archives.
++
++    -u / --public-archives
++        Displays only lists with public archives.
++
+     -h / --help
+         Print this text and exit.
+ 
+@@ -65,8 +71,10 @@
+ 
+ def main():
+     try:
+-        opts, args = getopt.getopt(sys.argv[1:], 'abV:h',
++        opts, args = getopt.getopt(sys.argv[1:], 'abruV:h',
+                                    ['advertised', 'bare',
++                                    'private-archives', 
++                                    'public-archives',
+                                     'virtual-host-overview=',
+                                     'help'])
+     except getopt.error, msg:
+@@ -75,6 +83,8 @@
+     advertised = 0
+     vhost = None
+     bare = 0
++    public_archives = 0
++    private_archives = 0
+     for opt, arg in opts:
+         if opt in ('-h', '--help'):
+             usage(0)
+@@ -84,6 +94,10 @@
+             vhost = arg
+         elif opt in ('-b', '--bare'):
+             bare = 1
++        elif opt in ('-r', '--private-archives'):
++            private_archives = 1
++        elif opt in ('-u', '--public-archives'):
++            public_archives = 1
+ 
+     names = Utils.list_names()
+     names.sort()
+@@ -94,6 +108,10 @@
+         mlist = MailList.MailList(n, lock=0)
+         if advertised and not mlist.advertised:
+             continue
++        if private_archives and not mlist.archive_private:
++            continue
++        if public_archives and mlist.archive_private:
++            continue
+         if vhost and mm_cfg.VIRTUAL_HOST_OVERVIEW and \
+                vhost.find(mlist.web_page_url) == -1 and \
+                mlist.web_page_url.find(vhost) == -1:

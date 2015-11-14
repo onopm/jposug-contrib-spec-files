@@ -46,7 +46,6 @@ you will need to install %{name}-devel.
 
 
 %prep 
-mkdir -p %{name}-%{version}
 %setup -q -n iksemel-%{version}
 
 %build

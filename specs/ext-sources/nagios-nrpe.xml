@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
 <service_bundle type="manifest" name="nrpe">
-  
+
   <service name="site/nagios/nrpe" type="service" version="1">
-    
+
     <create_default_instance enabled="false"/>
     <single_instance/>
-    
+
     <!--
        Wait for network interfaces to be initialized.
       -->
@@ -16,7 +16,7 @@
 		type='service'>
       <service_fmri value='svc:/milestone/network:default'/>
     </dependency>
-    
+
     <!--
        Wait for all local filesystems to be mounted.
       -->
@@ -35,7 +35,7 @@
       <service_fmri value="svc:/milestone/multi-user"/>
     </dependency>
 
-    <exec_method type="method" name="start" 
+    <exec_method type="method" name="start"
                  exec="/lib/svc/method/svc-nagios-nrpe start"
                  timeout_seconds="60"/>
     <exec_method type="method" name="stop"
@@ -53,7 +53,7 @@
       <propval name='vardir' type='astring'
 	       value='/var/log/nagios' />
       <propval name='runfile' type='astring'
-	       value='/var/run/nrpe.pid' />
+	       value='/var/run/nagios/nrpe.pid' />
       <propval name='lockdir' type='astring'
 	       value='/var/lock/subsys' />
       <propval name='lockfile' type='astring'
@@ -63,9 +63,9 @@
       <propval name='group' type='astring'
 	       value='nagios' />
     </property_group>
-    
+
     <stability value="Unstable"/>
-    
+
     <template>
       <common_name>
         <loctext xml:lang="C">Nagios Remote Plugin Executor</loctext>

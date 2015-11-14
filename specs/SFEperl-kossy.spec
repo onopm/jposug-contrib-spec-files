@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 0.10
+%define tarball_version 0.13
 %define tarball_name    Kossy
 
 Name:		SFEperl-kossy
 IPS_package_name: library/perl-5/kossy
-Version:	0.10
-IPS_component_version: 0.10
+Version:	0.13
+IPS_component_version: 0.13
 Summary:	Kossy
 License:	Artistic
 Distribution:   OpenSolaris
@@ -46,6 +46,13 @@ Kossy
 IPS_package_name: library/perl-5/kossy-512
 Summary: Kossy for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/plack-512
+BuildRequires:	library/perl-5/router-simple-512
+BuildRequires:	library/perl-5/text-xslate
+BuildRequires:	library/perl-5/html-fillinform-lite
+BuildRequires:	library/perl-5/text-xslate-bridge-tt2like-512
+BuildRequires:	library/perl-5/number-format-512
+BuildRequires:	library/perl-5/json-512
 Requires:	runtime/perl-512
 
 
@@ -101,6 +108,13 @@ rm -rf $RPM_BUILD_ROOT
 /usr/perl5/5.12/bin/*
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
+* Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
+- bump to 0.13
+* Sun Feb 10 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Bump to 0.10
 * Sat Jun 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

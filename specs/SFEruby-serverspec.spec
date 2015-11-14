@@ -3,94 +3,157 @@
 
 %define gemname serverspec
 
+%define build19 0
+%define build20 0
+%define build21 1
+%define build22 1
+
+%if %{build19}
 %define bindir19 /usr/ruby/1.9/bin
 %define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
+%endif
 
+%if %{build20}
 %define bindir20 /usr/ruby/2.0/bin
 %define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
+%endif
 
+%if %{build21}
 %define bindir21 /usr/ruby/2.1/bin
 %define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+%endif 
 
+%if %{build22}
 %define bindir22 /usr/ruby/2.2/bin
 %define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
+%endif
 
 Summary:          RSpec tests for your provisioned servers
 Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby-22/serverspec
-Version:          2.17.0
+IPS_package_name: library/ruby/serverspec
+Version:          2.24.2
 License:          MIT License
-# URL:              http://rubygems.org/gems/%{gemname}
 URL:              http://serverspec.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-Requires:         library/ruby-22/rspec >= 3.0.0
-Requires:         library/ruby-22/rspec-its
-Requires:         library/ruby-22/rake
-Requires:         library/ruby-22/highline
-Requires:         library/ruby-22/specinfra >= 2.32.0
-Requires:         library/ruby-22/multi_json
-
 %description
 RSpec tests for your provisioned servers
 
-%package 19
+%if %{build19}
+%package 19-old
 IPS_package_name: library/ruby-19/serverspec
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
-Requires:         library/ruby-19/rspec >= 3.0.0
-Requires:         library/ruby-19/rspec-its
-Requires:         library/ruby-19/rake
-Requires:         library/ruby-19/highline
-Requires:         library/ruby-19/specinfra >= 2.32.0
-Requires:         library/ruby-19/multi_json
+Requires:         library/ruby/serverspec-19
+
+%description 19-old
+RSpec tests for your provisioned servers
+
+%package 19
+IPS_package_name: library/ruby/serverspec-19
+Summary:          RSpec tests for your provisioned servers
+BuildRequires:    runtime/ruby-19 = *
+Requires:         runtime/ruby-19 = *
+Requires:         library/ruby/rspec-19 >= 3.0.0
+Requires:         library/ruby/rspec-its-19
+Requires:         library/ruby/highline-19
+Requires:         library/ruby/specinfra-19 >= 2.43.0
+Requires:         library/ruby/multi_json-19
 
 %description 19
 RSpec tests for your provisioned servers
+%endif
 
-%package 20
+%if %{build20}
+%package 20-old
 IPS_package_name: library/ruby-20/serverspec
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-Requires:         library/ruby-20/rspec >= 3.0.0
-Requires:         library/ruby-20/rspec-its
-Requires:         library/ruby-20/rake
-Requires:         library/ruby-20/highline
-Requires:         library/ruby-20/specinfra >= 2.32.0
-Requires:         library/ruby-20/multi_json
+Requires:         library/ruby/serverspec-20
+
+%description 20-old
+RSpec tests for your provisioned servers
+
+%package 20
+IPS_package_name: library/ruby/serverspec-20
+Summary:          RSpec tests for your provisioned servers
+BuildRequires:    runtime/ruby-20 = *
+Requires:         runtime/ruby-20 = *
+Requires:         library/ruby/rspec-20 >= 3.0.0
+Requires:         library/ruby/rspec-its-20
+Requires:         library/ruby/highline-20
+Requires:         library/ruby/specinfra-20 >= 2.43.0
+Requires:         library/ruby/multi_json-20
 
 %description 20
 RSpec tests for your provisioned servers
+%endif
 
-%package 21
+%if %{build21}
+%package 21-old
 IPS_package_name: library/ruby-21/serverspec
 Summary:          RSpec tests for your provisioned servers
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby-21/rspec >= 3.0.0
-Requires:         library/ruby-21/rspec-its
-Requires:         library/ruby-21/rake
-Requires:         library/ruby-21/highline
-Requires:         library/ruby-21/specinfra >= 2.32.0
-Requires:         library/ruby-21/multi_json
+Requires:         library/ruby/serverspec-21
+
+%description 21-old
+RSpec tests for your provisioned servers
+
+%package 21
+IPS_package_name: library/ruby/serverspec-21
+Summary:          RSpec tests for your provisioned servers
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/rspec-21 >= 3.0.0
+Requires:         library/ruby/rspec-its-21
+Requires:         library/ruby/highline-21
+Requires:         library/ruby/specinfra-21 >= 2.43.0
+Requires:         library/ruby/multi_json-21
 
 %description 21
 RSpec tests for your provisioned servers
+%endif
+
+%if %{build22}
+%package 22-old
+IPS_package_name: library/ruby-22/serverspec
+Summary:          RSpec tests for your provisioned servers
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/serverspec-22
+
+%description 22-old
+RSpec tests for your provisioned servers
+
+%package 22
+IPS_package_name: library/ruby/serverspec-22
+Summary:          RSpec tests for your provisioned servers
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/rspec-22 >= 3.0.0
+Requires:         library/ruby/rspec-its-22
+Requires:         library/ruby/highline-22
+Requires:         library/ruby/specinfra-22 >= 2.43.0
+Requires:         library/ruby/multi_json-22
+
+%description 22
+RSpec tests for your provisioned servers
+%endif
 
 %prep
 %setup -q -c -T
 
 %build
 # ruby-19
+%if %{build19}
 %{bindir19}/gem install --local \
     --install-dir .%{gemdir19} \
     --bindir .%{bindir19} \
@@ -105,8 +168,10 @@ mv serverspec-init serverspec-init.bak
 sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/1.9\/bin\/ruby/' < serverspec-init.bak > serverspec-init
 rm serverspec-init.bak
 popd
+%endif
 
 # ruby-20
+%if %{build20}
 %{bindir20}/gem install --local \
     --install-dir .%{gemdir20} \
     --bindir .%{bindir20} \
@@ -120,8 +185,10 @@ mv serverspec-init serverspec-init.bak
 sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.0\/bin\/ruby/' < serverspec-init.bak > serverspec-init
 rm serverspec-init.bak
 popd
+%endif
 
 # ruby-21
+%if %{build21}
 %{bindir21}/gem install --local \
     --install-dir .%{gemdir21} \
     --bindir .%{bindir21} \
@@ -135,8 +202,10 @@ mv serverspec-init serverspec-init.bak
 sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.1\/bin\/ruby/' < serverspec-init.bak > serverspec-init
 rm serverspec-init.bak
 popd
+%endif
 
 # ruby-22
+%if %{build22}
 %{bindir22}/gem install --local \
     --install-dir .%{gemdir22} \
     --bindir .%{bindir22} \
@@ -147,15 +216,17 @@ popd
 
 pushd .%{gemdir22}/gems/%{gemname}-%{version}/bin/
 mv serverspec-init serverspec-init.bak
-sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.1\/bin\/ruby/' < serverspec-init.bak > serverspec-init
+sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.2\/bin\/ruby/' < serverspec-init.bak > serverspec-init
 rm serverspec-init.bak
 popd
+%endif
 
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/%{_bindir}
 
 # ruby-19
+%if %{build19}
 mkdir -p %{buildroot}/%{gemdir19}
 cp -a .%{gemdir19}/* \
     %{buildroot}/%{gemdir19}/
@@ -168,8 +239,10 @@ mkdir -p %{buildroot}/%{bindir19}
 pushd %{buildroot}/%{bindir19}
 ln -s "../$( echo "%{geminstdir19}" | cut -d/ -f5-)/bin/serverspec-init" .
 popd
+%endif
 
 # ruby-20
+%if %{build20}
 mkdir -p %{buildroot}/%{gemdir20}
 cp -a .%{gemdir20}/* \
     %{buildroot}/%{gemdir20}/
@@ -182,8 +255,10 @@ mkdir -p %{buildroot}/%{bindir20}
 pushd %{buildroot}/%{bindir20}
 ln -s "../$( echo "%{geminstdir20}" | cut -d/ -f5-)/bin/serverspec-init" .
 popd
+%endif
 
 # ruby-21
+%if %{build21}
 mkdir -p %{buildroot}/%{gemdir21}
 cp -a .%{gemdir21}/* \
     %{buildroot}/%{gemdir21}/
@@ -196,8 +271,10 @@ mkdir -p %{buildroot}/%{bindir21}
 pushd %{buildroot}/%{bindir21}
 ln -s "../$( echo "%{geminstdir21}" | cut -d/ -f5-)/bin/serverspec-init" .
 popd
+%endif
 
 # ruby-22
+%if %{build22}
 mkdir -p %{buildroot}/%{gemdir22}
 cp -a .%{gemdir22}/* \
     %{buildroot}/%{gemdir22}/
@@ -210,35 +287,77 @@ mkdir -p %{buildroot}/%{bindir22}
 pushd %{buildroot}/%{bindir22}
 ln -s "../$( echo "%{geminstdir22}" | cut -d/ -f5-)/bin/serverspec-init" .
 popd
+%endif
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/bin/serverspec-init22
-/usr/ruby/2.2
+
+%if %{build19}
+%files 19-old
+%defattr(0755,root,bin,-)
 
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/bin/serverspec-init19
 /usr/ruby/1.9
+%endif
+
+%if %{build20}
+%files 20-old
+%defattr(0755,root,bin,-)
 
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/bin/serverspec-init20
 /usr/ruby/2.0
+%endif
+
+%if %{build21}
+%files 21-old
+%defattr(0755,root,bin,-)
 
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/bin/serverspec-init21
 /usr/ruby/2.1
+%endif
+
+%if %{build22}
+%files 22-old
+%defattr(0755,root,bin,-)
+
+%files 22
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/bin/serverspec-init22
+/usr/ruby/2.2
+%endif
+
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.24.2
+* Tue Oct 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.24.1
+* Sat Aug 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.21.0
+* Thu Jul 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.20.0
+* Mon Jun 22 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.19.0
+* Fri Jun 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify Requires according to changes of IPS packagenames
+* Thu Jun 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.18.0
+* Mon Jun 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.17.1
+- change IPS_package_names and keep old IPS_package_names to keep dependency
 * Sun May 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.17.0
 * Tue May 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

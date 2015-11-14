@@ -9,21 +9,21 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 0.12
+%define tarball_version 0.13
 %define tarball_name    Hash-MultiValue
 
 Name:		SFEperl-hash-multivalue
 IPS_package_name: library/perl-5/hash-multivalue
-Version:	0.12
-IPS_component_version: 0.12
+Version:	0.13
+IPS_component_version: 0.13
 Summary:	Hash-MultiValue
-License:	Artistic
+License:	The Perl 5 License (Artistic 1 & GPL 1)
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 Url:		http://search.cpan.org/~miyagawa/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/A/AR/ARISTOTLE/Hash-MultiValue-%{tarball_version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/M/MI/MIYAGAWA/Hash-MultiValue-%{tarball_version}.tar.gz
 
 # BuildRequires:	runtime/perl-584
 BuildRequires:	runtime/perl-512
@@ -99,5 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Su Feb 10 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.13 and fix License and source url
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

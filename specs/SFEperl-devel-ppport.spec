@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 3.20
+%define tarball_version 3.21
 %define tarball_name    Devel-PPPort
 
 Name:		SFEperl-devel-ppport
 IPS_package_name: library/perl-5/devel-ppport
-Version:	3.20
-IPS_component_version: 3.20
+Version:	3.21
+IPS_component_version: 3.21
 Summary:	Portability aid for your XS code
 License:	Artistic
 Distribution:   OpenSolaris
@@ -96,5 +96,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Nov 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.21
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

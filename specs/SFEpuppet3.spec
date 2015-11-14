@@ -29,14 +29,14 @@ Source0:          http://downloads.puppetlabs.com/puppet/puppet-%{version}.tar.g
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:    runtime/ruby-21
-BuildRequires:    library/ruby-21/facter
-BuildRequires:    library/ruby-21/hiera
+BuildRequires:    library/ruby/facter-21
+BuildRequires:    library/ruby/hiera-21
 Requires:         runtime/ruby-21 >= 2.0.0
-Requires:         library/ruby-21/facter
-Requires:         library/ruby-21/hiera
-Requires:         library/ruby-21/hiera/puppet
-Requires:         library/ruby-21/hiera/json
-Requires:         library/ruby-21/rgen
+Requires:         library/ruby/facter-21
+Requires:         library/ruby/hiera-21
+Requires:         library/ruby/hiera/puppet-21
+Requires:         library/ruby/hiera/json-21
+Requires:         library/ruby/rgen-21
 Requires:         archiver/gnu-tar
 Requires:         system/management/puppet3/common = %{version}
 
@@ -51,10 +51,10 @@ IPS_package_name: system/management/puppet3/master
 Group:		  Applications/System
 Summary:          Server for the puppet system management tool
 Requires:         system/management/puppet3 = %{version}
-Requires:         library/ruby-21/hiera
-Requires:         library/ruby-21/hiera/puppet
-Requires:         library/ruby-21/hiera/json
-Requires:         library/ruby-21/rgen
+Requires:         library/ruby/hiera-21
+Requires:         library/ruby/hiera/puppet-21
+Requires:         library/ruby/hiera/json-21
+Requires:         library/ruby/rgen-21
 Requires:         system/management/puppet3/common = %{version}
 
 %description master
@@ -208,6 +208,8 @@ user ftpuser=false gcos-field="Puppet Reserved UID" username="puppet" password=N
 rm -rf %{buildroot}
 
 %changelog
+* Wed Jun 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update Requires and BuildRequires
 * Wed Jun 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix download url
 * Tue Jun 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

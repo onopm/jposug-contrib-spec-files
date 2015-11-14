@@ -2,14 +2,14 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  2.0.0
+%define tarball_version  2.1.1
 %define tarball_name     Net_URL2
 %define pear_dir   %(/usr/php/5.3/bin/pear config-get php_dir)
 
 Name:                    SFEphp53-net-url2
 IPS_package_name:	 web/php-53/extension/php-net-url2
 Summary:                 PHP 5.3 module for Net_URL2
-Version:                 2.0.0
+Version:                 %{tarball_version}
 License:		 BSD
 Url:                     httfp://pear.php.net/package/%{tarball_name}
 Source:                  http://download.pear.php.net/package/%{tarball_name}-%{tarball_version}.tgz
@@ -57,5 +57,7 @@ rm -rf $RPM_BUILD_ROOT
 %{pear_dir}/.registry/net_url2.reg
 
 %changelog
+* Thu Mar 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.1
 * Sat Dec 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

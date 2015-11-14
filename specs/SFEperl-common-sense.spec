@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 3.5
+%define tarball_version 3.72
 %define tarball_name    common-sense
 
 Name:		SFEperl-common-sense
 IPS_package_name: library/perl-5/common-sense
-Version:	3.5
-IPS_component_version: 3.5
+Version:	3.72
+IPS_component_version: 3.7.2
 Summary:	common sense
 License:	Artistic
 Distribution:   OpenSolaris
@@ -96,5 +96,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.72
 * Sun Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -10,12 +10,14 @@
 
 Name:		SFEnagios-plugins
 IPS_package_name:        diagnostic/nagios/plugins
-Version:	1.4.16
+Version:	2.1.1
 Summary:	Nagios plugins
 Group:		Applications/System
 License:	GPLv2
 URL:		http://www.nagios.org/
-Source:		%{sf_download}/nagiosplug/nagios-plugins-%{version}.tar.gz
+# Source:		%{sf_download}/nagiosplug/nagios-plugins-%{version}.tar.gz
+# Source:	http://assets.nagios.com/downloads/nagiosplugins/nagios-plugins-%{version}.tar.gz
+Source:         http://www.nagios-plugins.org/download/nagios-plugins-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
@@ -122,6 +124,11 @@ do
     install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
 done
 
+# check_uptime works on Linux only and it is not builded on Solaris.
+# But check_uptime.c is installed because mode of check_uptime.c is 0755.
+# Then delete installed check_uptime.c
+# rm %{buildroot}%{_libdir}/nagios/plugins/check_uptime.c
+
 cd ../plugins-root
 for i in check_* pst3
 do
@@ -132,7 +139,7 @@ done
 cd ../plugins-scripts
 for i in check_* utils.sh utils.pm
 do
-    if [ -x $i ] 
+    if [ -x $i ]
     then
 	install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
     else
@@ -247,6 +254,20 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.1
+* Wed Dec 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump  to 2.0.3
+* Tue May 27 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.2
+* Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.1
+* Wed Mar 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0
+* Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %defattr
+* Tue Jan 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5
 * Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %attr
 * Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

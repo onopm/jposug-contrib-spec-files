@@ -51,6 +51,7 @@ Summary: Text-Xslate for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/any-moose-512
 BuildRequires:	library/perl-5/json-pp-512
+BuildRequires:	library/perl-5/data-messagepack-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/text-xslate
 
@@ -102,6 +103,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.1.1
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

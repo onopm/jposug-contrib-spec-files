@@ -155,7 +155,6 @@ Requires:         library/perl-5/io-html-520
 HTTP style messages
 %endif
 
-
 %prep
 %setup -q -n %{cpan_name}-%{version}
 rm -rf %{buildroot}
@@ -292,6 +291,8 @@ rm -rf %{buildroot}
 %changelog
 * Tue Nov 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 6.11
+* Sun Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Sep 27 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

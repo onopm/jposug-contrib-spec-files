@@ -9,7 +9,13 @@
 
 %include Solaris.inc
 %include packagenamemacros.inc
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
+%define with_mysql 0
+%else
+# OI
 %define with_mysql 1
+%endif
 %define src_name postfix
 %define postfix_usr_dir  %{_prefix}/postfix
 %define postfix_var_dir  %{_var}/postfix
@@ -45,7 +51,7 @@
 
 Name:           SFEpostfix
 Summary:        postfix mail server
-Version:        2.9.4
+Version:        2.9.9
 IPS_package_name: service/network/smtp/postfix
 License:        IBM Public License
 Url:            http://www.postfix.org
@@ -55,6 +61,7 @@ Source2:	svc-postfix
 # http://estseg.blogspot.jp/2010/03/postfix-w-opensolaris-nis.html
 # Если кто-то будет собирать Postfix на OpenSolaris b130 позднее получает следующее сообщение об ошибке:
 Patch1:		SFEpostfix-294-sys_defs.h.diff
+Patch100:	SFEpostfix-299-postfix-install.diff
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -68,10 +75,17 @@ BuildRequires:  %{pnm_buildrequires_library_pcre}
 BuildRequires:  consolidation/sfw/sfw-incorporation
 Requires:       %{pnm_requires_library_pcre}
 Requires:       consolidation/sfw/sfw-incorporation
-BuildRequires:  database/berkeleydb-48
 Requires:       library/security/cyrus-sasl
 BuildRequires:  library/security/cyrus-sasl
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
+BuildRequires:  database/berkeleydb-5
+Requires:       database/berkeleydb-5
+%else
+# OI
+BuildRequires:  database/berkeleydb-48
 Requires:       database/berkeleydb-48
+%endif
 %if %{with_mysql}
 BuildRequires:  %{pnm_buildrequires_database_mysql_51_library}
 BuildRequires:  %{pnm_buildrequires_mysql51}
@@ -84,6 +98,15 @@ BuildRequires:  %{pnm_buildrequires_system_library_math}
 Requires:       %{pnm_requires_system_library_math}
 BuildRequires:  %{pnm_buildrequires_library_openldap}
 Requires:       %{pnm_requires_library_openldap}
+BuildRequires:  %pnm_buildrequires_openssl
+Requires:       %pnm_requires_openssl
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
+%endif
 
 # OpenSolaris IPS Manifest Fields
 Meta(info.maintainer_url):      http://sourceforge.jp/forum/forum.php?forum_id=25193
@@ -98,6 +121,7 @@ Postfix is an attempt to provide an alternative to the widely-used Sendmail prog
 rm -rf %src_name-%version
 %setup -q -n %src_name-%version
 %patch1 -p0
+%patch100 -p0 -b .orig
 
 %build
 
@@ -123,6 +147,7 @@ CCARGS='-DDEF_CONFIG_DIR=\"%{postfix_etc_dir}\" \
  -DHAS_DB -I/usr/gnu/include \
  -DUSE_SASL_AUTH \
  -DUSE_CYRUS_SASL -I/usr/include/sasl2/sasl \
+ -DUSE_TLS \
 %if %{with_mysql}
  -DHAS_MYSQL -I/usr/mysql/include/mysql \
 %endif
@@ -137,6 +162,7 @@ AUXLIBS=' \
  -lpcre \
  -L/usr/lib/sasl2 -R/usr/lib/sasl2 -lsasl2 \
  -lldap-2.4 -llber-2.4 \
+ -lssl -lcrypto \
 '
 make
 
@@ -159,7 +185,10 @@ env -i "LD_LIBRARY_PATH=%buildroot%_libdir" \
     setgid_group=%{maildrop_group} \
     manpage_directory=%{_mandir} \
     sample_directory=%{postfix_sample_dir} \
-    readme_directory=%{postfix_readme_dir} || exit 1
+    readme_directory=%{postfix_readme_dir} \
+    default_database_type=hash \
+    alias_maps=hash:/etc/mail/aliases,nis:mail.aliases \
+    alias_database=hash:/etc/mail/aliases || exit 1
 
 mv %buildroot%{_mandir}/man1/mailq.1 %buildroot%{_mandir}/man1/mailq.postfix.1
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
@@ -261,6 +290,20 @@ user ftpuser=false gcos-field="Postfix user" username="%{runuser}" uid="%{runuse
 
 
 %changelog
+* Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- disable MySQL with Oracle Solaris because build fails
+- use database/berkeleydb-5 on Oracle Solaris
+* Sun May 11 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- added gcc dependencies
+* Fri May 02 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- enable TLS support
+- set default_database_type to hash  
+* Mon Feb 17 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Bump to 2.9.9
+* Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.9.8
+* Thu Jul 08 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 2.9.7
 * Wed Jan 09 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - changed the header path to sasl2
 * Wed Jan 09 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>

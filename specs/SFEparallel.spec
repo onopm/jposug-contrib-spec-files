@@ -1,7 +1,7 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define         date 20120522
+%define         date 20130922
 
 Summary:        executing jobs in parallel using one or more computers.
 Name:           parallel
@@ -48,5 +48,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/share/doc/parallel/*
 
 %changelog
+* Fri Sep 27 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 20130922
 * Fri Jun 01 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial

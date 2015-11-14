@@ -26,7 +26,7 @@
 
 
 Name:		SFEmpfr
-IPS_Package_Name:	sfe/library/mpfr
+IPS_Package_Name:	library/mpfr-3
 Summary:	C library for multiple-precision floating-point computations
 Group:		Development/Libraries
 License:	GPLv3
@@ -39,8 +39,8 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
 
 %if %SFEgmp
-BuildRequires: SFEgmp-devel
-Requires: SFEgmp
+BuildRequires: library/gmp-5/developer
+Requires: library/gmp-5
 #IPS doesn't honour SUNW_BaseDir 
 ##TODO## ##FIXME##
 #%define SFEgmpbasedir %(pkgparam SFEgmp BASEDIR)
@@ -53,6 +53,7 @@ Requires: SUNWgnu-mp
 Requires: %{pnm_requires_SUNWpostrun}
 
 %package devel
+IPS_Package_Name:	library/mpfr-3/developer
 Summary:	%{summary} - developer files
 SUNW_BaseDir:	%{_basedir}/%{_subdir}
 %include default-depend.inc
@@ -189,7 +190,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/*
 
 %changelog
-* Thu 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+* Sun May 19 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change dependency
+* Sun May 19 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- added suffix "developer" to IPS package name
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- delete sfe prefix from IPS package name
+* Thu Dec 20 2012 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - use pnm macros
 * Sun Jul 22 2012 - Milan Jurik
 - bump to 3.1.1

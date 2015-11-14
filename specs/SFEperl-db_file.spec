@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 1.827
+%define tarball_version 1.829
 %define tarball_name    DB_File
 
 Name:		SFEperl-db-file
 IPS_package_name: library/perl-5/db-file
-Version:	1.827
-IPS_component_version: 1.827
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	Tie to DB files
 License:	Artistic
 Distribution:   OpenSolaris
@@ -40,14 +40,17 @@ Tie to DB files
 IPS_package_name: library/perl-5/db-file-584
 Summary: Tie to DB files for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	database/berkeleydb-5
 Requires:	runtime/perl-584
+Requires:	database/berkeleydb-5
 
 %package 512
 IPS_package_name: library/perl-5/db-file-512
 Summary: Tie to DB files for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	database/berkeleydb-5
 Requires:	runtime/perl-512
-
+Requires:	database/berkeleydb-5
 
 %prep
 %setup -q -n %{tarball_name}-%{tarball_version}
@@ -62,7 +65,7 @@ make test
 
 rm -rf $RPM_BUILD_ROOT
 make pure_install
-make clean
+make realclean
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
@@ -70,7 +73,6 @@ export PERL5LIB=/usr/perl5/vendor_perl/5.12
   LIB=/usr/perl5/vendor_perl/5.12
 make
 make test
-
 
 %install
 make pure_install
@@ -98,5 +100,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequries and Requires
+- use %{tarball_version} at Version and IPS_component_version
+* Thu Jul 11 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.829
 * Thu Sep 27 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

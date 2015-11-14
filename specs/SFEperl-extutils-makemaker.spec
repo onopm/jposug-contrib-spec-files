@@ -42,12 +42,12 @@ Summary: Writes Makefiles for extensions for perl-584
 BuildRequires:	runtime/perl-584
 BuildRequires:	library/perl-5/extutils-install-584
 BuildRequires:	library/perl-5/parse-cpan-meta-584
-BuildRequires:	library/perl-5/extutils-manifest-584
+#BuildRequires:	library/perl-5/extutils-manifest-584
 BuildRequires:  library/perl-5/version-584
 Requires:	runtime/perl-584
 Requires:	library/perl-5/extutils-install-584
 Requires:	library/perl-5/parse-cpan-meta-584
-Requires:	library/perl-5/extutils-manifest-584
+#Requires:	library/perl-5/extutils-manifest-584
 Requires:       library/perl-5/version-584
 
 %package 512
@@ -56,12 +56,12 @@ Summary: Writes Makefiles for extensions for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/extutils-install-512
 BuildRequires:	library/perl-5/parse-cpan-meta-512
-BuildRequires:	library/perl-5/extutils-manifest-512
+#BuildRequires:	library/perl-5/extutils-manifest-512
 BuildRequires:  library/perl-5/version-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/extutils-install-512
 Requires:	library/perl-5/parse-cpan-meta-512
-Requires:	library/perl-5/extutils-manifest-512
+#Requires:	library/perl-5/extutils-manifest-512
 Requires:       library/perl-5/version-512
 
 %prep

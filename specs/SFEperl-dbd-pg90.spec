@@ -29,6 +29,7 @@ BuildRequires:	SFEperl-test-simple
 BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
 BuildRequires:	database/postgres-90/library
 BuildRequires:	database/postgres-90/developer
+
 Requires:	%{pnm_requires_SUNWpmdbi}
 Requires:	database/postgres-90/library
 
@@ -48,8 +49,8 @@ Postgres Driver for DBI
 # BuildRequires:	library/perl-5/test-simple-584
 # BuildRequires:	library/perl-5/json-pp-584 # not builded yet
 # BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
-# BuildRequires:	SFEpostgres-90-library
-# BuildRequires:	SFEpostgres-90-developer
+# BuildRequires:	SFEpostgres-90-libs
+# BuildRequires:	SFEpostgres-90-devel
 # Requires:	runtime/perl-584
 
 %package 512

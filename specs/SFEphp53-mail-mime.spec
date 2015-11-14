@@ -2,14 +2,14 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  1.8.6
+%define tarball_version  1.8.9
 %define tarball_name     Mail_Mime
 %define pear_dir   %(/usr/php/5.3/bin/pear config-get php_dir)
 
 Name:                    SFEphp53-mail-mime
 IPS_package_name:	 web/php-53/extension/php-mail-mime
 Summary:                 PHP 5.3 module for MAIL_Mime
-Version:                 1.8.6
+Version:                 %{tarball_version}
 License:		 BSD Style
 Url:                     http://pear.php.net/package/%{tarball_name}
 Source:                  http://download.pear.php.net/package/%{tarball_name}-%{tarball_version}.tgz
@@ -65,5 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 %{pear_dir}/.registry/mail_mime.reg
 
 %changelog
-* Sat Dec 15 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Thu Mar 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.8.9
+* Sat Dec 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

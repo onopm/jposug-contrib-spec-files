@@ -1,0 +1,13 @@
+--- src/osdep/unix/kerb_mit.c.orig	2013-04-16 10:33:46.117422723 +0900
++++ src/osdep/unix/kerb_mit.c	2013-04-16 10:34:34.921465353 +0900
+@@ -27,8 +27,8 @@
+  */
+ 
+ #define PROTOTYPE(x) x
+-#include <gssapi/gssapi_generic.h>
+-#include <gssapi/gssapi_krb5.h>
++#include <gssapi/gssapi.h>
++#include <kerberosv5/krb5.h>
+ 
+ 
+ long kerberos_server_valid (void);

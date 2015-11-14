@@ -1,0 +1,18 @@
+--- lib/puppet/provider/user/user_role_add.rb.bak	2014-05-29 23:37:58.360650493 +0900
++++ lib/puppet/provider/user/user_role_add.rb	2014-05-29 23:38:51.887938708 +0900
+@@ -17,6 +17,7 @@
+   options :profiles, :flag => "-P"
+   options :password_min_age, :flag => "-n"
+   options :password_max_age, :flag => "-x"
++  options :shell, :flag => "-s"
+ 
+   verify :gid, "GID must be an integer" do |value|
+     value.is_a? Integer
+@@ -27,6 +28,7 @@
+   end
+ 
+   has_features :manages_homedir, :allows_duplicates, :manages_solaris_rbac, :manages_passwords, :manages_password_age
++  has_features :manages_shell
+ 
+   #must override this to hand the keyvalue pairs
+   def add_properties

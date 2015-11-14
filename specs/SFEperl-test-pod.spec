@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 1.45
+%define tarball_version 1.48
 %define tarball_name    Test-Pod
 
 Name:		SFEperl-test-pod
 IPS_package_name: library/perl-5/test-pod
-Version:	1.45
-IPS_component_version: 1.45
+Version:	%{tarball_version}
+IPS_component_version: %{tarball_version}
 Summary:	Tests POD files for correctness
 License:	Artistic
 Distribution:   OpenSolaris
@@ -100,6 +100,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.48
 * Mon Nov 18 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

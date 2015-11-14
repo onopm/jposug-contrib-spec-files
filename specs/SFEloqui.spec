@@ -13,7 +13,7 @@
 %define _prefix	         /usr
 %define _var_prefix      /var
 %define tarball_name     loqui
-%define tarball_version  0.5.4
+%define tarball_version  0.5.5
 %define major_version    0.5
 
 %define _basedir         %{_prefix}
@@ -21,7 +21,7 @@
 Name:                    SFEloqui
 IPS_package_name:        desktop/irc/loqui
 Summary:	         Loqui IRC Client for Gtk2
-Version:                 0.5.4
+Version:                 0.5.5
 License:		 GPL
 Url:                     https://launchpad.net/%{tarball_name}
 Source:			 http://launchpad.net/%{tarball_name}/%{major_version}/%{tarball_version}/+download/%{tarball_name}-%{tarball_version}.tar.gz
@@ -36,8 +36,8 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
 %else
-BuildRequires: sfe/developer/gcc-46
-Requires:      sfe/system/library/gcc-runtime
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
 %endif
 BuildRequires: SFEgob
 Requires: SFEgob
@@ -148,6 +148,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, other) %{_prefix}/share/*
 
 %changelog
+* Tue Mar 19 2013 - TAKI <taki@justplayer.com>
+- bump to 0.5.5
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change BuildRequires that refer to gcc at OI
 * Tue Jan 19 JST 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Support for OpenIndiana
 * Sat Jan  5 JST 2013 TAKI, Yasushi <taki@justplayer.com>

@@ -27,11 +27,9 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %if %( expr %{osbuild} '=' 175 )
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
-%define mimpure_text 
 %else
-BuildRequires: SFEgcc
-Requires:      SFEgccruntime
-%define mimpure_text -mimpure-text
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
 %endif
 
 %description
@@ -57,7 +55,7 @@ export CC=gcc
 export CXX=g++
 export CFLAGS="%optflags -I%{gnu_inc} %{gnu_lib_path}"
 export CXXFLAGS="%cxx_optflags -I%{gnu_inc} %{gnu_lib_path}"
-export LDFLAGS="%_ldflags %gnu_lib_path %mimpure_text"
+export LDFLAGS="%_ldflags %gnu_lib_path"
 
 ./configure --prefix=%{_prefix}			\
             --bindir=%{_bindir}			\
@@ -92,6 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- rewrite dependency to use gcc-46 at oi.
+- abolish the use of minpuretext
 * Wed Jan  9 2013 - TAKI,Yasushi <taki@justplayer.com>
 - add minpuretext
 - add some gcc options

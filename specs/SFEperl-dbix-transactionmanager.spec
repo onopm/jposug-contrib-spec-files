@@ -40,12 +40,14 @@ DBIx::TransactionManager
 IPS_package_name: library/perl-5/dbix-transactionmanager-584
 Summary: DBIx::TransactionManager for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/try-tiny-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/dbix-transactionmanager-512
 Summary: DBIx::TransactionManager for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/try-tiny-512
 Requires:	runtime/perl-512
 
 
@@ -96,5 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sat Jun 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

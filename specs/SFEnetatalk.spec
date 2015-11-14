@@ -9,31 +9,46 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
+%define bdbdir /usr
+%else
+# OI
+%define bdbdir /usr/gnu
+%endif
+
 Name:           SFEnetatalk
 IPS_package_name:       service/network/netatalk
 Summary:        Open Source Apple Filing Protocol (AFP) fileserver
 Group:		System/Services
-Version:        2.2.2
-Epoch:          1
-License:        MIT
-SUNW_Copyright:	netatalk.copyright
+Version:        2.2.4
+License:        GLPv2
 Source:         %{sf_download}/netatalk/netatalk-%{version}.tar.bz2
 URL:            http://netatalk.sourceforge.net/
-Group:          Network
+Group:          System/File System
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
 
 %include default-depend.inc
 
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
+BuildRequires: database/berkeleydb-5
+Requires: database/berkeleydb-5
+%else
+# OI
 BuildRequires: SFEbdb
-BuildRequires: %{pnm_buildrequires_SUNWlibgcrypt}
+Requires: SFEbdb
+%endif
+
+BuildRequires: %{pnm_requires_system_library_security_libgcrypt}
 BuildRequires: %{pnm_buildrequires_SUNWopenssl}
 BuildRequires: %{pnm_buildrequires_system_network_avahi}
 BuildRequires: %{pnm_buildrequires_SUNWavahi_bridge_dsd}
 BuildRequires: %{pnm_buildrequires_SUNWavahi_bridge_dsd_devel}
 BuildRequires: %{pnm_buildrequires_avahi_bridge_dsd}
-Requires: SFEbdb
-Requires: %{pnm_requires_SUNWlibgcrypt}
+BuildRequires: %{pnm_buildrequires_developer_build_make}
+Requires: %{pnm_requires_system_library_security_libgcrypt}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_system_network_avahi}
 Requires: %{pnm_requires_SUNWavahi_bridge_dsd}
@@ -44,7 +59,7 @@ Requires: %name-root
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:            %{_basedir}
-SUNW_Copyright: %{name}.copyright
+SUNW_Copyright: netatalk.copyright
 
 # OpenSolaris IPS Manifest Fields
 Meta(info.upstream): http://netatalk.sourceforge.net/ 
@@ -70,7 +85,7 @@ rm -rf %name-%version
 
 %build
 export CFLAGS="%optflags -xc99=all "
-#export LDFLAGS="%_ldflags"
+export LIBS="-R/usr/gnu/lib"
 ./configure --prefix=%{_prefix}                  \
             --bindir=%{_bindir}                  \
             --mandir=%{_mandir}                  \
@@ -84,7 +99,8 @@ export CFLAGS="%optflags -xc99=all "
             --with-bdb=/usr/gnu \
             --with-libgcrypt-dir=/usr \
             --with-ssl-dir=/usr \
-            --enable-nfsv4acls
+            --enable-nfsv4acls \
+            --with-bdb=%{bdbdir}
 
 make
 
@@ -136,6 +152,12 @@ rm -rf %name-%version
 %defattr (-, root, sys)
 %attr (0755, root, sys) %dir %{_sysconfdir}
 %attr (0755, root, sys) %dir %{_sysconfdir}/init.d
+
+%if %( test -d %{_sysconfdir}/pam.d && echo 1 || echo 0)
+%attr (0755, root, sys) %dir %{_sysconfdir}/pam.d
+%{_sysconfdir}/pam.d/netatalk
+%endif
+
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/netatalk/*
 %{_sysconfdir}/init.d/netatalk
 %defattr (-, root, bin)
@@ -145,6 +167,20 @@ rm -rf %name-%version
 
 
 %changelog
+* Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use database/berkeleydb-5 on Oracle Solaris
+* Tue Jan 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Support for OpenIndiana
+* Sat Jan 26 2013 - TAKI,Yasushi <taki@justplayer.com>
+- When Solaris 11.1, with /etc/pam.d/netatalk. when other, without /etc/pam.d/netatlk.
+- bump to 2.2.4
+* Mon Jan 21 2013 - Fumihisa TONAKA
+- add BuildRequires
+* Sun Jan  6 2013 - TAKI, Yasushi 
+- add /etc/pam.d directory.
+* Mon Jul 23 2012 - Milan Jurik
+- bump to 2.2.3
+- fix rpath for /usr/gnu/lib
 * Sun Jan 22 2012 - TAKI, Yasushi
 - bump to 2.2.2.
 - Add IPS_package_name service/network/netatalk like samba package.

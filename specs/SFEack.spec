@@ -24,6 +24,7 @@ SUNW_Copyright: %{name}.copyright
 Source0:	http://search.cpan.org/CPAN/authors/id/P/PE/PETDANCE/ack-%{tarball_version}.tar.gz
 
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/file-next-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/file-next-512
 
@@ -60,6 +61,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Nov 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires because 'make test' requires library/perl-5/file-next-512.
 * Mon Nov 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - not include perllocal.pod
 * Sun Nov 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

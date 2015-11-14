@@ -76,7 +76,11 @@
 %if %( uname -v | egrep '^11\.[0-9]' > /dev/null && echo 1 || echo 0 )
 ##TODO## be more precise later, for build 173 and 174 and later SRU
 %define osbuild 175
-%endif 
+%endif
+# OmniOS
+%if %( uname -v | egrep 'omnios' > /dev/null && echo 1 || echo 0 )
+%define osbuild %( cat /etc/release | head -1 | sed -e 's/.*r//' )
+%endif
 
 # see if we are on old SVR4 release
 %define SXCE %( egrep "Solaris Express Community Edition" /etc/release > /dev/null 2>&1 && echo 1 || echo 0 )
@@ -106,6 +110,7 @@
 #no versioning here
 %define openindiana 0
 %define solaris11express 0
+%define omnios 0
 
 #boolean flags for major osdistro names - *with* versioning the releases
 #use osbuild in addition to finer granularity, e.g. osbuild >= 148
@@ -346,7 +351,21 @@
 %endif
 ##END
 
-
+##OmniOS
+%if %{osdet299999}
+%if %( expr %{osbuild} '>=' 151002 )
+%if %( uname -v | egrep 'omnios' > /dev/null && echo 1 || echo 0 )
+%define omnios 1
+%define osdet299999 0
+#we are on an IPS based OS distro
+%define os2nnn   1
+%else
+%endif
+%else
+%endif
+%else
+%endif
+##END
 
 ### bail out, detection of the os2... distribution failed!
 ###%if %{osdet299999}
@@ -356,6 +375,8 @@
 
 
 %changelog
+* Tue May 19 2015 - YAMAMOTO Takashi yamachan@piwikjapan.org
+- add support for OmniOS
 * Mon Nov  7 2011 - Thomas Wagner
 - add Support for builds (173)(174) as osbuild=175 Oracle Solaris 11 11/11
 * Fri Jun 17 2011 - Thomas Wagner

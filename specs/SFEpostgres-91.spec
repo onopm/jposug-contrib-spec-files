@@ -11,17 +11,18 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.1.7
+%define tarball_version  9.1.15
 %define major_version	 9.1
-
+%define prefix_name      SFEpostgres-91
 %define _basedir         %{_prefix}/%{major_version}
+%define oracle_solaris_11_2 %(grep 'Oracle Solaris 11.2' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
-Name:                    SFEpostgres-91
+Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-91
 Summary:	         PostgreSQL client tools
-Version:                 9.1.7
+Version:                 %{tarball_version}
 License:		 PostgreSQL
-Group:		System/Databases
+Group:                   System/Databases
 Url:                     http://www.postgresql.org/
 Source:                  http://ftp.postgresql.org/pub/source/v%{tarball_version}/%{tarball_name}-%{tarball_version}.tar.bz2
 Source1:		 postgres-91-postgres_91
@@ -33,7 +34,7 @@ Source6:		 postgres-91-user_attr
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Basedir:            /usr
-SUNW_Copyright:          %{name}.copyright
+SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: %{pnm_buildrequires_SUNWlxsl}
@@ -45,7 +46,11 @@ BuildRequires: %{pnm_buildrequires_SUNWcsl}
 BuildRequires: %{pnm_buildrequires_SUNWlibms}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWTcl}
+%if %{oracle_solaris_11_2}
+BuildRequires: library/libedit
+%else
 BuildRequires: SFEeditline
+%endif
 
 Requires: %{pnm_requires_SUNWlxsl}
 Requires: %{pnm_requires_SUNWlxml}
@@ -54,9 +59,13 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWgss}
+%if %{oracle_solaris_11_2}
+Requires: library/libedit
+%else
 Requires: SFEeditline
+%endif
 
-Requires: %{name}-library
+Requires: %{prefix_name}-libs
 
 # OpenSolaris IPS Package Manifest Fields
 Meta(info.upstream):	 	PostgreSQL Global Development Group
@@ -65,16 +74,16 @@ Meta(info.maintainer):	 	pkglabo.justplayer.com <pkgadmin@justplayer.com>
 Meta(info.classification):	System Database
 
 %description
-PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness. It runs on all major operating systems, including Linux, UNIX (AIX, BSD, HP-UX, SGI IRIX, Mac OS X, Solaris, Tru64), and Windows. It is fully ACID compliant, has full support for foreign keys, joins, views, triggers, and stored procedures (in multiple languages). It includes most SQL:2008 data types, including INTEGER, NUMERIC, BOOLEAN, CHAR, VARCHAR, DATE, INTERVAL, and TIMESTAMP. It also supports storage of binary large objects, including pictures, sounds, or video. It has native programming interfaces for C/C++, Java, .Net, Perl, Python, Ruby, Tcl, ODBC, among others, and exceptional documentation. 
+PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness. It runs on all major operating systems, including Linux, UNIX (AIX, BSD, HP-UX, SGI IRIX, Mac OS X, Solaris, Tru64), and Windows. It is fully ACID compliant, has full support for foreign keys, joins, views, triggers, and stored procedures (in multiple languages). It includes most SQL:2008 data types, including INTEGER, NUMERIC, BOOLEAN, CHAR, VARCHAR, DATE, INTERVAL, and TIMESTAMP. It also supports storage of binary large objects, including pictures, sounds, or video. It has native programming interfaces for C/C++, Java, .Net, Perl, Python, Ruby, Tcl, ODBC, among others, and exceptional documentation.
 
-%package library
+%package -n %{prefix_name}-libs
 
 IPS_package_name: database/postgres-91/library
 Summary: PostgreSQL client libraries
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWcsl}
 
-%package languages
+%package -n %{prefix_name}-pl
 IPS_package_name: database/postgres-91/language-bindings
 Summary: PostgreSQL additional Perl, Python & TCL server procedural languages
 
@@ -84,9 +93,9 @@ Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWTcl}
 Requires: %{name}
-Requires: %{name}-library
+Requires: %{prefix_name}-libs
 
-%package developer
+%package -n %{prefix_name}-devel
 IPS_package_name: database/postgres-91/developer
 Summary: PostgreSQL development tools and header files
 
@@ -98,13 +107,13 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
-Requires: %{name}-library
+Requires: %{prefix_name}-libs
 
-%package documentation
+%package -n %{prefix_name}-docs
 IPS_package_name: database/postgres-91/documentation
 Summary: PostgreSQL documentation and man pages
 
-%package server
+%package -n %{prefix_name}-server
 IPS_package_name: service/database/postgres-91
 Summary: PostgreSQL database server
 
@@ -118,10 +127,14 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
-Requires: %{name}-library
+Requires: %{prefix_name}-libs
+%if %{oracle_solaris_11_2}
+#On Oracle Soalris 11.2, user postgres exists by default.
+%else
 Requires: SFEpostgres-common
+%endif
 
-%package contrib
+%package -n %{prefix_name}-contrib
 IPS_package_name: database/postgres-91/contrib
 Summary: PostgreSQL community contributed tools not part of core product
 
@@ -133,7 +146,7 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
-Requires: %{name}-library
+Requires: %{prefix_name}-libs
 
 %prep
 %setup -c -n %{tarball_name}-%{tarball_version}
@@ -464,7 +477,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_basebackup-%{major_version}.mo
 
 
-%files library
+%files -n %{prefix_name}-libs
 %defattr (-, root, bin)
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
@@ -516,8 +529,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/libpq.so
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/libpq.so.5
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/libpq.so.5.4
- 
-%files languages
+
+%files -n %{prefix_name}-pl
 %defattr (-, root, bin)
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
@@ -576,7 +589,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/share/extension/pltclu.control
 
 
-%files developer
+%files -n %{prefix_name}-devel
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/amd64
@@ -700,7 +713,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/rewrite/*.h
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/libpq/*.h
 
-%files documentation
+%files -n %{prefix_name}-docs
 %defattr (-, root, bin)
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/doc
@@ -711,7 +724,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/doc/extension
 %{_prefix}/%{major_version}/doc/extension/*
 
-%files server
+%files -n %{prefix_name}-server
 %defattr (-, root, bin)
 
 %dir %attr (0755, root, sys) /usr
@@ -901,7 +914,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/extension/plpgsql--unpackaged--1.0.sql
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/extension/plpgsql.control
 
-%files contrib
+%files -n %{prefix_name}-contrib
 %defattr (-, root, bin)
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
@@ -1131,6 +1144,25 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Sun Feb 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.15
+* Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- With Oracle Solaris 11.2, use library/libedit instead of SFEeditline
+- SFEpostgres-common is no required on Oracle Solaris 11.2
+* Fri Jul 25 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.14
+* Sun Mar 23 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.13
+* Fri Feb 21 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.12
+* Sat Dec 14 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.11
+* Sat Oct 19 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.10
+* Fri Apr  5 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.9
+* Thu Feb  7 JST 2013 TAKI, Yasushi <taki@justplayer.com>
+- bump to 9.1.8
 * Thu Jan 17 PST 2013 TAKI, Yasushi <taki@justplayer.com>
 - support mediator.
 * Sat Dec 15 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

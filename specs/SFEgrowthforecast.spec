@@ -1,16 +1,8 @@
-#
-# spec file for package SFEnagios
-#
-# includes module(s): nagios
-#
-# This file and all modifications and additions to the pristine
-# package are under the same license as the package itself.
-#
 %include Solaris.inc
 %include packagenamemacros.inc
 
 %define tarball_name    GrowthForecast
-%define tarball_version 0.81
+%define tarball_version 0.83
 
 Name:		growthforecast
 IPS_package_name:        diagnostic/growthforecast
@@ -79,6 +71,8 @@ Requires:	library/perl-5/router-boom-512
 Requires:	library/perl-5/http-headers-fast-512
 Requires:	library/perl-5/kossy-validator-512
 Requires:	library/perl-5/http-entity-parser-512
+Requires:	library/perl-5/try-tiny-512
+Requires:	library/perl-5/cookie-baker-512
 
 %description
 GrowthForecast - Lightning Fast Graphing/Visualization
@@ -141,6 +135,10 @@ user ftpuser=false gcos-field="GrowthForecast Reserved UID" username="growthfore
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/site/growthforecast.xml
 
 %changelog
+* Sat Oct 25 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.83
+* Sun Jun 22 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Mon Jun 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.81
 * Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

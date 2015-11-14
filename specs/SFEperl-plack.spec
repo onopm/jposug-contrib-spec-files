@@ -70,6 +70,8 @@ BuildRequires:	library/perl-5/devel-stacktrace-ashtml-512
 BuildRequires:  library/perl-5/stream-buffered-512
 BuildRequires:  library/perl-5/file-sharedir-install-512
 BuildRequires:  library/perl-5/http-tiny-512
+BuildRequires:  library/perl-5/http-body-512
+BuildRequires:  library/perl-5/http-cookies-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/test-tiny-512
 Requires:	library/perl-5/http-body-512
@@ -134,6 +136,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sun Oct 06 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0029
 * Thu May 02 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

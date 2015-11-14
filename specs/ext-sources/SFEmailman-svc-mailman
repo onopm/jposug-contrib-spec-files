@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# mailman    This shell script starts and stops GNU Mailman.
+#
+# description: Mailman is the GNU Mailing List Manager, a program that \
+#              manages electronic mail discussion groups.  For more \
+#              on GNU Mailman see http://www.list.org
+# processname: mailmanctl
+# config: /usr/lib/mailman/Mailman/mm_cfg.py
+# pidfile: /usr/lib/mailman/data/master-qrunner.pid
+#
+PYTHON=/bin/python
+MAILMANHOME=/usr/lib/mailman
+MAILMANCTL=$MAILMANHOME/bin/mailmanctl
+
+[ -f $MAILMANCTL ] || exit 0
+
+. /lib/svc/share/smf_include.sh
+ 
+# See how we were called.
+
+# Check for echo -n vs echo \c
+if echo '\c' | grep -s c >/dev/null 2>&1 ; then
+    ECHO_N="echo -n"
+    ECHO_C=""
+else
+    ECHO_N="echo"
+    ECHO_C='\c'
+fi
+
+case "$1" in
+  start)
+        # Start daemons.
+        $ECHO_N "Starting mailman: "$ECHO_C
+        #rm -f $MAILMANHOME/locks/*
+        $PYTHON $MAILMANCTL -s -q start 2>/dev/null
+        echo mailman
+        ;;
+  stop)
+        # Stop daemons.
+        $ECHO_N "Shutting down mailman: "$ECHO_C
+        $PYTHON $MAILMANCTL -q stop 2>/dev/null
+        echo mailman
+        ;;
+  restart)
+        $PYTHON $MAILMANCTL -q restart
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+exit 0

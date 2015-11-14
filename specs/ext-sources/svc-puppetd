@@ -1,3 +1,4 @@
+
 #!/bin/sh
 # This is the /etc/init.d file for puppetd
 # Modified for CSW
@@ -21,6 +22,35 @@ start)
 
     printf "Starting Puppet client services:"
 
+
+    if [ ! `getent group puppet` ]
+    then 
+	groupadd puppet
+    fi
+
+    if [ ! `getent passwd puppet` ]
+    then 
+	useradd -g puppet -s /bin/false -d /var/lib/puppet puppet
+    fi
+
+    if [ ! -d /var/run/puppet ]
+    then
+	mkdir -p /var/run/puppet
+	chown puppet:puppet /var/run/puppet
+    fi
+
+    if [ ! -d /var/log/puppet ]
+    then
+	mkdir -p /var/log/puppet
+	chown puppet:puppet /var/log/puppet
+    fi
+
+    if [ ! -d /var/lib/puppet ]
+    then
+	mkdir -p /var/lib/puppet/run
+	chown -R puppet:puppet /var/lib/puppet
+    fi
+
     # /opt/csw/sbin/puppetd
     ${sbindir}/puppetd
 
@@ -28,8 +58,13 @@ start)
     echo ""
     ;;
 stop)
-    printf "Stopping Puppet client services:"
-    kill `cat $pidfile`
+    if [ -f $pidfile ]
+    then
+	printf "Stopping Puppet client services:"
+	kill `cat $pidfile`
+    else
+	echo "pid file not found."
+    fi
 
     printf " puppetd"
     echo ""

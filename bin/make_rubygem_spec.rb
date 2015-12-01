@@ -101,8 +101,9 @@ BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 <% data['dependencies']['runtime'].each do |req| -%>
 # <%= req['name'] %> <%= req['requirements'] %>
-Requires:         library/ruby/%{gemname}-19
+Requires:         library/ruby/<%= req['name'] %>-19
 <% end -%>
+Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
 <%= data['info'] %>
@@ -131,8 +132,9 @@ BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 <% data['dependencies']['runtime'].each do |req| -%>
 # <%= req['name'] %> <%= req['requirements'] %>
-Requires:         library/ruby/%{gemname}-20
+Requires:         library/ruby/<%= req['name'] %>-20
 <% end -%>
+Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
 <%= data['info'] %>
@@ -161,8 +163,9 @@ BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 <% data['dependencies']['runtime'].each do |req| -%>
 # <%= req['name'] %> <%= req['requirements'] %>
-Requires:         library/ruby/%{gemname}-21
+Requires:         library/ruby/<%= req['name'] %>-21
 <% end -%>
+Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
 <%= data['info'] %>
@@ -191,8 +194,9 @@ BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 <% data['dependencies']['runtime'].each do |req| -%>
 # <%= req['name'] %> <%= req['requirements'] %>
-Requires:         library/ruby/%{gemname}-22
+Requires:         library/ruby/<%= req['name'] %>-22
 <% end -%>
+Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
 <%= data['info'] %>

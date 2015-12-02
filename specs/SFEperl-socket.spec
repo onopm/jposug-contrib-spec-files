@@ -5,17 +5,14 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define generate_executable 0
-
-%define build_with_makefile_pl 1
-%define build_with_build_pl 0
+%define include_executable 0
 
 %define cpan_name Socket
 %define sfe_cpan_name socket
 
 Summary:               networking constants and support functions
 Name:                  SFEperl-%{sfe_cpan_name}
-IPS_package_name:      library/perl/%{sfe_cpan_name}
+IPS_package_name:      library/perl-5/%{sfe_cpan_name}
 Version:               2.020
 IPS_component_version: 2.20
 License:               perl_5
@@ -28,12 +25,12 @@ networking constants and support functions
 
 %if %{build584}
 %package 584
-IPS_package_name: library/perl/%{sfe_cpan_name}-584
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-584 = *
-Requires:         library/perl/extutils-cbuilder-584
-Requires:         library/perl/extutils-constant-584
-Requires:         library/perl/extutils-makemaker-584
+Requires:         library/perl-5/extutils-cbuilder-584
+Requires:         library/perl-5/extutils-constant-584
+Requires:         library/perl-5/extutils-makemaker-584
 Requires:         runtime/perl-584 = *
 
 %description 584
@@ -42,12 +39,12 @@ networking constants and support functions
 
 %if %{build512}
 %package 512
-IPS_package_name: library/perl/%{sfe_cpan_name}-512
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-512 = *
-Requires:         library/perl/extutils-cbuilder-512
-Requires:         library/perl/extutils-constant-512
-Requires:         library/perl/extutils-makemaker-512
+Requires:         library/perl-5/extutils-cbuilder-512
+Requires:         library/perl-5/extutils-constant-512
+Requires:         library/perl-5/extutils-makemaker-512
 Requires:         runtime/perl-512 = *
 
 %description 512
@@ -56,12 +53,12 @@ networking constants and support functions
 
 %if %{build516}
 %package 516
-IPS_package_name: library/perl/%{sfe_cpan_name}-516
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-516 = *
-Requires:         library/perl/extutils-cbuilder-516
-Requires:         library/perl/extutils-constant-516
-Requires:         library/perl/extutils-makemaker-516
+Requires:         library/perl-5/extutils-cbuilder-516
+Requires:         library/perl-5/extutils-constant-516
+Requires:         library/perl-5/extutils-makemaker-516
 Requires:         runtime/perl-516 = *
 
 %description 516
@@ -70,12 +67,12 @@ networking constants and support functions
 
 %if %{build520}
 %package 520
-IPS_package_name: library/perl/%{sfe_cpan_name}-520
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-520 = *
-Requires:         library/perl/extutils-cbuilder-520
-Requires:         library/perl/extutils-constant-520
-Requires:         library/perl/extutils-makemaker-520
+Requires:         library/perl-5/extutils-cbuilder-520
+Requires:         library/perl-5/extutils-constant-520
+Requires:         library/perl-5/extutils-makemaker-520
 Requires:         runtime/perl-520 = *
 
 %description 520
@@ -125,17 +122,15 @@ modify_bin_dir() {
 }
 
 build_for() {
-%if %{build_with_makefile_pl}
-build_with_makefile.pl_for $*
-%endif
+    if [ -f Makefile.PL ];
+    then
+        build_with_makefile.pl_for $*
+    elif [ -f Build.PL ];
+    then
+        build_with_build.pl_for $*
+    fi
 
-%if %{build_with_build_pl}
-build_with_build.pl_for $*
-%endif
-
-%if %{generate_executable}
-modify_bin_dir $*
-%endif
+    modify_bin_dir $*
 }
 
 
@@ -172,7 +167,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.8.4
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.8.4
 %endif
 %endif
@@ -182,7 +177,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.12
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.12
 %endif
 %endif
@@ -192,7 +187,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.16
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.16
 %endif
 %endif
@@ -202,7 +197,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.20
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.20
 %endif
 %endif
@@ -211,3 +206,6 @@ rm -rf %{buildroot}
 %changelog
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- fix IPS package names
+- check existence of Makefile.PL and Build.PL instead of using variable
+- modify variable name, s/generate_executable/include_executable/

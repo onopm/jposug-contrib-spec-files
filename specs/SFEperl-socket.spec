@@ -28,6 +28,7 @@ networking constants and support functions
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-584 = *
+BuildRequires:    library/perl-5/extutils-cbuilder-584
 Requires:         library/perl-5/extutils-cbuilder-584
 Requires:         library/perl-5/extutils-constant-584
 Requires:         library/perl-5/extutils-makemaker-584
@@ -42,6 +43,7 @@ networking constants and support functions
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-512 = *
+BuildRequires:    library/perl-5/extutils-cbuilder-512
 Requires:         library/perl-5/extutils-cbuilder-512
 Requires:         library/perl-5/extutils-constant-512
 Requires:         library/perl-5/extutils-makemaker-512
@@ -56,6 +58,7 @@ networking constants and support functions
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-516 = *
+BuildRequires:    library/perl-5/extutils-cbuilder-516
 Requires:         library/perl-5/extutils-cbuilder-516
 Requires:         library/perl-5/extutils-constant-516
 Requires:         library/perl-5/extutils-makemaker-516
@@ -70,6 +73,7 @@ networking constants and support functions
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-520 = *
+BuildRequires:    library/perl-5/extutils-cbuilder-520
 Requires:         library/perl-5/extutils-cbuilder-520
 Requires:         library/perl-5/extutils-constant-520
 Requires:         library/perl-5/extutils-makemaker-520
@@ -204,6 +208,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Dec 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - fix IPS package names

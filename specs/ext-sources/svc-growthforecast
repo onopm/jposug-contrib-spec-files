@@ -1,0 +1,75 @@
+#!/bin/sh
+. /lib/svc/share/smf_include.sh
+
+# SMF_FMRI is the name of the target service. This allows multiple instances
+# to use the same script.
+
+getproparg() {
+    val=`svcprop -p $1 $SMF_FMRI`
+    [ -n "$val" ] && echo $val
+}
+
+killproc_growthforecast ()
+{
+    kill $GrowthForecastPID
+}
+
+
+pid_growthforecast ()
+{
+    if test ! -f $GrowthForecastRunFile; then
+	echo "No lock file found in $GrowthForecastRunFile"
+	exit 1
+    fi
+    GrowthForecastPID=`head -n 1 $GrowthForecastRunFile`
+}
+
+
+GrowthForecastBin=`getproparg growthforecast/bin`
+
+GrowthForecastRunFile=`getproparg growthforecast/runfile`
+GrowthForecastHost=`getproparg growthforecast/host`
+GrowthForecastPort=`getproparg growthforecast/port`
+GrowthForecastDataDir=`getproparg growthforecast/datadir`
+
+GrowthForecastUser=`getproparg growthforecast/user`
+GrowthForecastGroup=`getproparg growthforecast/group`
+
+if [ -z $SMF_FMRI ]; then
+    echo "Error: SMF framework variables are not initialized"
+    exit $SMF_EXIT_ERR
+fi
+
+# Check that growthforecast exists.
+if [ ! -x $GrowthForecastBin ]; then
+    echo "Executable file $GrowthForecastBin not found.  Exiting."
+    exit $SMF_EXIT_ERR_CONFIG
+fi
+
+# See how we were called.
+case "$1" in
+
+    start)
+	sudo -u $GrowthForecastUser $GrowthForecastBin \
+	    --data-dir $GrowthForecastDataDir &
+	echo $! > $GrowthForecastRunFile
+
+	exit 0
+	;;
+
+    stop)
+	pid_growthforecast
+	killproc_growthforecast
+
+	rm -f $GrowthForecastRunFile
+	;;
+
+    *)
+	echo "Usage: $0 {start|stop}"
+	exit 1
+	;;
+
+esac
+
+# End of this script
+exit $SMF_EXIT_OK

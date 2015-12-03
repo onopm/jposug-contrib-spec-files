@@ -5,17 +5,14 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define generate_executable 0
-
-%define build_with_makefile_pl 1
-%define build_with_build_pl 0
+%define include_executable 0
 
 %define cpan_name IO-Socket-IP
 %define sfe_cpan_name io-socket-ip
 
 Summary:               Family-neutral IP socket supporting both IPv4 and IPv6
 Name:                  SFEperl-%{sfe_cpan_name}
-IPS_package_name:      library/perl/%{sfe_cpan_name}
+IPS_package_name:      library/perl-5/%{sfe_cpan_name}
 Version:               0.37
 IPS_component_version: 0.37
 License:               perl_5
@@ -28,13 +25,13 @@ Family-neutral IP socket supporting both IPv4 and IPv6
 
 %if %{build584}
 %package 584
-IPS_package_name: library/perl/%{sfe_cpan_name}-584
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
 Summary:          Family-neutral IP socket supporting both IPv4 and IPv6
 BuildRequires:    runtime/perl-584 = *
-Requires:         library/perl/test-more-584
+Requires:         library/perl-5/test-more-584
 Requires:         runtime/perl-584 = *
-Requires:         library/perl/socket-584
-Requires:         library/perl/io-socket-584
+Requires:         library/perl-5/socket-584
+Requires:         library/perl-5/io-socket-584
 
 %description 584
 Family-neutral IP socket supporting both IPv4 and IPv6
@@ -42,13 +39,13 @@ Family-neutral IP socket supporting both IPv4 and IPv6
 
 %if %{build512}
 %package 512
-IPS_package_name: library/perl/%{sfe_cpan_name}-512
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
 Summary:          Family-neutral IP socket supporting both IPv4 and IPv6
 BuildRequires:    runtime/perl-512 = *
-Requires:         library/perl/test-more-512
+Requires:         library/perl-5/test-more-512
 Requires:         runtime/perl-512 = *
-Requires:         library/perl/socket-512
-Requires:         library/perl/io-socket-512
+Requires:         library/perl-5/socket-512
+Requires:         library/perl-5/io-socket-512
 
 %description 512
 Family-neutral IP socket supporting both IPv4 and IPv6
@@ -56,13 +53,13 @@ Family-neutral IP socket supporting both IPv4 and IPv6
 
 %if %{build516}
 %package 516
-IPS_package_name: library/perl/%{sfe_cpan_name}-516
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
 Summary:          Family-neutral IP socket supporting both IPv4 and IPv6
 BuildRequires:    runtime/perl-516 = *
-Requires:         library/perl/test-more-516
+Requires:         library/perl-5/test-more-516
 Requires:         runtime/perl-516 = *
-Requires:         library/perl/socket-516
-Requires:         library/perl/io-socket-516
+Requires:         library/perl-5/socket-516
+Requires:         library/perl-5/io-socket-516
 
 %description 516
 Family-neutral IP socket supporting both IPv4 and IPv6
@@ -70,13 +67,13 @@ Family-neutral IP socket supporting both IPv4 and IPv6
 
 %if %{build520}
 %package 520
-IPS_package_name: library/perl/%{sfe_cpan_name}-520
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
 Summary:          Family-neutral IP socket supporting both IPv4 and IPv6
 BuildRequires:    runtime/perl-520 = *
-Requires:         library/perl/test-more-520
+Requires:         library/perl-5/test-more-520
 Requires:         runtime/perl-520 = *
-Requires:         library/perl/socket-520
-Requires:         library/perl/io-socket-520
+Requires:         library/perl-5/socket-520
+Requires:         library/perl-5/io-socket-520
 
 %description 520
 Family-neutral IP socket supporting both IPv4 and IPv6
@@ -125,17 +122,15 @@ modify_bin_dir() {
 }
 
 build_for() {
-%if %{build_with_makefile_pl}
-build_with_makefile.pl_for $*
-%endif
+    if [ -f Makefile.PL ];
+    then
+        build_with_makefile.pl_for $*
+    elif [ -f Build.PL ];
+    then
+        build_with_build.pl_for $*
+    fi
 
-%if %{build_with_build_pl}
-build_with_build.pl_for $*
-%endif
-
-%if %{generate_executable}
-modify_bin_dir $*
-%endif
+    modify_bin_dir $*
 }
 
 
@@ -172,7 +167,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.8.4
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.8.4
 %endif
 %endif
@@ -182,7 +177,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.12
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.12
 %endif
 %endif
@@ -192,7 +187,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.16
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.16
 %endif
 %endif
@@ -202,7 +197,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/perl5/vendor_perl/5.20
-%if %{generate_executable}
+%if %{include_executable}
 /usr/perl5/5.20
 %endif
 %endif
@@ -211,3 +206,6 @@ rm -rf %{buildroot}
 %changelog
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- fix IPS package names
+- check existence of Makefile.PL and Build.PL instead of using variable
+- modify variable name, s/generate_executable/include_executable/

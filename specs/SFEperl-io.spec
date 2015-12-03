@@ -1,5 +1,5 @@
 #
-# spec file for package: SFEperl-io-file
+# spec file for package: SFEperl-io
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -13,7 +13,7 @@
 %define tarball_name    IO
 
 Name:		SFEperl-io
-IPS_package_name: library/perl-5/io-file
+IPS_package_name: library/perl-5/io
 Version:	1.25
 IPS_component_version: 1.25
 Summary:	Methods for disk file based i/o handles
@@ -96,3 +96,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix IPS_package_name

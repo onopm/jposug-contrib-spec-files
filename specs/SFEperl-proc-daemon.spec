@@ -81,7 +81,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-#%{_prefix}/perl5
 %attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 #%attr(0755,root,bin) %dir %{_bindir}
@@ -96,5 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
 * Sun Jun 09 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.14

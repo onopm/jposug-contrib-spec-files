@@ -36,16 +36,19 @@ Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 %description
 Data::Validator
 
-%package 584
-IPS_package_name: library/perl-5/data-validator-584
-Summary: Data::Validator for perl-584
-BuildRequires:	runtime/perl-584
-Requires:	runtime/perl-584
+# %package 584
+# IPS_package_name: library/perl-5/data-validator-584
+# Summary: Data::Validator for perl-584
+# BuildRequires:	runtime/perl-584
+# BuildRequires:	library/perl-5/mouse-584
+# Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/data-validator-512
 Summary: Data::Validator for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/mouse-512
+BuildRequires:	library/perl-5/test-requires-512
 Requires:	runtime/perl-512
 
 
@@ -53,15 +56,15 @@ Requires:	runtime/perl-512
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
-/usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
-  DESTDIR=$RPM_BUILD_ROOT \
-  LIB=/usr/perl5/vendor_perl/5.8.4
-make
-make test
+# export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
+# /usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
+#   DESTDIR=$RPM_BUILD_ROOT \
+#   LIB=/usr/perl5/vendor_perl/5.8.4
+# make
+# make test
 
-rm -rf $RPM_BUILD_ROOT
-make pure_install
+# rm -rf $RPM_BUILD_ROOT
+# make pure_install
 
 export PERL5LIB=/usr/perl5/vendor_perl/5.12
 /usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
@@ -71,6 +74,8 @@ make
 make test
 
 %install
+rm -rf $RPM_BUILD_ROOT
+
 make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
 mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
@@ -87,14 +92,20 @@ rm -rf $RPM_BUILD_ROOT
 #%attr(0755,root,bin) %dir %{_bindir}
 #%{_bindir}/*
 
-%files 584
-%defattr (-, root, bin)
-%{_prefix}/perl5/vendor_perl/5.8.4
+# %files 584
+# %defattr (-, root, bin)
+# %{_prefix}/perl5/vendor_perl/5.8.4
 
 %files 512
 %defattr (-, root, bin)
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- not generate package for perl-584
+* Mon Nov 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires and run make test
+* Tue Feb 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- comment out "make test" for perl-584 because "make test" requires Mouse.pm
 * Sat Jun 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

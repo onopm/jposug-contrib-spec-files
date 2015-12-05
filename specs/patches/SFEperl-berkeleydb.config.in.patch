@@ -1,0 +1,20 @@
+--- config.in.orig	2014-07-21 12:17:29.526749345 +0900
++++ config.in	2014-07-21 12:17:44.819251132 +0900
+@@ -9,7 +9,7 @@
+ 
+ #INCLUDE	= /usr/local/include
+ #INCLUDE	= ../..
+-INCLUDE	= /usr/local/BerkeleyDB/include
++INCLUDE	= /usr/gnu/include
+ 
+ # 2. Where is libdb?
+ #
+@@ -18,7 +18,7 @@
+ 
+ #LIB	= /usr/local/lib
+ #LIB	= ../..
+-LIB	= /usr/local/BerkeleyDB/lib
++LIB	= /usr/gnu/lib
+ 
+ # 3. Is the library called libdb?
+ #

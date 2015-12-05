@@ -33,6 +33,7 @@ BuildRequires:    library/perl-5/cpan-meta-584
 BuildRequires:    library/perl-5/module-build-584
 BuildRequires:    library/perl-5/test-simple-584
 BuildRequires:    library/perl-5/time-local-584
+BuildRequires:    library/perl-5/set-crontab-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/list-moreutils-584
@@ -51,6 +52,7 @@ BuildRequires:    library/perl-5/cpan-meta-510
 BuildRequires:    library/perl-5/module-build-510
 BuildRequires:    library/perl-5/test-simple-510
 BuildRequires:    library/perl-5/time-local-510
+BuildRequires:    library/perl-5/set-crontab-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/list-moreutils-510
@@ -69,6 +71,7 @@ BuildRequires:    library/perl-5/cpan-meta-512
 BuildRequires:    library/perl-5/module-build-512
 BuildRequires:    library/perl-5/test-simple-512
 BuildRequires:    library/perl-5/time-local-512
+BuildRequires:    library/perl-5/set-crontab-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/list-moreutils-512
@@ -87,6 +90,7 @@ BuildRequires:    library/perl-5/cpan-meta-516
 BuildRequires:    library/perl-5/module-build-516
 BuildRequires:    library/perl-5/test-simple-516
 BuildRequires:    library/perl-5/time-local-516
+BuildRequires:    library/perl-5/set-crontab-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/list-moreutils-516
@@ -105,6 +109,7 @@ BuildRequires:    library/perl-5/cpan-meta-520
 BuildRequires:    library/perl-5/module-build-520
 BuildRequires:    library/perl-5/test-simple-520
 BuildRequires:    library/perl-5/time-local-520
+BuildRequires:    library/perl-5/set-crontab-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/list-moreutils-520
@@ -296,3 +301,4 @@ rm -rf %{buildroot}
 %changelog
 * Sat Dec 05 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- add BuildRequires

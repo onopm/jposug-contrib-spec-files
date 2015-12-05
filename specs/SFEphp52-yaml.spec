@@ -9,13 +9,13 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define tarball_version  1.0.1
+%define tarball_version  1.1.0
 %define tarball_name     yaml
 
 Name:                    SFEphp52-yaml
 IPS_package_name:	 web/php-52/extension/php-yaml
 Summary:                 PHP 5.2 module for YAML
-Version:                 1.0.1
+Version:                 1.1.0
 License:		 PHP License
 Url:                     http://pecl.php.net/package/%{tarball_name}
 Source:                  http://pecl.php.net/get/%{tarball_name}-%{tarball_version}.tgz
@@ -28,9 +28,11 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: %{pnm_buildrequires_SUNWphp52}
 BuildRequires: %{pnm_buildrequires_SUNWgsed_devel}
+BuildRequires: library/text/yaml >= 0.1.6
 
 Requires: %{pnm_requires_SUNWphp52}
-Requires: SFElibyaml
+Requires: library/text/yaml >= 0.1.6
+Requires: web/php-52/extension/php-date
 
 # OpenSolaris IPS Package Manifest Fields
 Meta(info.upstream):	 	http://code.google.com/p/php-yaml/
@@ -94,5 +96,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.2/conf.d/*
 
 %changelog
+* Wed Apr 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- specify required version of library/text/yaml (CVE-2014-2525)
+* Sat Dec 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
+* Fri Nov 01 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.1.0
 * Sat Jun 25 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Initial Revision

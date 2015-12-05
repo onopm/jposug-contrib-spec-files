@@ -30,6 +30,8 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          Alternative interface to File::Find
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
+BuildRequires:    library/perl-5/test-simple-584
+BuildRequires:    library/perl-5/text-glob-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-584
@@ -47,6 +49,8 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          Alternative interface to File::Find
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
+BuildRequires:    library/perl-5/test-simple-510
+BuildRequires:    library/perl-5/text-glob-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-510
@@ -64,6 +68,8 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          Alternative interface to File::Find
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
+BuildRequires:    library/perl-5/test-simple-512
+BuildRequires:    library/perl-5/text-glob-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-512
@@ -81,6 +87,8 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          Alternative interface to File::Find
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
+BuildRequires:    library/perl-5/test-simple-516
+BuildRequires:    library/perl-5/text-glob-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-516
@@ -98,6 +106,8 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-520
 Summary:          Alternative interface to File::Find
 BuildRequires:    runtime/perl-520 = *
 BuildRequires:    library/perl-5/extutils-makemaker-520
+BuildRequires:    library/perl-5/test-simple-520
+BuildRequires:    library/perl-5/text-glob-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-520
@@ -291,3 +301,4 @@ rm -rf %{buildroot}
 %changelog
 * Sat Dec 05 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- add BuildRequires

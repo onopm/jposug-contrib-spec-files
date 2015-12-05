@@ -5,7 +5,7 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define include_executable 0
+%define include_executable 1
 
 %define cpan_name Proclet
 %define sfe_cpan_name proclet
@@ -30,11 +30,22 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          minimalistic Supervisor
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/cpan-meta-584
+BuildRequires:    library/perl-5/data-validator-584
+BuildRequires:    library/perl-5/file-which-584
+BuildRequires:    library/perl-5/getopt-compact-withcmd-584
 BuildRequires:    library/perl-5/list-moreutils-584
+BuildRequires:    library/perl-5/log-minimal-584
 BuildRequires:    library/perl-5/module-build-584
+BuildRequires:    library/perl-5/mouse-584
+BuildRequires:    library/perl-5/parallel-prefork-584
 BuildRequires:    library/perl-5/parallel-scoreboard-584
+BuildRequires:    library/perl-5/parent-584
+BuildRequires:    library/perl-5/string-shellquote-584
+BuildRequires:    library/perl-5/term-ansicolor-584
 BuildRequires:    library/perl-5/test-requires-584
 BuildRequires:    library/perl-5/test-simple-584
+BuildRequires:    library/perl-5/time-crontab-584
+BuildRequires:    library/perl-5/yaml-libyaml-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-validator-584
@@ -47,7 +58,7 @@ Requires:         library/perl-5/parent-584
 Requires:         library/perl-5/string-shellquote-584
 Requires:         library/perl-5/term-ansicolor-584
 Requires:         library/perl-5/time-crontab-584
-Requires:         library/perl-5/yaml-xs-584
+Requires:         library/perl-5/yaml-libyaml-584
 
 %description 584
 minimalistic Supervisor
@@ -59,11 +70,22 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          minimalistic Supervisor
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/cpan-meta-510
+BuildRequires:    library/perl-5/data-validator-510
+BuildRequires:    library/perl-5/file-which-510
+BuildRequires:    library/perl-5/getopt-compact-withcmd-510
 BuildRequires:    library/perl-5/list-moreutils-510
+BuildRequires:    library/perl-5/log-minimal-510
 BuildRequires:    library/perl-5/module-build-510
+BuildRequires:    library/perl-5/mouse-510
+BuildRequires:    library/perl-5/parallel-prefork-510
 BuildRequires:    library/perl-5/parallel-scoreboard-510
+BuildRequires:    library/perl-5/parent-510
+BuildRequires:    library/perl-5/string-shellquote-510
+BuildRequires:    library/perl-5/term-ansicolor-510
 BuildRequires:    library/perl-5/test-requires-510
 BuildRequires:    library/perl-5/test-simple-510
+BuildRequires:    library/perl-5/time-crontab-510
+BuildRequires:    library/perl-5/yaml-libyaml-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-validator-510
@@ -76,7 +98,7 @@ Requires:         library/perl-5/parent-510
 Requires:         library/perl-5/string-shellquote-510
 Requires:         library/perl-5/term-ansicolor-510
 Requires:         library/perl-5/time-crontab-510
-Requires:         library/perl-5/yaml-xs-510
+Requires:         library/perl-5/yaml-libyaml-510
 
 %description 510
 minimalistic Supervisor
@@ -88,11 +110,22 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          minimalistic Supervisor
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/cpan-meta-512
+BuildRequires:    library/perl-5/data-validator-512
+BuildRequires:    library/perl-5/file-which-512
+BuildRequires:    library/perl-5/getopt-compact-withcmd-512
 BuildRequires:    library/perl-5/list-moreutils-512
+BuildRequires:    library/perl-5/log-minimal-512
 BuildRequires:    library/perl-5/module-build-512
+BuildRequires:    library/perl-5/mouse-512
+BuildRequires:    library/perl-5/parallel-prefork-512
 BuildRequires:    library/perl-5/parallel-scoreboard-512
+BuildRequires:    library/perl-5/parent-512
+BuildRequires:    library/perl-5/string-shellquote-512
+BuildRequires:    library/perl-5/term-ansicolor-512
 BuildRequires:    library/perl-5/test-requires-512
 BuildRequires:    library/perl-5/test-simple-512
+BuildRequires:    library/perl-5/time-crontab-512
+BuildRequires:    library/perl-5/yaml-libyaml-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-validator-512
@@ -105,7 +138,7 @@ Requires:         library/perl-5/parent-512
 Requires:         library/perl-5/string-shellquote-512
 Requires:         library/perl-5/term-ansicolor-512
 Requires:         library/perl-5/time-crontab-512
-Requires:         library/perl-5/yaml-xs-512
+Requires:         library/perl-5/yaml-libyaml-512
 
 %description 512
 minimalistic Supervisor
@@ -117,11 +150,22 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          minimalistic Supervisor
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/cpan-meta-516
+BuildRequires:    library/perl-5/data-validator-516
+BuildRequires:    library/perl-5/file-which-516
+BuildRequires:    library/perl-5/getopt-compact-withcmd-516
 BuildRequires:    library/perl-5/list-moreutils-516
+BuildRequires:    library/perl-5/log-minimal-516
 BuildRequires:    library/perl-5/module-build-516
+BuildRequires:    library/perl-5/mouse-516
+BuildRequires:    library/perl-5/parallel-prefork-516
 BuildRequires:    library/perl-5/parallel-scoreboard-516
+BuildRequires:    library/perl-5/parent-516
+BuildRequires:    library/perl-5/string-shellquote-516
+BuildRequires:    library/perl-5/term-ansicolor-516
 BuildRequires:    library/perl-5/test-requires-516
 BuildRequires:    library/perl-5/test-simple-516
+BuildRequires:    library/perl-5/time-crontab-516
+BuildRequires:    library/perl-5/yaml-libyaml-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-validator-516
@@ -134,7 +178,7 @@ Requires:         library/perl-5/parent-516
 Requires:         library/perl-5/string-shellquote-516
 Requires:         library/perl-5/term-ansicolor-516
 Requires:         library/perl-5/time-crontab-516
-Requires:         library/perl-5/yaml-xs-516
+Requires:         library/perl-5/yaml-libyaml-516
 
 %description 516
 minimalistic Supervisor
@@ -146,11 +190,22 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-520
 Summary:          minimalistic Supervisor
 BuildRequires:    runtime/perl-520 = *
 BuildRequires:    library/perl-5/cpan-meta-520
+BuildRequires:    library/perl-5/data-validator-520
+BuildRequires:    library/perl-5/file-which-520
+BuildRequires:    library/perl-5/getopt-compact-withcmd-520
 BuildRequires:    library/perl-5/list-moreutils-520
+BuildRequires:    library/perl-5/log-minimal-520
 BuildRequires:    library/perl-5/module-build-520
+BuildRequires:    library/perl-5/mouse-520
+BuildRequires:    library/perl-5/parallel-prefork-520
 BuildRequires:    library/perl-5/parallel-scoreboard-520
+BuildRequires:    library/perl-5/parent-520
+BuildRequires:    library/perl-5/string-shellquote-520
+BuildRequires:    library/perl-5/term-ansicolor-520
 BuildRequires:    library/perl-5/test-requires-520
 BuildRequires:    library/perl-5/test-simple-520
+BuildRequires:    library/perl-5/time-crontab-520
+BuildRequires:    library/perl-5/yaml-libyaml-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-validator-520
@@ -163,7 +218,7 @@ Requires:         library/perl-5/parent-520
 Requires:         library/perl-5/string-shellquote-520
 Requires:         library/perl-5/term-ansicolor-520
 Requires:         library/perl-5/time-crontab-520
-Requires:         library/perl-5/yaml-xs-520
+Requires:         library/perl-5/yaml-libyaml-520
 
 %description 520
 minimalistic Supervisor
@@ -349,7 +404,7 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Fri Dec 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Sat Dec 05 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.35
 * Fri Jun 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -31,6 +31,7 @@ Summary:          Override subroutines in a module for unit testing
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/module-build-584
 BuildRequires:    library/perl-5/test-simple-584
+BuildRequires:    library/perl-5/super-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-584
@@ -48,6 +49,7 @@ Summary:          Override subroutines in a module for unit testing
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/module-build-510
 BuildRequires:    library/perl-5/test-simple-510
+BuildRequires:    library/perl-5/super-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-510
@@ -65,6 +67,7 @@ Summary:          Override subroutines in a module for unit testing
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/module-build-512
 BuildRequires:    library/perl-5/test-simple-512
+BuildRequires:    library/perl-5/super-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-512
@@ -82,6 +85,7 @@ Summary:          Override subroutines in a module for unit testing
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/module-build-516
 BuildRequires:    library/perl-5/test-simple-516
+BuildRequires:    library/perl-5/super-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-516
@@ -99,6 +103,7 @@ Summary:          Override subroutines in a module for unit testing
 BuildRequires:    runtime/perl-520 = *
 BuildRequires:    library/perl-5/module-build-520
 BuildRequires:    library/perl-5/test-simple-520
+BuildRequires:    library/perl-5/super-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-520
@@ -291,5 +296,6 @@ rm -rf %{buildroot}
 %changelog
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.11
+- add BuildRequires
 * Mon Jun 18 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

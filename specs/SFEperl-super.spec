@@ -31,6 +31,7 @@ Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
 BuildRequires:    library/perl-5/test-simple-584
+BuildRequires:    library/perl-5/sub-identify-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-584
@@ -48,6 +49,7 @@ Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
 BuildRequires:    library/perl-5/test-simple-510
+BuildRequires:    library/perl-5/sub-identify-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-510
@@ -65,6 +67,7 @@ Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
 BuildRequires:    library/perl-5/test-simple-512
+BuildRequires:    library/perl-5/sub-identify-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-512
@@ -82,6 +85,7 @@ Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
 BuildRequires:    library/perl-5/test-simple-516
+BuildRequires:    library/perl-5/sub-identify-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-516
@@ -99,6 +103,7 @@ Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-520 = *
 BuildRequires:    library/perl-5/extutils-makemaker-520
 BuildRequires:    library/perl-5/test-simple-520
+BuildRequires:    library/perl-5/sub-identify-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-520
@@ -291,3 +296,4 @@ rm -rf %{buildroot}
 %changelog
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- add BuildRequires

@@ -81,8 +81,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+#%{_prefix}/perl5
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
 #%attr(755,root,sys) %dir %{_bindir}
 #%{_bindir}/*
@@ -96,5 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Tue Jan 22 2013-  TAKI,Yasushi <taki@justplayer.com>
+- delete conflict files from base package.
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
 * Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for perl-512

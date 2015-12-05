@@ -1,0 +1,22 @@
+--- mailman-2.1.14+j7.orig/Mailman/Defaults.py.in	2014-04-27 14:43:02.506945825 +0900
++++ mailman-2.1.14+j7/Mailman/Defaults.py.in	2014-04-27 15:17:41.462806075 +0900
+@@ -54,7 +54,7 @@
+ # disable Mailman's logo footer altogther, hack
+ # Mailman/htmlformat.py:MailmanLogo(), which also contains the hardcoded links
+ # and image names.
+-IMAGE_LOGOS = '/icons/'
++IMAGE_LOGOS = '/mailmanicons/'
+ 
+ # The name of the Mailman favicon
+ SHORTCUT_ICON = 'mm-icon.png'
+@@ -460,8 +460,8 @@
+ # and virtual-mailman.db files, respectively, from the associated plain text
+ # files.  The file being updated will be appended to this string (with a
+ # separating space), so it must be appropriate for os.system().
+-POSTFIX_ALIAS_CMD = '/usr/sbin/postalias'
+-POSTFIX_MAP_CMD = '/usr/sbin/postmap'
++POSTFIX_ALIAS_CMD = '/usr/postfix/sbin/postalias'
++POSTFIX_MAP_CMD = '/usr/postfix/sbin/postmap'
+ 
+ # Ceiling on the number of recipients that can be specified in a single SMTP
+ # transaction.  Set to 0 to submit the entire recipient list in one

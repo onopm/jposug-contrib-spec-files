@@ -47,6 +47,8 @@ IPS_package_name: library/perl-5/parallel-prefork-512
 Summary: Parallel-Prefork for perl-512
 BuildRequires:	runtime/perl-512
 BuildRequires:	library/perl-5/test-sharedfork-512
+BuildRequires:	library/perl-5/proc-wait3-512
+BuildRequires:	library/perl-5/scope-guard
 Requires:	runtime/perl-512
 
 
@@ -98,5 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

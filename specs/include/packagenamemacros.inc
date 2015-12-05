@@ -76,6 +76,15 @@
 #>=133
 %endif
 
+%if %{omnios}
+# The packagenames.define-omnios151014 have been built on r15014,
+# but we want support for all distributions of OmniOS.
+%if %( expr %{osbuild} '>=' 151002 )
+%include packagenames.define-omnios151014.inc
+#>=151002
+%endif
+#END omnios
+%endif
 
 # finally including a general file with definitions, to overwrite possible
 # special cases (and eventually overriding content which got defined above)
@@ -83,6 +92,8 @@
 %include packagenames.define.allbuilds.inc
 
 %changelog
+* Wed May 20 2015 - YAMAMOTO Takashi yamachan@piwikjapan.org
+- add support for OmniOS
 * Wed Mar 16 2011 - Thomas Wagner
 - add missing changelog
 - change include order to include packagenames.define.allbuilds.inc at the 

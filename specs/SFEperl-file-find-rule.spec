@@ -32,6 +32,7 @@ BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
 BuildRequires:    library/perl-5/test-simple-584
 BuildRequires:    library/perl-5/text-glob-584
+BuildRequires:    library/perl-5/number-compare-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-584
@@ -51,6 +52,7 @@ BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
 BuildRequires:    library/perl-5/test-simple-510
 BuildRequires:    library/perl-5/text-glob-510
+BuildRequires:    library/perl-5/number-compare-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-510
@@ -70,6 +72,7 @@ BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
 BuildRequires:    library/perl-5/test-simple-512
 BuildRequires:    library/perl-5/text-glob-512
+BuildRequires:    library/perl-5/number-compare-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-512
@@ -89,6 +92,7 @@ BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
 BuildRequires:    library/perl-5/test-simple-516
 BuildRequires:    library/perl-5/text-glob-516
+BuildRequires:    library/perl-5/number-compare-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-516
@@ -108,6 +112,7 @@ BuildRequires:    runtime/perl-520 = *
 BuildRequires:    library/perl-5/extutils-makemaker-520
 BuildRequires:    library/perl-5/test-simple-520
 BuildRequires:    library/perl-5/text-glob-520
+BuildRequires:    library/perl-5/number-compare-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/number-compare-520

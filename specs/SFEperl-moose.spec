@@ -52,6 +52,8 @@ BuildRequires:	library/perl-5/sub-exporter-512
 BuildRequires:	library/perl-5/sub-name-512
 BuildRequires:	library/perl-5/test-fatal-512
 BuildRequires:	library/perl-5/test-requires-512
+BuildRequires:	library/perl-5/eval-closure-512
+BuildRequires:	library/perl-5/devel-globaldestruction-512
 Requires:	runtime/perl-512
 Requires:	library/perl-5/moose
 
@@ -89,5 +91,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon Feb 11 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Sun Jun 10 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

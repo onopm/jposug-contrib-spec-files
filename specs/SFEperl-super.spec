@@ -7,111 +7,111 @@
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
-%define cpan_name Test-MockModule
-%define sfe_cpan_name test-mockmodule
-%define ips_cpan_name test-mockmodule
+%define cpan_name SUPER
+%define sfe_cpan_name super
+%define ips_cpan_name super
 
-Summary:               Override subroutines in a module for unit testing
+Summary:               control superclass method dispatch
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               0.11
-IPS_component_version: 0.11
-License:               gpl_3
-URL:                   https://metacpan.org/pod/Test::MockModule
-Source0:               http://cpan.metacpan.org/authors/id/G/GF/GFRANKS/Test-MockModule-%{version}.tar.gz
+Version:               1.20141117
+IPS_component_version: 1.20141117
+License:               perl_5
+URL:                   https://metacpan.org/pod/SUPER
+Source0:               http://cpan.metacpan.org/authors/id/C/CH/CHROMATIC/SUPER-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
-Override subroutines in a module for unit testing
+control superclass method dispatch
 
 %if %{build584}
 %package 584
 IPS_package_name: library/perl-5/%{ips_cpan_name}-584
-Summary:          Override subroutines in a module for unit testing
+Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-584 = *
-BuildRequires:    library/perl-5/module-build-584
+BuildRequires:    library/perl-5/extutils-makemaker-584
 BuildRequires:    library/perl-5/test-simple-584
-BuildRequires:    library/perl-5/super-584
+BuildRequires:    library/perl-5/sub-identify-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-584
 Requires:         library/perl-5/scalar-list-utils-584
-Requires:         library/perl-5/super-584
+Requires:         library/perl-5/sub-identify-584
 
 %description 584
-Override subroutines in a module for unit testing
+control superclass method dispatch
 %endif
 
 %if %{build510}
 %package 510
 IPS_package_name: library/perl-5/%{ips_cpan_name}-510
-Summary:          Override subroutines in a module for unit testing
+Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-510 = *
-BuildRequires:    library/perl-5/module-build-510
+BuildRequires:    library/perl-5/extutils-makemaker-510
 BuildRequires:    library/perl-5/test-simple-510
-BuildRequires:    library/perl-5/super-510
+BuildRequires:    library/perl-5/sub-identify-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-510
 Requires:         library/perl-5/scalar-list-utils-510
-Requires:         library/perl-5/super-510
+Requires:         library/perl-5/sub-identify-510
 
 %description 510
-Override subroutines in a module for unit testing
+control superclass method dispatch
 %endif
 
 %if %{build512}
 %package 512
 IPS_package_name: library/perl-5/%{ips_cpan_name}-512
-Summary:          Override subroutines in a module for unit testing
+Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-512 = *
-BuildRequires:    library/perl-5/module-build-512
+BuildRequires:    library/perl-5/extutils-makemaker-512
 BuildRequires:    library/perl-5/test-simple-512
-BuildRequires:    library/perl-5/super-512
+BuildRequires:    library/perl-5/sub-identify-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-512
 Requires:         library/perl-5/scalar-list-utils-512
-Requires:         library/perl-5/super-512
+Requires:         library/perl-5/sub-identify-512
 
 %description 512
-Override subroutines in a module for unit testing
+control superclass method dispatch
 %endif
 
 %if %{build516}
 %package 516
 IPS_package_name: library/perl-5/%{ips_cpan_name}-516
-Summary:          Override subroutines in a module for unit testing
+Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-516 = *
-BuildRequires:    library/perl-5/module-build-516
+BuildRequires:    library/perl-5/extutils-makemaker-516
 BuildRequires:    library/perl-5/test-simple-516
-BuildRequires:    library/perl-5/super-516
+BuildRequires:    library/perl-5/sub-identify-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-516
 Requires:         library/perl-5/scalar-list-utils-516
-Requires:         library/perl-5/super-516
+Requires:         library/perl-5/sub-identify-516
 
 %description 516
-Override subroutines in a module for unit testing
+control superclass method dispatch
 %endif
 
 %if %{build520}
 %package 520
 IPS_package_name: library/perl-5/%{ips_cpan_name}-520
-Summary:          Override subroutines in a module for unit testing
+Summary:          control superclass method dispatch
 BuildRequires:    runtime/perl-520 = *
-BuildRequires:    library/perl-5/module-build-520
+BuildRequires:    library/perl-5/extutils-makemaker-520
 BuildRequires:    library/perl-5/test-simple-520
-BuildRequires:    library/perl-5/super-520
+BuildRequires:    library/perl-5/sub-identify-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-520
 Requires:         library/perl-5/scalar-list-utils-520
-Requires:         library/perl-5/super-520
+Requires:         library/perl-5/sub-identify-520
 
 %description 520
-Override subroutines in a module for unit testing
+control superclass method dispatch
 %endif
 
 
@@ -295,7 +295,5 @@ rm -rf %{buildroot}
 
 %changelog
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 0.11
-- add BuildRequires
-* Mon Jun 18 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- add BuildRequires

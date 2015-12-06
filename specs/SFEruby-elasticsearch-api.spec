@@ -1,45 +1,22 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
+%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 1
 
 %define gemname elasticsearch-api
 %define sfe_gemname elasticsearch-api
 
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
-
 Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
 
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.0.14
+Version:          1.0.15
 License:          Apache 2
 URL:              https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -60,6 +37,7 @@ Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for fu
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 # multi_json >= 0
+Requires:         library/ruby/multi_json-19
 Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
@@ -90,6 +68,7 @@ Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for fu
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 # multi_json >= 0
+Requires:         library/ruby/multi_json-20
 Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
@@ -120,6 +99,7 @@ Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for fu
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 # multi_json >= 0
+Requires:         library/ruby/multi_json-21
 Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
@@ -150,6 +130,7 @@ Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for fu
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 # multi_json >= 0
+Requires:         library/ruby/multi_json-22
 Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
@@ -167,6 +148,37 @@ Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/multi_json-22
 
 %description 22
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+# multi_json >= 0
+Requires:         library/ruby/multi_json-23
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+# multi_json >= 0
+Requires:         library/ruby/multi_json-23
+
+%description 23
 Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
 
 %endif
@@ -209,6 +221,11 @@ build_for 2.1
 %if %{build22}
 # ruby-22
 build_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+build_for 2.3
 %endif
 
 %install
@@ -275,7 +292,13 @@ install_for 2.1
 %endif
 
 %if %{build22}
+# ruby-22
 install_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+install_for 2.3
 %endif
 
 %clean
@@ -328,7 +351,20 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+
 %changelog
+* Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.15 and build package for ruby-23
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.14
 * Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

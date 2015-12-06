@@ -154,6 +154,10 @@ rm -rf %{buildroot}
 - bump to 0.10.39
 - modify shebang to use ruby-19
 - add /usr/bin/fluent*
+* Sat Mar 30 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.10.33
+* Sat Feb 02 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.10.31
 * Wed Dec 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.30
 * Wed Dec 05 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -1,0 +1,24 @@
+--- librtmp/Makefile.orig	2011-07-12 09:24:33.000000000 +0900
++++ librtmp/Makefile	2013-05-13 22:34:43.926708628 +0900
+@@ -1,10 +1,10 @@
+ VERSION=v2.4
+ 
+-prefix=/usr/local
++prefix=/usr
+ 
+ incdir=$(prefix)/include/librtmp
+-bindir=$(prefix)/bin
+-libdir=$(prefix)/lib
++bindir=$(prefix)/bin$(SUFFIX)
++libdir=$(prefix)/lib$(SUFFIX)
+ mandir=$(prefix)/man
+ BINDIR=$(DESTDIR)$(bindir)
+ INCDIR=$(DESTDIR)$(incdir)
+@@ -66,7 +66,6 @@
+ SO_INST=$(SOINST_$(SHARED))
+ 
+ DEF=-DRTMPDUMP_VERSION=\"$(VERSION)\" $(CRYPTO_DEF) $(XDEF)
+-OPT=-O2
+ CFLAGS=-Wall $(XCFLAGS) $(INC) $(DEF) $(OPT) $(SO_DEF)
+ LDFLAGS=$(XLDFLAGS)
+ 

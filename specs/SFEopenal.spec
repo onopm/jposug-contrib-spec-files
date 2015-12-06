@@ -6,18 +6,30 @@
 # of me must work or not needed. Gilles Dauphin
 #
 %include Solaris.inc
+%define cc_is_gcc 1
+%include packagenamemacros.inc
+
+%ifarch amd64 sparcv9
+%include arch64.inc
+%use openal_64 = openal.spec
+%endif
+
+%include base.inc
+%use openal = openal.spec
 
 %define src_name	openal-soft
 %define src_url		http://kcat.strangesoft.net/openal-releases/
+%define with_libaudioio %(pkginfo -q SFElibaudioio && echo 1 || echo 0)
 
 Name:                   SFEopenal
 Summary:                OpenAL is a cross-platform 3D audio API
-Version:                1.13
+Version:                1.14
 IPS_package_name:       library/media/openal
 Source:                 %{src_url}/%{src_name}-%{version}.tar.bz2
 URL:			http://connect.creativelabs.com/openal/
 #Patch1:		openal-new-01.diff
 Patch2:			openal-cmake-02.diff
+Patch3:			SFEopenal-CMakeLists.patch
 SUNW_BaseDir:           %{_basedir}
 SUNW_Copyright:         %{name}.copyright
 BuildRoot:              %{_tmppath}/%{name}-%{version}-build
@@ -27,70 +39,112 @@ BuildRequires: system/library/math/header-math
 Requires:      system/library/math/header-math
 BuildRequires: system/header/header-audio
 
-#%if %with_libaudioio
-#BuildRequires: SFElibaudioio-devel
-#Requires: SFElibaudioio
-#%endif
+%if %with_libaudioio
+BuildRequires: SFElibaudioio-devel
+Requires: SFElibaudioio
+%endif
 
-BuildRequires: developer/build/cmake
+BuildRequires: sfe/developer/build/cmake
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
+%endif
+BuildRequires: SUNWlibms
+Requires: SUNWlibms
+BuildRequires: %{pnm_buildrequires_SUNWaudh}
 
 %package devel
 Summary:                 %{summary} - development files
 IPS_package_name:        library/media/header-openal
 SUNW_BaseDir:            %{_prefix}
 %include default-depend.inc
+Requires: %{name}
 
 Meta(info.maintainer_url):      http://sourceforge.jp/forum/forum.php?forum_id=25193
 Meta(info.upstream_url):        http://kcat.strangesoft.net/openal.html
 Meta(info.classification):      org.opensolaris.category.2011:Media
 
 %prep
-rm -rf openal-soft*
-bzcat %{SOURCE} | gtar xf -
-cd openal-soft*
-#%patch1 -p1
-%patch2 -p1
-cd ..
+rm -rf %name-%version
+mkdir %name-%version
+
+%ifarch amd64 sparcv9
+mkdir %name-%version/%_arch64
+%openal_64.prep -d %name-%version/%_arch64
+%endif
+
+mkdir %name-%version/%{base_arch}
+%openal.prep -d %name-%version/%{base_arch}
 
 %build
-CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
-if test "x$CPUS" = "x" -o $CPUS = 0; then
-    CPUS=1
-fi
 
-cd %{src_name}-%{version}
-CC=cc
-export CC
-cd build
-cmake -DHAVE_GCC_VISIBILITY:INTERNAL=0 -DCMAKE_INSTALL_PREFIX:PATH=%_prefix -DHAVE_VISIBILITY_SWITCH:INTERNAL=0 ..
-make
+%ifarch amd64 sparcv9
+%openal_64.build -d %name-%version/%_arch64
+%endif
+
+%openal.build -d %name-%version/%{base_arch}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-cd %{src_name}-%{version}
-cd build
-mkdir -p $RPM_BUILD_ROOT/%{_prefix}
-export DESTDIR=$RPM_BUILD_ROOT
-make install
-#mv ./sfw_stage/* $RPM_BUILD_ROOT/%{_prefix}
-#rm $RPM_BUILD_ROOT/%{_libdir}/lib*.*a
+
+%ifarch amd64 sparcv9
+%openal_64.install -d %name-%version/%_arch64
+%endif
+
+%openal.install -d %name-%version/%{base_arch}
+
+%if %can_isaexec
+mkdir $RPM_BUILD_ROOT%{_bindir}/%{base_isa}
+mv $RPM_BUILD_ROOT%{_bindir}/openal-info $RPM_BUILD_ROOT%{_bindir}/%{base_isa}
+mv $RPM_BUILD_ROOT%{_bindir}/makehrtf $RPM_BUILD_ROOT%{_bindir}/%{base_isa}
+cd $RPM_BUILD_ROOT%{_bindir} && ln -s ../lib/isaexec openal-info
+cd $RPM_BUILD_ROOT%{_bindir} && ln -s ../lib/isaexec makehrtf
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr (-, root, bin)
-%{_bindir}
+%dir %attr (0755, root, bin) %{_bindir}
+%if %can_isaexec
+%{_bindir}/%{base_isa}
+%hard %{_bindir}/openal-info
+%hard %{_bindir}/makehrtf
+%else
+%{_bindir}/openal-info
+%{_bindir}/makehrtf
+%endif
 %dir %attr(0755,root,bin) %{_libdir}
 %dir %attr(0755,root,other) %{_libdir}/pkgconfig
 %{_libdir}/lib*.so*
 %{_libdir}/pkgconfig/*
+%ifarch amd64 sparcv9
+%dir %attr (0755, root, bin) %{_bindir}/%{_arch64}
+%{_bindir}/%{_arch64}/*
+%dir %attr (0755, root, bin) %{_libdir}/%{_arch64}
+%{_libdir}/%{_arch64}/lib*.so*
+%dir %attr (0755, root, other) %{_libdir}/%{_arch64}/pkgconfig
+%{_libdir}/%{_arch64}/pkgconfig/*
+%endif
 
 %files devel
 %defattr (-, root, bin)
 %{_includedir}
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- rewrite dependency to use sfe's cmake
+* Wed May 16 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Added 64bit build
+* Sun Aug 19 2012 - Thomas Wagner
+- change to BuildRequires to %{pnm_buildrequires_SUNWaudh}, %include packagenamacros.inc
+- add standard CFLAGS, LDFLAGS
+* Sun Aug 19 2012 - Milan Jurik
+- bump to 1.14
 * Wed Mar 02 2011 - Satoru MIYAZAKI<s.miyaza@gmail.com>
 - bump to 1.13
 - Support for Solaris11 Express.

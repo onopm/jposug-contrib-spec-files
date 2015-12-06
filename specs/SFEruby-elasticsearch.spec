@@ -1,55 +1,28 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
+%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 1
 
 %define gemname elasticsearch
 %define sfe_gemname elasticsearch
 
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
-
 Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
-
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.0.14
+Version:          1.0.15
 License:          Apache 2
 URL:              http://github.com/elasticsearch/elasticsearch-ruby
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-
-
 %description
 Ruby integrations for Elasticsearch (client, API, etc.)
-
 
 %if %{build19}
 %if %{keep_dependency}
@@ -59,9 +32,10 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
-# elasticsearch-api = 1.0.14
-Requires:         library/ruby/%{gemname}-19
-# elasticsearch-transport = 1.0.14
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-19 = %{version}
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-19 = %{version}
 Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
@@ -75,10 +49,10 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
-# elasticsearch-api = 1.0.14
-Requires:         library/ruby/elasticsearch-api-19
-# elasticsearch-transport = 1.0.14
-Requires:         library/ruby/elasticsearch-transport-19
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-19 = %{version}
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-19 = %{version}
 
 %description 19
 Ruby integrations for Elasticsearch (client, API, etc.)
@@ -93,9 +67,10 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-# elasticsearch-api = 1.0.14
-Requires:         library/ruby/%{gemname}-20
-# elasticsearch-transport = 1.0.14
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-20 = %{version}
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-20 = %{version}
 Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
@@ -109,10 +84,10 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-# elasticsearch-api = 1.0.14
-Requires:         library/ruby/elasticsearch-api-20
-# elasticsearch-transport = 1.0.14
-Requires:         library/ruby/elasticsearch-transport-20
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-20 = %{version}
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-20 = %{version}
 
 %description 20
 Ruby integrations for Elasticsearch (client, API, etc.)
@@ -127,9 +102,10 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-# elasticsearch-api = 1.0.14
-Requires:         library/ruby/%{gemname}-21
-# elasticsearch-transport = 1.0.14
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-21 = %{version}
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-21 = %{version}
 Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
@@ -143,10 +119,10 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-# elasticsearch-api = 1.0.14
-Requires:         library/ruby/elasticsearch-api-21
-# elasticsearch-transport = 1.0.14
-Requires:         library/ruby/elasticsearch-transport-21
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-21 = %{version}
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-21 = %{version}
 
 %description 21
 Ruby integrations for Elasticsearch (client, API, etc.)
@@ -161,9 +137,10 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-# elasticsearch-api = 1.0.14
-Requires:         library/ruby/%{gemname}-22
-# elasticsearch-transport = 1.0.14
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-22 = %{version}
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-22 = %{version}
 Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
@@ -177,12 +154,47 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-# elasticsearch-api = 1.0.14
-Requires:         library/ruby/elasticsearch-api-22
-# elasticsearch-transport = 1.0.14
-Requires:         library/ruby/elasticsearch-transport-22
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-22 = %{version}
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-22 = %{version}
 
 %description 22
+Ruby integrations for Elasticsearch (client, API, etc.)
+
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
+
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-23
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-23
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+Ruby integrations for Elasticsearch (client, API, etc.)
+
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
+
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+# elasticsearch-api = 1.0.15
+Requires:         library/ruby/elasticsearch-api-23
+# elasticsearch-transport = 1.0.15
+Requires:         library/ruby/elasticsearch-transport-23
+
+%description 23
 Ruby integrations for Elasticsearch (client, API, etc.)
 
 %endif
@@ -225,6 +237,11 @@ build_for 2.1
 %if %{build22}
 # ruby-22
 build_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+build_for 2.3
 %endif
 
 %install
@@ -291,7 +308,13 @@ install_for 2.1
 %endif
 
 %if %{build22}
+# ruby-22
 install_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+install_for 2.3
 %endif
 
 %clean
@@ -344,7 +367,20 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+
 %changelog
+* Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.15 and build package for ruby-23
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.14
 * Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

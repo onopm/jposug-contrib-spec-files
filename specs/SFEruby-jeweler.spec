@@ -45,10 +45,6 @@ Requires:         library/ruby/github_api-19
 Requires:         library/ruby/highline-19
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-19
-# rake >= 0
-Requires:         library/ruby/rake-19
-# rdoc >= 0
-Requires:         library/ruby/rdoc-19
 Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
@@ -72,10 +68,6 @@ Requires:         library/ruby/github_api-19
 Requires:         library/ruby/highline-19
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-19
-# rake >= 0
-Requires:         library/ruby/rake-19
-# rdoc >= 0
-Requires:         library/ruby/rdoc-19
 
 %description 19
 Simple and opinionated helper for creating Rubygem projects on GitHub
@@ -100,10 +92,6 @@ Requires:         library/ruby/github_api-20
 Requires:         library/ruby/highline-20
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-20
-# rake >= 0
-Requires:         library/ruby/rake-20
-# rdoc >= 0
-Requires:         library/ruby/rdoc-20
 Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
@@ -155,10 +143,6 @@ Requires:         library/ruby/github_api-21
 Requires:         library/ruby/highline-21
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-21
-# rake >= 0
-Requires:         library/ruby/rake-21
-# rdoc >= 0
-Requires:         library/ruby/rdoc-21
 Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
@@ -210,10 +194,6 @@ Requires:         library/ruby/github_api-22
 Requires:         library/ruby/highline-22
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-22
-# rake >= 0
-Requires:         library/ruby/rake-22
-# rdoc >= 0
-Requires:         library/ruby/rdoc-22
 Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
@@ -237,10 +217,6 @@ Requires:         library/ruby/github_api-22
 Requires:         library/ruby/highline-22
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-22
-# rake >= 0
-Requires:         library/ruby/rake-22
-# rdoc >= 0
-Requires:         library/ruby/rdoc-22
 
 %description 22
 Simple and opinionated helper for creating Rubygem projects on GitHub
@@ -265,10 +241,6 @@ Requires:         library/ruby/github_api-23
 Requires:         library/ruby/highline-23
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-23
-# rake >= 0
-Requires:         library/ruby/rake-23
-# rdoc >= 0
-Requires:         library/ruby/rdoc-23
 Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
@@ -292,10 +264,6 @@ Requires:         library/ruby/github_api-23
 Requires:         library/ruby/highline-23
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-23
-# rake >= 0
-Requires:         library/ruby/rake-23
-# rdoc >= 0
-Requires:         library/ruby/rdoc-23
 
 %description 23
 Simple and opinionated helper for creating Rubygem projects on GitHub
@@ -481,6 +449,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Dec 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use rake and rdoc included in runtime/ruby-*
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.1 and build packages for ruby-22 and ruby-23
 * Wed Dec 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

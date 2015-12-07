@@ -31,8 +31,6 @@ Requires:      library/text/yaml >= 0.1.6
 
 %build
 export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr    -mt -DFFI_NO_RAW_API' 
-# export CPPFLAGS="-m64 -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I../CPPFLAGSTEST"
-# export LDFLAGS="-m64 -L/lib/%{_arch64} -L/usr/lib/%{_arch64} -R/lib/%{_arch64} -R/usr/lib/%{_arch64}"
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -95,5 +93,6 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Dec 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - gcc is not required to build because of compiling with SolarisStudio
+- delete commentouted CFLAGS and LDFLAGS
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

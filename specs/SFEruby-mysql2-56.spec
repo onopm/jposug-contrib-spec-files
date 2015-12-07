@@ -1,156 +1,152 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
+%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
+%define keep_dependency 1
 
 %define gemname mysql2
 %define sfe_gemname mysql2
 
-%define mysql_ver 5.6
-
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
-
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          0.3.18
+Version:          0.4.2
 License:          MIT
 URL:              http://github.com/brianmario/mysql2
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
+BuildRequires:    database/mysql-56
+BuildRequires:    database/mysql-56/library
+
 %description
 A simple, fast Mysql library for Ruby, binding to libmysql
 
 %if %{build19}
+%if %{keep_dependency}
 %package 19-old
 IPS_package_name: library/ruby-19/%{gemname}
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 Requires:         library/ruby/%{gemname}-19
-Requires:	  database/mysql-56/library
 
 %description 19-old
 A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
 
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:    runtime/ruby-19 = *
-BuildRequires:	  database/mysql-56/64
-BuildRequires:	  database/mysql-56/library
 Requires:         runtime/ruby-19 = *
-Requires:	  database/mysql-56/library
+Requires:         library/ruby/%{gemname}
+Requires:         database/mysql-56/library
 
 %description 19
 A simple, fast Mysql library for Ruby, binding to libmysql
 %endif
 
 %if %{build20}
+%if %{keep_dependency}
 %package 20-old
 IPS_package_name: library/ruby-20/%{gemname}
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:    runtime/ruby-20 = *
-BuildRequires:	  database/mysql-56/64
-BuildRequires:	  database/mysql-56/library
 Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/%{gemname}-20
-Requires:	  database/mysql-56/library
 
 %description 20-old
 A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
 
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:    runtime/ruby-20 = *
-BuildRequires:	  database/mysql-56/64
-BuildRequires:	  database/mysql-56/library
 Requires:         runtime/ruby-20 = *
-Requires:	  database/mysql-56/library
+Requires:         library/ruby/%{gemname}
+Requires:         database/mysql-56/library
 
 %description 20
 A simple, fast Mysql library for Ruby, binding to libmysql
 %endif
 
 %if %{build21}
+%if %{keep_dependency}
 %package 21-old
 IPS_package_name: library/ruby-21/%{gemname}
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:    runtime/ruby-21 = *
-BuildRequires:	  database/mysql-56/64
-BuildRequires:	  database/mysql-56/library
 Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/%{gemname}-21
-Requires:	  database/mysql-56/library
 
 %description 21-old
 A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
 
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:    runtime/ruby-21 = *
-BuildRequires:	  database/mysql-56/64
-BuildRequires:	  database/mysql-56/library
 Requires:         runtime/ruby-21 = *
-Requires:	  database/mysql-56/library
+Requires:         library/ruby/%{gemname}
 
 %description 21
 A simple, fast Mysql library for Ruby, binding to libmysql
 %endif
 
 %if %{build22}
+%if %{keep_dependency}
 %package 22-old
 IPS_package_name: library/ruby-22/%{gemname}
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:    runtime/ruby-22 = *
-BuildRequires:	  database/mysql-56/64
-BuildRequires:	  database/mysql-56/library
 Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/%{gemname}-22
-Requires:	  database/mysql-56/library
 
 %description 22-old
 A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
 
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 BuildRequires:    runtime/ruby-22 = *
-BuildRequires:	  database/mysql-56/64
-BuildRequires:	  database/mysql-56/library
 Requires:         runtime/ruby-22 = *
-Requires:	  database/mysql-56/library
+Requires:         library/ruby/%{gemname}
+Requires:         database/mysql-56/library
 
 %description 22
+A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         database/mysql-56/library
+
+%description 23
 A simple, fast Mysql library for Ruby, binding to libmysql
 %endif
 
@@ -158,10 +154,6 @@ A simple, fast Mysql library for Ruby, binding to libmysql
 %setup -q -c -T
 
 %build
-export PATH=/usr/mysql/5.6/bin:$PATH
-export CFLAGS='-m64'
-export LDFLAGS='-L/usr/mysql/5.6/lib/%{_arch64}:/lib/%{_arch64}:/usr/lib/%{_arch64} -R/usr/mysql/5.6/lib/%{_arch64}:/lib/%{_arch64}:/usr/lib/%{_arch64}'
-
 build_for() {
     ruby_ver=$1
     bindir="/usr/ruby/${ruby_ver}/bin"
@@ -176,7 +168,8 @@ build_for() {
         --no-rdoc \
         -V \
         --force %{SOURCE0} \
-        -- --with-mysql-config=/usr/mysql/5.6/bin/64/mysql_config
+        -- --with-mysql-config=/usr/mysql/5.6/bin/mysql_config
+
 }
 
 %if %{build19}
@@ -197,6 +190,11 @@ build_for 2.1
 %if %{build22}
 # ruby-22
 build_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+build_for 2.3
 %endif
 
 %install
@@ -263,7 +261,13 @@ install_for 2.1
 %endif
 
 %if %{build22}
+# ruby-22
 install_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+install_for 2.3
 %endif
 
 %clean
@@ -273,9 +277,6 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 
 %if %{build19}
-%files 19-old
-%defattr(0755,root,bin,-)
-
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -287,9 +288,6 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build20}
-%files 20-old
-%defattr(0755,root,bin,-)
-
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -301,9 +299,6 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build21}
-%files 21-old
-%defattr(0755,root,bin,-)
-
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -315,9 +310,6 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build22}
-%files 22-old
-%defattr(0755,root,bin,-)
-
 %files 22
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -328,7 +320,20 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+
 %changelog
+* Tue Dec 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.4.2 and build package for ruby-23
 * Wed Jun 17 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.3.18
 * Mon Mar 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

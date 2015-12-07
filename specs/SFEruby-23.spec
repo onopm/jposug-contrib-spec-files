@@ -75,8 +75,10 @@ ln -s ../ruby/%{major_version}/bin/ri ri%{version_suffix}
 ln -s ../ruby/%{major_version}/bin/ruby ruby%{version_suffix}
 popd
 
+
 arch=$(./miniruby --version|/usr/bin/sed -e 's/.*\[\(.*\)\].*/\1/')
-/usr/bin/sed -f %{SOURCE1} < rbconfig.rb > $RPM_BUILD_ROOT/usr/ruby/%{major_version}/lib/ruby/%{unmangled_version}/${arch}/rbconfig.rb
+/usr/bin/sed -e 's/RUBY_VER/%{major_version}/' -e 's/RUBY_LIB_VER/%{unmangled_version}/' < %{SOURCE1} > rbconfig.sed
+/usr/bin/sed -f rbconfig.sed < rbconfig.rb > $RPM_BUILD_ROOT/usr/ruby/%{major_version}/lib/ruby/%{unmangled_version}/${arch}/rbconfig.rb
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -100,5 +102,6 @@ rm -rf $RPM_BUILD_ROOT
 - gcc is not required to build because of compiling with SolarisStudio
 - delete commentouted CFLAGS and LDFLAGS
 - modify rbconifg.rb to build gem which builds native modules with premise to use GCC (CFLAGS includes '-Wall' etc.)
+- replace 'RUBY_VER' and 'RUBY_LIB_VER' in SOURCE1
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

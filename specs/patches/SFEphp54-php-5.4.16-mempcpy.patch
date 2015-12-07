@@ -1,0 +1,31 @@
+diff -urN php-5.4.16/ext/date/lib/mempcpy.h php-5.4.16.mempcpy/ext/date/lib/mempcpy.h
+--- php-5.4.16/ext/date/lib/mempcpy.h	1970-01-01 09:00:00.000000000 +0900
++++ php-5.4.16.mempcpy/ext/date/lib/mempcpy.h	2014-05-24 10:26:26.637733751 +0900
+@@ -0,0 +1,14 @@
++/* Copy memory to memory until the specified number of bytes
++   has been copied, return pointer to following byte.
++   Overlap is NOT handled correctly.
++*/
++
++/* Ditch the glibc version and just wrap memcpy. */
++
++#include <string.h>
++
++void *mempcpy (void *dstpp, const void *srcpp, size_t len)
++{
++  memcpy(dstpp, srcpp, len);
++  return (void *)(((char *)dstpp) + len);
++}
+diff -urN php-5.4.16/ext/date/lib/parse_tz.c php-5.4.16.mempcpy/ext/date/lib/parse_tz.c
+--- php-5.4.16/ext/date/lib/parse_tz.c	2014-05-24 10:55:48.566881838 +0900
++++ php-5.4.16.mempcpy/ext/date/lib/parse_tz.c	2014-05-24 10:45:56.131233507 +0900
+@@ -19,6 +19,9 @@
+ /* $Id$ */
+ 
+ #include "timelib.h"
++#ifndef HAVE_MEMPCPY
++#include "mempcpy.h"
++#endif
+ 
+ #ifdef HAVE_SYSTEM_TZDATA
+ #include <sys/mman.h>

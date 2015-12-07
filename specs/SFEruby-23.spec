@@ -20,9 +20,6 @@ BuildRequires: system/network/bpf
 BuildRequires: system/library/libnet
 Requires:      library/text/yaml >= 0.1.6
 
-BuildRequires: developer/gcc
-Requires:      system/library/gcc-runtime
-
 %description
 
 %prep
@@ -96,5 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Mon Dec 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- gcc is not required to build because of compiling with SolarisStudio
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

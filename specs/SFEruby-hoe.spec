@@ -42,8 +42,6 @@ IPS_package_name: library/ruby-19/%{gemname}
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-19
 Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
@@ -64,8 +62,6 @@ IPS_package_name: library/ruby/%{gemname}-19
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-19
 
 %description 19
 Hoe is a rake/rubygems helper for project Rakefiles. It helps you
@@ -87,8 +83,6 @@ IPS_package_name: library/ruby-20/%{gemname}
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-20
 Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
@@ -109,8 +103,6 @@ IPS_package_name: library/ruby/%{gemname}-20
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-20
 
 %description 20
 Hoe is a rake/rubygems helper for project Rakefiles. It helps you
@@ -132,8 +124,6 @@ IPS_package_name: library/ruby-21/%{gemname}
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-21
 Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
@@ -154,8 +144,6 @@ IPS_package_name: library/ruby/%{gemname}-21
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-21
 
 %description 21
 Hoe is a rake/rubygems helper for project Rakefiles. It helps you
@@ -177,8 +165,6 @@ IPS_package_name: library/ruby-22/%{gemname}
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-22
 Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
@@ -199,8 +185,6 @@ IPS_package_name: library/ruby/%{gemname}-22
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-22
 
 %description 22
 Hoe is a rake/rubygems helper for project Rakefiles. It helps you
@@ -222,8 +206,6 @@ IPS_package_name: library/ruby-23/%{gemname}
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-23
 Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
@@ -244,8 +226,6 @@ IPS_package_name: library/ruby/%{gemname}-23
 Summary:          Hoe is a rake/rubygems helper for project Rakefiles.
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-# rake < 11.0, >= 0.8
-Requires:         library/ruby/rake-23
 
 %description 23
 Hoe is a rake/rubygems helper for project Rakefiles. It helps you
@@ -440,6 +420,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Dec 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use rake included in runtime/ruby-*
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.14.2 and build packages for ruby-20, ruby-21, ruby-22 and ruby-23
 * Thr June 05 2014 - YAMAMOTO Takashi <yamachan@selfnavi.com>

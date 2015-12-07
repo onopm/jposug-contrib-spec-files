@@ -12,6 +12,7 @@ Release:		%{patchlevel}
 IPS_component_version:	%{version}.%{patchlevel}
 License: 		GPL
 Source: 		https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0-preview1.tar.bz2
+Source1:		https://hg.java.net/hg/solaris-userland~gate/raw-file/2062cde74e03/components/ruby/ruby-21/Solaris/rbconfig.sedscript
 Patch0:                 ruby-23-disable-ssl.patch
 Url:			 http://www.ruby-lang.org/
 
@@ -56,7 +57,7 @@ make -j$CPUS
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/bin
-cd $RPM_BUILD_ROOT/usr/bin
+pushd $RPM_BUILD_ROOT/usr/bin
 ln -s ../ruby/%{major_version}/bin/erb .
 ln -s ../ruby/%{major_version}/bin/gem .
 ln -s ../ruby/%{major_version}/bin/irb .
@@ -72,6 +73,10 @@ ln -s ../ruby/%{major_version}/bin/rake rake%{version_suffix}
 ln -s ../ruby/%{major_version}/bin/rdoc rdoc%{version_suffix}
 ln -s ../ruby/%{major_version}/bin/ri ri%{version_suffix}
 ln -s ../ruby/%{major_version}/bin/ruby ruby%{version_suffix}
+popd
+
+arch=$(./miniruby --version|/usr/bin/sed -e 's/.*\[\(.*\)\].*/\1/')
+/usr/bin/sed -f %{SOURCE1} < rbconfig.rb > $RPM_BUILD_ROOT/usr/ruby/%{major_version}/lib/ruby/%{unmangled_version}/${arch}/rbconfig.rb
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -94,5 +99,6 @@ rm -rf $RPM_BUILD_ROOT
 * Mon Dec 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - gcc is not required to build because of compiling with SolarisStudio
 - delete commentouted CFLAGS and LDFLAGS
+- modify rbconifg.rb to build gem which builds native modules with premise to use GCC (CFLAGS includes '-Wall' etc.)
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

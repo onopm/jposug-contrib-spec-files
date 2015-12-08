@@ -115,10 +115,6 @@ Requires:         library/ruby/github_api-20
 Requires:         library/ruby/highline-20
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-20
-# rake >= 0
-Requires:         library/ruby/rake-20
-# rdoc >= 0
-Requires:         library/ruby/rdoc-20
 
 %description 20
 Simple and opinionated helper for creating Rubygem projects on GitHub
@@ -166,10 +162,6 @@ Requires:         library/ruby/github_api-21
 Requires:         library/ruby/highline-21
 # nokogiri >= 1.5.10
 Requires:         library/ruby/nokogiri-21
-# rake >= 0
-Requires:         library/ruby/rake-21
-# rdoc >= 0
-Requires:         library/ruby/rdoc-21
 
 %description 21
 Simple and opinionated helper for creating Rubygem projects on GitHub

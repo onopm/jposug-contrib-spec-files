@@ -20,8 +20,9 @@ License: Ruby License
 Source0: http://tmtm.org/downloads/mysql/ruby/%{tarball_name}-%{tarball_version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
-Requires: runtime/ruby-18
 BuildRequires: runtime/ruby-18
+BuildRequires: database/mysql-51
+Requires:      runtime/ruby-18
 
 %description
 This is the MySQL API module for Ruby. It provides the same functions for Ruby programs that the MySQL C API provides for C programs.
@@ -29,8 +30,9 @@ This is the MySQL API module for Ruby. It provides the same functions for Ruby p
 %package 19
 IPS_package_name: library/ruby-19/mysql
 Summary: %{gemname}
-BuildRequires:	runtime/ruby-19
-Requires:	runtime/ruby-19
+BuildRequires: runtime/ruby-19
+BuildRequires: database/mysql-51
+Requires:      runtime/ruby-19
 
 %description 19
 This is the MySQL API module for Ruby. It provides the same functions for Ruby programs that the MySQL C API provides for C programs.
@@ -90,5 +92,7 @@ rm -rf %{buildroot}
 /usr/ruby/1.9
 
 %changelog
+* Fri Dec 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Fri Oct 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

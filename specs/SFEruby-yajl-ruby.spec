@@ -25,7 +25,6 @@ Version: 1.2.1
 License: MIT
 URL: http://rubygems.org/gems/%{gemname}
 Source0: http://rubygems.org/downloads/%{tarball_name}-%{tarball_version}.gem
-Source1: SFEruby-yajl-makefile
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %description
@@ -145,5 +144,7 @@ rm -rf %{buildroot}
 - delete default-depend.inc
 * Thu Jan 30 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.2.0
+* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete Source1
 * Wed Nov 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -6,7 +6,7 @@
 %define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define generate_executable 0
+%define generate_executable 1
 %define keep_dependency 1
 
 %define gemname rspec-core
@@ -335,6 +335,7 @@ rm -rf %{buildroot}
 %changelog
 * Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.4.1 and build packge for ruby-23
+- rspec-core includes executable file
 * Fri Jun 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.2.3
 - fix shebang modifying sed

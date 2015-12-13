@@ -1,53 +1,31 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
+%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
+%define keep_dependency 1
 
 %define gemname rspec-expectations
 %define sfe_gemname rspec-expectations
 
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
-
 Summary:          rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
 Name:             ruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          3.2.1
+Version:          3.4.0
 License:          MIT
 URL:              http://github.com/rspec/rspec-expectations
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-
 %description
 rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
 
 %if %{build19}
+%if %{keep_dependency}
 %package 19-old
 IPS_package_name: library/ruby-19/%{gemname}
 Summary:          rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
@@ -57,6 +35,7 @@ Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
 rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
+%endif
 
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
@@ -65,14 +44,16 @@ BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 # diff-lcs < 2.0, >= 1.2.0
 Requires:         library/ruby/diff-lcs-19
-# rspec-support ~> 3.2.0
-Requires:         library/ruby/rspec-support-19 >= 3.2.2
+# rspec-support ~> 3.4.0
+Requires:         library/ruby/rspec-support-19
+Requires:         library/ruby/%{gemname}
 
 %description 19
 rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
 %endif
 
 %if %{build20}
+%if %{keep_dependency}
 %package 20-old
 IPS_package_name: library/ruby-20/%{gemname}
 Summary:          rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
@@ -82,6 +63,7 @@ Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
 rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
+%endif
 
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
@@ -90,14 +72,16 @@ BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 # diff-lcs < 2.0, >= 1.2.0
 Requires:         library/ruby/diff-lcs-20
-# rspec-support ~> 3.2.0
-Requires:         library/ruby/rspec-support-20 >= 3.2.2
+# rspec-support ~> 3.4.0
+Requires:         library/ruby/rspec-support-20
+Requires:         library/ruby/%{gemname}
 
 %description 20
 rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
 %endif
 
 %if %{build21}
+%if %{keep_dependency}
 %package 21-old
 IPS_package_name: library/ruby-21/%{gemname}
 Summary:          rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
@@ -107,6 +91,7 @@ Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
 rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
+%endif
 
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
@@ -115,14 +100,16 @@ BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 # diff-lcs < 2.0, >= 1.2.0
 Requires:         library/ruby/diff-lcs-21
-# rspec-support ~> 3.2.0
-Requires:         library/ruby/rspec-support-21 >= 3.2.2
+# rspec-support ~> 3.4.0
+Requires:         library/ruby/rspec-support-21
+Requires:         library/ruby/%{gemname}
 
 %description 21
 rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
 %endif
 
 %if %{build22}
+%if %{keep_dependency}
 %package 22-old
 IPS_package_name: library/ruby-22/%{gemname}
 Summary:          rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
@@ -132,6 +119,7 @@ Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
 rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
+%endif
 
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
@@ -140,10 +128,38 @@ BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 # diff-lcs < 2.0, >= 1.2.0
 Requires:         library/ruby/diff-lcs-22
-# rspec-support ~> 3.2.0
-Requires:         library/ruby/rspec-support-22 >= 3.2.2
+# rspec-support ~> 3.4.0
+Requires:         library/ruby/rspec-support-22
+Requires:         library/ruby/%{gemname}
 
 %description 22
+rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+# diff-lcs < 2.0, >= 1.2.0
+Requires:         library/ruby/diff-lcs-23
+# rspec-support ~> 3.4.0
+Requires:         library/ruby/rspec-support-23
+
+%description 23
 rspec-expectations provides a simple, readable API to express expected outcomes of a code example.
 %endif
 
@@ -187,6 +203,11 @@ build_for 2.1
 build_for 2.2
 %endif
 
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
+
 %install
 rm -rf %{buildroot}
 
@@ -200,15 +221,40 @@ install_for() {
     gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-    mkdir -p %{buildroot}/usr/ruby/${ruby_var}
-    cp -a ./usr/ruby/${ruby_var}/* \
-        %{buildroot}/usr/ruby/${ruby_var}/
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
 
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
 %if %{generate_executable}
-    mkdir -p %{buildroot}${bindir}
-    cp -a .${bindir}/* \
-        %{buildroot}${bindir}/
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
 %endif
+
 }
 
 %if %{build19}
@@ -226,7 +272,13 @@ install_for 2.1
 %endif
 
 %if %{build22}
+# ruby-22
 install_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+install_for 2.3
 %endif
 
 %clean
@@ -236,46 +288,63 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 
 %if %{build19}
-%files 19-old
-%defattr(0755,root,bin,-)
-
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*19
+%endif
 %endif
 
 %if %{build20}
-%files 20-old
-%defattr(0755,root,bin,-)
-
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*20
+%endif
 %endif
 
 %if %{build21}
-%files 21-old
-%defattr(0755,root,bin,-)
-
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
 %endif
 
 %if %{build22}
-%files 22-old
-%defattr(0755,root,bin,-)
-
 %files 22
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
 %endif
 
 %changelog
+* Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.4.0 and build package for ruby-23
 * Fri Jun 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.2.1
 * Mon Oct 06 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

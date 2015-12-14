@@ -1,17 +1,15 @@
 %include Solaris.inc
-%include packagenamemacros.inc
 %include base.inc
-%define cc_is_gcc 0
 
 %define module_name puppetlabs-stdlib
-%define module_version 4.5.1
+%define module_version 4.9.1
 
 Name:           puppet-modules-stdlib
 IPS_package_name:        system/management/puppet3/modules/puppetlabs/stdlib
 Version:        %{module_version}
 Summary:        Puppet Module Standard Library
 Group:		Applications/System
-# License:        ASL 2.0
+License:        Apache License 2.0
 URL:            https://github.com/puppetlabs/puppetlabs-stdlib
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
@@ -47,6 +45,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Dec 15 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 4.9.1
 * Fri Feb 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.5.1
 * Tue Oct 28 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

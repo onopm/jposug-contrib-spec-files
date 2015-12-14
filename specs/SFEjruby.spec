@@ -2,7 +2,7 @@
 
 Name:			SFEjruby
 IPS_package_name:       runtime/jruby
-Version:		1.7.13
+Version:		9.0.4.0
 Summary:		The Ruby Programming Language on the JVM
 License:		Ruby license
 URL:			http://jruby.org/
@@ -10,8 +10,8 @@ Source:		http://jruby.org.s3.amazonaws.com/downloads/%{version}/jruby-bin-%{vers
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
+BuildRequires:  developer/java/jdk
 Requires:	runtime/jre
-
 
 %description
 The Ruby Programming Language on the JVM
@@ -21,9 +21,8 @@ The Ruby Programming Language on the JVM
 
 %build
 
-ls bin/
+# ls bin/
 rm bin/*{.bat,.exe,.dll,.bash}
-
 
 %install
 rm -rf %{buildroot}
@@ -32,7 +31,8 @@ mkdir -p %{buildroot}/usr/jruby/share
 
 cp -r bin lib %{buildroot}/usr/jruby
 #cp -r tool %{buildroot}/usr/jruby
-cp -r docs samples COPYING LICENSE.RUBY %{buildroot}/usr/jruby/share
+# cp -r docs samples COPYING LICENSE.RUBY %{buildroot}/usr/jruby/share
+cp -r samples COPYING LICENSE.RUBY %{buildroot}/usr/jruby/share
 
 # mkdir -p %{buildroot}/usr/bin
 # cd %{buildroot}/usr/bin
@@ -56,5 +56,7 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/jruby/share
 
 %changelog
+* Mon Dec 14 2015 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.0.4.0
 * Mon Jul 14 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

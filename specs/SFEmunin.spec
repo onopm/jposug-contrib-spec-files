@@ -24,6 +24,7 @@ Source5:        munin-node.logadm.conf
 
 Patch1: SFEmunin-SyncDictFile.patch
 # Patch2: SFEmunin-2.0.19-makefile.patch
+Patch3: munin-plugin-mysql_.patch
 
 BuildRequires: library/perl-5/module-build-512
 BuildRequires: library/perl-5/log-log4perl-512
@@ -177,7 +178,7 @@ munin-async
 # %if 0%{?rhel} < 6 && 0%{?fedora} < 11
 # %patch2 -p0
 # %endif
-# %patch3 -p1
+%patch3 -p1
 
 %build
 export PATH=/usr/perl5/5.12/bin:$PATH
@@ -441,7 +442,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
-* SUn Dec 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Fri Dec 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add patch3 to make mysql_innodb_insert_buf to work
+* Sun Dec 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.25

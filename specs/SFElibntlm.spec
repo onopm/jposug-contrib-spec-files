@@ -5,6 +5,9 @@
 #
 %include Solaris.inc
 %include packagenamemacros.inc
+%define cc_is_gcc 1
+%define _gpp g++
+%include base.inc
 
 %define	src_name libntlm
 %define	src_url	http://www.nongnu.org/libntlm/releases
@@ -12,7 +15,7 @@
 Name:		SFElibntlm
 IPS_Package_Name:	library/security/libntlm
 SUNW_Copyright: %{name}.copyright
-Summary:	Microsoft's NTLM authentication library
+Summary:	Microsoft NTLM authentication library
 Version:	1.3
 Group:		System/Libraries
 License:	LGPLv2.1+
@@ -21,6 +24,13 @@ Source:		%{src_url}/%{src_name}-%{version}.tar.gz
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
+%endif
 
 %description
 A library for authenticating with Microsoft NTLM challenge-response, 
@@ -41,8 +51,11 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
      CPUS=1
 fi
 
-export CFLAGS="%optflags"
-export LDFLAGS="%_ldflags"
+export CC=gcc
+export CXX=g++
+export CFLAGS="%optflags -I%{gnu_inc} %{gnu_lib_path}"
+export CXXFLAGS="%cxx_optflags -I%{gnu_inc} %{gnu_lib_path}"
+export LDFLAGS="%_ldflags %gnu_lib_path"
 
 ./configure --prefix=%{_prefix}			\
             --bindir=%{_bindir}			\
@@ -77,6 +90,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Sun May 19 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- rewrite dependency to use gcc-46 at oi.
+- abolish the use of minpuretext
+* Wed Jan  9 2013 - TAKI,Yasushi <taki@justplayer.com>
+- add minpuretext
+- add some gcc options
+* Tue Jan 08 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- fix linker option problem
+* Mon Jan 07 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- build with gcc by default
 * Sat Dec 08 2012 - YAMAMOTO Takashi
 - Initial revision for the jposug
 * Mon Dec 12 2011 - Milan Jurik

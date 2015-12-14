@@ -3,14 +3,14 @@
 
 %define _prefix /usr
 %define php_version 5.3
-%define tarball_version  1.6.1
+%define tarball_version  1.6.2
 %define tarball_name     Net_SMTP
 %define pear_dir   %(/usr/php/5.3/bin/pear config-get php_dir)
 
 Name:                    SFEphp53-net-smtp
 IPS_package_name:	 web/php-53/extension/php-net-smtp
 Summary:                 PHP 5.3 module for Net_SMTP
-Version:                 1.6.1
+Version:                 1.6.2
 License:		 PHP License
 Url:                     http://pear.php.net/package/%{tarball_name}
 Source:                  http://download.pear.php.net/package/%{tarball_name}-%{tarball_version}.tgz
@@ -24,8 +24,7 @@ BuildRequires: web/php-53
 # BuildRequires: %{pnm_buildrequires_SUNWgsed_devel}
 
 Requires: web/php-53
-# "pear/Net_Socket"
-# "pear/Auth_SASL"
+Requires: web/php-53/extension/php-net-socket
 
 %description
 Provides an implementation of the SMTP protocol using PEAR's Net_Socket class.
@@ -60,5 +59,9 @@ rm -rf $RPM_BUILD_ROOT
 %{pear_dir}/.registry/net_smtp.reg
 
 %changelog
+* Tue Nov 19 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.2
+* Fri Jan 11 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requies
 * Sat Dec 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

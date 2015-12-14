@@ -1,5 +1,5 @@
 #
-# spec file for package SFEphp52-pgsql90
+# spec file for package SFEphp53-pgsql92
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -11,13 +11,13 @@
 %define tarball_version  5.3.14
 %define tarball_name     php
 
-Name:                    SFEphp52-pgsql92
-IPS_package_name:	 web/php-52/extension/php-pgsql92
-Summary:                 PHP 5.2 module for PostgreSQL 92
+Name:                    SFEphp53-pgsql92
+IPS_package_name:	 web/php-53/extension/php-pgsql92
+Summary:                 PHP 5.3 module for PostgreSQL 92
 Version:                 5.3.14
 License:		 PHP License
 Url:                     http://www.php.net/
-Source:			 http://museum.php.net/php5/%{tarball_name}-%{tarball_version}.tar.bz2
+Source:			 http://museum.php.net/php5/%{tarball_name}-%{tarball_version}.tar.gz
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Basedir:            /
@@ -26,11 +26,11 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: web/php-53
 BuildRequires: text/gnu-sed
-BuildRequires: database/postgres-90/library
-BuildRequires: database/postgres-90/developer
+BuildRequires: database/postgres-92/library
+BuildRequires: database/postgres-92/developer
 BuildRequires: SFEre2c
 
-Requires: database/postgres-90/library
+Requires: database/postgres-92/library
 Requires: web/php-53
 
 %description
@@ -123,5 +123,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/5.3/conf.d/*
 
 %changelog
+* Mon Jan  7 2013 TAKI,Yasushi <taki@justplayer.com>
+- fix version number
+- fix package name
 * Sat Dec 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

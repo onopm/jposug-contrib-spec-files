@@ -145,6 +145,8 @@ rm -rf %{buildroot}
 - bump to 0.5.8
 * Wed Oct 16 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.5.6
+* Sat Mar 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.5.4
 * Sat Jan 05 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.5.1
 * Mon Nov 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

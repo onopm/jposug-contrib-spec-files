@@ -24,6 +24,8 @@ close $list_fh;
 # spec_file_linesからわざわざ詰め直して作る理由は、あとから追加される可能性があるため
 my %sfe_pkg_list; # specファイルの一覧が入るハッシュ。存在したら1。
 my %ips_spec_name; # IPS_package_nameから、specファイルを得るハッシュテーブル。
+
+# specファイル名からips_package_name群を返す変換テーブル表を作る
 foreach (@spec_file_lines){
     s/#.*//g;
     s/^s+//g;
@@ -33,11 +35,15 @@ foreach (@spec_file_lines){
 
     my $spec=$_;
     %ips_spec_name=(%ips_spec_name,get_build_requires($spec));
-
     $spec=~s/.spec$//;
     $sfe_pkg_list{$spec}=1;
 }
-
+# このファイルは、install_spec.shでspecファイルからipsの名前でインストールするのに使う。
+open my $s2ifh, ">./spec2ipsname.list" or die("file write error");
+for my $key (keys(%ips_spec_name)) {
+    print $s2ifh "$ips_spec_name{$key}.spec:$key\n" if ($key !~ /^SFE/);
+}
+close $s2ifh;
 
 foreach my $spec_file (@spec_file_lines){
     $spec_file =~ s/#.*//g;
@@ -51,11 +57,11 @@ foreach my $spec_file (@spec_file_lines){
     search_depend_files($spec_file,\%requires,\%definelist);
 
     my $depend_sources='';
+    my $build_requires='';
 
     if(%requires){
 	if(defined($requires{'buildrequires'})){
 	    # TODO: ここはjikkou 
-	    my $build_requires='';
 	    foreach my $depend (@{$requires{'buildrequires'}}){
 		print STDERR "depend check:$depend\n";
 		if( $sfe_pkg_list{$depend} ){
@@ -73,23 +79,31 @@ foreach my $spec_file (@spec_file_lines){
 	    my $sfe_name = $spec_file;
 	    $sfe_name=~ s/\.spec$/.info/g;
 	    print "${sfe_name} : ${build_requires}\n" if(${build_requires});
-	} elsif(defined($requires{'patch'})){
-	    my $sources='patches/'.join ' patches/',@{$requires{'patch'}};
+	}
+	if(defined($requires{'patch'})){
+            my $sources='';
+            foreach (@{$requires{'patch'}}){
+                if(! /^(http|https|ftp):\/\//){
+                    $sources.='patches/'.$_.' ';
+                }
+            }
 	    my $sfe_name = $spec_file;
 	    $depend_sources.=' '.${sources} if(${sources});
-	} elsif(defined($requires{'source'})){
-	    my $sources='';
-	    foreach (@{$requires{'source'}}){
-		if(! /^(http|https|ftp):\/\//){
-		    $sources.='ext-sources/'.$_.' ';
-		}
-	    }
-	    $depend_sources.=' '.${sources} if(${sources});
 	}
+	# いままでなかった問題が顕在化してくるのでコメントアウト
+	#if(defined($requires{'source'})){
+	#    my $sources='';
+	#    foreach (@{$requires{'source'}}){
+	#	if(! /^(http|https|ftp):\/\//){
+	#	    $sources.='ext-sources/'.$_.' ';
+	#	}
+	#    }
+	#    $depend_sources.=' '.${sources} if(${sources});
+	#}
     }
     my $sfe_name = $spec_file;
     $sfe_name=~ s/\.spec$/.proto/g;
-    print "${sfe_name} : ${spec_file} ${depend_sources}\n";
+    print "${sfe_name} : ${spec_file} ${depend_sources} ${build_requires}\n";
 }
 
 exit;
@@ -135,7 +149,9 @@ sub search_depend_files {
 	    } else {
 		$sfe_pkg=replace_define("%{name}-".$package,%$definelist);
 	    }
-	    $sfe_pkg_list{$sfe_pkg}=1;
+	    # get_build_requires で SFEhoge-devel の元 spec ファイルを拾っているにもかかわらず、
+	    # SFEhoge-devel.spec ファイルを要求してしまう。なので、comment out した
+	    # $sfe_pkg_list{$sfe_pkg}=1;
 	    print STDERR "Add sfe_pkg_list $sfe_pkg\n";
 	} elsif( $line =~ /\%define\s+(.+?)\s+(.+)/i ||
 		 $line =~ /^([A-Za-z_][A-Za-z0-9_]+):\s*(.+)/i
@@ -160,6 +176,10 @@ sub replace_define {
     return $line;
 }
 
+
+#
+# 与えられたspecファイルから、ips_nameの羅列を返す
+#
 sub get_build_requires {
     my ($file_name) = @_;
     return if ! -r $file_name;

@@ -2,12 +2,10 @@
 %include default-depend.inc
 
 %define build584 0
+%define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
-#%define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-#%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
-# at 2015-11-03, BuildRequires packages have not been built for perl-516 and perl-520
-%define build516 0
-%define build520 0
+%define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
 %define cpan_name HTTP-Daemon
@@ -43,6 +41,26 @@ Requires:         library/perl-5/http-date-584
 Requires:         library/perl-5/io-584
 
 %description 584
+a simple http server class
+%endif
+
+%if %{build510}
+%package 510
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-510
+Summary:          a simple http server class
+BuildRequires:    runtime/perl-510 = *
+BuildRequires:    library/perl-5/lwp-mediatypes-510
+BuildRequires:    library/perl-5/http-message-510
+BuildRequires:    library/perl-5/http-date-510
+BuildRequires:    library/perl-5/io-510
+BuildRequires:    library/perl-5/extutils-makemaker-510
+Requires:         runtime/perl-510 = *
+Requires:         library/perl-5/lwp-mediatypes-510
+Requires:         library/perl-5/http-message-510
+Requires:         library/perl-5/http-date-510
+Requires:         library/perl-5/io-510
+
+%description 510
 a simple http server class
 %endif
 
@@ -165,6 +183,10 @@ build_for() {
 build_for 5.8.4
 %endif
 
+%if %{build510}
+build_for 5.10
+%endif
+
 %if %{build512}
 build_for 5.12
 %endif
@@ -196,6 +218,16 @@ rm -rf %{buildroot}
 /usr/perl5/vendor_perl/5.8.4
 %if %{include_executable}
 /usr/perl5/5.8.4
+%endif
+%endif
+
+%if %{build510}
+%files 510
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.10
+%if %{include_executable}
+/usr/perl5/5.10
 %endif
 %endif
 
@@ -231,6 +263,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Dec 18 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build packages for perl-510, perl-516 and perl-520
 * Mon Nov 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify spec file to make BuildRequires and Requires strict, and to build packages for perl-516 and perl-520
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

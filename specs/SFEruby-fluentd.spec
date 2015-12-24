@@ -6,7 +6,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.12.17
+%define tarball_version 0.12.19
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -23,19 +23,19 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 Fluentd is a log collector daemon written in Ruby. Fluentd receives logs as JSON streams, buffers them, and sends them to other systems like MySQL, MongoDB, or even other instances of Fluentd.
 
 BuildRequires:	runtime/ruby-21
-BuildRequires:	library/ruby-21/jeweler
-BuildRequires:	library/ruby-21/rr
-BuildRequires:	library/ruby-21/timecop
+BuildRequires:	library/ruby/jeweler-21
+BuildRequires:	library/ruby/rr-21
+BuildRequires:	library/ruby/timecop-21
 BuildRequires:	library/text/yaml >= 0.1.6
 Requires:	runtime/ruby-21
-Requires:	library/ruby-21/cool.io >= 1.2.2
-Requires:	library/ruby-21/http_parser.rb >= 0.5.1
-Requires:	library/ruby-21/json >= 1.4.3
-Requires:	library/ruby-21/msgpack >= 0.5.11
-Requires:	library/ruby-21/sigdump >= 0.2.2
-Requires:	library/ruby-21/yajl-ruby >= 1.0
-Requires:	library/ruby-21/tzinfo >= 1.0.0
-Requires:	library/ruby-21/tzinfo-data >= 1.0.0
+Requires:	library/ruby/cool.io-21 >= 1.2.2
+Requires:	library/ruby/http_parser.rb-21 >= 0.5.1
+Requires:	library/ruby/json-21 >= 1.4.3
+Requires:	library/ruby/msgpack-21 >= 0.5.11
+Requires:	library/ruby/sigdump-21 >= 0.2.2
+Requires:	library/ruby/yajl-ruby-21 >= 1.0
+Requires:	library/ruby/tzinfo-21 >= 1.0.0
+Requires:	library/ruby/tzinfo-data-21 >= 1.0.0
 
 %prep
 %setup -q -c -T
@@ -122,6 +122,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Thu Dec 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.19 and update Requires
 * Fri Nov 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.12.17
 * Tue Sep 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

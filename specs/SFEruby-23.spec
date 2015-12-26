@@ -11,7 +11,7 @@ Version:		%{version}
 Release:		%{patchlevel}
 IPS_component_version:	%{version}.%{patchlevel}
 License: 		GPL
-Source: 		https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0-preview2.tar.bz2
+Source: 		https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.bz2
 Source1:		https://hg.java.net/hg/solaris-userland~gate/raw-file/2062cde74e03/components/ruby/ruby-21/Solaris/rbconfig.sedscript
 Patch0:                 ruby-23-disable-ssl.patch
 Url:			 http://www.ruby-lang.org/
@@ -25,8 +25,7 @@ Requires:      library/text/yaml >= 0.1.6
 
 %prep
 # %setup -n ruby-%{version}-p%{patchlevel}
-# %setup -n ruby-%{version}
-%setup -n ruby-%{version}-preview2
+%setup -n ruby-%{version}
 
 %patch0 -p0
 
@@ -98,6 +97,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Sun Dec 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.0
 * Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to preview2
 * Mon Dec 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

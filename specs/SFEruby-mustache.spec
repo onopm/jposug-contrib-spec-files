@@ -1,101 +1,338 @@
 %include Solaris.inc
 %include default-depend.inc
 
+%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define generate_executable 0
+%define keep_dependency 1
+
 %define gemname mustache
-%define gemdir18 %(ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-%define bindir18 /usr/ruby/1.8/bin
-%define gemdir19 %(ruby19 -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%define bindir19 /usr/ruby/1.9/bin
+%define sfe_gemname mustache
 
-Summary: %{gemname}
-Name: SFEruby-%{gemname}
-IPS_package_name:        library/ruby-18/mustache
-Version: 0.99.4
-License: MIT License
-URL: http://rubygems.org/gems/%{gemname}
-Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+Name:             SFEruby-%{sfe_gemname}
+IPS_package_name: library/ruby/%{gemname}
+Version:          1.0.2
+License:          MIT
+URL:              https://github.com/mustache/mustache
+Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
+BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	runtime/ruby-18
-Requires: runtime/ruby-18
+
 
 %description
-Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views. As ctemplates says, "It emphasizes separating logic from presentation: it is impossible to embed application logic in this template language. Think of Mustache as a replacement for your views. Instead of views consisting of ERB or HAML with random helpers and arbitrary logic, your views are broken into two parts: a Ruby class and an HTML template.
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+
+%if %{build19}
+%if %{keep_dependency}
+%package 19-old
+IPS_package_name: library/ruby-19/%{gemname}
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-19 = *
+Requires:         runtime/ruby-19 = *
+Requires:         library/ruby/%{gemname}-19
+
+%description 19-old
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
 
 %package 19
-IPS_package_name: library/ruby-19/mustache
-Summary: %{gemname}
-BuildRequires:	runtime/ruby-19
-Requires:	runtime/ruby-19
+IPS_package_name: library/ruby/%{gemname}-19
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-19 = *
+Requires:         runtime/ruby-19 = *
 
 %description 19
-Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views. As ctemplates says, "It emphasizes separating logic from presentation: it is impossible to embed application logic in this template language. Think of Mustache as a replacement for your views. Instead of views consisting of ERB or HAML with random helpers and arbitrary logic, your views are broken into two parts: a Ruby class and an HTML template.
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
+
+%if %{build20}
+%if %{keep_dependency}
+%package 20-old
+IPS_package_name: library/ruby-20/%{gemname}
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-20 = *
+Requires:         runtime/ruby-20 = *
+Requires:         library/ruby/%{gemname}-20
+
+%description 20-old
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
+
+%package 20
+IPS_package_name: library/ruby/%{gemname}-20
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-20 = *
+Requires:         runtime/ruby-20 = *
+
+%description 20
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
+
+%if %{build21}
+%if %{keep_dependency}
+%package 21-old
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}-21
+
+%description 21-old
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
+
+%package 21
+IPS_package_name: library/ruby/%{gemname}-21
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+
+%description 21
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
+
+%if %{build22}
+%if %{keep_dependency}
+%package 22-old
+IPS_package_name: library/ruby-22/%{gemname}
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}-22
+
+%description 22-old
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
+
+%package 22
+IPS_package_name: library/ruby/%{gemname}-22
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+
+%description 22
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          Inspired by ctemplate, Mustache is a framework-agnostic way to render logic-free views.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+
+%description 23
+Inspired by ctemplate, Mustache is a framework-agnostic way to render
+logic-free views.
+%endif
 
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir18}
-mkdir -p .%{bindir18}
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
 
 %build
-# export CONFIGURE_ARGS="--with-cflags='%{optflags}'"
+build_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-# ruby-18
-/usr/ruby/1.8/bin/gem install --local \
-    --install-dir .%{gemdir18} \
-    --bindir .%{bindir18} \
-    -V \
-    --force %{SOURCE0}
+    ${bindir}/gem install --local \
+        --no-env-shebang \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0}
+}
 
+%if %{build19}
 # ruby-19
-/usr/ruby/1.9/bin/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    -V \
-    --force %{SOURCE0}
+build_for 1.9
+%endif
+
+%if %{build20}
+# ruby-20
+build_for 2.0
+%endif
+
+%if %{build21}
+# ruby-21
+build_for 2.1
+%endif
+
+%if %{build22}
+# ruby-22
+build_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
 
 %install
 rm -rf %{buildroot}
 
-# ruby-18
-mkdir -p %{buildroot}/%{gemdir18}
-cp -a .%{gemdir18}/* \
-    %{buildroot}/%{gemdir18}/
+%if %{generate_executable}
+mkdir -p %{buildroot}/%{_bindir}
+%endif
 
-mkdir -p %{buildroot}%{bindir18}
-cp -a .%{bindir18}/* \
-    %{buildroot}%{bindir18}/
+install_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
+
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
+%if %{generate_executable}
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
+%endif
+
+}
+
+%if %{build19}
 # ruby-19
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
+install_for 1.9
+%endif
 
-mkdir -p %{buildroot}%{bindir19}
-cp -a .%{bindir19}/* \
-    %{buildroot}%{bindir19}/
+%if %{build20}
+install_for 2.0
+%endif
 
-rm -rf %{buildroot}%{geminstdir}/.yardoc/
+%if %{build21}
+# ruby-21
+install_for 2.1
+%endif
+
+%if %{build22}
+# ruby-22
+install_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+install_for 2.3
+%endif
 
 %clean
 rm -rf %{buildroot}
 
-
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/1.8
 
+%if %{build19}
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*19
+%endif
+%endif
+
+%if %{build20}
+%files 20
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.0
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*20
+%endif
+%endif
+
+%if %{build21}
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
+%endif
+
+%if %{build22}
+%files 22
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
 
 %changelog
+* Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.2 and build packages for ruby-20, ruby-21, ruby-22 and ruby-23
 * Sun Oct 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -3,12 +3,12 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.28
+%define tarball_version  5.5.30
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
 
-%define use_libedit %(egrep 'Oracle Solaris (11.2|12)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+%define use_libedit %(egrep 'Oracle Solaris (11.[23]|12)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}
 IPS_package_name:        web/php-55
@@ -32,6 +32,9 @@ BuildRequires: library/libedit
 %else
 BuildRequires: SFEeditline
 %endif
+BuildRequires:  developer/icu
+BuildRequires:  system/library/security/libmcrypt
+BuildRequires:  text/tidy
 
 Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       system/library/security/libmcrypt
@@ -43,6 +46,7 @@ Requires:       library/libedit
 %else
 Requires:       SFEeditline
 %endif
+Requires:       library/icu
 
 %description
 PHP
@@ -59,6 +63,11 @@ nkf -Lu --overwrite=.bak ${i}
 done
 
 
+pushd ext/intl
+cp config.m4 config.m4.dist
+sed -e 's/ -Wno-write-strings//' < config.m4.dist > config.m4
+popd
+
 %build
 mkdir build-cgi build-apache build-embedded build-zts build-ztscli build-fpm
 
@@ -74,6 +83,7 @@ build() {
     # bison-1.875-2 seems to produce a broken parser; workaround.
     # mkdir Zend && cp ../Zend/zend_{language,ini}_{parser,scanner}.[ch] Zend
     ln -sf ../configure
+
 ./configure --prefix=/usr \
     --bindir=/usr/php/5.5/bin \
     --datadir=/usr/php/5.5/share \
@@ -117,12 +127,16 @@ build() {
     --with-mhash \
     --enable-opcache=yes \
     --enable-dtrace \
+    --enable-intl=shared \
     $*
     if test $? != 0; then
 	tail -500 config.log
 	: configure failed
 	exit 1
     fi
+
+    cp Makefile Makefile.dist
+    sed -e 's/ -Wno-write-strings//' < Makefile.dist > Makefile
     make -j$CPUS
 }
 
@@ -162,7 +176,6 @@ build --enable-force-cgi-redirect \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
     --enable-fileinfo=shared \
-    --with-icu-dir= \
     --with-enchant=shared
 popd
 
@@ -235,7 +248,6 @@ build --enable-force-cgi-redirect \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
     --enable-fileinfo=shared \
-    --with-icu-dir=%{_prefix} \
     --with-enchant=shared
 popd
 
@@ -441,6 +453,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %config(noreplace) /etc/apache2/2.2/conf.d/php/php5.5.conf
 
 %changelog
+* Wed Nov 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
+- update '%define use_libedit' for Oracle Solaris 11.3
+* Tue Oct 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- enable intl
+* Tue Oct 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.30
 * Fri Aug 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.28
 * Sat Jun 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

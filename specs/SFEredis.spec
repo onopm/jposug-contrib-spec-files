@@ -3,6 +3,7 @@
 #
 
 %include Solaris.inc
+%include default-depend.inc
 %include packagenamemacros.inc
 %define cc_is_gcc 1
 
@@ -114,6 +115,23 @@ mkdir -p $RPM_BUILD_ROOT%{_etc_prefix}/%{major_version}/
 cp %{SOURCE7} $RPM_BUILD_ROOT%{_etc_prefix}/%{major_version}/
 cp %{SOURCE8} $RPM_BUILD_ROOT%{_etc_prefix}/%{major_version}/
 
+
+mkdir -p $RPM_BUILD_ROOT/usr/bin/
+cd $RPM_BUILD_ROOT/usr/bin/
+ln -fs ../redis/%{major_version}/bin/redis-benchmark
+ln -fs ../redis/%{major_version}/bin/redis-check-dump
+ln -fs ../redis/%{major_version}/bin/redis-cli
+ln -fs ../redis/%{major_version}/bin/redis-check-aof
+ln -fs ../redis/%{major_version}/bin/redis-server
+
+mkdir -p $RPM_BUILD_ROOT/usr/bin/%{_arch64}
+cd $RPM_BUILD_ROOT/usr/bin/%{_arch64}
+ln -fs ../../redis/%{major_version}/bin/%{_arch64}/redis-benchmark
+ln -fs ../../redis/%{major_version}/bin/%{_arch64}/redis-check-dump
+ln -fs ../../redis/%{major_version}/bin/%{_arch64}/redis-cli
+ln -fs ../../redis/%{major_version}/bin/%{_arch64}/redis-check-aof
+ln -fs ../../redis/%{major_version}/bin/%{_arch64}/redis-server
+
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
@@ -122,9 +140,33 @@ group groupname="%{runusergroup}" gid="%{runusergroupid}"
 user ftpuser=false gcos-field="redis Reserved UID" username="%{runuser}" uid="%{runuserid}" password=NP group="%{runusergroup}" home-dir="%{_var_prefix}" login-shell="/bin/true" group-list="redis"
 
 %files
-%defattr(0755, root, sys)
+%defattr(-, root, bin)
+%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) /usr/bin/%{_arch64}
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
-%{_prefix}/%{major_version}/bin/*
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}
+
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/redis-benchmark
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/redis-check-dump
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/redis-cli
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/redis-check-aof
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/redis-server
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/%{_arch64}/redis-benchmark
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/%{_arch64}/redis-check-dump
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/%{_arch64}/redis-cli
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/%{_arch64}/redis-check-aof
+%attr (0555, root, bin) %ips_tag (mediator=redis mediator-version=%{major_version}) /usr/bin/%{_arch64}/redis-server
+
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/redis-benchmark
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/redis-check-dump
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/redis-cli
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/redis-check-aof
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/redis-server
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/%{_arch64}/redis-benchmark
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/%{_arch64}/redis-check-dump
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/%{_arch64}/redis-cli
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/%{_arch64}/redis-check-aof
+%attr (0555, root, bin) /usr/redis/%{major_version}/bin/%{_arch64}/redis-server
 
 %dir %attr (0755, redis, redis) %{_var_prefix}
 %dir %attr (0755, redis, redis) %{_var_prefix}/%{major_version}
@@ -160,6 +202,8 @@ user ftpuser=false gcos-field="redis Reserved UID" username="%{runuser}" uid="%{
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_28.xml
 
 %changelog
+* Thu Dec 29 2015 - Osamu Tabata <cantimerny.g@gmail.com>
+- set mediator
 * Wed Aug 12 2015 - Osamu Tabata <cantimerny.g@gmail.com>
 - ユーザー、グループID固定化
 * Wed Jul 15 2015 - Osamu Tabata <cantimerny.g@gmail.com>

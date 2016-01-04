@@ -20,7 +20,7 @@
 %define runusergroupid  200
 
 Name:		SFEredis-30
-Version:        3.0.2
+Version:        3.0.6
 Summary:	Redis is an open source, advanced key-value store
 IPS_package_name:    service/redis-30
 URL:		http://redis.io
@@ -70,14 +70,14 @@ fi
 
 cd %{tarball_name}-%{version}
 export CC=gcc
-make PREFIX=%{_prefix}/%{major_version}
+make PREFIX=%{_prefix}/%{major_version} -j$CPUS
 
 %ifarch amd64 sparcv9
 cd ../%{tarball_name}-%{version}-64
 export CC=gcc
 export CFLAGS="-m64 $CFLASG"
 export LDFLAGS="-m64"
-make PREFIX=%{_prefix}/%{major_version}
+make PREFIX=%{_prefix}/%{major_version} -j$CPUS
 %endif
 
 %install
@@ -221,6 +221,8 @@ rm -rf ${RPM_BUILD_ROOT}
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_30.xml
 
 %changelog
+* Mon Jan 4 2016 - Osamu Tabata <cantimerny.g@gmail.com>
+- Bump to 3.0.6
 * Mon Jan 4 2016 - Osamu Tabata <cantimerny.g@gmail.com>
 - set mediator
 * Tue Aug 25 2015 - Osamu Tabata <cantimerny.g@gmail.com>

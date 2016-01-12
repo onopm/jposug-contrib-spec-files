@@ -19,9 +19,6 @@ Source1:          fluentd.xml
 Source2:          svc-fluentd
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-%description
-Fluentd is a log collector daemon written in Ruby. Fluentd receives logs as JSON streams, buffers them, and sends them to other systems like MySQL, MongoDB, or even other instances of Fluentd.
-
 BuildRequires:	runtime/ruby-21
 BuildRequires:	library/ruby/jeweler-21
 BuildRequires:	library/ruby/rr-21
@@ -36,6 +33,9 @@ Requires:	library/ruby/sigdump-21 >= 0.2.2
 Requires:	library/ruby/yajl-ruby-21 >= 1.0
 Requires:	library/ruby/tzinfo-21 >= 1.0.0
 Requires:	library/ruby/tzinfo-data-21 >= 1.0.0
+
+%description
+Fluentd is a log collector daemon written in Ruby. Fluentd receives logs as JSON streams, buffers them, and sends them to other systems like MySQL, MongoDB, or even other instances of Fluentd.
 
 %prep
 %setup -q -c -T
@@ -122,6 +122,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Wed Jan 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %description position
 * Thu Dec 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.12.19 and update Requires
 * Fri Nov 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

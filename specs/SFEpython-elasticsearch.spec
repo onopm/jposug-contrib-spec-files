@@ -9,7 +9,7 @@
 
 %define tarball_index e
 %define tarball_name elasticsearch
-%define tarball_version 2.2.0
+%define tarball_version 2.0.0
 %define include_executable 0
 
 Name:                    SFEpython-elasticsearch
@@ -174,3 +174,4 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Jan 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- bump down to 2.0.0 because eslasticsearch-curator requires elasticsearch>=1.8.0,<2.1.0

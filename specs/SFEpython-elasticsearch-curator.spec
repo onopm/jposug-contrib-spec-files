@@ -33,6 +33,7 @@ Requires:         runtime/python-26
 Requires:         library/python/elasticsearch-curator
 Requires:         library/python/click-26
 Requires:         library/python/elasticsearch-26
+Requires:         library/python/urllib3-26
 
 %description 26
 Tending your Elasticsearch indices
@@ -47,6 +48,7 @@ Requires:         runtime/python-27
 Requires:         library/python/elasticsearch-curator
 Requires:         library/python/click-27
 Requires:         library/python/elasticsearch-27
+Requires:         library/python/urllib3-27
 
 %description 27
 Tending your Elasticsearch indices
@@ -61,6 +63,7 @@ Requires:         runtime/python-34
 Requires:         library/python/elasticsearch-curator
 Requires:         library/python/click-34
 Requires:         library/python/elasticsearch-34
+Requires:         library/python/urllib3-34
 
 %description 34
 Tending your Elasticsearch indices
@@ -75,6 +78,7 @@ Requires:         runtime/python-35
 Requires:         library/python/elasticsearch-curator
 Requires:         library/python/click-35
 Requires:         library/python/elasticsearch-35
+Requires:         library/python/urllib3-35
 
 %description 35
 Tending your Elasticsearch indices

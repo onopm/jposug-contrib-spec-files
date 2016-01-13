@@ -43,6 +43,7 @@ Summary:          Tending your Elasticsearch indices
 BuildRequires:    runtime/python-27
 Requires:         runtime/python-27
 Requires:         library/python/elasticsearch-curator
+Requires:         library/python/click-27
 
 %description 27
 Tending your Elasticsearch indices
@@ -55,6 +56,7 @@ Summary:          Tending your Elasticsearch indices
 BuildRequires:    runtime/python-34
 Requires:         runtime/python-34
 Requires:         library/python/elasticsearch-curator
+Requires:         library/python/click-34
 
 %description 34
 Tending your Elasticsearch indices
@@ -67,6 +69,7 @@ Summary:          Tending your Elasticsearch indices
 BuildRequires:    runtime/python-35
 Requires:         runtime/python-35
 Requires:         library/python/elasticsearch-curator
+Requires:         library/python/click-35
 
 %description 35
 Tending your Elasticsearch indices
@@ -172,5 +175,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Jan 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires
 * Tue Jan 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

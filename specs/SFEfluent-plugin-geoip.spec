@@ -12,7 +12,6 @@ Name:             fluent-plugin-geoip
 IPS_package_name: system/fluentd/plugins/geoip
 Summary:          Fluentd Output plugin to add information about geographical location of IP addresses with Maxmind GeoIP databases.
 Version:          0.5.1
-License:          MIT License
 License:          Apache-2.0
 URL:              https://github.com/y-ken/fluent-plugin-geoip
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem

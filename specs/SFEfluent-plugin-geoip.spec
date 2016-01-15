@@ -21,8 +21,9 @@ BuildRequires:	  runtime/ruby-21 = *
 BuildRequires:    library/GeoIP/devel
 Requires:         runtime/ruby-21 = *
 Requires:         system/fluentd >= 0.10.43
+Requires:         system/fluent/mixin-rewrite-tag-name
 Requires:         library/GeoIP
-Requires:         library/ruby/excon-21 = *
+Requires:         library/ruby/geoip-c-21 = *
 
 %description
 Fluentd Output plugin to add information about geographical location of IP addresses with Maxmind GeoIP databases.
@@ -64,5 +65,7 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Sat Jan 16 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix Requires
 * Fri Jan 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

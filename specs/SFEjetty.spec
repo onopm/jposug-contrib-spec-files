@@ -1,7 +1,7 @@
 %include Solaris.inc
 
-%define jetty_version 9.3.3
-%define jetty_date 20150827
+%define jetty_version 9.3.6
+%define jetty_date 20151106
 
 Name:			SFEjetty
 IPS_package_name:	web/server/jetty
@@ -16,7 +16,7 @@ Source: 		http://ftp.daum.net/eclipse//jetty/stable-9/dist/jetty-distribution-%{
 Source1:		svc-jetty
 Source2:		jetty.xml
 
-Requires:		runtime/java/jre >= 1.7.0
+Requires:		runtime/java/jre-8
 
 %description
 Jetty provides a Web server and javax.servlet container, plus support for SPDY, WebSocket, OSGi, JMX, JNDI, JAAS and many other integrations. These components are open source and available for commercial use and distribution.
@@ -84,6 +84,8 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/start.ini
 
 %changelog
+* Sun Jan 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.6
 * Fri Sep 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.3.3
 * Sat Jun 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

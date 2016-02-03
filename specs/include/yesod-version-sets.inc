@@ -148,3 +148,4 @@
 %define yesod_form_ver 1.4.6
 %define yesod_persistent_ver 1.4.0.3
 %define zlib_ver 0.5.4.2
+%define aeson_compat 0.3.0.0

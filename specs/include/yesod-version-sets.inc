@@ -260,7 +260,7 @@
 %define basic_prelude_ver 0.5.0
 %define bcrypt_ver 0.0.6
 %define bencode_ver 0.6.0.0
-%define bifunctors_ver 5.2.1
+%define bifunctors_ver 5.2
 %define bin_package_db installed
 %define binary_conduit_ver 1.2.3
 %define binary_list_ver 1.1.1.0

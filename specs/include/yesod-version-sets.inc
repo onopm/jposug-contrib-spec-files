@@ -1,5 +1,5 @@
 #
-# LTS Haskell 3.20   https://www.stackage.org/lts-3.20/cabal.config
+# LTS Haskell 3.20   https://www.stackage.org/lts_3.20/cabal.config
 #
 %define aeson_ver 0.8.0.2
 %define aeson_extra_ver 0.2.3.0
@@ -152,8 +152,8 @@
 %define yesod_persistent_ver 1.4.0.3
 %define zlib_ver 0.5.4.2
 %define aeson_compat 0.3.0.0
-%define abstract-par_ver 0.3.3
-%define AC-Vector_ver 2.3.2
+%define abstract_par_ver 0.3.3
+%define AC_Vector_ver 2.3.2
 %define accelerate_ver 0.15.1.0
 %define ace_ver 0.6
 %define acid_state_ver 0.12.4

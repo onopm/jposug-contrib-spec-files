@@ -1358,3 +1358,4 @@
 %define zlib_lens_ver 0.1.2
 %define abstract_deque_ver 0.3
 %define ReadArgs_ver 1.2.2
+%define ShellCheck_ver 0.4.3

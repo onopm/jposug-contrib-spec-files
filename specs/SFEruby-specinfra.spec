@@ -175,7 +175,8 @@ Requires:         library/ruby/net-scp-23
 # net-ssh < 3.1, >= 2.7
 Requires:         library/ruby/net-ssh-23
 # net-telnet >= 0
-Requires:         library/ruby/net-telnet-23
+# Ruby 2.3.0 includes net-telnet 0.1.1
+# Requires:         library/ruby/net-telnet-23
 # sfl >= 0
 Requires:         library/ruby/sfl-23
 
@@ -365,6 +366,7 @@ rm -rf %{buildroot}
 %changelog
 * Tue Feb 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.51.0
+- remove net-telnet from Requires of ruby-23, because ruby-23 includes net-telnet 0.1.1
 * Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.45.0 and build package for ruby-23
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

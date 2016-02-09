@@ -15,7 +15,7 @@
 Summary:          Common layer for serverspec and itamae
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.45.0
+Version:          2.51.0
 License:          MIT
 URL:              https://rubygems.org/gems/specinfra
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -363,6 +363,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Feb 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.51.0
 * Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.45.0 and build package for ruby-23
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

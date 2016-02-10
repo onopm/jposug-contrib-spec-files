@@ -12,16 +12,18 @@ Name:		SFEldns
 IPS_Package_Name:	library/ldns
 URL:		http://www.nlnetlabs.nl/projects/ldns/
 Summary:	ldns library for DNS programming
-Version:	1.6.13
+Version:	1.6.17
 Group:		System/Libraries
 License:	BSD
 SUNW_Copyright:	ldns.copyright
-Source:		http://www.nlnetlabs.nl/downloads/%{src_name}/%{src_name}-%{version}.tar.gz 
+Source:		http://www.nlnetlabs.nl/downloads/%{src_name}/%{src_name}-%{version}.tar.gz
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
-BuildRequires:	%{pnm_buildrequires_SUNWopenssl_include}
-Requires:	%{pnm_requires_SUNWopenssl_libraries}
+# BuildRequires:	%{pnm_buildrequires_SUNWopenssl_include}
+#Requires:	%{pnm_requires_SUNWopenssl_libraries}
+BuildRequires:	library/security/openssl
+Requires:	library/security/openssl
 
 %description
 The goal of ldns is to simplify DNS programming, it supports recent RFCs like the DNSSEC documents, and allows developers to easily create software conforming to current RFCs, and experimental software for current Internet Drafts.
@@ -66,6 +68,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}
 
 %changelog
+* Wed May 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.17
 * Sun Dec 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - ues pnmacro
 * Wed Jun 06 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

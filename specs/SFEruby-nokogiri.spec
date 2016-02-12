@@ -15,7 +15,7 @@
 Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.6.7
+Version:          1.6.7.2
 License:          MIT
 URL:              http://nokogiri.org
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -359,6 +359,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Fri Feb 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.7.2
 * Tue Dec 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.6.7 and build package for ruby-23
 * Tue Aug 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

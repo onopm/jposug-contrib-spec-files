@@ -10,7 +10,7 @@
 Name:             fluent-plugin-growthforecast
 IPS_package_name: system/fluentd/plugins/growthforecast
 Summary:          fluent plugin for growthforecast
-Version:          0.2.8
+Version:          0.2.10
 License:          APLv2
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -62,6 +62,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Thu Feb 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.2.10
 * Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.2.8 and use ruby-21 instead of ruby-19
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

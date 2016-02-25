@@ -11,7 +11,7 @@
 Name:             SFEfluent-plugin-flowcounter
 IPS_package_name: system/fluentd/plugins/flowcounter
 Summary:          Plugin to counts messages/bytes that matches, per minutes/hours/days
-Version:          0.2.1
+Version:          0.3.2
 License:          APLv2
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -62,6 +62,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Thu Feb 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.3.2
 * Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.2.1 and use ruby-21 instead of ruby-19
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

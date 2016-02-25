@@ -1,39 +1,16 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
+%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 1
 
 %define gemname json_pure
 %define sfe_gemname json-pure
-
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
 
 Summary:          This is a JSON implementation in pure Ruby.
 Name:             SFEruby-%{sfe_gemname}
@@ -141,6 +118,29 @@ Requires:         runtime/ruby-22 = *
 This is a JSON implementation in pure Ruby.
 %endif
 
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          This is a JSON implementation in pure Ruby.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+This is a JSON implementation in pure Ruby.
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          This is a JSON implementation in pure Ruby.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+
+%description 23
+This is a JSON implementation in pure Ruby.
+%endif
+
 %prep
 %setup -q -c -T
 
@@ -179,6 +179,11 @@ build_for 2.1
 %if %{build22}
 # ruby-22
 build_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+build_for 2.3
 %endif
 
 %install
@@ -245,7 +250,13 @@ install_for 2.1
 %endif
 
 %if %{build22}
+# ruby-22
 install_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+install_for 2.3
 %endif
 
 %clean
@@ -298,7 +309,20 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+
 %changelog
+* Mon Dec 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build package for ruby-23
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.8.3
 * Tue Apr 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

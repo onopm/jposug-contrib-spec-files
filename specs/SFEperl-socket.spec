@@ -1,7 +1,7 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build584 %( if [ -x /usr/perl5/5.8.4/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build584 0
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
@@ -208,6 +208,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Jan 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- stop to build package for perl-584
 * Wed Dec 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

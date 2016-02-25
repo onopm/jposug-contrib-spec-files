@@ -11,7 +11,7 @@
 Name:             fluent-plugin-elasticsearch
 IPS_package_name: system/fluentd/plugins/elasticsearch
 Summary:          fluent plugin for elasticsearch
-Version:          1.1.0
+Version:          1.3.0
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -63,6 +63,10 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Fri Jan 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.3.0
+* Sun Dec 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2.1
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.1.0
 * Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

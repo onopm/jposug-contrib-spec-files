@@ -10,7 +10,7 @@
 Name:             fluent-plugin-mysql
 IPS_package_name: system/fluentd/plugins/mysql
 Summary:          fluent plugin to insert mysql as json(single column) or insert statement
-Version:          0.0.7
+Version:          0.1.0
 License:          APLv2
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -62,6 +62,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Thu Feb 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.1.0
 * Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use ruby-21 instead of ruby-19
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

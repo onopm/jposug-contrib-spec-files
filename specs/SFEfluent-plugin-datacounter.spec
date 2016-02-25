@@ -10,7 +10,7 @@
 Name:             SFEfluent-plugin-datacounter
 IPS_package_name: system/fluentd/plugins/datacounter
 Summary:          To count records with string fields by regexps (To count records with numbers, use numeric-counter)
-Version:          0.4.3
+Version:          0.4.5
 License:          APLv2
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -60,6 +60,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Thu Feb 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.4.5
 * Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use ruby-21 instead of ruby-19
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

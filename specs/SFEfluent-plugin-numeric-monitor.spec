@@ -10,7 +10,7 @@
 Name:             fluent-plugin-num-monitor
 IPS_package_name: system/fluentd/plugins/numeric-monitor
 Summary:          Fluentd plugin to calculate min/max/avg/Xpercentile values, and emit these data as message
-Version:          0.1.7
+Version:          0.1.9
 License:          APLv2
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -59,6 +59,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Thu Feb 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.1.9
 * Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use ruby-21 instead of ruby-19
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

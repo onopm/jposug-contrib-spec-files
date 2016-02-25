@@ -10,7 +10,7 @@
 Summary:          Enhanced HTTP input plugin for Fluent event collector
 Name:             SFEfluent-http-enhanced
 IPS_package_name: system/fluentd/plugins/http-enhanced
-Version:          0.0.4
+Version:          0.0.5
 License:          Apache License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -60,6 +60,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Thu Feb 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.0.5
 * Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use ruby-21 instead of ruby-19
 * Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

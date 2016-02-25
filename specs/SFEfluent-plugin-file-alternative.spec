@@ -11,7 +11,7 @@
 Summary:          alternative implementation of out_file, with various configurations
 Name:             SFEfluent-plugin-file-alt
 IPS_package_name: system/fluentd/plugins/file-alternative
-Version:          0.2.0
+Version:          0.2.2
 License:          Apache License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -63,6 +63,8 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Thu Feb 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.2.2
 * Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.2.0
 * Mon Jul 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

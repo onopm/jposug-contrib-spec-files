@@ -2,14 +2,14 @@
 %include default-depend.inc
 
 %define tarball_name node
-%define major_version 4.2
+%define major_version 4
 
 %define oracle_solaris_11 %(grep 'Oracle Solaris 11' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 
 Summary:          Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
-Name:             SFEnodejs-42
-IPS_package_name: runtime/node.js-42
+Name:             SFEnodejs-4
+IPS_package_name: runtime/node.js-4
 Version:          4.2.3
 License:          MIT License
 URL:              http://nodejs.org/
@@ -55,8 +55,8 @@ install -d %{buildroot}/usr/bin
 pushd %{buildroot}/usr/bin
 ln -s ../nodejs/%{major_version}/bin/node node
 ln -s ../nodejs/%{major_version}/bin/npm npm
-ln -s ../nodejs/%{major_version}/bin/node node42
-ln -s ../nodejs/%{major_version}/bin/npm npm42
+ln -s ../nodejs/%{major_version}/bin/node node4
+ln -s ../nodejs/%{major_version}/bin/npm npm4
 
 %clean
 rm -rf %{buildroot}
@@ -67,11 +67,13 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, bin) /usr/bin
 %ips_tag (mediator=nodejs mediator-version=%{major_version}) %attr (0755, root, bin) /usr/bin/node
 %ips_tag (mediator=nodejs mediator-version=%{major_version}) %attr (0755, root, bin) /usr/bin/npm
-%attr (0755, root, bin) /usr/bin/npm42
-%attr (0755, root, bin) /usr/bin/node42
+%attr (0755, root, bin) /usr/bin/npm4
+%attr (0755, root, bin) /usr/bin/node4
 %dir %attr (0755, root, bin) /usr/nodejs
 %attr (0755, root, bin) /usr/nodejs/%{major_version}
 
 %changelog
+* Mon Mar 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- rename "runtime/node.js-42" to "runtime/node.js-4"
 * Fri Dec 18 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

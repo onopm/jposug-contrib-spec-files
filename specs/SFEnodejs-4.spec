@@ -10,7 +10,7 @@
 Summary:          Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 Name:             SFEnodejs-4
 IPS_package_name: runtime/node.js-4
-Version:          4.2.3
+Version:          4.3.2
 License:          MIT License
 URL:              http://nodejs.org/
 Source0:          https://nodejs.org/dist/v%{verson}/node-v%{version}.tar.xz
@@ -75,5 +75,6 @@ rm -rf %{buildroot}
 %changelog
 * Mon Mar 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - rename "runtime/node.js-42" to "runtime/node.js-4"
+- bump to 4.3.2
 * Fri Dec 18 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

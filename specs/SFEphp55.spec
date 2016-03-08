@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.32
+%define tarball_version  5.5.33
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
@@ -523,6 +523,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Mar 08 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.33
 * Wed Feb 10 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.32 and ready for Oralce Apache 2.4 package
 * Wed Nov 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

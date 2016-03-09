@@ -1,11 +1,3 @@
-#
-# spec file for package: tmux
-#
-# Copyright 2010 Guido Berhoerster.
-# This file and all modifications and additions to the pristine
-# package are under the same license as the package itself.
-#
-
 %include Solaris.inc
 %include packagenamemacros.inc
 %include default-depend.inc
@@ -15,7 +7,7 @@
 Name:           SFEsmartmontools
 IPS_package_name:        system/smartmontools
 Summary:        utility programs to control and monitor storage systems using SMART
-Version:        6.3
+Version:        6.4
 License:        GPLv2
 Url:            http://sourceforge.net/apps/trac/smartmontools/
 Source:         %{sf_download}/smartmontools/%{srcname}-%{version}.tar.gz
@@ -71,7 +63,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_docdir}/smartmontools/NEWS
 %{_docdir}/smartmontools/COPYING
 %{_docdir}/smartmontools/smartd.conf
-%{_docdir}/smartmontools/WARNINGS
 %{_docdir}/smartmontools/TODO
 %{_docdir}/smartmontools/INSTALL
 %{_docdir}/smartmontools/README
@@ -86,6 +77,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmontools/drivedb.h
 
 %changelog
+* Wed Mar 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 6.4
 * Fri Dec 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 6.3
 * Sat Feb 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

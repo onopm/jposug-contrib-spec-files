@@ -27,6 +27,7 @@ mkdir -p $RPM_BUILD_ROOT/etc/elasticsearch/templates
 
 mkdir -p $RPM_BUILD_ROOT/usr/elasticsearch
 mkdir -p $RPM_BUILD_ROOT/usr/elasticsearch/plugins
+mkdir -p $RPM_BUILD_ROOT/usr/elasticsearch/modules
 cp -r bin $RPM_BUILD_ROOT/usr/elasticsearch
 cp -r lib $RPM_BUILD_ROOT/usr/elasticsearch
 
@@ -77,6 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Mar 16 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.2.1
+- add directory '/usr/elasticsearch/modules'
 * Wed Mar 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.2.0
 * Mon Dec 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

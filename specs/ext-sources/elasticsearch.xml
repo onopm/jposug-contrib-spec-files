@@ -69,6 +69,8 @@
                     	   value='/var/elasticsearch/logs' />
                 	<propval name='config' type='astring'
                     	   value='/etc/elasticsearch' />
+                	<propval name='heapsize' type='astring'
+                    	   value='1g' />
         	</property_group>
         </instance>
 

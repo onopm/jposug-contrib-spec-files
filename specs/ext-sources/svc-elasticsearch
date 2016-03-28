@@ -8,12 +8,11 @@ getproparg() {
 }
 
 ES_BIN=`getproparg elasticsearch/bin`
-ES_CONFIGFILE=`getproparg elasticsearch/configfile`
 ES_HOMEDIR=`getproparg elasticsearch/homedir`
-ES_WORKDIR=`getproparg elasticsearch/workdir`
 ES_DATADIR=`getproparg elasticsearch/datadir`
 ES_LOGDIR=`getproparg elasticsearch/logdir`
 ES_CONFIG=`getproparg elasticsearch/config`
+ES_HEAPSIZE=`getproparg elasticsearch/heapsize`
 PIDFILE='/var/elasticsearch/elasticsearch.pid'
 
 
@@ -25,16 +24,14 @@ fi
 case "$1" in
 'start')
 	printf "Starting Elasticsearch:"
-	${ES_BIN} \
+	ES_HEAP_SIZE=${ES_HEAPSIZE} ${ES_BIN} \
 	    -d \
 	    -p ${PIDFILE} \
-	    -Des.config=${ES_CONFIGFILE} \
-	    -Des.default.path.home=${ES_HOMEDIR} \
-	    -Des.default.path.home=${ES_HOMEDIR} \
-	    -Des.default.path.work=${ES_WORKDIR} \
-	    -Des.default.path.logs=${ES_LOGDIR} \
-	    -Des.default.path.data=${ES_DATADIR} \
-	    -Des.default.path.config=${ES_CONFIG}
+            -p ${PIDFILE} \
+	    -Des.path.conf=${ES_CONFIG} \
+	    -Des.path.home=${ES_HOMEDIR} \
+	    -Des.path.logs=${ES_LOGDIR} \
+	    -Des.path.data=${ES_DATADIR}
         ;;
 'stop')
     if [ -f $PIDFILE ]

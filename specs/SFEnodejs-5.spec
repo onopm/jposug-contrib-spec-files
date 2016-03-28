@@ -9,7 +9,7 @@
 Summary:          Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 Name:             SFEnodejs-5
 IPS_package_name: runtime/node.js-5
-Version:          5.7.1
+Version:          5.9.1
 License:          MIT License
 URL:              http://nodejs.org/
 Source0:          https://nodejs.org/dist/v%{verson}/node-v%{version}.tar.xz
@@ -72,6 +72,8 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/nodejs/%{major_version}
 
 %changelog
+* Mon Mar 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.9.1
 * Mon Mar 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - rename "runtime/node.js-53" to "runtime/node.js-5"
 - bump to 5.7.1

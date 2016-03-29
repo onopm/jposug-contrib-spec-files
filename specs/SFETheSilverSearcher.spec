@@ -2,7 +2,7 @@
 
 Name:		SFETheSilverSearcher
 IPS_package_name:        text/the_silver_searcher
-Version:	0.30.0
+Version:	0.31.0
 Summary:	A code-searching tool similar to ack, but faster.
 License:	Apache License
 URL:		http://geoff.greer.fm/ag/
@@ -18,6 +18,7 @@ The Silver Searcher is a tool for searching code. It started off as a clone of A
 
 %build
 export CC=/usr/bin/gcc
+export CFLAGS='-m64'
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
      CPUS=1
@@ -46,7 +47,8 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) %{_datadir}/man
 
 %changelog
+* Tue Mar 29 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.31.0
 * Sat Jun 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 0.30.0
 * Wed Mar 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

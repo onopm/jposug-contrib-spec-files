@@ -4,7 +4,7 @@
 %define tarball_version 23
 
 Name:                  SFEngircd
-IPS_package_name:      service/irc/ngircd
+IPS_package_name:      service/network/irc/ngircd
 Summary:               A lightweight daemon for the Internet Relay Chat (IRC)
 Version:               %{tarball_version}
 IPS_component_version: 23.0
@@ -85,3 +85,4 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Tue Mar 29 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- fix IPS_package_name

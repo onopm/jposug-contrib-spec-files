@@ -4,7 +4,7 @@
 Name:			SFEelasticsearch
 IPS_package_name:       database/elasticsearch
 Summary:		distributed restful search and analytics
-Version:		2.3.0
+Version:		2.3.1
 Source:                 http://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-%{version}.zip
 Source1:		svc-elasticsearch
 Source2:		elasticsearch.xml
@@ -76,6 +76,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755, root, sys) /var/svc/manifest/application/elasticsearch.xml
 
 %changelog
+* Tue Apr 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.1
 * Mon Apr 04 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.3.0
 * Wed Mar 16 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

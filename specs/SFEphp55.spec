@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.33
+%define tarball_version  5.5.34
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
@@ -496,12 +496,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, sys) /var/svc/manifest/php-fpm55.xml
 # %dir %attr (0755, root, sys) /var/run
 # %attr (0755, root, root) /var/run/php-fpm
-%if %{apache22}
 %dir %attr (0755, root, bin) /usr/apache2
+%dir %attr (0755, root, bin) /etc/apache2
+%if %{apache22}
 %dir %attr (0755, root, bin) /usr/apache2/2.2
 %dir %attr (0755, root, bin) /usr/apache2/2.2/libexec
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
-%dir %attr (0755, root, bin) /etc/apache2
 %dir %attr (0755, root, bin) /etc/apache2/2.2
 %dir %attr (0755, root, bin) /etc/apache2/2.2/conf.d
 %dir %attr (0755, root, bin) /etc/apache2/2.2/conf.d/php
@@ -510,11 +510,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %if %{apache24}
-%dir %attr (0755, root, bin) /usr/apache2
 %dir %attr (0755, root, bin) /usr/apache2/2.4
 %dir %attr (0755, root, bin) /usr/apache2/2.4/libexec
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php5.5.so
-%dir %attr (0755, root, bin) /etc/apache2
 %dir %attr (0755, root, bin) /etc/apache2/2.4
 %dir %attr (0755, root, bin) /etc/apache2/2.4/conf.d
 %dir %attr (0755, root, bin) /etc/apache2/2.4/conf.d/php
@@ -523,6 +521,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Apr 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.34 and fix file list
 * Tue Mar 08 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.33
 * Wed Feb 10 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

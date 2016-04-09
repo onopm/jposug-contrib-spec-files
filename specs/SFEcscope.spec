@@ -24,7 +24,6 @@ SUNW_Copyright:	         cscope.copyright
 BuildRequires:           %{pnm_buildrequires_SUNWbison}
 BuildRequires:           %{pnm_buildrequires_SUNWncurses}
 Requires:                %{pnm_buildrequires_SUNWncurses}
-Requires:                %{pnm_requires_SUNWtoo}
 
 %prep
 %setup -q -n cscope-%{tarball_version}
@@ -59,6 +58,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/*/*
 
 %changelog
+* Sat Apr 9 2016 - Osamu Tabata <cantimerny.g@gmail.com>
+- build for 11.3
 * Fri Aug 21 2015 - Osamu Tabata <cantimerny.g@gmail.com>
 - Bump to 15.8b
 * Wed Aug 12 2015 - Osamu Tabata

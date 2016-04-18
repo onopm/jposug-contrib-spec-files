@@ -15,7 +15,7 @@
 Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.0.15
+Version:          1.0.17
 License:          Apache 2
 URL:              http://github.com/elasticsearch/elasticsearch-ruby
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -67,9 +67,7 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-# elasticsearch-api = 1.0.15
 Requires:         library/ruby/elasticsearch-api-20 = %{version}
-# elasticsearch-transport = 1.0.15
 Requires:         library/ruby/elasticsearch-transport-20 = %{version}
 Requires:         library/ruby/%{gemname}-20
 
@@ -84,9 +82,7 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-# elasticsearch-api = 1.0.15
 Requires:         library/ruby/elasticsearch-api-20 = %{version}
-# elasticsearch-transport = 1.0.15
 Requires:         library/ruby/elasticsearch-transport-20 = %{version}
 
 %description 20
@@ -102,9 +98,7 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-# elasticsearch-api = 1.0.15
 Requires:         library/ruby/elasticsearch-api-21 = %{version}
-# elasticsearch-transport = 1.0.15
 Requires:         library/ruby/elasticsearch-transport-21 = %{version}
 Requires:         library/ruby/%{gemname}-21
 
@@ -119,9 +113,7 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-# elasticsearch-api = 1.0.15
 Requires:         library/ruby/elasticsearch-api-21 = %{version}
-# elasticsearch-transport = 1.0.15
 Requires:         library/ruby/elasticsearch-transport-21 = %{version}
 
 %description 21
@@ -137,9 +129,7 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-# elasticsearch-api = 1.0.15
 Requires:         library/ruby/elasticsearch-api-22 = %{version}
-# elasticsearch-transport = 1.0.15
 Requires:         library/ruby/elasticsearch-transport-22 = %{version}
 Requires:         library/ruby/%{gemname}-22
 
@@ -154,9 +144,7 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-# elasticsearch-api = 1.0.15
 Requires:         library/ruby/elasticsearch-api-22 = %{version}
-# elasticsearch-transport = 1.0.15
 Requires:         library/ruby/elasticsearch-transport-22 = %{version}
 
 %description 22
@@ -172,10 +160,8 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-# elasticsearch-api = 1.0.15
-Requires:         library/ruby/elasticsearch-api-23
-# elasticsearch-transport = 1.0.15
-Requires:         library/ruby/elasticsearch-transport-23
+Requires:         library/ruby/elasticsearch-api-23 = %{version}
+Requires:         library/ruby/elasticsearch-transport-23 = %{version}
 Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
@@ -189,10 +175,8 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-# elasticsearch-api = 1.0.15
-Requires:         library/ruby/elasticsearch-api-23
-# elasticsearch-transport = 1.0.15
-Requires:         library/ruby/elasticsearch-transport-23
+Requires:         library/ruby/elasticsearch-api-23 = %{version}
+Requires:         library/ruby/elasticsearch-transport-23 = %{version}
 
 %description 23
 Ruby integrations for Elasticsearch (client, API, etc.)
@@ -379,6 +363,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.17
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.15 and build package for ruby-23
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

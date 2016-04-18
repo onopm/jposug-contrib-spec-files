@@ -15,7 +15,7 @@
 Summary:          Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.0.15
+Version:          1.0.17
 License:          Apache 2
 URL:              https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -379,6 +379,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.17
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.15 and build package for ruby-23
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -11,11 +11,12 @@
 
 %define gemname serverspec
 %define sfe_gemname serverspec
+%define specinfra_ver 2.48.0
 
 Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.24.3
+Version:          2.30.1
 License:          MIT
 URL:              http://serverspec.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -49,7 +50,7 @@ Requires:         library/ruby/rspec-19
 # rspec-its >= 0
 Requires:         library/ruby/rspec-its-19
 # specinfra ~> 2.43
-Requires:         library/ruby/specinfra-19
+Requires:         library/ruby/specinfra-19 >= %{specinfra_ver}
 Requires:         library/ruby/%{gemname}
 
 %description 19
@@ -81,7 +82,7 @@ Requires:         library/ruby/rspec-20
 # rspec-its >= 0
 Requires:         library/ruby/rspec-its-20
 # specinfra ~> 2.43
-Requires:         library/ruby/specinfra-20
+Requires:         library/ruby/specinfra-20 >= %{specinfra_ver}
 Requires:         library/ruby/%{gemname}
 
 %description 20
@@ -113,7 +114,7 @@ Requires:         library/ruby/rspec-21
 # rspec-its >= 0
 Requires:         library/ruby/rspec-its-21
 # specinfra ~> 2.43
-Requires:         library/ruby/specinfra-21
+Requires:         library/ruby/specinfra-21 >= %{specinfra_ver}
 Requires:         library/ruby/%{gemname}
 
 %description 21
@@ -145,7 +146,7 @@ Requires:         library/ruby/rspec-22
 # rspec-its >= 0
 Requires:         library/ruby/rspec-its-22
 # specinfra ~> 2.43
-Requires:         library/ruby/specinfra-22
+Requires:         library/ruby/specinfra-22 >= %{specinfra_ver}
 Requires:         library/ruby/%{gemname}
 
 %description 22
@@ -177,7 +178,7 @@ Requires:         library/ruby/rspec-23
 # rspec-its >= 0
 Requires:         library/ruby/rspec-its-23
 # specinfra ~> 2.43
-Requires:         library/ruby/specinfra-23
+Requires:         library/ruby/specinfra-23 >= %{specinfra_ver}
 
 %description 23
 RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
@@ -363,6 +364,11 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Mar 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.30.0
+- bump to 2.30.1
+* Tue Feb 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.29.2
 * Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for ruby-23
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

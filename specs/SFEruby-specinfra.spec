@@ -15,7 +15,7 @@
 Summary:          Common layer for serverspec and itamae
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.45.0
+Version:          2.53.0
 License:          MIT
 URL:              https://rubygems.org/gems/specinfra
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -175,7 +175,8 @@ Requires:         library/ruby/net-scp-23
 # net-ssh < 3.1, >= 2.7
 Requires:         library/ruby/net-ssh-23
 # net-telnet >= 0
-Requires:         library/ruby/net-telnet-23
+# Ruby 2.3.0 includes net-telnet 0.1.1
+# Requires:         library/ruby/net-telnet-23
 # sfl >= 0
 Requires:         library/ruby/sfl-23
 
@@ -363,6 +364,14 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Mar 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.52.0
+- bump to 2.53.0
+* Tue Feb 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.51.0
+* Tue Feb 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.51.0
+- remove net-telnet from Requires of ruby-23, because ruby-23 includes net-telnet 0.1.1
 * Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.45.0 and build package for ruby-23
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

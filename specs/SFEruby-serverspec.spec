@@ -11,12 +11,12 @@
 
 %define gemname serverspec
 %define sfe_gemname serverspec
-%define specinfra_ver 2.48.0
+%define specinfra_ver 2.53.0
 
 Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.30.1
+Version:          2.32.0
 License:          MIT
 URL:              http://serverspec.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -364,6 +364,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Fri Apr 22 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.32.0
 * Mon Mar 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.30.0
 - bump to 2.30.1

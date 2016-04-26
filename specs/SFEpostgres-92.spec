@@ -11,12 +11,13 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.2.13
+%define tarball_version  9.2.16
 %define major_version	 9.2
 %define prefix_name      SFEpostgres-92
 %define _basedir         %{_prefix}/%{major_version}
 
-%define oracle_solaris_11_2 %(grep 'Oracle Solaris 11.2' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+%define after_oracle_solaris_11_2 %(egrep 'Oracle Solaris (11\.[23]|12)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+%define oracle_solaris_12 %(grep 'Oracle Solaris 12' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-92
@@ -47,7 +48,7 @@ BuildRequires: %{pnm_buildrequires_SUNWcsl}
 BuildRequires: %{pnm_buildrequires_SUNWlibms}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWTcl}
-%if %{oracle_solaris_11_2}
+%if %{after_oracle_solaris_11_2}
 BuildRequires: library/libedit
 %else
 BuildRequires: SFEeditline
@@ -60,7 +61,7 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWgss}
-%if %{oracle_solaris_11_2}
+%if %{after_oracle_solaris_11_2}
 Requires: library/libedit
 %else
 Requires: SFEeditline
@@ -130,8 +131,13 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{prefix_name}-libs
-%if %{oracle_solaris_11_2}
+%if %{after_oracle_solaris_11_2}
+#
+%if %{oracle_solaris_12}
+Requires: SFEpostgres-common
+%else
 #On Oracle Soalris 11.2, user postgres exists by default.
+%endif
 %else
 Requires: SFEpostgres-common
 %endif
@@ -643,12 +649,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config/missing
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/makefiles
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test/regress
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/config
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/config/missing
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/makefiles
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/test
@@ -1165,6 +1173,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Tue Apr 26 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.16
 * Sun Jun 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.2.13
 * Mon May 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

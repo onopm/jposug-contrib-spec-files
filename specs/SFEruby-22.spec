@@ -3,7 +3,7 @@
 #
 
 %define _name ruby
-%define version 2.2.3
+%define version 2.2.5
 %define major_version 2.2
 %define unmangled_version 2.2.0
 %define patchlevel 0
@@ -23,6 +23,7 @@ IPS_component_version:	%{version}.%{patchlevel}
 License: 		GPL
 Source: http://cache.ruby-lang.org/pub/ruby/2.2/ruby-%{version}.tar.gz
 Patch0:			ruby-22-ext-socket-option.patch
+Patch1:                 ruby-22-disable-ssl.patch
 Url:			 http://www.ruby-lang.org/
 
 BuildRequires: library/text/yaml >= 0.1.6
@@ -30,14 +31,8 @@ BuildRequires: system/network/bpf
 BuildRequires: system/library/libnet
 Requires:      library/text/yaml >= 0.1.6
 
-%if %( expr %{osbuild} '=' 175 )
-BuildRequires: developer/gcc-48
-Requires:      system/library/gcc-48-runtime
-%define mimpure_text
-%else
-BuildRequires: developer/gcc-46
+BuildRequires: developer/gcc
 Requires:      system/library/gcc-runtime
-%endif
 
 %description
 
@@ -46,6 +41,7 @@ Requires:      system/library/gcc-runtime
 %setup -n ruby-%{version}
 
 %patch0 -p1
+%patch1 -p0
 
 %build
 export CFLAGS='-m64 -std=gnu99 -I/usr/gcc/include'
@@ -116,6 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Mon May 02 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.5
 * Wed Aug 19 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.2.3
 * Mon Mar 18 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

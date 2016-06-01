@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  7.0.4
+%define tarball_version  7.0.7
 %define major_version	 7.0
 %define prefix_name      SFEphp70
 %define _basedir         %{_prefix}/%{major_version}
@@ -34,7 +34,6 @@ BuildRequires: SFEeditline
 BuildRequires: developer/icu
 
 Requires:       system/management/snmp/net-snmp >= 5.4.1
-Requires:       system/library/security/libmcrypt
 Requires:       text/tidy
 Requires:       library/libtool/libltdl
 Requires:       web/php-common
@@ -170,7 +169,7 @@ build --enable-force-cgi-redirect \
     --without-readline \
     --with-libedit \
     --enable-phar=shared \
-    --with-mcrypt=shared \
+    --disable-mcrypt \
     --with-tidy=shared \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
@@ -242,7 +241,7 @@ build --enable-force-cgi-redirect \
     --without-readline \
     --with-libedit \
     --enable-phar=shared \
-    --with-mcrypt=shared \
+    --disable-mcrypt \
     --with-tidy=shared \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
@@ -431,6 +430,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php7.0.so
 
 %changelog
+* Wed Jun 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.7 and disable mcrypt
 * Mon Mar 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.0.4 and use apache-24
 * Fri Jan 08 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

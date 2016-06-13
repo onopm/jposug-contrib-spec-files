@@ -16,7 +16,7 @@
 Summary:          MessagePack is a binary-based efficient object serialization library. It enables to exchange structured objects between many languages like JSON. But unlike JSON, it is very fast and small.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          0.5.12
+Version:          0.7.6
 License:          Apache 2.0
 URL:              http://msgpack.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -324,6 +324,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Jun 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.7.6
 * Mon Dec 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.5.12
 * Fri Feb 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

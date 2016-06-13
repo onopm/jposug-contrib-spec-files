@@ -7,7 +7,7 @@
 %define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
-%define keep_dependency 1
+%define keep_dependency 0
 
 %define gemname serverengine
 %define sfe_gemname serverengine
@@ -335,3 +335,4 @@ rm -rf %{buildroot}
 %changelog
 * Mon Jun 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- no need to keep dependency

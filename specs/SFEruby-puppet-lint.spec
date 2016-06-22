@@ -15,7 +15,7 @@
 Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.1.0
+Version:          2.0.0
 License:          MIT License
 URL:              https://github.com/rodjek/puppet-lint/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -323,6 +323,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Jun 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.0
 * Tue Dec 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for ruby-23
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

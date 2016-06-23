@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.34
+%define tarball_version  5.5.36
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
@@ -521,6 +521,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Jun 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.36
 * Tue Apr 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.5.34 and fix file list
 * Tue Mar 08 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

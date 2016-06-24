@@ -9,7 +9,7 @@
 Summary:          Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 Name:             SFEnodejs-%{major_version}
 IPS_package_name: runtime/node.js-%{major_version}
-Version:          6.1.0
+Version:          6.2.2
 License:          MIT License
 URL:              http://nodejs.org/
 Source0:          https://nodejs.org/dist/v%{verson}/node-v%{version}.tar.xz
@@ -21,6 +21,9 @@ SUNW_Copyright:   %{name}.copyright
 Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
 Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world.
+
+BuildRequires: developer/gcc
+Requires:      system/library/gcc/gcc-runtime
 
 %prep
 %setup -q -n node-v%{version}
@@ -73,6 +76,8 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/nodejs/%{major_version}
 
 %changelog
+* Fri Jun 24 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 6.2.2
 * Mon May 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 6.1.0
 * Wed Apr 27 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

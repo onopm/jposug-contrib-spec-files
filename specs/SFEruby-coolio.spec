@@ -5,7 +5,8 @@
 %define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+# %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 0
 %define generate_executable 0
 %define keep_dependency 1
 
@@ -15,7 +16,10 @@
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.4.4
+Version:          1.4.5
+IPS_Component_Version: 1.4.5
+IPS_Build_Version: %(pkg list -H entire |awk '{print $2}' | cut -d- -f1 |sed -e 's/^0\.//')
+IPS_Vendor_Version: %(pkg list -H entire |awk '{print $2}' | cut -d- -f2)
 License:          MIT License
 URL:              http://coolio.github.com
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -29,8 +33,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 19-old
 IPS_package_name: library/ruby-19/%{gemname}
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-19 = *
-Requires:         runtime/ruby-19 = *
+# BuildRequires:    runtime/ruby-19
+Requires:         runtime/ruby-19
 Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
@@ -40,8 +44,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-19 = *
-Requires:         runtime/ruby-19 = *
+# BuildRequires:    runtime/ruby-19
+Requires:         runtime/ruby-19
 
 %description 19
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
@@ -52,8 +56,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 20-old
 IPS_package_name: library/ruby-20/%{gemname}
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-20 = *
-Requires:         runtime/ruby-20 = *
+# BuildRequires:    runtime/ruby-20
+Requires:         runtime/ruby-20
 Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
@@ -63,8 +67,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-20 = *
-Requires:         runtime/ruby-20 = *
+# BuildRequires:    runtime/ruby-20
+Requires:         runtime/ruby-20
 
 %description 20
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
@@ -75,8 +79,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 21-old
 IPS_package_name: library/ruby-21/%{gemname}
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
+# BuildRequires:    runtime/ruby-21
+Requires:         runtime/ruby-21
 Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
@@ -86,8 +90,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
+# BuildRequires:    runtime/ruby-21
+Requires:         runtime/ruby-21
 
 %description 21
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
@@ -98,8 +102,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 22-old
 IPS_package_name: library/ruby-22/%{gemname}
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
+# BuildRequires:    runtime/ruby-22
+Requires:         runtime/ruby-22
 Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
@@ -109,8 +113,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
+# BuildRequires:    runtime/ruby-22
+Requires:         runtime/ruby-22
 
 %description 22
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
@@ -121,8 +125,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 23-old
 IPS_package_name: library/ruby-23/%{gemname}
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-23 = *
-Requires:         runtime/ruby-23 = *
+# BuildRequires:    runtime/ruby-23
+Requires:         runtime/ruby-23
 Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
@@ -132,8 +136,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 23
 IPS_package_name: library/ruby/%{gemname}-23
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-BuildRequires:    runtime/ruby-23 = *
-Requires:         runtime/ruby-23 = *
+# BuildRequires:    runtime/ruby-23
+Requires:         runtime/ruby-23
 
 %description 23
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
@@ -319,6 +323,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Sep 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.4.5, use IPS_*_Version to avoid 'Bad Version' error, comment out BuildRequires to avoid package detection failure and disable to build for ruby-23 because of build failure
 * Mon Jun 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.4.4
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

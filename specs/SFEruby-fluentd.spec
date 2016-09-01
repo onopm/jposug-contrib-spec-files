@@ -25,11 +25,11 @@ BuildRequires:	library/ruby/rr-21
 BuildRequires:	library/ruby/timecop-21
 BuildRequires:	library/text/yaml >= 0.1.6
 Requires:	runtime/ruby-21
-Requires:	library/ruby/cool.io-21 >= 1.4.3
+Requires:	library/ruby/cool.io-21 >= 1.4.5
 Requires:	library/ruby/http_parser.rb-21 >= 0.5.1
 Requires:	library/ruby/json-21 >= 1.4.3
 Requires:	library/ruby/msgpack-21 >= 0.7.0
-Requires:	library/ruby/serverengine-21 >= 1.6.4
+Requires:	library/ruby/serverengine-21 >= 2.0.0
 Requires:	library/ruby/sigdump-21 >= 0.2.2
 Requires:	library/ruby/strptime >= 0.1.7
 Requires:	library/ruby/yajl-ruby-21 >= 1.0
@@ -126,6 +126,7 @@ rm -rf %{buildroot}
 %changelog
 * Thu Sep 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.14.4
+- fix requires
 * Mon Jun 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.14.0
 * Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

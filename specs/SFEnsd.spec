@@ -11,7 +11,7 @@
 Name:			SFEnsd
 IPS_Package_Name:	service/network/dns/nsd
 Summary:		Fast and lean authoritative DNS Name Server
-Version:		4.1.12
+Version:		4.1.13
 License: 		BSD
 Source:                 http://www.nlnetlabs.nl/downloads/nsd/nsd-%{version}.tar.gz
 Source1:                nsd.xml
@@ -127,6 +127,8 @@ user ftpuser=false gcos-field="NSD Reserved UID" username="nsd" password=NP grou
 %attr (0755, root, bin) /usr/share/munin/plugins/nsd_munin_
 
 %changelog
+* Fri Sep 30 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 4.1.13
 * Thu Sep 08 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.1.12
 * Thu Mar 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

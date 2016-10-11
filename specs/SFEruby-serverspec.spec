@@ -16,7 +16,7 @@
 Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.36.0
+Version:          2.37.0
 License:          MIT
 URL:              http://serverspec.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -364,6 +364,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Oct 11 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.37.0
 * Mon May 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.36.0
 * Fri Apr 22 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

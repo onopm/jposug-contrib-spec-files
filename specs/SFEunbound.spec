@@ -8,7 +8,7 @@
 Summary:	Validating, recursive, and caching DNS resolver
 IPS_Package_Name:	network/dns/unbound
 Name:		SFEunbound
-Version:	1.4.17
+Version:	1.5.8
 License:	BSD
 URL:		http://www.nlnetlabs.nl/unbound/
 Source:		http://www.unbound.net/downloads/unbound-%{version}.tar.gz
@@ -132,6 +132,22 @@ user ftpuser=false gcos-field="Unbound Reserved UID" username="unbound" password
 %{_libdir}/libunbound*
 
 %changelog
+* Wed Mar 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.8
+* Mon Dec 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.7
+* Thu Oct 15 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.5
+* Thu Sep 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.4
+* Mon Jun 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.3
+* Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.1
+* Tue Nov 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.0
+* Wed May 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.4.22
 * Fri Dec 07 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify requires to build Solaris 11.1
 * Thu Jun 07 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

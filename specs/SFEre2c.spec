@@ -24,8 +24,8 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 BuildRequires: developer/gcc-45
 Requires:      system/library/gcc-45-runtime
 %else
-BuildRequires: SFEgcc
-Requires:      SFEgccruntime
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
 %endif
 
 %include default-depend.inc
@@ -71,6 +71,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change BuildRequires that refer to gcc at OI
+* Thu Jan 24 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Adjusted for OI.
 * Sun Jan  6 2013 - TAKI,Yasushi <taki@justplayer.com>
 - merge jposug fork version.
 - When using Solaris 11, use gcc-45.

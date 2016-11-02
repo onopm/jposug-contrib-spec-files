@@ -138,7 +138,7 @@
 #gcc variant, but we get only whole machine defaults)
 
 Name:		SFEgcc
-IPS_package_name:	sfe/developer/gcc
+IPS_package_name:	developer/gcc
 Summary:	GNU gcc compiler - metapackage with symbolic links to version %{major_minor} compiler files available in %{gccsymlinks}
 #Version:	see above, %{version} is set elsewhere
 License:             GPLv3+
@@ -182,8 +182,8 @@ Requires:      SFEgcc-%{majorminornumber},SFEgccruntime-%{majorminornumber}
 #cosmetic:
 Requires:      SFEgccruntime
 
-BuildRequires: SFElibiconv-devel
-Requires:      SFElibiconv
+BuildRequires: library/text/gnu-iconv/developer
+Requires:      library/text/gnu-iconv
 BuildRequires: SUNWbash
 
 %if %SFEgmp
@@ -207,7 +207,7 @@ Requires: SUNWgnu-mpfr
 %endif
 
 %if %SFElibmpc
-BuildRequires: SFElibmpc-devel
+BuildRequires: library/mpc/developer
 Requires: SFElibmpc
 #workaround on IPS which is wrong with BASEdir as "/" -> then assume /usr/gnu
 %define SFElibmpcbasedir %(pkgparam SFElibmpc BASEDIR 2>/dev/null | sed -e 's+^/$+/usr/gnu+')
@@ -227,7 +227,7 @@ Requires: SUNWbinutils
 Requires: SUNWpostrun
 
 %package -n SFEgcc-%{majorminornumber}
-IPS_package_name:        sfe/developer/gcc-46
+IPS_package_name:        developer/gcc-46
 Summary:                 GNU gcc compiler - version %{major_minor} compiler files
 Version:                 %{version}
 SUNW_BaseDir:            %{_basedir}
@@ -235,7 +235,7 @@ SUNW_BaseDir:            %{_basedir}
 Requires: %{name}runtime-%{majorminornumber}
 
 %package -n SFEgccruntime
-IPS_package_name:        sfe/system/library/gcc-runtime
+IPS_package_name:        system/library/gcc-runtime
 Summary:                 GNU gcc runtime libraries for applications - metapackage with symbolic links to version %{major_minor} runtime available in %{gccsymlinks}
 Version:                 %{version}
 SUNW_BaseDir:            %{_basedir}
@@ -243,7 +243,7 @@ SUNW_BaseDir:            %{_basedir}
 Requires: %{name}runtime-%{majorminornumber}
 
 %package -n SFEgccruntime-%{majorminornumber}
-IPS_package_name:        sfe/system/library/gcc-46-runtime        
+IPS_package_name:        system/library/gcc-46-runtime        
 Summary:                 GNU gcc runtime libraries for applications - version %{version} runtime library files
 Version:                 %{version}
 SUNW_BaseDir:            %{_basedir}
@@ -587,6 +587,12 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Feb 16 2014 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- Fixed dependency
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- delete sfe prefix from IPS package name
+* Tue Jan 29 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- Change dependency
 * Wed Jun 13 2012 - Osamu Tabata<cantimerny.g@gmail.com>
 - Sipport for Solaris11
 * Sat Mar 03 2012 - Milan Jurik

@@ -14,6 +14,7 @@ License:		 BSD Style
 Url:                     http://pear.php.net/package/%{tarball_name}
 Source:                  http://download.pear.php.net/package/%{tarball_name}-%{tarball_version}.tgz
 # Source1:                 %{name}.ini
+Patch0:                   Mail-1.2.0-php53.patch
 Distribution:            OpenSolaris
 Vendor:		         OpenSolaris Community
 SUNW_Basedir:            /
@@ -31,7 +32,9 @@ PEAR's Mail package defines an interface for implementing mailers under the PEAR
 
 %prep
 
-%setup -c -T
+# %setup -c -T
+%setup -c -n %{tarball_name}-%{tarball_version}
+%patch0 -p0
 
 %build
 
@@ -39,6 +42,7 @@ PEAR's Mail package defines an interface for implementing mailers under the PEAR
 
 rm -rf %{buildroot}
 /usr/php/5.3/bin/pear -c pearrc install --nodeps --packagingroot %{buildroot} %{SOURCE0}
+install Mail-1.2.0/Mail/smtp.php %{buildroot}/var/php/5.3/pear/Mail/smtp.php
 
 # Clean up unnecessary files
 rm %{buildroot}/%{pear_dir}/.filemap
@@ -59,5 +63,7 @@ rm -rf $RPM_BUILD_ROOT
 %{pear_dir}/.registry/mail.reg
 
 %changelog
+* Thu Jan 17 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add patch0
 * Sat Dec 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

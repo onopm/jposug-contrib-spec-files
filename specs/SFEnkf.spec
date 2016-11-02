@@ -12,16 +12,21 @@
 %define         tarball_name    nkf
 
 Name:		   SFEnkf
-Version:	   2.1.2
+Version:	   2.1.3
 IPS_package_name:  text/nkf
 License:           BSD
 Group:             Applications/Text
 URL:               http://nkf.sourceforge.jp/
-Source0:           http://dl.sourceforge.jp/%{tarball_name}/53171/%{tarball_name}-%{version}.tar.gz
+Source0:           http://dl.sourceforge.jp/%{tarball_name}/59912/%{tarball_name}-%{version}.tar.gz
 Buildroot:         %{_tmppath}/%{tarball_name}-%{version}-%{release}-root
+%if %( expr %{osbuild} '=' 175 )
 BuildRequires:     %{pnm_buildrequires_SUNWperl584core_devel}
-BuildRequires:     %{pnm_buildrequires_system_library_iconv_utf_8}
 Requires:          %{pnm_requires_SUNWperl584core}
+%else
+BuildRequires:     %{pnm_buildrequires_perl510core}
+Requires:          %{pnm_requires_perl510core}
+%endif
+BuildRequires:     %{pnm_buildrequires_system_library_iconv_utf_8}
 BuildRequires:          system/library
 Requires:          system/library
 Requires:          %{pnm_requires_system_library_iconv_utf_8}
@@ -40,9 +45,14 @@ converts input Kanji code to 7-bit JIS, MS-kanji (shifted-JIS) or EUC.
 IPS_package_name: library/perl-5/nkf
 Summary:        Perl extension for Network Kanji Filter
 Group:          Applications/Text
+%if %( expr %{osbuild} '=' 175 )
 BuildRequires:     %{pnm_buildrequires_SUNWperl584core_devel}
-BuildRequires:     %{pnm_buildrequires_system_library_iconv_utf_8}
 Requires:          %{pnm_requires_SUNWperl584core}
+%else
+BuildRequires:     %{pnm_buildrequires_perl510core}
+Requires:          %{pnm_requires_perl510core}
+%endif
+BuildRequires:     %{pnm_buildrequires_system_library_iconv_utf_8}
 BuildRequires:          system/library
 Requires:          system/library
 #Requires:          %{pnm_requires_system_library}
@@ -117,11 +127,15 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_man3dir}/NKF.3
 
 %changelog
+* Wed Nov 12 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.3
+* Tue Jan 29 2013 YAMAMOTO Takashi<yamachan@selfnavi.com>
+- Support for OpenIndiana
 * Sun Jan  6 2013 TAKI, Yasushi <taki@justplayer.com>
 - Bump to 2.1.2
 - use pnmacro.
 - fix minor error
-* Thu Mar 15 2012 Satoru MIYAZAKI <s.miyaza@gmail.com> 
+* Thu Mar 15 2012 Satoru MIYAZAKI <s.miyaza@gmail.com>
 - add dir entries
-* Thu Feb  3 2011 Satoru MIYAZAKI <s.miyaza@gmail.com> 
+* Thu Feb  3 2011 Satoru MIYAZAKI <s.miyaza@gmail.com>
 - Support for Solaris11 Express.

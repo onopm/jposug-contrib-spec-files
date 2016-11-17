@@ -1,9 +1,9 @@
 #
-# spec file for package SFEruby-21
+# spec file for package SFEruby-22
 #
 
 %define _name ruby
-%define version 2.2.5
+%define version 2.2.6
 %define major_version 2.2
 %define unmangled_version 2.2.0
 %define patchlevel 0
@@ -21,7 +21,7 @@ Version:		%{version}
 Release:		%{patchlevel}
 IPS_component_version:	%{version}.%{patchlevel}
 License: 		GPL
-Source: http://cache.ruby-lang.org/pub/ruby/2.2/ruby-%{version}.tar.gz
+Source: http://cache.ruby-lang.org/pub/ruby/%{major_version}/ruby-%{version}.tar.gz
 Patch0:			ruby-22-ext-socket-option.patch
 Patch1:                 ruby-22-disable-ssl.patch
 Url:			 http://www.ruby-lang.org/
@@ -112,6 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Thu Nov 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.6
 * Mon May 02 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.2.5
 * Wed Aug 19 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

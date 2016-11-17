@@ -6,7 +6,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.14.4
+%define tarball_version 0.14.9
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -105,6 +105,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr(0755, root, sys) /usr
 %dir %attr(0755, root, bin) /usr/bin
+%attr(0555, root, bin) /usr/bin/fluent-binlog-reader
 %attr(0555, root, bin) /usr/bin/fluent-cat
 %attr(0555, root, bin) /usr/bin/fluent-debug
 %attr(0555, root, bin) /usr/bin/fluent-gem
@@ -124,6 +125,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Thu Nov 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.9
 * Thu Sep 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.14.4
 - fix requires

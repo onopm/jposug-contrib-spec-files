@@ -2,7 +2,7 @@
 
 Name:		SFETheSilverSearcher
 IPS_package_name:        text/the_silver_searcher
-Version:	0.31.0
+Version:	0.33.0
 Summary:	A code-searching tool similar to ack, but faster.
 License:	Apache License
 URL:		http://geoff.greer.fm/ag/
@@ -47,6 +47,8 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) %{_datadir}/man
 
 %changelog
+* Thu Oct 20 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.33.0
 * Tue Mar 29 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.31.0
 * Sat Jun 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

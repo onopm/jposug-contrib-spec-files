@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  7.0.8
+%define tarball_version  7.0.12
 %define major_version	 7.0
 %define prefix_name      SFEphp70
 %define _basedir         %{_prefix}/%{major_version}
@@ -161,9 +161,12 @@ build --enable-force-cgi-redirect \
     --enable-xmlreader=shared --enable-xmlwriter=shared \
     --with-curl=shared \
     --enable-fastcgi \
-    --enable-pdo=shared \
-    --with-pdo-sqlite=shared \
     --with-sqlite3=shared \
+    --enable-mysqlnd=shared \
+    --with-mysqli=shared,mysqlnd \
+    --enable-pdo=shared \
+    --with-pdo-mysql=shared,mysqlnd \
+    --with-pdo-sqlite=shared \
     --enable-json=shared \
     --enable-zip=shared \
     --without-readline \
@@ -232,8 +235,11 @@ build --enable-force-cgi-redirect \
     --enable-xmlreader=shared --enable-xmlwriter=shared \
     --with-curl=shared \
     --enable-fastcgi \
+    --enable-mysqlnd=shared \
+    --enable-mysqlnd-threading \
+    --with-mysqli=shared,mysqlnd \
     --enable-pdo=shared \
-    --with-pdo-mysql=shared \
+    --with-pdo-mysql=shared,mysqlnd \
     --with-pdo-sqlite=shared \
     --with-sqlite3=shared \
     --enable-json=shared \
@@ -386,6 +392,16 @@ rm -rf $RPM_BUILD_ROOT/.depdb
 rm -rf $RPM_BUILD_ROOT/.depdblock
 rm -rf $RPM_BUILD_ROOT/.registry
 
+# ini file for extension
+for mod in mysqlnd  mysqli pdo_mysql
+do
+    cat > $RPM_BUILD_ROOT/etc/php/7.0/conf.d/${mod}.ini <<EOF
+; Enable ${mod} extension module
+extension=${mod}.so
+EOF
+done
+
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -399,7 +415,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %config(noreplace) /etc/php/7.0/php.ini-production
 %attr (0644, root, bin) %config(noreplace) /etc/php/7.0/php.ini-development
 %dir %attr (0755, root, bin) /etc/php/7.0/conf.d
-%attr (0755, root, bin) %config(noreplace) /etc/php/7.0/conf.d/opcache.ini
+%attr (0755, root, bin) %config(noreplace) /etc/php/7.0/conf.d/*.ini
 %dir %attr (0755, root, bin) /etc/php/7.0/zts-conf.d
 # %dir %attr (0755, root, bin) /etc/php/7.0/fpm-conf.d
 %attr (0755, root, bin) %config(noreplace) /etc/php/7.0/php-fpm.conf.default
@@ -430,6 +446,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php7.0.so
 
 %changelog
+* Fri Oct 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use mysqlng instead of libmysqlclient
+* Thu Oct 20 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.12
+* Fri Sep 30 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.11
+* Fri Jul 22 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.9
 * Fri Jun 24 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.0.8
 * Wed Jun 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

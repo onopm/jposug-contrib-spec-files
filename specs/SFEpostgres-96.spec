@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.6.0
+%define tarball_version  9.6.1
 %define major_version	 9.6
 %define prefix_name      SFEpostgres-96
 %define _basedir         %{_prefix}/%{major_version}
@@ -1293,5 +1293,7 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_recvlogical
 
 %changelog
+* Mon Nov 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.6.1
 * Tue Oct 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

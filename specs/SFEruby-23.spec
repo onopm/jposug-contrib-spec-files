@@ -1,4 +1,4 @@
-%define version 2.3.2
+%define version 2.3.3
 %define major_version 2.3
 %define unmangled_version 2.3.0
 %define version_suffix 23
@@ -97,6 +97,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Wed Nov 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.3
 * Thu Nov 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.3.2
 * Mon May 02 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

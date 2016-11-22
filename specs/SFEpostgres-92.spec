@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.2.17
+%define tarball_version  9.2.19
 %define major_version	 9.2
 %define prefix_name      SFEpostgres-92
 %define _basedir         %{_prefix}/%{major_version}
@@ -1173,6 +1173,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Tue Nov 22 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.19
 * Fri Jul 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.2.17
 * Tue Apr 26 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

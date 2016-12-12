@@ -4,8 +4,8 @@
 Name:			SFEelasticsearch
 IPS_package_name:       database/elasticsearch
 Summary:		distributed restful search and analytics
-Version:		2.4.1
-Source:                 http://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-%{version}.zip
+Version:		5.1.1
+Source:                 https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-%{version}.zip
 Source1:		svc-elasticsearch
 Source2:		elasticsearch.xml
 URL:			https://www.elastic.co
@@ -59,7 +59,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(0755, root, bin) /etc/elasticsearch/scripts
 %dir %attr(0755, root, bin) /etc/elasticsearch/templates
 %attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/elasticsearch.yml
-%attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/logging.yml
+%attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/jvm.options
+%attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/log4j2.properties
 %dir %attr(0755, root, sys) /usr
 /usr/elasticsearch
 %dir %attr(0755, root, bin) /lib
@@ -76,6 +77,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755, root, sys) /var/svc/manifest/application/elasticsearch.xml
 
 %changelog
+* Mon Dec 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.1.1
 * Thu Oct 20 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.4.1
 * Tue Apr 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -1,20 +1,21 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 %include default-depend.inc
+%define cc_is_gcc 1
 
 %define srcname smartmontools
 
 Name:           SFEsmartmontools
 IPS_package_name:        system/smartmontools
 Summary:        utility programs to control and monitor storage systems using SMART
-Version:        6.4
+Version:        6.5
 License:        GPLv2
 Url:            http://sourceforge.net/apps/trac/smartmontools/
 Source:         %{sf_download}/smartmontools/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %include default-depend.inc
-Requires: system/library/gcc-45-runtime
+Requires: system/library/gcc/gcc-runtime
 
 %description
 The smartmontools package contains two utility programs (smartctl and smartd) to control and monitor storage systems using the Self-Monitoring, Analysis and Reporting Technology System (SMART) built into most modern ATA and SCSI harddisks. In many cases, these utilities will provide advanced warning of disk degradation and failure.
@@ -77,6 +78,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/smartmontools/drivedb.h
 
 %changelog
+* Tue Nov 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 6.5
 * Wed Mar 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 6.4
 * Fri Dec 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -2,7 +2,7 @@
 %include default-depend.inc
 
 %define tarball_name node
-%define major_version 6
+%define major_version 7
 
 
 %define oracle_solaris_11 %(grep 'Oracle Solaris 11' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
@@ -10,7 +10,7 @@
 Summary:          Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 Name:             SFEnodejs-%{major_version}
 IPS_package_name: runtime/node.js-%{major_version}
-Version:          6.9.2
+Version:          7.2.1
 License:          MIT License
 URL:              http://nodejs.org/
 Source0:          https://nodejs.org/dist/v%{verson}/node-v%{version}.tar.xz
@@ -77,19 +77,9 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/nodejs/%{major_version}
 
 %changelog
-* Thu Dec 08 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 6.9.2
+* Wed Dec 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.2.1
+* Fri Nov 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.2.0
 * Wed Oct 26 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 6.9.1
-* Wed Oct 19 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 6.9.0
-* Fri Sep 30 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 6.7.0
-* Tue Jul 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 6.3.0
-* Fri Jun 24 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 6.2.2
-* Mon May 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 6.1.0
-* Wed Apr 27 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

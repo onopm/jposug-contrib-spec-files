@@ -15,7 +15,7 @@
 Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          0.4.2
+Version:          0.4.4
 License:          MIT
 URL:              http://github.com/brianmario/mysql2
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -332,6 +332,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Oct 20 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.4.4
 * Tue Dec 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.4.2 and build package for ruby-23
 * Wed Jun 17 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

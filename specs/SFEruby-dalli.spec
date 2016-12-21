@@ -9,209 +9,138 @@
 %define generate_executable 0
 %define keep_dependency 0
 
-%define gemname rubocop
-%define sfe_gemname rubocop
+%define gemname dalli
+%define sfe_gemname dalli
 
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          0.43.0
+Version:          2.7.6
 License:          MIT
-URL:              http://github.com/bbatsov/rubocop
+URL:              https://github.com/petergoldstein/dalli
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 %description
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
+High performance memcached client for Ruby
 
 %if %{build19}
 %if %{keep_dependency}
 %package 19-old
 IPS_package_name: library/ruby-19/%{gemname}
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
-# parser < 3.0, >= 2.3.1.1
-Requires:         library/ruby/parser-19
-# powerpack ~> 0.1
-Requires:         library/ruby/powerpack-19
-# rainbow < 3.0, >= 1.99.1
-Requires:         library/ruby/rainbow-19
-# ruby-progressbar ~> 1.7
-Requires:         library/ruby/ruby-progressbar-19
-# unicode-display_width >= 1.0.1, ~> 1.0
-Requires:         library/ruby/unicode-display_width-19
 Requires:         library/ruby/%{gemname}
 
 %description 19
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %if %{build20}
 %if %{keep_dependency}
 %package 20-old
 IPS_package_name: library/ruby-20/%{gemname}
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
-# parser < 3.0, >= 2.3.1.1
-Requires:         library/ruby/parser-20
-# powerpack ~> 0.1
-Requires:         library/ruby/powerpack-20
-# rainbow < 3.0, >= 1.99.1
-Requires:         library/ruby/rainbow-20
-# ruby-progressbar ~> 1.7
-Requires:         library/ruby/ruby-progressbar-20
-# unicode-display_width >= 1.0.1, ~> 1.0
-Requires:         library/ruby/unicode-display_width-20
 Requires:         library/ruby/%{gemname}
 
 %description 20
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %if %{build21}
 %if %{keep_dependency}
 %package 21-old
 IPS_package_name: library/ruby-21/%{gemname}
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-# parser < 3.0, >= 2.3.1.1
-Requires:         library/ruby/parser-21
-# powerpack ~> 0.1
-Requires:         library/ruby/powerpack-21
-# rainbow < 3.0, >= 1.99.1
-Requires:         library/ruby/rainbow-21
-# ruby-progressbar ~> 1.7
-Requires:         library/ruby/ruby-progressbar-21
-# unicode-display_width >= 1.0.1, ~> 1.0
-Requires:         library/ruby/unicode-display_width-21
 Requires:         library/ruby/%{gemname}
 
 %description 21
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %if %{build22}
 %if %{keep_dependency}
 %package 22-old
 IPS_package_name: library/ruby-22/%{gemname}
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-# parser < 3.0, >= 2.3.1.1
-Requires:         library/ruby/parser-22
-# powerpack ~> 0.1
-Requires:         library/ruby/powerpack-22
-# rainbow < 3.0, >= 1.99.1
-Requires:         library/ruby/rainbow-22
-# ruby-progressbar ~> 1.7
-Requires:         library/ruby/ruby-progressbar-22
-# unicode-display_width >= 1.0.1, ~> 1.0
-Requires:         library/ruby/unicode-display_width-22
 Requires:         library/ruby/%{gemname}
 
 %description 22
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %if %{build23}
 %if %{keep_dependency}
 %package 23-old
 IPS_package_name: library/ruby-23/%{gemname}
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
 Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %package 23
 IPS_package_name: library/ruby/%{gemname}-23
-Summary:          Automatic Ruby code style checking tool.
+Summary:          High performance memcached client for Ruby
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-# parser < 3.0, >= 2.3.1.1
-Requires:         library/ruby/parser-23
-# powerpack ~> 0.1
-Requires:         library/ruby/powerpack-23
-# rainbow < 3.0, >= 1.99.1
-Requires:         library/ruby/rainbow-23
-# ruby-progressbar ~> 1.7
-Requires:         library/ruby/ruby-progressbar-23
-# unicode-display_width >= 1.0.1, ~> 1.0
-Requires:         library/ruby/unicode-display_width-23
 
 %description 23
-Automatic Ruby code style checking tool.
-Aims to enforce the community-driven Ruby Style Guide.
-
+High performance memcached client for Ruby
 %endif
 
 %prep
@@ -394,7 +323,5 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
-* Wed Sep 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 0.43.0
-* Tue Jun 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Mon Aug 29 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

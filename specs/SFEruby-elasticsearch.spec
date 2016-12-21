@@ -148,7 +148,7 @@ Ruby integrations for Elasticsearch (client, API, etc.)
 build_for() {
     ruby_ver=$1
     bindir="/usr/ruby/${ruby_ver}/bin"
-    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
     ${bindir}/gem install --local \
@@ -159,6 +159,7 @@ build_for() {
         --no-rdoc \
         -V \
         --force %{SOURCE0}
+    rm -r .${gemdir}/cache
 }
 
 %if %{build21}
@@ -188,7 +189,7 @@ mkdir -p %{buildroot}/%{_bindir}
 install_for() {
     ruby_ver=$1
     bindir="/usr/ruby/${ruby_ver}/bin"
-    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
     mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
@@ -296,6 +297,7 @@ rm -rf %{buildroot}
 - bump to 1.0.18
 - obsolete ruby-19 and ruby-20
 - generate package for ruby-24
+- not include gem file
 * Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.17
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

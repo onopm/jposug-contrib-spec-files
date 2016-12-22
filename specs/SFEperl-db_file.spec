@@ -39,6 +39,18 @@ Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 584
 Perl5 access to Berkeley DB version 1.x
+
+%package 584-old
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
+Summary:          Perl5 access to Berkeley DB version 1.x
+BuildRequires:    runtime/perl-584 = *
+Requires:         runtime/perl-584 = *
+Requires:         library/perl-5/%{ips_cpan_name}-584
+
+%description 584-old
+This is a package to keep package name compatibility.
+use library/perl-5/%{ips_cpan_name}-584
+
 %endif
 
 %if %{build510}
@@ -65,6 +77,18 @@ Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 512
 Perl5 access to Berkeley DB version 1.x
+
+%package 512-old
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
+Summary:          Perl5 access to Berkeley DB version 1.x
+BuildRequires:    runtime/perl-512 = *
+Requires:         runtime/perl-512 = *
+Requires:         library/perl-5/%{ips_cpan_name}-512
+
+%description 512-old
+This is a package to keep package name compatibility.
+use library/perl-5/%{ips_cpan_name}-512
+
 %endif
 
 %if %{build516}
@@ -79,6 +103,18 @@ Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 516
 Perl5 access to Berkeley DB version 1.x
+
+%package 516-old
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
+Summary:          Perl5 access to Berkeley DB version 1.x
+BuildRequires:    runtime/perl-516 = *
+Requires:         runtime/perl-516 = *
+Requires:         library/perl-5/%{ips_cpan_name}-516
+
+%description 516-old
+This is a package to keep package name compatibility.
+use library/perl-5/%{ips_cpan_name}-516
+
 %endif
 
 %if %{build520}
@@ -92,6 +128,18 @@ Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 520
 Perl5 access to Berkeley DB version 1.x
+
+%package 520-old
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
+Summary:          Perl5 access to Berkeley DB version 1.x
+BuildRequires:    runtime/perl-520 = *
+Requires:         runtime/perl-520 = *
+Requires:         library/perl-5/%{ips_cpan_name}-520
+
+%description 520-old
+This is a package to keep package name compatibility.
+use library/perl-5/%{ips_cpan_name}-520
+
 %endif
 
 %if %{build522}
@@ -105,6 +153,17 @@ Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 522
 Perl5 access to Berkeley DB version 1.x
+
+%package 522-old
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-522
+Summary:          Perl5 access to Berkeley DB version 1.x
+BuildRequires:    runtime/perl-522 = *
+Requires:         runtime/perl-522 = *
+Requires:         library/perl-5/%{ips_cpan_name}-522
+
+%description 522-old
+This is a package to keep package name compatibility.
+use library/perl-5/%{ips_cpan_name}-522
 %endif
 
 
@@ -309,6 +368,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Dec 22 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- keep compatibility with old package name
 * Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.838
 * Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

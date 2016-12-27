@@ -11,8 +11,7 @@ Version:		%{version}
 Release:		%{patchlevel}
 IPS_component_version:	%{version}.%{patchlevel}
 License: 		GPL
-# Source: 		https://cache.ruby-lang.org/pub/ruby/%{major_version}/ruby-%{version}.tar.bz2
-Source:			https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0-preview3.tar.bz2
+Source: 		https://cache.ruby-lang.org/pub/ruby/%{major_version}/ruby-%{version}.tar.bz2
 Source1:		https://hg.java.net/hg/solaris-userland~gate/raw-file/2062cde74e03/components/ruby/ruby-21/Solaris/rbconfig.sedscript
 Url:			 http://www.ruby-lang.org/
 
@@ -25,8 +24,7 @@ Requires:      library/text/yaml >= 0.1.6
 
 %prep
 # %setup -n ruby-%{version}-p%{patchlevel}
-# %setup -n ruby-%{version}
-%setup -n ruby-%{version}-preview3
+%setup -n ruby-%{version}
 
 %build
 export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr    -mt -DFFI_NO_RAW_API' 
@@ -96,5 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Tue Dec 27 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.0
 * Fri Nov 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

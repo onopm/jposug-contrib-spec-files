@@ -73,7 +73,9 @@ popd
 
 
 arch=$(./miniruby --version|/usr/bin/sed -e 's/.*\[\(.*\)\].*/\1/')
-/usr/bin/sed -e 's/RUBY_VER/%{major_version}/' -e 's/RUBY_LIB_VER/%{unmangled_version}/' < %{SOURCE1} > rbconfig.sed
+/usr/bin/sed -e 's/RUBY_VER/%{major_version}/' \
+    -e 's/RUBY_LIB_VER/%{unmangled_version}/' \
+    -e 's/CONFIG\[\"CFLAGS\"\].*$/CONFIG\[\"CFLAGS\"\] = \"-g -O3 -fPIC -std=gnu99\"/' < %{SOURCE1} > rbconfig.sed
 /usr/bin/sed -f rbconfig.sed < rbconfig.rb > $RPM_BUILD_ROOT/usr/ruby/%{major_version}/lib/ruby/%{unmangled_version}/${arch}/rbconfig.rb
 
 %clean
@@ -94,6 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Wed Dec 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add '-std=gnu99' to CFALGS in rbconfig.rb
 * Tue Dec 27 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.4.0
 * Fri Nov 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -270,5 +270,5 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
-* Sat Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Sat Dec 31 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

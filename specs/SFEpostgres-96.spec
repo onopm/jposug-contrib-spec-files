@@ -739,14 +739,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/rewrite/*.h
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/datatype/timestamp.h
 %attr (0644, root, bin) %{_prefix}/%{major_version}/include/libpq/*.h
-%dir %attr (0644, root, bin) %{_prefix}/%{major_version}/include/server/common
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/common
 %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/common/*.h
-%dir %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pkgconfig
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pkgconfig
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pkgconfig/libpgtypes.pc
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pkgconfig/libecpg.pc
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pkgconfig/libpq.pc
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pkgconfig/libecpg_compat.pc
-%dir %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig/libecpg.pc
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig/libpq.pc
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig/libpgtypes.pc
@@ -1293,6 +1293,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_recvlogical
 
 %changelog
+* Thu Jan 12 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix attr
 * Mon Nov 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.6.1
 * Tue Oct 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

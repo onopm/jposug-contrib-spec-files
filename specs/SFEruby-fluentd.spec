@@ -6,7 +6,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.14.9
+%define tarball_version 0.14.12
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -76,11 +76,11 @@ sed -e 's/.*string-scrub.*//' \
 rm -rf %{buildroot}
 
 mkdir -p %{buildroot}/usr/bin
-cp -a ./usr/bin/* \
+cp ./usr/bin/* \
         %{buildroot}/usr/bin/
 
 mkdir -p %{buildroot}%{gemdir21}
-cp -a .%{gemdir21}/* \
+cp -r .%{gemdir21}/* \
         %{buildroot}%{gemdir21}/
 
 rm -rf %{buildroot}%{geminstdir21}/.yardoc/
@@ -125,6 +125,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Wed Feb 01 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.12
 * Thu Nov 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.14.9
 * Thu Sep 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

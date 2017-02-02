@@ -10,14 +10,14 @@
 
 Name:		SFEnagios-plugins
 IPS_package_name:        diagnostic/nagios/plugins
-Version:	2.1.4
+Version:	2.2.0
 Summary:	Nagios plugins
 Group:		Applications/System
 License:	GPLv2
 URL:		http://www.nagios.org/
 # Source:		%{sf_download}/nagiosplug/nagios-plugins-%{version}.tar.gz
 # Source:	http://assets.nagios.com/downloads/nagiosplugins/nagios-plugins-%{version}.tar.gz
-Source:         http://www.nagios-plugins.org/download/nagios-plugins-%{version}.tar.gz
+Source:         https://nagios-plugins.org/download/nagios-plugins-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
@@ -254,6 +254,8 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Thu Feb 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.0
 * Fri Dec 16 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.1.4
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -4,19 +4,22 @@
 Name:			SFEelasticsearch
 IPS_package_name:       database/elasticsearch
 Summary:		distributed restful search and analytics
-Version:		5.1.1
+Version:		5.2.0
 Source:                 https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-%{version}.zip
 Source1:		svc-elasticsearch
 Source2:		elasticsearch.xml
 URL:			https://www.elastic.co
 License:		Apache License 2.0
 
-Requires:	runtime/java/jre = *
+Requires:	runtime/java/jre-8 = *
 
 %prep
 %setup -q -n elasticsearch-%{version}
 
 %build
+
+echo 'path.data: /var/elasticsearch/data' >> config/elasticsearch.yml
+echo 'path.logs: /var/elasticsearch/logs' >> config/elasticsearch.yml
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -26,10 +29,10 @@ mkdir -p $RPM_BUILD_ROOT/etc/elasticsearch/scripts
 mkdir -p $RPM_BUILD_ROOT/etc/elasticsearch/templates
 
 mkdir -p $RPM_BUILD_ROOT/usr/elasticsearch
-mkdir -p $RPM_BUILD_ROOT/usr/elasticsearch/plugins
-mkdir -p $RPM_BUILD_ROOT/usr/elasticsearch/modules
 cp -r bin $RPM_BUILD_ROOT/usr/elasticsearch
 cp -r lib $RPM_BUILD_ROOT/usr/elasticsearch
+cp -r modules $RPM_BUILD_ROOT/usr/elasticsearch
+cp -r plugins $RPM_BUILD_ROOT/usr/elasticsearch
 
 pushd $RPM_BUILD_ROOT/usr/elasticsearch
 ln -s ../../etc/elasticsearch config
@@ -37,6 +40,7 @@ popd
 
 mkdir -p $RPM_BUILD_ROOT/etc/elasticsearch
 cp config/* $RPM_BUILD_ROOT/etc/elasticsearch
+
 mkdir -p $RPM_BUILD_ROOT/var/elasticsearch/data
 mkdir -p $RPM_BUILD_ROOT/var/elasticsearch/logs
 
@@ -77,6 +81,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755, root, sys) /var/svc/manifest/application/elasticsearch.xml
 
 %changelog
+* Fri Feb 03 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.2.0
 * Mon Dec 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.1.1
 * Thu Oct 20 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -15,7 +15,7 @@
 Summary:          Common layer for serverspec and itamae
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.63.3
+Version:          2.66.8
 License:          MIT
 URL:              https://rubygems.org/gems/specinfra
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -364,6 +364,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Feb 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.66.8
 * Tue Oct 11 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.63.3
 * Tue Jul 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

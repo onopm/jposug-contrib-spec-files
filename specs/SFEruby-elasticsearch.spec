@@ -15,7 +15,7 @@ Summary:          Ruby integrations for Elasticsearch (client, API, etc.)
 
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.0.18
+Version:          5.0.3
 License:          Apache 2
 URL:              http://github.com/elasticsearch/elasticsearch-ruby
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -293,6 +293,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Feb 14 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.0.3
 * Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.18
 - obsolete ruby-19 and ruby-20

@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.5.0
+%define tarball_version  9.5.6
 %define major_version	 9.5
 %define prefix_name      SFEpostgres-95
 %define _basedir         %{_prefix}/%{major_version}
@@ -24,8 +24,7 @@
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-95
 Summary:	         PostgreSQL client tools
-# Version:                 %{tarball_version}
-Version:                 9.5.0
+Version:                 %{tarball_version}
 License:		 PostgreSQL
 Group:			 System/Databases
 Url:                     http://www.postgresql.org/
@@ -1246,7 +1245,17 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_recvlogical
 
 %changelog
-* Fri Jan 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Fri Feb 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.5.6
+* Mon Nov 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.5.5
+* Wed Aug 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.5.4
+* Thu Jul 14 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.5.3
+* Mon Apr 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.5.2
+* Fri Jan 08 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.5.0
 * Sun Dec 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

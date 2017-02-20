@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  7.0.15
+%define tarball_version  7.0.16
 %define major_version	 7.0
 %define prefix_name      SFEphp70
 %define _basedir         %{_prefix}/%{major_version}
@@ -446,6 +446,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php7.0.so
 
 %changelog
+* Mon Feb 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.16
 * Thu Jan 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.0.15
 * Mon Dec 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

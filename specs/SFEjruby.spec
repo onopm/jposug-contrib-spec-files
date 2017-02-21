@@ -2,7 +2,7 @@
 
 Name:			SFEjruby
 IPS_package_name:       runtime/jruby
-Version:		9.0.4.0
+Version:		9.1.7.0
 Summary:		The Ruby Programming Language on the JVM
 License:		Ruby license
 URL:			http://jruby.org/
@@ -10,8 +10,8 @@ Source:		http://jruby.org.s3.amazonaws.com/downloads/%{version}/jruby-bin-%{vers
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:  developer/java/jdk
-Requires:	runtime/jre
+BuildRequires:  developer/java/jdk-8
+Requires:	runtime/java/jre-8
 
 %description
 The Ruby Programming Language on the JVM
@@ -65,6 +65,8 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/jruby/share
 
 %changelog
+* Tue Feb 21 2017 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.7.0
 * Sun Dec 27 2015 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify shebang and add symbolic links
 * Mon Dec 14 2015 Fumihisa TONAKA <fumi.ftnk@gmail.com>

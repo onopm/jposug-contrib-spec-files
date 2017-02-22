@@ -4,7 +4,7 @@
 Name:			SFEelasticsearch
 IPS_package_name:       database/elasticsearch
 Summary:		distributed restful search and analytics
-Version:		5.2.0
+Version:		5.2.1
 Source:                 https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-%{version}.zip
 Source1:		svc-elasticsearch
 Source2:		elasticsearch.xml
@@ -81,6 +81,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755, root, sys) /var/svc/manifest/application/elasticsearch.xml
 
 %changelog
+* Wed Feb 22 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.2.1
 * Fri Feb 03 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 5.2.0
 * Mon Dec 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

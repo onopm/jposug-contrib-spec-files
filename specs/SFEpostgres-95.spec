@@ -179,8 +179,15 @@ cd %{tarball_name}-%{tarball_version}
 export CCAS=/usr/bin/cc
 export CCASFLAGS=
 export CC=cc
-# export CFLAGS="%optflags"
+
+%ifarch amd64
 export CFLAGS="-i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
+%endif
+
+%ifarch sparcv9
+export CFLAGS="-i -xO4 -D__sparc -xspace -xstrconst -xCC"
+%endif
+
 export LDFLAGS="%_ldflags -L/usr/gnu/lib -R/usr/gnu/lib -lncurses"
 export LD_OPTIONS="-R/usr/sfw/lib:/usr/gnu/lib -L/usr/sfw/lib:/usr/gnu/lib"
 
@@ -215,13 +222,20 @@ export LD_OPTIONS="-R/usr/sfw/lib:/usr/gnu/lib -L/usr/sfw/lib:/usr/gnu/lib"
             --with-tclconfig=/usr/lib \
             --with-libs=/usr/lib:/usr/sfw/lib:/usr/gnu/lib
 
-gmake -j$CPUS world
+# gmake -j$CPUS world
+gmake -j1 world
 
 %ifarch amd64 sparcv9
 cd ../%{tarball_name}-%{tarball_version}-64
 
-#export CFLAGS="%optflags64"
+%ifarch amd64
 export CFLAGS="-m64 -i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
+%endif
+
+%ifarch sparcv9
+export CFLAGS="-m64 -i -xO4 -D__sparc -xspace -xstrconst -xCC"
+%endif
+
 export LDFLAGS="%_ldflags -L/usr/gnu/lib/%{_arch64} -R/usr/gnu/lib/%{_arch64} -lncurses"
 export LD_OPTIONS="-R/usr/sfw/lib/%{_arch64}:/usr/gnu/lib/%{_arch64} -L/usr/sfw/lib/%{_arch64}:/usr/gnu/lib/%{_arch64}"
 
@@ -255,10 +269,13 @@ export LD_OPTIONS="-R/usr/sfw/lib/%{_arch64}:/usr/gnu/lib/%{_arch64} -L/usr/sfw/
             --with-tclconfig=/usr/lib \
             --with-libs=/usr/lib/%{_arch64}:/usr/sfw/lib/%{_arch64}:/usr/gnu/lib/%{_arch64}
 
-gmake -j$CPUS world
+# gmake -j$CPUS world
+gmake -j1 world
 
 %endif
 %install
+[ -d ${RPM_BUILD_ROOT} ] && rm -rf ${RPM_BUILD_ROOT}
+
 cd %{tarball_name}-%{tarball_version}
 gmake install-world DESTDIR=$RPM_BUILD_ROOT
 if test -d sun-manpages; then
@@ -305,21 +322,21 @@ cp %{SOURCE5} $RPM_BUILD_ROOT/etc/user_attr.d/service\%2Fdatabase\%2Fpostgres-95
 mkdir -p $RPM_BUILD_ROOT/usr/share
 
 # delete amd64
-rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/amd64/libecpg.a
-rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/amd64/libpq.a
-rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/amd64/libpgtypes.a
-rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/amd64/amd64
-rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/amd64/libpgport.a
-rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/amd64/libecpg_compat.a
+rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/%{_arch64}/libecpg.a
+rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/%{_arch64}/libpq.a
+rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/%{_arch64}/libpgtypes.a
+rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/%{_arch64}/%{_arch64}
+rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/%{_arch64}/libpgport.a
+rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/lib/%{_arch64}/libecpg_compat.a
 
 %{?pkgbuild_postprocess: %pkgbuild_postprocess -v -c "%{version}:%{jds_version}:%{name}:$RPM_ARCH:%(date +%%Y-%%m-%%d):%{support_level}" $RPM_BUILD_ROOT}
 
 # make symbolic link
 
 cd $RPM_BUILD_ROOT/%{_prefix}/%{major_version}/bin/
-[ -r 64 ] || ln -fs amd64 64
+[ -r 64 ] || ln -fs %{_arch64} 64
 
-mkdir -p $RPM_BUILD_ROOT/usr/bin/amd64
+mkdir -p $RPM_BUILD_ROOT/usr/bin/%{_arch64}
 cd $RPM_BUILD_ROOT/usr/bin/
 ln -fs ../postgres/%{major_version}/bin/clusterdb .
 ln -fs ../postgres/%{major_version}/bin/createdb .
@@ -357,42 +374,42 @@ ln -fs ../postgres/%{major_version}/bin/vacuumdb .
 ln -fs ../postgres/%{major_version}/bin/vacuumlo .
 ln -fs ../postgres/%{major_version}/bin/pg_recvlogical .
 
-cd $RPM_BUILD_ROOT/usr/bin/amd64
-ln -fs ../postgres/%{major_version}/bin/amd64/clusterdb .
-ln -fs ../postgres/%{major_version}/bin/amd64/createdb .
-ln -fs ../postgres/%{major_version}/bin/amd64/createlang .
-ln -fs ../postgres/%{major_version}/bin/amd64/createuser .
-ln -fs ../postgres/%{major_version}/bin/amd64/dropdb .
-ln -fs ../postgres/%{major_version}/bin/amd64/droplang .
-ln -fs ../postgres/%{major_version}/bin/amd64/dropuser .
-ln -fs ../postgres/%{major_version}/bin/amd64/ecpg .
-ln -fs ../postgres/%{major_version}/bin/amd64/initdb .
-ln -fs ../postgres/%{major_version}/bin/amd64/oid2name .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_archivecleanup .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_basebackup .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_config .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_controldata .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_ctl .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_dump .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_dumpall .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_resetxlog .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_restore .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_receivexlog .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_standby .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_test_fsync .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_test_timing
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_upgrade .
-ln -fs ../postgres/%{major_version}/bin/amd64/pgbench .
-ln -fs ../postgres/%{major_version}/bin/amd64/pltcl_delmod .
-ln -fs ../postgres/%{major_version}/bin/amd64/pltcl_listmod .
-ln -fs ../postgres/%{major_version}/bin/amd64/pltcl_loadmod .
-ln -fs ../postgres/%{major_version}/bin/amd64/postgres .
-ln -fs ../postgres/%{major_version}/bin/amd64/postmaster .
-ln -fs ../postgres/%{major_version}/bin/amd64/psql .
-ln -fs ../postgres/%{major_version}/bin/amd64/reindexdb .
-ln -fs ../postgres/%{major_version}/bin/amd64/vacuumdb .
-ln -fs ../postgres/%{major_version}/bin/amd64/vacuumlo .
-ln -fs ../postgres/%{major_version}/bin/amd64/pg_recvlogical .
+cd $RPM_BUILD_ROOT/usr/bin/%{_arch64}
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/clusterdb .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/createdb .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/createlang .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/createuser .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/dropdb .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/droplang .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/dropuser .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/ecpg .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/initdb .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/oid2name .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_archivecleanup .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_basebackup .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_config .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_controldata .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_ctl .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_dump .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_dumpall .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_resetxlog .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_restore .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_receivexlog .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_standby .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_test_fsync .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_test_timing
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_upgrade .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pgbench .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pltcl_delmod .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pltcl_listmod .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pltcl_loadmod .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/postgres .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/postmaster .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/psql .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/reindexdb .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/vacuumdb .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/vacuumlo .
+ln -fs ../postgres/%{major_version}/bin/%{_arch64}/pg_recvlogical .
 
 # plpython is out in postgresql 9.4
 rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/plpython-%{major_version}.mo
@@ -408,29 +425,29 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/amd64
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale/*
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES
 # %{_prefix}/%{major_version}/bin/64
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/clusterdb
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/createdb
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/createlang
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/createuser
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/dropdb
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/droplang
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/dropuser
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_basebackup
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_dump
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_dumpall
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_restore
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_rewind
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_test_fsync
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_test_timing
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/vacuumdb
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/reindexdb
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/psql
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/clusterdb
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/createdb
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/createlang
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/createuser
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/dropdb
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/droplang
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/dropuser
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_basebackup
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_dump
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_dumpall
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_restore
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_rewind
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_test_fsync
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_test_timing
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/vacuumdb
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/reindexdb
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/psql
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/psql
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/clusterdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/createdb
@@ -449,22 +466,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/reindexdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/vacuumdb
 
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/clusterdb
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/createdb
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/createlang
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/createuser
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/dropdb
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/droplang
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/dropuser
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_basebackup
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_dump
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_dumpall
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_restore
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_test_fsync
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_test_timing
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumdb
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/reindexdb
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/psql
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/clusterdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/createdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/createlang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/createuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/dropdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/droplang
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/dropuser
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_basebackup
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_dump
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_dumpall
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_restore
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_test_fsync
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_test_timing
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/vacuumdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/reindexdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/psql
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/psql
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/clusterdb
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/createdb
@@ -500,7 +517,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}
 %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/64
 #%dir %attr (0755, root, sys) /usr/share
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share
@@ -517,22 +534,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/ecpg-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/ecpglib6-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/libpq5-%{major_version}.mo
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/auth_delay.so
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/file_fdw.so
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libecpg.so
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libecpg.so.6
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libecpg.so.6.7
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libecpg_compat.so
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libecpg_compat.so.3
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libecpg_compat.so.3.7
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpgcommon.a
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpgtypes.so
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpgtypes.so.3
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpgtypes.so.3.6
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpq.so
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpq.so.5
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpq.so.5.8
-%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/postgres_fdw.so
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/auth_delay.so
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/file_fdw.so
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libecpg.so
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libecpg.so.6
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libecpg.so.6.7
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libecpg_compat.so
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libecpg_compat.so.3
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libecpg_compat.so.3.7
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libpgcommon.a
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libpgtypes.so
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libpgtypes.so.3
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libpgtypes.so.3.6
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libpq.so
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libpq.so.5
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libpq.so.5.8
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/postgres_fdw.so
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/auth_delay.so
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/file_fdw.so
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/libecpg.so
@@ -554,9 +571,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/amd64
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale/*
@@ -571,17 +588,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/plperl-%{major_version}.mo
 #%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/plpython-%{major_version}.mo
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pltcl-%{major_version}.mo
-#%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/plpython.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/pltcl.so
+#%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/plpython.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pltcl.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/plperl.so
 #%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/plpython.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/pltcl.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pltcl_delmod
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pltcl_listmod
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pltcl_loadmod
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pltcl_delmod
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pltcl_listmod
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pltcl_loadmod
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pltcl_delmod
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pltcl_listmod
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pltcl_loadmod
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pltcl_delmod
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pltcl_listmod
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pltcl_loadmod
 %attr (0444, root, bin) %{_prefix}/%{major_version}/share/unknown.pltcl
 %{_prefix}/%{major_version}/share/extension/plperl--1.0.sql
 %{_prefix}/%{major_version}/share/extension/plperl--unpackaged--1.0.sql
@@ -608,7 +625,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n %{prefix_name}-devel
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/amd64
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/internal
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/internal/libpq
@@ -650,13 +667,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/server/datatype
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/include/libpq
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/makefiles
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test/regress
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/config
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src/makefiles
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src/test
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src/test/regress
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/config
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src
@@ -673,24 +690,24 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/Makefile.shlib
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/makefiles/pgxs.mk
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/nls-global.mk
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/ecpg
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_config
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/ecpg
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_config
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/ecpg
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_config
 
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/ecpg
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_config
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/ecpg
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_config
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/ecpg
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_config
 
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config/install-sh
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config/missing
-%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/Makefile.global
-%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/Makefile.port
-%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/Makefile.shlib
-%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/makefiles/pgxs.mk
-%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/nls-global.mk
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test/regress/pg_regress
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/config/install-sh
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/config/missing
+%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src/Makefile.global
+%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src/Makefile.port
+%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src/Makefile.shlib
+%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src/makefiles/pgxs.mk
+%attr (0444, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src/nls-global.mk
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pgxs/src/test/regress/pg_regress
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/Makefile.global
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/test/regress/pg_regress
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_config-%{major_version}.mo
@@ -740,11 +757,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pkgconfig/libecpg.pc
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pkgconfig/libpq.pc
 %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/pkgconfig/libecpg_compat.pc
-%dir %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig
-%attr (0644, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig/libecpg.pc
-%attr (0644, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig/libpq.pc
-%attr (0644, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig/libpgtypes.pc
-%attr (0644, root, bin) %{_prefix}/%{major_version}/lib/amd64/pkgconfig/libecpg_compat.pc
+%dir %attr (0644, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pkgconfig
+%attr (0644, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pkgconfig/libecpg.pc
+%attr (0644, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pkgconfig/libpq.pc
+%attr (0644, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pkgconfig/libpgtypes.pc
+%attr (0644, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/pkgconfig/libecpg_compat.pc
 
 
 
@@ -767,9 +784,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_prefix}
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/amd64
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale/*
@@ -816,13 +833,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, sys) /etc/user_attr.d/service\%2Fdatabase\%2Fpostgres-95
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/postgresql_95.xml
 
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/initdb
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_controldata
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_ctl
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_resetxlog
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/postgres
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/postmaster
-%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/amd64/pg_receivexlog
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/initdb
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_controldata
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_ctl
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_resetxlog
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/postgres
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/postmaster
+%attr (0555, root, bin) %{_prefix}/%{major_version}/bin/%{_arch64}/pg_receivexlog
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/initdb
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_controldata
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_ctl
@@ -831,13 +848,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/postmaster
 %attr (0555, root, bin) %{_prefix}/%{major_version}/bin/pg_receivexlog
 
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/initdb
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_controldata
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_ctl
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_resetxlog
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/postgres
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/postmaster
-%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_receivexlog
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/initdb
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_controldata
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_ctl
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_resetxlog
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/postgres
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/postmaster
+%attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_receivexlog
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/initdb
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_controldata
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_ctl
@@ -846,34 +863,34 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/postmaster
 %attr (0555, root, bin) %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_receivexlog
 
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/ascii_and_mic.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/cyrillic_and_mic.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/dict_snowball.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/euc_cn_and_mic.so
-#%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/euc_jis_2004_and_shift_jis_2004.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/euc_jp_and_sjis.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/euc_kr_and_mic.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/euc_tw_and_big5.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/latin2_and_win1250.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/latin_and_mic.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/plpgsql.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_ascii.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_big5.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_cyrillic.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_euc_cn.so
-#%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_euc_jis_2004.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_euc_jp.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_euc_kr.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_euc_tw.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_gb18030.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_gbk.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_iso8859.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_iso8859_1.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_johab.so
-#%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_shift_jis_2004.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_sjis.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_uhc.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_win.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/ascii_and_mic.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/cyrillic_and_mic.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/dict_snowball.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/euc_cn_and_mic.so
+#%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/euc_jis_2004_and_shift_jis_2004.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/euc_jp_and_sjis.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/euc_kr_and_mic.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/euc_tw_and_big5.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/latin2_and_win1250.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/latin_and_mic.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/plpgsql.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_ascii.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_big5.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_cyrillic.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_euc_cn.so
+#%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_euc_jis_2004.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_euc_jp.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_euc_kr.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_euc_tw.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_gb18030.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_gbk.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_iso8859.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_iso8859_1.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_johab.so
+#%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_shift_jis_2004.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_sjis.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_uhc.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_win.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/ascii_and_mic.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/cyrillic_and_mic.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/dict_snowball.so
@@ -907,11 +924,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/utf8_and_euc2004.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/utf8_and_sjis2004.so
 %attr (0555, root, bin) %{_prefix}/%{major_version}/lib/plpython2.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_euc2004.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/utf8_and_sjis2004.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/euc2004_sjis2004.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/plpython2.so
-%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/amd64/libpqwalreceiver.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_euc2004.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/utf8_and_sjis2004.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/euc2004_sjis2004.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/plpython2.so
+%attr (0555, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}/libpqwalreceiver.so
 ##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/initdb-%{major_version}.mo
 ##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_controldata-%{major_version}.mo
 ##%attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_ctl-%{major_version}.mo
@@ -959,7 +976,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/bin
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib
-%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/%{_arch64}
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/locale
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share
 %dir %attr (0755, root, other) %{_prefix}/%{major_version}/share/extension
@@ -1009,50 +1026,50 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/lib/tsm_system_rows.so
 %{_prefix}/%{major_version}/lib/tsm_system_time.so
 %{_prefix}/%{major_version}/lib/unaccent.so
-%{_prefix}/%{major_version}/lib/amd64/_int.so
-%{_prefix}/%{major_version}/lib/amd64/adminpack.so
-%{_prefix}/%{major_version}/lib/amd64/auto_explain.so
-%{_prefix}/%{major_version}/lib/amd64/autoinc.so
-%{_prefix}/%{major_version}/lib/amd64/btree_gin.so
-%{_prefix}/%{major_version}/lib/amd64/btree_gist.so
-%{_prefix}/%{major_version}/lib/amd64/chkpass.so
-%{_prefix}/%{major_version}/lib/amd64/citext.so
-%{_prefix}/%{major_version}/lib/amd64/cube.so
-%{_prefix}/%{major_version}/lib/amd64/dblink.so
-%{_prefix}/%{major_version}/lib/amd64/dict_int.so
-%{_prefix}/%{major_version}/lib/amd64/dict_xsyn.so
-%{_prefix}/%{major_version}/lib/amd64/earthdistance.so
-%{_prefix}/%{major_version}/lib/amd64/fuzzystrmatch.so
-%{_prefix}/%{major_version}/lib/amd64/hstore.so
-%{_prefix}/%{major_version}/lib/amd64/hstore_plpython2.so
-%{_prefix}/%{major_version}/lib/amd64/insert_username.so
-%{_prefix}/%{major_version}/lib/amd64/isn.so
-%{_prefix}/%{major_version}/lib/amd64/lo.so
-%{_prefix}/%{major_version}/lib/amd64/ltree.so
-%{_prefix}/%{major_version}/lib/amd64/ltree_plpython2.so
-%{_prefix}/%{major_version}/lib/amd64/moddatetime.so
-%{_prefix}/%{major_version}/lib/amd64/pageinspect.so
-%{_prefix}/%{major_version}/lib/amd64/passwordcheck.so
-%{_prefix}/%{major_version}/lib/amd64/pg_buffercache.so
-%{_prefix}/%{major_version}/lib/amd64/pg_freespacemap.so
-%{_prefix}/%{major_version}/lib/amd64/pg_prewarm.so
-%{_prefix}/%{major_version}/lib/amd64/pg_stat_statements.so
-%{_prefix}/%{major_version}/lib/amd64/pg_trgm.so
-%{_prefix}/%{major_version}/lib/amd64/pgcrypto.so
-%{_prefix}/%{major_version}/lib/amd64/pgrowlocks.so
-%{_prefix}/%{major_version}/lib/amd64/pgstattuple.so
-%{_prefix}/%{major_version}/lib/amd64/pgxml.so
-%{_prefix}/%{major_version}/lib/amd64/refint.so
-%{_prefix}/%{major_version}/lib/amd64/seg.so
-%{_prefix}/%{major_version}/lib/amd64/sslinfo.so
-%{_prefix}/%{major_version}/lib/amd64/tablefunc.so
-%{_prefix}/%{major_version}/lib/amd64/tcn.so
-%{_prefix}/%{major_version}/lib/amd64/test_decoding.so
-%{_prefix}/%{major_version}/lib/amd64/timetravel.so
-%{_prefix}/%{major_version}/lib/amd64/tsearch2.so
-%{_prefix}/%{major_version}/lib/amd64/tsm_system_rows.so
-%{_prefix}/%{major_version}/lib/amd64/tsm_system_time.so
-%{_prefix}/%{major_version}/lib/amd64/unaccent.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/_int.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/adminpack.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/auto_explain.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/autoinc.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/btree_gin.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/btree_gist.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/chkpass.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/citext.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/cube.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/dblink.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/dict_int.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/dict_xsyn.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/earthdistance.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/fuzzystrmatch.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/hstore.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/hstore_plpython2.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/insert_username.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/isn.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/lo.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/ltree.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/ltree_plpython2.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/moddatetime.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pageinspect.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/passwordcheck.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pg_buffercache.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pg_freespacemap.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pg_prewarm.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pg_stat_statements.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pg_trgm.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pgcrypto.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pgrowlocks.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pgstattuple.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/pgxml.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/refint.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/seg.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/sslinfo.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/tablefunc.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/tcn.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/test_decoding.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/timetravel.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/tsearch2.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/tsm_system_rows.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/tsm_system_time.so
+%{_prefix}/%{major_version}/lib/%{_arch64}/unaccent.so
 %{_prefix}/%{major_version}/share/extension/adminpack--1.0.sql
 %{_prefix}/%{major_version}/share/extension/adminpack.control
 %{_prefix}/%{major_version}/share/extension/autoinc--1.0.sql
@@ -1210,15 +1227,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/share/extension/pg_prewarm.control
 %{_prefix}/%{major_version}/share/tsearch_data/xsyn_sample.rules
 %{_prefix}/%{major_version}/share/tsearch_data/unaccent.rules
-%{_prefix}/%{major_version}/bin/amd64/oid2name
-%{_prefix}/%{major_version}/bin/amd64/pg_archivecleanup
-%{_prefix}/%{major_version}/bin/amd64/pg_isready
-%{_prefix}/%{major_version}/bin/amd64/pg_standby
-%{_prefix}/%{major_version}/bin/amd64/pg_upgrade
-%{_prefix}/%{major_version}/bin/amd64/pg_xlogdump
-%{_prefix}/%{major_version}/bin/amd64/pgbench
-%{_prefix}/%{major_version}/bin/amd64/vacuumlo
-%{_prefix}/%{major_version}/bin/amd64/pg_recvlogical
+%{_prefix}/%{major_version}/bin/%{_arch64}/oid2name
+%{_prefix}/%{major_version}/bin/%{_arch64}/pg_archivecleanup
+%{_prefix}/%{major_version}/bin/%{_arch64}/pg_isready
+%{_prefix}/%{major_version}/bin/%{_arch64}/pg_standby
+%{_prefix}/%{major_version}/bin/%{_arch64}/pg_upgrade
+%{_prefix}/%{major_version}/bin/%{_arch64}/pg_xlogdump
+%{_prefix}/%{major_version}/bin/%{_arch64}/pgbench
+%{_prefix}/%{major_version}/bin/%{_arch64}/vacuumlo
+%{_prefix}/%{major_version}/bin/%{_arch64}/pg_recvlogical
 %{_prefix}/%{major_version}/bin/oid2name
 %{_prefix}/%{major_version}/bin/pg_archivecleanup
 %{_prefix}/%{major_version}/bin/pg_isready
@@ -1236,15 +1253,17 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pgbench
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/vacuumlo
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/pg_recvlogical
-%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/oid2name
-%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_archivecleanup
-%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_standby
-%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_upgrade
-%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pgbench
-%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
-%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_recvlogical
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/oid2name
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_archivecleanup
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_standby
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_upgrade
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pgbench
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/vacuumlo
+%ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_recvlogical
 
 %changelog
+* Fri Feb 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify to build on SPARC
 * Fri Feb 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.5.6
 * Mon Nov 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

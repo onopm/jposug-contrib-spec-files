@@ -40,7 +40,13 @@ Requires:      library/text/yaml >= 0.1.6
 %patch1 -p0
 
 %build
-export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr    -mt -DFFI_NO_RAW_API' 
+%ifarch sparcv9
+export CFLAGS='-m64 -xO4 -D__sparc -mt -DFFI_NO_RAW_API -Kpic'
+%endif
+
+%ifarch amd64
+export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr -mt -DFFI_NO_RAW_API'
+%endif
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -109,6 +115,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Tue Mar 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add CFLAGS for SPARC
 * Mon Dec 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use cc instead of gcc
 * Thu Nov 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

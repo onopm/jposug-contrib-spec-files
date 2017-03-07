@@ -39,12 +39,14 @@ Router-Simple
 IPS_package_name: library/perl-5/router-simple-584
 Summary: Router-Simple for perl-584
 BuildRequires:	runtime/perl-584
+BuildRequires:	library/perl-5/class-accessor-584
 Requires:	runtime/perl-584
 
 %package 512
 IPS_package_name: library/perl-5/router-simple-512
 Summary: Router-Simple for perl-512
 BuildRequires:	runtime/perl-512
+BuildRequires:	library/perl-5/class-accessor-512
 Requires:	runtime/perl-512
 
 
@@ -95,5 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Sun Feb 10 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

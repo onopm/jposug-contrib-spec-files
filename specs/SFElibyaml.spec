@@ -7,12 +7,12 @@
 %include packagenamemacros.inc
 
 %define _prefix /usr
-%define	tarball_version	0.1.4
+%define	tarball_version	0.1.7
 %define	tarball_name yaml
 %define	src_url	http://pyyaml.org/download/libyaml
 
 Name:		SFElibyaml
-Summary:	LibYAML is a YAML 1.1 parser and emitter written in C. 
+Summary:	LibYAML is a YAML 1.1 parser and emitter written in C.
 Version:	%{tarball_version}
 IPS_package_name:  library/text/yaml
 License:	MIT license
@@ -90,19 +90,24 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(0755, root, sys) %{_prefix}
 %dir %attr(0755, root, bin) %{_prefix}/lib
 %dir %attr(0755, root, other) %{_prefix}/lib/pkgconfig
-%dir %attr(0755, root, bin) %{_prefix}/lib/amd64
-%dir %attr(0755, root, other) %{_prefix}/lib/amd64/pkgconfig
+%dir %attr(0755, root, bin) %{_prefix}/lib/%{_arch64}
+%dir %attr(0755, root, other) %{_prefix}/lib/%{_arch64}/pkgconfig
 %dir %attr(0755, root, bin) %{_prefix}/include
 %{_prefix}/lib/libyaml*
 %{_prefix}/lib/pkgconfig/*
-%{_prefix}/lib/amd64/libyaml*
-%{_prefix}/lib/amd64/pkgconfig/*
+%{_prefix}/lib/%{_arch64}/libyaml*
+%{_prefix}/lib/%{_arch64}/pkgconfig/*
 %{_prefix}/include/*
 
 %changelog
+* Fri Sep 30 2016 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.1.7
+* Tue Feb 25 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.1.6 (CVE-2014-2525)
+* Tue Feb 25 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- substitute %{_arch64} for amd64 in path to work with SPARC
 * Wed Mar 21 2012 TAKI, Yasushi <taki@justplayer.com>
 - fix compile option
 - fix pkgconfig permision
 * Sat Jun 25 2012 TAKI, Yasushi <taki@justplayer.com>
 - Initial Revision
-

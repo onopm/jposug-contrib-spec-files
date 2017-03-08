@@ -163,7 +163,6 @@ cp -rp %{tarball_name}-%{tarball_version} %{tarball_name}-%{tarball_version}-64
 %endif
 
 %build
-
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
     CPUS=1
@@ -222,8 +221,7 @@ export LD_OPTIONS="-R/usr/sfw/lib:/usr/gnu/lib -L/usr/sfw/lib:/usr/gnu/lib"
             --with-tclconfig=/usr/lib \
             --with-libs=/usr/lib:/usr/sfw/lib:/usr/gnu/lib
 
-# gmake -j$CPUS world
-gmake -j1 world
+gmake -j$CPUS world
 
 %ifarch amd64 sparcv9
 cd ../%{tarball_name}-%{tarball_version}-64
@@ -269,8 +267,7 @@ export LD_OPTIONS="-R/usr/sfw/lib/%{_arch64}:/usr/gnu/lib/%{_arch64} -L/usr/sfw/
             --with-tclconfig=/usr/lib \
             --with-libs=/usr/lib/%{_arch64}:/usr/sfw/lib/%{_arch64}:/usr/gnu/lib/%{_arch64}
 
-# gmake -j$CPUS world
-gmake -j1 world
+gmake -j$CPUS world
 
 %endif
 %install
@@ -1262,7 +1259,9 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_recvlogical
 
 %changelog
-* Fri Feb 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Wed Mar 08 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete temporary codes
+* Tue Mar 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify to build on SPARC
 * Fri Feb 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.5.6

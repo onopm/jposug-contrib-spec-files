@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+    <!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+-->
+<service_bundle type="manifest" name="openvpn">
+	<service name="network/openvpn" type="service" version="1">
+		<create_default_instance enabled="false"/>
+		<single_instance/>
+		<dependency name="network" grouping="require_all" restart_on="error" type="service">
+			<service_fmri value="svc:/milestone/network:default"/>
+		</dependency>
+		<dependency name="system-log" grouping="optional_all" restart_on="none" type="service">
+			<service_fmri value="svc:/system/system-log"/>
+		</dependency>
+		<exec_method type="method" name="start" exec="/lib/svc/method/openvpn start" timeout_seconds="180"/>
+		<exec_method type="method" name="stop" exec="/lib/svc/method/openvpn stop" timeout_seconds="120"/>
+		<exec_method type="method" name="refresh" exec="/lib/svc/method/openvpn reload" timeout_seconds="120"/>
+		<!--
+	    The init scripts should never automatically be run twice.
+	    duration=transient tells svc.startd not to restart if no
+	    processes are left running, and timeout_retry=false tells
+	    svc.startd not to retry the start method if it times out.
+		-->
+		<stability value="Unstable"/>
+		<template>
+			<common_name>
+				<loctext xml:lang="C">
+				OpenVPN is an open source VPN daemon by James Yonan. 
+				</loctext>
+			</common_name>
+			<documentation>
+				<doc_link name="openvpn" uri="http://openvpn.net/index.php/open-source/documentation/manuals/69-openvpn-21.html"/>
+			</documentation>
+		</template>
+	</service>
+</service_bundle>

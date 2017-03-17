@@ -5,6 +5,7 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
 %define cpan_name CGI
@@ -14,9 +15,9 @@
 Summary:               Handle Common Gateway Interface requests and responses
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               4.22
-IPS_component_version: 4.22
-License:               unknown
+Version:               4.35
+IPS_component_version: 4.35
+License:               perl_5
 URL:                   https://metacpan.org/pod/CGI
 Source0:               http://cpan.metacpan.org/authors/id/L/LE/LEEJO/CGI-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
@@ -29,17 +30,26 @@ Handle Common Gateway Interface requests and responses
 IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          Handle Common Gateway Interface requests and responses
 BuildRequires:    runtime/perl-584 = *
+BuildRequires:    library/perl-5/extutils-makemaker-584
+BuildRequires:    library/perl-5/io-584
+BuildRequires:    library/perl-5/pathtools-584
+BuildRequires:    library/perl-5/test-deep-584
+BuildRequires:    library/perl-5/test-simple-584
 BuildRequires:    library/perl-5/test-warn-584
+BuildRequires:    library/perl-5/carp-584
+BuildRequires:    library/perl-5/encode-584
+BuildRequires:    library/perl-5/exporter-584
+BuildRequires:    library/perl-5/file-temp-584
 BuildRequires:    library/perl-5/html-parser-584
+BuildRequires:    library/perl-5/parent-584
+BuildRequires:    library/perl-5/pathtools-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-584
-Requires:         library/perl-5/config-584
 Requires:         library/perl-5/encode-584
 Requires:         library/perl-5/exporter-584
 Requires:         library/perl-5/file-temp-584
 Requires:         library/perl-5/html-parser-584
-#Requires:         library/perl-5/if-584
 Requires:         library/perl-5/parent-584
 Requires:         library/perl-5/pathtools-584
 
@@ -52,17 +62,26 @@ Handle Common Gateway Interface requests and responses
 IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          Handle Common Gateway Interface requests and responses
 BuildRequires:    runtime/perl-510 = *
+BuildRequires:    library/perl-5/extutils-makemaker-510
+BuildRequires:    library/perl-5/io-510
+BuildRequires:    library/perl-5/pathtools-510
+BuildRequires:    library/perl-5/test-deep-510
+BuildRequires:    library/perl-5/test-simple-510
 BuildRequires:    library/perl-5/test-warn-510
+BuildRequires:    library/perl-5/carp-510
+BuildRequires:    library/perl-5/encode-510
+BuildRequires:    library/perl-5/exporter-510
+BuildRequires:    library/perl-5/file-temp-510
 BuildRequires:    library/perl-5/html-parser-510
+BuildRequires:    library/perl-5/parent-510
+BuildRequires:    library/perl-5/pathtools-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-510
-Requires:         library/perl-5/config-510
 Requires:         library/perl-5/encode-510
 Requires:         library/perl-5/exporter-510
 Requires:         library/perl-5/file-temp-510
 Requires:         library/perl-5/html-parser-510
-#Requires:         library/perl-5/if-510
 Requires:         library/perl-5/parent-510
 Requires:         library/perl-5/pathtools-510
 
@@ -75,17 +94,26 @@ Handle Common Gateway Interface requests and responses
 IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          Handle Common Gateway Interface requests and responses
 BuildRequires:    runtime/perl-512 = *
+BuildRequires:    library/perl-5/extutils-makemaker-512
+BuildRequires:    library/perl-5/io-512
+BuildRequires:    library/perl-5/pathtools-512
+BuildRequires:    library/perl-5/test-deep-512
+BuildRequires:    library/perl-5/test-simple-512
 BuildRequires:    library/perl-5/test-warn-512
+BuildRequires:    library/perl-5/carp-512
+BuildRequires:    library/perl-5/encode-512
+BuildRequires:    library/perl-5/exporter-512
+BuildRequires:    library/perl-5/file-temp-512
 BuildRequires:    library/perl-5/html-parser-512
+BuildRequires:    library/perl-5/parent-512
+BuildRequires:    library/perl-5/pathtools-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-512
-Requires:         library/perl-5/config-512
 Requires:         library/perl-5/encode-512
 Requires:         library/perl-5/exporter-512
 Requires:         library/perl-5/file-temp-512
 Requires:         library/perl-5/html-parser-512
-#Requires:         library/perl-5/if-512
 Requires:         library/perl-5/parent-512
 Requires:         library/perl-5/pathtools-512
 
@@ -98,17 +126,27 @@ Handle Common Gateway Interface requests and responses
 IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          Handle Common Gateway Interface requests and responses
 BuildRequires:    runtime/perl-516 = *
+BuildRequires:    library/perl-5/extutils-makemaker-516
+BuildRequires:    library/perl-5/io-516
+BuildRequires:    library/perl-5/pathtools-516
+BuildRequires:    library/perl-5/test-deep-516
+BuildRequires:    library/perl-5/test-simple-516
 BuildRequires:    library/perl-5/test-warn-516
+Requires:         library/perl-5/%{ips_cpan_name}
+BuildRequires:    library/perl-5/carp-516
+BuildRequires:    library/perl-5/encode-516
+BuildRequires:    library/perl-5/exporter-516
+BuildRequires:    library/perl-5/file-temp-516
 BuildRequires:    library/perl-5/html-parser-516
+BuildRequires:    library/perl-5/parent-516
+BuildRequires:    library/perl-5/pathtools-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-516
-Requires:         library/perl-5/config-516
 Requires:         library/perl-5/encode-516
 Requires:         library/perl-5/exporter-516
 Requires:         library/perl-5/file-temp-516
 Requires:         library/perl-5/html-parser-516
-#Requires:         library/perl-5/if-516
 Requires:         library/perl-5/parent-516
 Requires:         library/perl-5/pathtools-516
 
@@ -121,17 +159,26 @@ Handle Common Gateway Interface requests and responses
 IPS_package_name: library/perl-5/%{ips_cpan_name}-520
 Summary:          Handle Common Gateway Interface requests and responses
 BuildRequires:    runtime/perl-520 = *
+BuildRequires:    library/perl-5/extutils-makemaker-520
+BuildRequires:    library/perl-5/io-520
+BuildRequires:    library/perl-5/pathtools-520
+BuildRequires:    library/perl-5/test-deep-520
+BuildRequires:    library/perl-5/test-simple-520
 BuildRequires:    library/perl-5/test-warn-520
+BuildRequires:    library/perl-5/carp-520
+BuildRequires:    library/perl-5/encode-520
+BuildRequires:    library/perl-5/exporter-520
+BuildRequires:    library/perl-5/file-temp-520
 BuildRequires:    library/perl-5/html-parser-520
+BuildRequires:    library/perl-5/parent-520
+BuildRequires:    library/perl-5/pathtools-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-520
-Requires:         library/perl-5/config-520
 Requires:         library/perl-5/encode-520
 Requires:         library/perl-5/exporter-520
 Requires:         library/perl-5/file-temp-520
 Requires:         library/perl-5/html-parser-520
-#Requires:         library/perl-5/if-520
 Requires:         library/perl-5/parent-520
 Requires:         library/perl-5/pathtools-520
 
@@ -139,10 +186,42 @@ Requires:         library/perl-5/pathtools-520
 Handle Common Gateway Interface requests and responses
 %endif
 
+%if %{build522}
+%package 522
+IPS_package_name: library/perl-5/%{ips_cpan_name}-522
+Summary:          Handle Common Gateway Interface requests and responses
+BuildRequires:    runtime/perl-522 = *
+BuildRequires:    library/perl-5/extutils-makemaker-522
+BuildRequires:    library/perl-5/io-522
+BuildRequires:    library/perl-5/pathtools-522
+BuildRequires:    library/perl-5/test-deep-522
+BuildRequires:    library/perl-5/test-simple-522
+BuildRequires:    library/perl-5/test-warn-522
+BuildRequires:    library/perl-5/carp-522
+BuildRequires:    library/perl-5/encode-522
+BuildRequires:    library/perl-5/exporter-522
+BuildRequires:    library/perl-5/file-temp-522
+BuildRequires:    library/perl-5/html-parser-522
+BuildRequires:    library/perl-5/parent-522
+BuildRequires:    library/perl-5/pathtools-522
+Requires:         runtime/perl-522 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/carp-522
+Requires:         library/perl-5/encode-522
+Requires:         library/perl-5/exporter-522
+Requires:         library/perl-5/file-temp-522
+Requires:         library/perl-5/html-parser-522
+Requires:         library/perl-5/parent-522
+Requires:         library/perl-5/pathtools-522
+
+%description 522
+Handle Common Gateway Interface requests and responses
+%endif
+
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
-rm -rf %{buildroot}
+[ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
 build_with_makefile.pl_for() {
@@ -155,8 +234,17 @@ build_with_makefile.pl_for() {
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
-    make
-    [ x${test} = 'xwithout_test' ] || make test
+
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
+    if [ $? -eq 0 ]
+    then
+        make CC='cc -m32' LD='cc -m32'
+        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
+    else
+        make CC='cc -m64' LD='cc -m64'
+        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
+    fi
+
     make pure_install
 }
 
@@ -171,8 +259,9 @@ build_with_build.pl_for() {
                    --installdirs vendor \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ x${test} = 'xwithout_test' ] || ${bindir}/perl ./Build test
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
+    ${bindir}/perl ./Build clean
 }
 
 modify_bin_dir() {
@@ -183,12 +272,12 @@ modify_bin_dir() {
       mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
     fi
       
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}bin ]
+    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin ]
     then
-        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}bin/*
+        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
         do
-            sed -ibak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${I}
-            [ -f ${i}.bak] || rm ${i}.bak
+            sed -i.bak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${i}
+            [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
 }
@@ -205,7 +294,11 @@ modify_man_dir() {
             mv $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
             rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
         fi
-        rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+        if [ %{include_executable} -eq 0 ]
+        then
+            rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+        fi
+
     fi
 }
 
@@ -242,6 +335,10 @@ build_for 5.16
 
 %if %{build520}
 build_for 5.20
+%endif
+
+%if %{build522}
+build_for 5.22
 %endif
 
 %install
@@ -312,8 +409,19 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build522}
+%files 522
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.22
+%if %{include_executable}
+/usr/perl5/5.22
+%endif
+%endif
 
 %changelog
+* Fri Mar 17 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 4.35
 * Fri Nov 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.22 and build packages for perl-510, perl-516 and perl-520
 * Tue Jun 19 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -14,8 +14,8 @@
 Summary:               Database independent interface for Perl
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               1.634
-IPS_component_version: 1.634
+Version:               1.636
+IPS_component_version: 1.636
 License:               perl_5
 URL:                   https://metacpan.org/pod/DBI
 Source0:               http://cpan.metacpan.org/authors/id/T/TI/TIMB/DBI-%{version}.tar.gz
@@ -309,6 +309,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Mar 17 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.636
 * Wed Dec 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.634
 * Sat Jun 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

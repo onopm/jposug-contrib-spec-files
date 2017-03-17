@@ -1,0 +1,11 @@
+--- doc/Makefile.orig	2013-05-13 18:23:15.195271931 +0900
++++ doc/Makefile	2013-05-13 18:25:14.343297914 +0900
+@@ -59,7 +59,7 @@
+ doc/%.html: TAG = HTML
+ doc/%.html: doc/%.texi $(SRC_PATH)/doc/t2h.init $(GENTEXI)
+ 	$(Q)$(TEXIDEP)
+-	$(M)texi2html -I doc -monolithic --init-file $(SRC_PATH)/doc/t2h.init --output $@ $<
++	$(M)texi2html -Idoc -monolithic $<
+ 
+ doc/%.pod: TAG = POD
+ doc/%.pod: doc/%.texi $(SRC_PATH)/doc/texi2pod.pl $(GENTEXI)

@@ -115,7 +115,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
-* Thu Mar 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Wed Mar 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.2.7
 * Tue Mar 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add CFLAGS for SPARC

@@ -3,7 +3,7 @@
 #
 
 %define _name ruby
-%define version 2.2.6
+%define version 2.2.7
 %define major_version 2.2
 %define unmangled_version 2.2.0
 %define patchlevel 0
@@ -115,6 +115,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Wed Mar 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.7
 * Tue Mar 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add CFLAGS for SPARC
 * Mon Dec 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

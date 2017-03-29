@@ -1,4 +1,4 @@
-%define version 2.4.0
+%define version 2.4.1
 %define major_version 2.4
 %define unmangled_version 2.4.0
 %define version_suffix 24
@@ -102,6 +102,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Thu Mar 23 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.1
 * Wed Mar 08 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify to build on SPARC 
 * Wed Dec 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

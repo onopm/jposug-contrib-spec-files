@@ -11,10 +11,13 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.2.4
+%define tarball_version  9.2.20
 %define major_version	 9.2
 %define prefix_name      SFEpostgres-92
 %define _basedir         %{_prefix}/%{major_version}
+
+%define after_oracle_solaris_11_2 %(egrep 'Oracle Solaris (11\.[23]|12)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+%define oracle_solaris_12 %(grep 'Oracle Solaris 12' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-92
@@ -45,7 +48,11 @@ BuildRequires: %{pnm_buildrequires_SUNWcsl}
 BuildRequires: %{pnm_buildrequires_SUNWlibms}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWTcl}
+%if %{after_oracle_solaris_11_2}
+BuildRequires: library/libedit
+%else
 BuildRequires: SFEeditline
+%endif
 
 Requires: %{pnm_requires_SUNWlxsl}
 Requires: %{pnm_requires_SUNWlxml}
@@ -54,7 +61,11 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWgss}
+%if %{after_oracle_solaris_11_2}
+Requires: library/libedit
+%else
 Requires: SFEeditline
+%endif
 
 Requires: %{prefix_name}-libs
 
@@ -65,7 +76,7 @@ Meta(info.maintainer):	 	pkglabo.justplayer.com <pkgadmin@justplayer.com>
 Meta(info.classification):	System Database
 
 %description
-PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness. It runs on all major operating systems, including Linux, UNIX (AIX, BSD, HP-UX, SGI IRIX, Mac OS X, Solaris, Tru64), and Windows. It is fully ACID compliant, has full support for foreign keys, joins, views, triggers, and stored procedures (in multiple languages). It includes most SQL:2008 data types, including INTEGER, NUMERIC, BOOLEAN, CHAR, VARCHAR, DATE, INTERVAL, and TIMESTAMP. It also supports storage of binary large objects, including pictures, sounds, or video. It has native programming interfaces for C/C++, Java, .Net, Perl, Python, Ruby, Tcl, ODBC, among others, and exceptional documentation. 
+PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness. It runs on all major operating systems, including Linux, UNIX (AIX, BSD, HP-UX, SGI IRIX, Mac OS X, Solaris, Tru64), and Windows. It is fully ACID compliant, has full support for foreign keys, joins, views, triggers, and stored procedures (in multiple languages). It includes most SQL:2008 data types, including INTEGER, NUMERIC, BOOLEAN, CHAR, VARCHAR, DATE, INTERVAL, and TIMESTAMP. It also supports storage of binary large objects, including pictures, sounds, or video. It has native programming interfaces for C/C++, Java, .Net, Perl, Python, Ruby, Tcl, ODBC, among others, and exceptional documentation.
 
 %package -n %{prefix_name}-libs
 
@@ -120,7 +131,16 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{prefix_name}-libs
+%if %{after_oracle_solaris_11_2}
+#
+%if %{oracle_solaris_12}
 Requires: SFEpostgres-common
+%else
+#On Oracle Soalris 11.2, user postgres exists by default.
+%endif
+%else
+Requires: SFEpostgres-common
+%endif
 
 %package -n %{prefix_name}-contrib
 IPS_package_name: database/postgres-92/contrib
@@ -525,7 +545,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/libpq.so
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/libpq.so.5
 %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/libpq.so.5.5
- 
+
 %files -n %{prefix_name}-pl
 %defattr (-, root, bin)
 
@@ -629,12 +649,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config/missing
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/makefiles
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test/regress
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/config
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/config/missing
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/makefiles
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/test
@@ -1019,6 +1041,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/share/extension/chkpass.control
 %{_prefix}/%{major_version}/share/extension/citext--1.0.sql
 %{_prefix}/%{major_version}/share/extension/citext--unpackaged--1.0.sql
+%{_prefix}/%{major_version}/share/extension/citext--1.1.sql
+%{_prefix}/%{major_version}/share/extension/citext--1.0--1.1.sql
+%{_prefix}/%{major_version}/share/extension/citext--1.1--1.0.sql
 %{_prefix}/%{major_version}/share/extension/citext.control
 %{_prefix}/%{major_version}/share/extension/cube--1.0.sql
 %{_prefix}/%{major_version}/share/extension/cube--unpackaged--1.0.sql
@@ -1148,6 +1173,33 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Fri Feb 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.20
+* Tue Nov 22 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.19
+* Fri Jul 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.17
+* Tue Apr 26 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.16
+* Sun Jun 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.13
+* Mon May 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.11
+* Sun Feb 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.10
+* Sun Dec 14 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- With Oracle Solaris 11.2, use library/libedit instead of SFEeditline
+- SFEpostgres-common is no required on Oracle Solaris 11.2
+* Fri Jul 25 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.9
+* Sun Mar 23 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.8
+* Fri Feb 21 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.7
+* Sat Dec 14 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.6
+* Sat Oct 19 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.2.5
 * Fri Apr  5 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.2.4
 * Thu Feb  7 JST 2013 TAKI, Yasushi <taki@justplayer.com>

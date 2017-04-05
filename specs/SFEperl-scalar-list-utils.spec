@@ -8,7 +8,7 @@
 
 %define cpan_name Scalar-List-Utils
 %define sfe_cpan_name scalar-list-utils
-%define sfe_cpan_name_old scalar-utils
+%define sfe_cpan_name_old scalar-util
 
 Summary:               Common Scalar and List utility subroutines
 Name:                  perl-%{sfe_cpan_name}
@@ -222,6 +222,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Dec 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix sfe_cpan_name_old
 * Mon Nov 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - create empty packages library/perl-5/scalar-utils-{584,512} to keep dependency
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

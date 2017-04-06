@@ -188,7 +188,7 @@ modify_bin_dir() {
     then
         for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
@@ -318,6 +318,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Apr 04 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix sed in modify_bin_dir
 * Wed Apr 05 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - package for perl-512 is added, for perl-520 is obsolete
 * Sat Dec 05 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

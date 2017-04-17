@@ -10,11 +10,11 @@
 Summary:          Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 Name:             SFEnodejs-%{major_version}
 IPS_package_name: runtime/node.js-%{major_version}
-Version:          7.2.1
+Version:          7.9.0
 License:          MIT License
 URL:              http://nodejs.org/
 Source0:          https://nodejs.org/dist/v%{verson}/node-v%{version}.tar.xz
-Patch0:           nodejs-53-add-defines.patch
+Patch0:           nodejs-7-add-defines.patch
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 SUNW_Copyright:   %{name}.copyright
 
@@ -77,6 +77,24 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/nodejs/%{major_version}
 
 %changelog
+* Wed Apr 12 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.9.0
+* Wed Mar 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.8.0
+* Thu Mar 23 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.7.4 and update patch0
+* Thu Mar 09 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.7.2
+* Mon Mar 06 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.7.1
+* Wed Feb 22 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.6.0
+* Wed Feb 01 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.5.0
+* Sun Jan 08 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.4.0
+* Tue Jan 03 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.3.0
 * Wed Dec 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.2.1
 * Fri Nov 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

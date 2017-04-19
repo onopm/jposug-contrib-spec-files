@@ -10,13 +10,13 @@
 %include packagenamemacros.inc
 
 %define tarball_name    nrpe
-%define tarball_version 2.13
+%define tarball_version 2.15
 
 
 Name:		SFEnagios-nrpe
 IPS_package_name:        diagnostic/nagios/nrpe
-Version:	2.13
-Summary:	NRPE - Nagios Remote Plugin Executor 
+Version:	2.15
+Summary:	NRPE - Nagios Remote Plugin Executor
 Group:		Applications/System
 License:	GPL
 URL:		http://www.nagios.org/
@@ -56,13 +56,14 @@ fi
 	--sysconfdir=%{_sysconfdir}/nagios \
 	--localstatedir=%{_localstatedir}/log/nagios \
 	--datadir=%{_datadir}/nagios/html \
+        --enable-command-args
 
 make -j$CPUS all
 
 
 %install
 rm -rf %{buildroot}
-make DESTDIR=%{buildroot} NAGIOS_INSTALL_OPTS="" NRPE_INSTALL_OPTS="" install 
+make DESTDIR=%{buildroot} NAGIOS_INSTALL_OPTS="" NRPE_INSTALL_OPTS="" install
 mkdir -p %{buildroot}/%{_sysconfdir}/nagios
 install -m 0644 sample-config/nrpe.cfg %{buildroot}%{_sysconfdir}/nagios/nrpe.cfg
 
@@ -99,6 +100,13 @@ rm -rf %{buildroot}
 
 
 %changelog
+=======
+* Tue May 13 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add configure option '--enable-command-args'
+* Tue Jan 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.15
+* Wed Mar 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.14
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

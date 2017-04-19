@@ -25,6 +25,7 @@ Source1:	nagios-nrpe.xml
 Source2:	svc-nagios-nrpe
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
+BuildRequires:	diagnostic/nagios/devel
 Requires:       diagnostic/nagios/common
 
 %description
@@ -99,11 +100,14 @@ rm -rf %{buildroot}
 
 
 %changelog
+=======
 * Tue May 13 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add configure option '--enable-command-args'
 * Tue Jan 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.15
 * Wed Mar 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.14
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

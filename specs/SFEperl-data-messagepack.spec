@@ -5,6 +5,7 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
 %define cpan_name Data-MessagePack
@@ -14,11 +15,11 @@
 Summary:               MessagePack serializing/deserializing
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               0.48
-IPS_component_version: 0.48
+Version:               1.00
+IPS_component_version: 1.0
 License:               perl_5
 URL:                   https://metacpan.org/pod/Data::MessagePack
-Source0:               http://cpan.metacpan.org/authors/id/G/GF/GFUJI/Data-MessagePack-%{version}.tar.gz
+Source0:               http://cpan.metacpan.org/authors/id/S/SY/SYOHEX/Data-MessagePack-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
@@ -32,8 +33,10 @@ BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/devel-ppport-584
 BuildRequires:    library/perl-5/extutils-makemaker-584
 BuildRequires:    library/perl-5/extutils-parsexs-584
+BuildRequires:    library/perl-5/file-copy-recursive-584
 BuildRequires:    library/perl-5/test-requires-584
 BuildRequires:    library/perl-5/test-simple-584
+BuildRequires:    library/perl-5/xsloader-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/xsloader-584
@@ -50,8 +53,10 @@ BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/devel-ppport-510
 BuildRequires:    library/perl-5/extutils-makemaker-510
 BuildRequires:    library/perl-5/extutils-parsexs-510
+BuildRequires:    library/perl-5/file-copy-recursive-510
 BuildRequires:    library/perl-5/test-requires-510
 BuildRequires:    library/perl-5/test-simple-510
+BuildRequires:    library/perl-5/xsloader-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/xsloader-510
@@ -68,8 +73,10 @@ BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/devel-ppport-512
 BuildRequires:    library/perl-5/extutils-makemaker-512
 BuildRequires:    library/perl-5/extutils-parsexs-512
+BuildRequires:    library/perl-5/file-copy-recursive-512
 BuildRequires:    library/perl-5/test-requires-512
 BuildRequires:    library/perl-5/test-simple-512
+BuildRequires:    library/perl-5/xsloader-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/xsloader-512
@@ -86,8 +93,11 @@ BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/devel-ppport-516
 BuildRequires:    library/perl-5/extutils-makemaker-516
 BuildRequires:    library/perl-5/extutils-parsexs-516
+BuildRequires:    library/perl-5/file-copy-recursive-516
 BuildRequires:    library/perl-5/test-requires-516
 BuildRequires:    library/perl-5/test-simple-516
+Requires:         library/perl-5/%{ips_cpan_name}
+BuildRequires:    library/perl-5/xsloader-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/xsloader-516
@@ -104,8 +114,10 @@ BuildRequires:    runtime/perl-520 = *
 BuildRequires:    library/perl-5/devel-ppport-520
 BuildRequires:    library/perl-5/extutils-makemaker-520
 BuildRequires:    library/perl-5/extutils-parsexs-520
+BuildRequires:    library/perl-5/file-copy-recursive-520
 BuildRequires:    library/perl-5/test-requires-520
 BuildRequires:    library/perl-5/test-simple-520
+BuildRequires:    library/perl-5/xsloader-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/xsloader-520
@@ -114,10 +126,30 @@ Requires:         library/perl-5/xsloader-520
 MessagePack serializing/deserializing
 %endif
 
+%if %{build522}
+%package 522
+IPS_package_name: library/perl-5/%{ips_cpan_name}-522
+Summary:          MessagePack serializing/deserializing
+BuildRequires:    runtime/perl-522 = *
+BuildRequires:    library/perl-5/devel-ppport-522
+BuildRequires:    library/perl-5/extutils-makemaker-522
+BuildRequires:    library/perl-5/extutils-parsexs-522
+BuildRequires:    library/perl-5/file-copy-recursive-522
+BuildRequires:    library/perl-5/test-requires-522
+BuildRequires:    library/perl-5/test-simple-522
+BuildRequires:    library/perl-5/xsloader-522
+Requires:         runtime/perl-522 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/xsloader-522
+
+%description 522
+MessagePack serializing/deserializing
+%endif
+
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
-rm -rf %{buildroot}
+[ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
 build_with_makefile.pl_for() {
@@ -130,8 +162,17 @@ build_with_makefile.pl_for() {
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
-    make
-    [ x${test} = 'xwithout_test' ] || make test
+
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
+    if [ $? -eq 0 ]
+    then
+        make CC='cc -m32' LD='cc -m32'
+        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
+    else
+        make CC='cc -m64' LD='cc -m64'
+        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
+    fi
+
     make pure_install
 }
 
@@ -146,7 +187,7 @@ build_with_build.pl_for() {
                    --installdirs vendor \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ x${test} = 'xwithout_test' ] || ${bindir}/perl ./Build test
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build clean
 }
@@ -181,7 +222,11 @@ modify_man_dir() {
             mv $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
             rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
         fi
-        rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+        if [ %{include_executable} -eq 0 ]
+        then
+            rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+        fi
+
     fi
 }
 
@@ -218,6 +263,10 @@ build_for 5.16
 
 %if %{build520}
 build_for 5.20
+%endif
+
+%if %{build522}
+build_for 5.22
 %endif
 
 %install
@@ -288,8 +337,19 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build522}
+%files 522
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.22
+%if %{include_executable}
+/usr/perl5/5.22
+%endif
+%endif
 
 %changelog
+* Thu Mar 09 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.00
 * Sat Nov 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.48 and build packages for perl-510, perl-516 and perl-520
 * Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

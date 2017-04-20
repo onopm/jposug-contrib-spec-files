@@ -6,7 +6,7 @@
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.12.19
+%define tarball_version 0.14.0
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -25,11 +25,13 @@ BuildRequires:	library/ruby/rr-21
 BuildRequires:	library/ruby/timecop-21
 BuildRequires:	library/text/yaml >= 0.1.6
 Requires:	runtime/ruby-21
-Requires:	library/ruby/cool.io-21 >= 1.2.2
+Requires:	library/ruby/cool.io-21 >= 1.4.3
 Requires:	library/ruby/http_parser.rb-21 >= 0.5.1
 Requires:	library/ruby/json-21 >= 1.4.3
-Requires:	library/ruby/msgpack-21 >= 0.5.11
+Requires:	library/ruby/msgpack-21 >= 0.7.0
+Requires:	library/ruby/serverengine-21 >= 1.6.4
 Requires:	library/ruby/sigdump-21 >= 0.2.2
+Requires:	library/ruby/strptime >= 0.1.7
 Requires:	library/ruby/yajl-ruby-21 >= 1.0
 Requires:	library/ruby/tzinfo-21 >= 1.0.0
 Requires:	library/ruby/tzinfo-data-21 >= 1.0.0
@@ -122,6 +124,12 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Mon Jun 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.0
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.22
+* Thu Feb 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.20
 * Wed Jan 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %description position
 * Thu Dec 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

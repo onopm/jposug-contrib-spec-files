@@ -4,7 +4,7 @@
 %define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
 %define cpan_name Cache-Memcached
@@ -30,7 +30,10 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          client library for memcached (memory cache daemon)
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
+BuildRequires:    library/perl-5/encode-584
+BuildRequires:    library/perl-5/storable-584
 BuildRequires:    library/perl-5/string-crc32-584
+BuildRequires:    library/perl-5/time-hires-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-584
@@ -48,7 +51,10 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          client library for memcached (memory cache daemon)
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
+BuildRequires:    library/perl-5/encode-510
+BuildRequires:    library/perl-5/storable-510
 BuildRequires:    library/perl-5/string-crc32-510
+BuildRequires:    library/perl-5/time-hires-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-510
@@ -66,7 +72,10 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          client library for memcached (memory cache daemon)
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
+BuildRequires:    library/perl-5/encode-512
+BuildRequires:    library/perl-5/storable-512
 BuildRequires:    library/perl-5/string-crc32-512
+BuildRequires:    library/perl-5/time-hires-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-512
@@ -84,7 +93,11 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          client library for memcached (memory cache daemon)
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
+Requires:         library/perl-5/%{ips_cpan_name}
+BuildRequires:    library/perl-5/encode-516
+BuildRequires:    library/perl-5/storable-516
 BuildRequires:    library/perl-5/string-crc32-516
+BuildRequires:    library/perl-5/time-hires-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-516
@@ -96,28 +109,31 @@ Requires:         library/perl-5/time-hires-516
 client library for memcached (memory cache daemon)
 %endif
 
-%if %{build520}
-%package 520
-IPS_package_name: library/perl-5/%{ips_cpan_name}-520
+%if %{build522}
+%package 522
+IPS_package_name: library/perl-5/%{ips_cpan_name}-522
 Summary:          client library for memcached (memory cache daemon)
-BuildRequires:    runtime/perl-520 = *
-BuildRequires:    library/perl-5/extutils-makemaker-520
-BuildRequires:    library/perl-5/string-crc32-520
-Requires:         runtime/perl-520 = *
+BuildRequires:    runtime/perl-522 = *
+BuildRequires:    library/perl-5/extutils-makemaker-522
+BuildRequires:    library/perl-5/encode-522
+BuildRequires:    library/perl-5/storable-522
+BuildRequires:    library/perl-5/string-crc32-522
+BuildRequires:    library/perl-5/time-hires-522
+Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/encode-520
-Requires:         library/perl-5/storable-520
-Requires:         library/perl-5/string-crc32-520
-Requires:         library/perl-5/time-hires-520
+Requires:         library/perl-5/encode-522
+Requires:         library/perl-5/storable-522
+Requires:         library/perl-5/string-crc32-522
+Requires:         library/perl-5/time-hires-522
 
-%description 520
+%description 522
 client library for memcached (memory cache daemon)
 %endif
 
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
-rm -rf %{buildroot}
+[ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
 build_with_makefile.pl_for() {
@@ -130,8 +146,17 @@ build_with_makefile.pl_for() {
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
-    make
-    [ x${test} = 'xwithout_test' ] || make test
+
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
+    if [ $? -eq 0 ]
+    then
+        make CC='cc -m32' LD='cc -m32'
+        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
+    else
+        make CC='cc -m64' LD='cc -m64'
+        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
+    fi
+
     make pure_install
 }
 
@@ -146,7 +171,7 @@ build_with_build.pl_for() {
                    --installdirs vendor \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ x${test} = 'xwithout_test' ] || ${bindir}/perl ./Build test
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build clean
 }
@@ -163,7 +188,7 @@ modify_bin_dir() {
     then
         for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
@@ -220,8 +245,8 @@ build_for 5.12
 build_for 5.16
 %endif
 
-%if %{build520}
-build_for 5.20
+%if %{build522}
+build_for 5.22
 %endif
 
 %install
@@ -282,19 +307,22 @@ rm -rf %{buildroot}
 %endif
 %endif
 
-%if %{build520}
-%files 520
+%if %{build522}
+%files 522
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.20
+/usr/perl5/vendor_perl/5.22
 %if %{include_executable}
-/usr/perl5/5.20
+/usr/perl5/5.22
 %endif
 %endif
-
 
 %changelog
-* Sat Dec 05 2015 -  Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Tue Apr 04 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix sed in modify_bin_dir
+* Wed Apr 05 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- package for perl-512 is added, for perl-520 is obsolete
+* Sat Dec 05 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build packages for perl-510, perl-516 and perl-520
 * Wed Feb 20 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires

@@ -1,4 +1,4 @@
-%define version 2.3.0
+%define version 2.3.4
 %define major_version 2.3
 %define unmangled_version 2.3.0
 %define version_suffix 23
@@ -11,7 +11,7 @@ Version:		%{version}
 Release:		%{patchlevel}
 IPS_component_version:	%{version}.%{patchlevel}
 License: 		GPL
-Source: 		https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.bz2
+Source: 		https://cache.ruby-lang.org/pub/ruby/%{major_version}/ruby-%{version}.tar.bz2
 Source1:		https://hg.java.net/hg/solaris-userland~gate/raw-file/2062cde74e03/components/ruby/ruby-21/Solaris/rbconfig.sedscript
 Patch0:                 ruby-23-disable-ssl.patch
 Url:			 http://www.ruby-lang.org/
@@ -30,7 +30,13 @@ Requires:      library/text/yaml >= 0.1.6
 %patch0 -p0
 
 %build
-export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr    -mt -DFFI_NO_RAW_API' 
+%ifarch sparcv9
+export CFLAGS='-m64 -xO4 -D__sparc -mt -DFFI_NO_RAW_API -Kpic'
+%endif
+
+%ifarch amd64
+export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr -mt -DFFI_NO_RAW_API'
+%endif
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -97,6 +103,16 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
+* Fri Mar 31 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.4
+* Tue Mar 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add CFLAGS for SPARC
+* Wed Nov 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.3
+* Thu Nov 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.2
+* Mon May 02 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.1
 * Sun Dec 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.3.0
 * Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

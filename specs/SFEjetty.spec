@@ -1,7 +1,7 @@
 %include Solaris.inc
 
-%define jetty_version 9.3.6
-%define jetty_date 20151106
+%define jetty_version 9.3.18
+%define jetty_date 20170406
 
 Name:			SFEjetty
 IPS_package_name:	web/server/jetty
@@ -11,8 +11,8 @@ License:		Apache License 2.0
 URL:			http://www.eclipse.org/jetty/
 # Source:		http://ftp.yz.yamagata-u.ac.jp/pub/eclipse//jetty/stable-9/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
 #Source: 		http://ftp.yz.yamagata-u.ac.jp/pub/eclipse/jetty/%{jetty_version}.v%{jetty_date}/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
-Source: 		http://ftp.daum.net/eclipse//jetty/stable-9/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
-
+# Source: 		http://ftp.daum.net/eclipse//jetty/stable-9/dist/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
+Source:                 http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/%{jetty_version}.v%{jetty_date}/jetty-distribution-%{jetty_version}.v%{jetty_date}.tar.gz
 Source1:		svc-jetty
 Source2:		jetty.xml
 
@@ -121,10 +121,14 @@ rm -rf %{buildroot}
 %attr(0755, root, bin) /usr/jetty/modules/deploy.mod
 %attr(0755, root, bin) /usr/jetty/modules/ext.mod
 %attr(0755, root, bin) /usr/jetty/modules/fcgi.mod
+%attr(0755, root, bin) /usr/jetty/modules/flight-recorder.mod
+%attr(0755, root, bin) /usr/jetty/modules/gcloud-memcached-sessions.mod
+%attr(0755, root, bin) /usr/jetty/modules/gcloud-session-idmgr.mod
 %attr(0755, root, bin) /usr/jetty/modules/gcloud-sessions.mod
 %attr(0755, root, bin) /usr/jetty/modules/gzip.mod
 %attr(0755, root, bin) /usr/jetty/modules/hawtio.mod
 %attr(0755, root, bin) /usr/jetty/modules/home-base-warning.mod
+%attr(0755, root, bin) /usr/jetty/modules/http-forwarded.mod
 %attr(0755, root, bin) /usr/jetty/modules/http.mod
 %attr(0755, root, bin) /usr/jetty/modules/infinispan.mod
 %attr(0755, root, bin) /usr/jetty/modules/ipaccess.mod
@@ -150,6 +154,8 @@ rm -rf %{buildroot}
 %attr(0755, root, bin) /usr/jetty/modules/quickstart.mod
 %attr(0755, root, bin) /usr/jetty/modules/requestlog.mod
 %attr(0755, root, bin) /usr/jetty/modules/resources.mod
+%attr(0755, root, bin) /usr/jetty/modules/rewrite-compactpath.mod
+%attr(0755, root, bin) /usr/jetty/modules/rewrite-customizer.mod
 %attr(0755, root, bin) /usr/jetty/modules/rewrite.mod
 %attr(0755, root, bin) /usr/jetty/modules/security.mod
 %attr(0755, root, bin) /usr/jetty/modules/server.mod
@@ -158,6 +164,7 @@ rm -rf %{buildroot}
 %attr(0755, root, bin) /usr/jetty/modules/setuid.mod
 %attr(0755, root, bin) /usr/jetty/modules/spring.mod
 %attr(0755, root, bin) /usr/jetty/modules/stats.mod
+%attr(0755, root, bin) /usr/jetty/modules/threadlimit.mod
 %attr(0755, root, bin) /usr/jetty/modules/webapp.mod
 %attr(0755, root, bin) /usr/jetty/modules/websocket.mod
 
@@ -165,6 +172,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, bin) /var/jetty/etc
 %attr(0644, root, bin) /var/jetty/etc/README.spnego
 %config %attr(0644, root, bin) /var/jetty/etc/example-quickstart.xml
+%config %attr(0644, root, bin) /var/jetty/etc/gcloud-memcached-session-context.xml
+%config %attr(0644, root, bin) /var/jetty/etc/gcloud-session-context.xml
 %config %attr(0644, root, bin) /var/jetty/etc/hawtio.xml
 %config %attr(0644, root, bin) /var/jetty/etc/home-base-warning.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jamon.xml
@@ -175,8 +184,11 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-debug.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-debuglog.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-deploy.xml
+%config %attr(0644, root, bin) /var/jetty/etc/jetty-gcloud-memcached-sessions.xml
+%config %attr(0644, root, bin) /var/jetty/etc/jetty-gcloud-session-idmgr.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-gcloud-sessions.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-gzip.xml
+%config %attr(0644, root, bin) /var/jetty/etc/jetty-http-forwarded.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-http.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-infinispan.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-ipaccess.xml
@@ -192,16 +204,19 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-proxy-protocol.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-proxy.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-requestlog.xml
+%config %attr(0644, root, bin) /var/jetty/etc/jetty-rewrite-customizer.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-rewrite.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-setuid.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-spring.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-started.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-stats.xml
+%config %attr(0644, root, bin) /var/jetty/etc/jetty-threadlimit.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty.conf
 %config %attr(0644, root, bin) /var/jetty/etc/jetty.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jminix.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jolokia.xml
 %config %attr(0644, root, bin) /var/jetty/etc/krb5.ini
+%config %attr(0644, root, bin) /var/jetty/etc/rewrite-compactpath.xml
 %config %attr(0644, root, bin) /var/jetty/etc/spnego.conf
 %config %attr(0644, root, bin) /var/jetty/etc/spnego.properties
 %config %attr(0644, root, bin) /var/jetty/etc/webdefault.xml
@@ -257,6 +272,10 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-http2c.xml
 
 %changelog
+* Fri Apr 06 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.18.v20170406
+* Thu Jun 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.10.v20160621
 * Tue Feb 02 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - split package
 * Sun Jan 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -15,13 +15,11 @@
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.4.2
+Version:          1.4.4
 License:          MIT License
 URL:              http://coolio.github.com
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
-
-
 
 %description
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
@@ -321,6 +319,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Jun 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.4.4
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.4.2 and build package for ruby-23
 * Mon Nov 03 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

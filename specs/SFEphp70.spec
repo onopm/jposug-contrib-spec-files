@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  7.0.2
+%define tarball_version  7.0.15
 %define major_version	 7.0
 %define prefix_name      SFEphp70
 %define _basedir         %{_prefix}/%{major_version}
@@ -34,7 +34,6 @@ BuildRequires: SFEeditline
 BuildRequires: developer/icu
 
 Requires:       system/management/snmp/net-snmp >= 5.4.1
-Requires:       system/library/security/libmcrypt
 Requires:       text/tidy
 Requires:       library/libtool/libltdl
 Requires:       web/php-common
@@ -162,15 +161,18 @@ build --enable-force-cgi-redirect \
     --enable-xmlreader=shared --enable-xmlwriter=shared \
     --with-curl=shared \
     --enable-fastcgi \
-    --enable-pdo=shared \
-    --with-pdo-sqlite=shared \
     --with-sqlite3=shared \
+    --enable-mysqlnd=shared \
+    --with-mysqli=shared,mysqlnd \
+    --enable-pdo=shared \
+    --with-pdo-mysql=shared,mysqlnd \
+    --with-pdo-sqlite=shared \
     --enable-json=shared \
     --enable-zip=shared \
     --without-readline \
     --with-libedit \
     --enable-phar=shared \
-    --with-mcrypt=shared \
+    --disable-mcrypt \
     --with-tidy=shared \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
@@ -188,7 +190,7 @@ without_shared="--without-gd \
 
 # Build Apache module, and the CLI SAPI, /usr/bin/php
 pushd build-apache
-build --with-apxs2=/usr/apache2/2.2/bin/apxs \
+build --with-apxs2=/usr/apache2/2.4/bin/apxs \
     --enable-pdo=shared \
     --with-pdo-sqlite=shared,%{_prefix} \
     ${without_shared}
@@ -233,8 +235,11 @@ build --enable-force-cgi-redirect \
     --enable-xmlreader=shared --enable-xmlwriter=shared \
     --with-curl=shared \
     --enable-fastcgi \
+    --enable-mysqlnd=shared \
+    --enable-mysqlnd-threading \
+    --with-mysqli=shared,mysqlnd \
     --enable-pdo=shared \
-    --with-pdo-mysql=shared \
+    --with-pdo-mysql=shared,mysqlnd \
     --with-pdo-sqlite=shared \
     --with-sqlite3=shared \
     --enable-json=shared \
@@ -242,7 +247,7 @@ build --enable-force-cgi-redirect \
     --without-readline \
     --with-libedit \
     --enable-phar=shared \
-    --with-mcrypt=shared \
+    --disable-mcrypt \
     --with-tidy=shared \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
@@ -252,7 +257,7 @@ popd
 
 # Build a special thread-safe Apache SAPI
 pushd build-zts
-build --with-apxs2=/usr/apache2/2.2/bin/apxs \
+build --with-apxs2=/usr/apache2/2.4/bin/apxs \
     --includedir=/usr/php/7.0/include/php-zts \
     --libdir=/usr/php/7.0/lib/php-zts \
     --enable-maintainer-zts \
@@ -306,8 +311,8 @@ install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/
 install -m 755 -d $RPM_BUILD_ROOT%{_datadir}/php
 
 # install the DSO
-install -m 755 -d $RPM_BUILD_ROOT/usr/apache2/2.2/libexec
-install -m 755 build-apache/libs/libphp7.so $RPM_BUILD_ROOT/usr/apache2/2.2/libexec/mod_php7.0.so
+install -m 755 -d $RPM_BUILD_ROOT/usr/apache2/2.4/libexec
+install -m 755 build-apache/libs/libphp7.so $RPM_BUILD_ROOT/usr/apache2/2.4/libexec/mod_php7.0.so
 
 # install the ZTS DSO
 # install -m 755 build-zts/libs/libphp5.so $RPM_BUILD_ROOT%{_libdir}/httpd/modules/libphp5-zts.so
@@ -387,6 +392,16 @@ rm -rf $RPM_BUILD_ROOT/.depdb
 rm -rf $RPM_BUILD_ROOT/.depdblock
 rm -rf $RPM_BUILD_ROOT/.registry
 
+# ini file for extension
+for mod in mysqlnd  mysqli pdo_mysql
+do
+    cat > $RPM_BUILD_ROOT/etc/php/7.0/conf.d/${mod}.ini <<EOF
+; Enable ${mod} extension module
+extension=${mod}.so
+EOF
+done
+
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -400,7 +415,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, bin) %config(noreplace) /etc/php/7.0/php.ini-production
 %attr (0644, root, bin) %config(noreplace) /etc/php/7.0/php.ini-development
 %dir %attr (0755, root, bin) /etc/php/7.0/conf.d
-%attr (0755, root, bin) %config(noreplace) /etc/php/7.0/conf.d/opcache.ini
+%attr (0755, root, bin) %config(noreplace) /etc/php/7.0/conf.d/*.ini
 %dir %attr (0755, root, bin) /etc/php/7.0/zts-conf.d
 # %dir %attr (0755, root, bin) /etc/php/7.0/fpm-conf.d
 %attr (0755, root, bin) %config(noreplace) /etc/php/7.0/php-fpm.conf.default
@@ -426,11 +441,29 @@ rm -rf $RPM_BUILD_ROOT
 # %dir %attr (0755, root, sys) /var/run
 # %attr (0755, root, root) /var/run/php-fpm
 %dir %attr (0755, root, bin) /usr/apache2
-%dir %attr (0755, root, bin) /usr/apache2/2.2
-%dir %attr (0755, root, bin) /usr/apache2/2.2/libexec
-%attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php7.0.so
+%dir %attr (0755, root, bin) /usr/apache2/2.4
+%dir %attr (0755, root, bin) /usr/apache2/2.4/libexec
+%attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php7.0.so
 
 %changelog
+* Thu Jan 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.15
+* Mon Dec 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.14
+* Fri Oct 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use mysqlng instead of libmysqlclient
+* Thu Oct 20 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.12
+* Fri Sep 30 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.11
+* Fri Jul 22 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.9
+* Fri Jun 24 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.8
+* Wed Jun 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.7 and disable mcrypt
+* Mon Mar 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.4 and use apache-24
 * Fri Jan 08 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.0.2
 * Sat Dec 19 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -14,7 +14,7 @@
 Summary:          A replacement log formatter for SSHKit that makes Capistrano output much easier on the eyes. Just add Airbrussh to your Capfile and enjoy concise, useful log output that is easy to read.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.1.1
+Version:          1.2.0
 License:          MIT
 URL:              https://github.com/mattbrictson/airbrussh
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -270,5 +270,7 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Apr 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2.0
 * Sat Dec 31 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

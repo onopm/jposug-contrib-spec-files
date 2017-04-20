@@ -9,6 +9,14 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
+%define bdbdir /usr
+%else
+# OI
+%define bdbdir /usr/gnu
+%endif
+
 Name:           SFEnetatalk
 IPS_package_name:       service/network/netatalk
 Summary:        Open Source Apple Filing Protocol (AFP) fileserver
@@ -23,7 +31,16 @@ Vendor:         OpenSolaris Community
 
 %include default-depend.inc
 
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
+BuildRequires: database/berkeleydb-5
+Requires: database/berkeleydb-5
+%else
+# OI
 BuildRequires: SFEbdb
+Requires: SFEbdb
+%endif
+
 BuildRequires: %{pnm_requires_system_library_security_libgcrypt}
 BuildRequires: %{pnm_buildrequires_SUNWopenssl}
 BuildRequires: %{pnm_buildrequires_system_network_avahi}
@@ -31,7 +48,6 @@ BuildRequires: %{pnm_buildrequires_SUNWavahi_bridge_dsd}
 BuildRequires: %{pnm_buildrequires_SUNWavahi_bridge_dsd_devel}
 BuildRequires: %{pnm_buildrequires_avahi_bridge_dsd}
 BuildRequires: %{pnm_buildrequires_developer_build_make}
-Requires: SFEbdb
 Requires: %{pnm_requires_system_library_security_libgcrypt}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_system_network_avahi}
@@ -83,7 +99,8 @@ export LIBS="-R/usr/gnu/lib"
             --with-bdb=/usr/gnu \
             --with-libgcrypt-dir=/usr \
             --with-ssl-dir=/usr \
-            --enable-nfsv4acls
+            --enable-nfsv4acls \
+            --with-bdb=%{bdbdir}
 
 make
 
@@ -150,6 +167,8 @@ rm -rf %name-%version
 
 
 %changelog
+* Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use database/berkeleydb-5 on Oracle Solaris
 * Tue Jan 29 2013 - YAMAMOTO Takashi <yamachan@selfnavi.com>
 - Support for OpenIndiana
 * Sat Jan 26 2013 - TAKI,Yasushi <taki@justplayer.com>

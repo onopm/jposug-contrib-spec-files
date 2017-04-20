@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 0.045
+%define tarball_version 0.048
 %define tarball_name    IPC-Run3
 
 Name:		SFEperl-ipc-run3
 IPS_package_name: library/perl-5/ipc-run3
-Version:	0.045
-IPS_component_version: 0.45
+Version:	0.048
+IPS_component_version: 0.48
 Summary:	IPC::Run3 - run a subprocess with input/ouput redirection
 License:	Artistic
 Distribution:   OpenSolaris
@@ -98,5 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Mon May 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.048
 * Thu Jun 21 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

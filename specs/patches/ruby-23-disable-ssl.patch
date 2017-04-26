@@ -1,0 +1,15 @@
+--- ext/openssl/extconf.rb.dist	2015-11-19 12:13:44.759130906 +0900
++++ ext/openssl/extconf.rb	2015-11-19 12:13:13.299023906 +0900
+@@ -96,12 +96,6 @@
+ have_func("SSL_SESSION_get_id")
+ have_func("SSL_SESSION_cmp")
+ have_func("OPENSSL_cleanse")
+-have_func("SSLv2_method")
+-have_func("SSLv2_server_method")
+-have_func("SSLv2_client_method")
+-have_func("SSLv3_method")
+-have_func("SSLv3_server_method")
+-have_func("SSLv3_client_method")
+ have_func("TLSv1_1_method")
+ have_func("TLSv1_1_server_method")
+ have_func("TLSv1_1_client_method")

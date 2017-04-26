@@ -1,40 +1,19 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
+%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
+%define keep_dependency 1
 
 %define gemname highline
+%define sfe_gemname highline
 
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
-
-Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
-Name:             SFEruby-%{gemname}
+Summary:          A high-level IO library that provides validation,
+Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
 Version:          1.7.8
 License:          Ruby
@@ -52,9 +31,10 @@ minutes of work.
 
 
 %if %{build19}
+%if %{keep_dependency}
 %package 19-old
 IPS_package_name: library/ruby-19/%{gemname}
-Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
+Summary:          A high-level IO library that provides validation,
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 Requires:         library/ruby/%{gemname}-19
@@ -65,9 +45,11 @@ command-line interfaces. HighLine also includes a complete menu system that can
 crank out anything from simple list selection to complete shells with just
 minutes of work.
 
+%endif
+
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
-Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
+Summary:          A high-level IO library that provides validation,
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 
@@ -80,9 +62,10 @@ minutes of work.
 %endif
 
 %if %{build20}
+%if %{keep_dependency}
 %package 20-old
 IPS_package_name: library/ruby-20/%{gemname}
-Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
+Summary:          A high-level IO library that provides validation,
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/%{gemname}-20
@@ -93,9 +76,11 @@ command-line interfaces. HighLine also includes a complete menu system that can
 crank out anything from simple list selection to complete shells with just
 minutes of work.
 
+%endif
+
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
-Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
+Summary:          A high-level IO library that provides validation,
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 
@@ -108,9 +93,10 @@ minutes of work.
 %endif
 
 %if %{build21}
+%if %{keep_dependency}
 %package 21-old
 IPS_package_name: library/ruby-21/%{gemname}
-Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
+Summary:          A high-level IO library that provides validation,
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/%{gemname}-21
@@ -121,9 +107,11 @@ command-line interfaces. HighLine also includes a complete menu system that can
 crank out anything from simple list selection to complete shells with just
 minutes of work.
 
+%endif
+
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
-Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
+Summary:          A high-level IO library that provides validation,
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 
@@ -136,9 +124,10 @@ minutes of work.
 %endif
 
 %if %{build22}
+%if %{keep_dependency}
 %package 22-old
 IPS_package_name: library/ruby-22/%{gemname}
-Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
+Summary:          A high-level IO library that provides validation,
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/%{gemname}-22
@@ -149,13 +138,46 @@ command-line interfaces. HighLine also includes a complete menu system that can
 crank out anything from simple list selection to complete shells with just
 minutes of work.
 
+%endif
+
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
-Summary:          A high-level IO library that provides validation, type conversion, and more for command-line interfaces. 
+Summary:          A high-level IO library that provides validation,
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 
 %description 22
+A high-level IO library that provides validation, type conversion, and more for
+command-line interfaces. HighLine also includes a complete menu system that can
+crank out anything from simple list selection to complete shells with just
+minutes of work.
+
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          A high-level IO library that provides validation,
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+A high-level IO library that provides validation, type conversion, and more for
+command-line interfaces. HighLine also includes a complete menu system that can
+crank out anything from simple list selection to complete shells with just
+minutes of work.
+
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          A high-level IO library that provides validation,
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+
+%description 23
 A high-level IO library that provides validation, type conversion, and more for
 command-line interfaces. HighLine also includes a complete menu system that can
 crank out anything from simple list selection to complete shells with just
@@ -203,6 +225,11 @@ build_for 2.1
 build_for 2.2
 %endif
 
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
+
 %install
 rm -rf %{buildroot}
 
@@ -216,15 +243,40 @@ install_for() {
     gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-    mkdir -p %{buildroot}/usr/ruby/${ruby_var}
-    cp -a ./usr/ruby/${ruby_var}/* \
-        %{buildroot}/usr/ruby/${ruby_var}/
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
 
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
 %if %{generate_executable}
-    mkdir -p %{buildroot}${bindir}
-    cp -a .${bindir}/* \
-        %{buildroot}${bindir}/
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
 %endif
+
 }
 
 %if %{build19}
@@ -242,7 +294,13 @@ install_for 2.1
 %endif
 
 %if %{build22}
+# ruby-22
 install_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+install_for 2.3
 %endif
 
 %clean
@@ -252,46 +310,63 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 
 %if %{build19}
-%files 19-old
-%defattr(0755,root,bin,-)
-
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/1.9
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*19
+%endif
 %endif
 
 %if %{build20}
-%files 20-old
-%defattr(0755,root,bin,-)
-
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.0
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*20
+%endif
 %endif
 
 %if %{build21}
-%files 21-old
-%defattr(0755,root,bin,-)
-
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
 %endif
 
 %if %{build22}
-%files 22-old
-%defattr(0755,root,bin,-)
-
 %files 22
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
 %endif
 
 %changelog
+* Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build package for ruby-23
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.7.8
 * Fri Jun 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

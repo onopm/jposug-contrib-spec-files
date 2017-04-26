@@ -1,41 +1,19 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
+%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
+%define keep_dependency 1
 
 %define gemname rspec_junit_formatter
-%define sfe_gemname rspec-junit-formatter
-
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
+%define sfe_gemname rspec-junit-frmttr
 
 Summary:          RSpec results that Hudson can read.
-Name:             %{sfe_gemname}
+Name:             ruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
 Version:          0.2.3
 License:          MIT
@@ -43,25 +21,21 @@ URL:              http://github.com/sj26/rspec_junit_formatter
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-
-
 %description
 RSpec results that Hudson can read.
 
 %if %{build19}
+%if %{keep_dependency}
 %package 19-old
 IPS_package_name: library/ruby-19/%{gemname}
 Summary:          RSpec results that Hudson can read.
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 Requires:         library/ruby/%{gemname}-19
-# builder < 4
-Requires:         library/ruby-19/builder
-# rspec-core != 2.12.0, < 4, >= 2
-Requires:         library/ruby-19/rspec-core
 
 %description 19-old
 RSpec results that Hudson can read.
+%endif
 
 %package 19
 IPS_package_name: library/ruby/%{gemname}-19
@@ -72,25 +46,24 @@ Requires:         runtime/ruby-19 = *
 Requires:         library/ruby/builder-19
 # rspec-core != 2.12.0, < 4, >= 2
 Requires:         library/ruby/rspec-core-19
+Requires:         library/ruby/%{gemname}
 
 %description 19
 RSpec results that Hudson can read.
 %endif
 
 %if %{build20}
+%if %{keep_dependency}
 %package 20-old
 IPS_package_name: library/ruby-20/%{gemname}
 Summary:          RSpec results that Hudson can read.
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/%{gemname}-20
-# builder < 4
-Requires:         library/ruby-20/builder
-# rspec-core != 2.12.0, < 4, >= 2
-Requires:         library/ruby-20/rspec-core
 
 %description 20-old
 RSpec results that Hudson can read.
+%endif
 
 %package 20
 IPS_package_name: library/ruby/%{gemname}-20
@@ -101,25 +74,24 @@ Requires:         runtime/ruby-20 = *
 Requires:         library/ruby/builder-20
 # rspec-core != 2.12.0, < 4, >= 2
 Requires:         library/ruby/rspec-core-20
+Requires:         library/ruby/%{gemname}
 
 %description 20
 RSpec results that Hudson can read.
 %endif
 
 %if %{build21}
+%if %{keep_dependency}
 %package 21-old
 IPS_package_name: library/ruby-21/%{gemname}
 Summary:          RSpec results that Hudson can read.
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/%{gemname}-21
-# builder < 4
-Requires:         library/ruby-21/builder
-# rspec-core != 2.12.0, < 4, >= 2
-Requires:         library/ruby-21/rspec-core
 
 %description 21-old
 RSpec results that Hudson can read.
+%endif
 
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
@@ -130,25 +102,24 @@ Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/builder-21
 # rspec-core != 2.12.0, < 4, >= 2
 Requires:         library/ruby/rspec-core-21
+Requires:         library/ruby/%{gemname}
 
 %description 21
 RSpec results that Hudson can read.
 %endif
 
 %if %{build22}
+%if %{keep_dependency}
 %package 22-old
 IPS_package_name: library/ruby-22/%{gemname}
 Summary:          RSpec results that Hudson can read.
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/%{gemname}-22
-# builder < 4
-Requires:         library/ruby-22/builder
-# rspec-core != 2.12.0, < 4, >= 2
-Requires:         library/ruby-22/rspec-core
 
 %description 22-old
 RSpec results that Hudson can read.
+%endif
 
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
@@ -159,8 +130,36 @@ Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/builder-22
 # rspec-core != 2.12.0, < 4, >= 2
 Requires:         library/ruby/rspec-core-22
+Requires:         library/ruby/%{gemname}
 
 %description 22
+RSpec results that Hudson can read.
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          RSpec results that Hudson can read.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+RSpec results that Hudson can read.
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          RSpec results that Hudson can read.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+# builder < 4
+Requires:         library/ruby/builder-23
+# rspec-core != 2.12.0, < 4, >= 2
+Requires:         library/ruby/rspec-core-23
+
+%description 23
 RSpec results that Hudson can read.
 %endif
 
@@ -202,6 +201,11 @@ build_for 2.1
 %if %{build22}
 # ruby-22
 build_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+build_for 2.3
 %endif
 
 %install
@@ -268,7 +272,13 @@ install_for 2.1
 %endif
 
 %if %{build22}
+# ruby-22
 install_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+install_for 2.3
 %endif
 
 %clean
@@ -278,9 +288,6 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 
 %if %{build19}
-%files 19-old
-%defattr(0755,root,bin,-)
-
 %files 19
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -292,9 +299,6 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build20}
-%files 20-old
-%defattr(0755,root,bin,-)
-
 %files 20
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -306,9 +310,6 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build21}
-%files 21-old
-%defattr(0755,root,bin,-)
-
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -320,9 +321,6 @@ rm -rf %{buildroot}
 %endif
 
 %if %{build22}
-%files 22-old
-%defattr(0755,root,bin,-)
-
 %files 22
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
@@ -333,7 +331,20 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+
 %changelog
+* Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build package for ruby-23
 * Sun Jun 21 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.2.3
 * Tue Mar 17 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

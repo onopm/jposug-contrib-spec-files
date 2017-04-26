@@ -137,16 +137,11 @@ build_with_makefile.pl_for() {
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
 
-    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
-    if [ $? -eq 0 ]
-    then
-        make CC='cc -m32' LD='cc -m32'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
-    else
-        make CC='cc -m64' LD='cc -m64'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
-    fi
-
+    export CC='cc -m32'
+    export LD='cc -m32'
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    make
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test
     make pure_install
 }
 
@@ -310,5 +305,6 @@ rm -rf %{buildroot}
 %changelog
 * Wed Apr 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for perl-522
+- fix build
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

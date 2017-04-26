@@ -1,118 +1,215 @@
 %include Solaris.inc
+%include default-depend.inc
+
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define generate_executable 0
+%define keep_dependency 1
 
 %define gemname sigdump
+%define sfe_gemname sigdump
 
-%define generate_executable 0
-
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-
-Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class.
-Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby-21/sigdump
-Version:          0.2.2
+Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+Name:             SFEruby-%{sfe_gemname}
+IPS_package_name: library/ruby/%{gemname}
+Version:          0.2.4
 License:          MIT
-URL:              http://rubygems.org/gems/%{gemname}
+URL:              https://github.com/frsyuki/sigdump
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	runtime/ruby-21
-Requires:       runtime/ruby-21 = *
-
 %description
-Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-<pid>.log.
+Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
 
-%package 19
-IPS_package_name: library/ruby-19/sigdump
-Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class.
-BuildRequires:	runtime/ruby-19
-Requires:	runtime/ruby-19
+%if %{build21}
+%if %{keep_dependency}
+%package 21-old
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}-21
 
-%description 19
-Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-<pid>.log.
+%description 21-old
+Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+%endif
 
-%package 20
-IPS_package_name: library/ruby-20/sigdump
-Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class.
-BuildRequires:	runtime/ruby-20
-Requires:	runtime/ruby-20
+%package 21
+IPS_package_name: library/ruby/%{gemname}-21
+Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}
 
-%description 20
-Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-<pid>.log.
+%description 21
+Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+%endif
+
+%if %{build22}
+%if %{keep_dependency}
+%package 22-old
+IPS_package_name: library/ruby-22/%{gemname}
+Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}-22
+
+%description 22-old
+Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+%endif
+
+%package 22
+IPS_package_name: library/ruby/%{gemname}-22
+Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}
+
+%description 22
+Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}
+
+%description 23
+Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+%endif
+
+%if %{build24}
+
+%package 24
+IPS_package_name: library/ruby/%{gemname}-24
+Summary:          Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+BuildRequires:    runtime/ruby-24 = *
+Requires:         runtime/ruby-24 = *
+Requires:         library/ruby/%{gemname}
+
+%description 24
+Setup signal handler which dumps backtrace of running threads and number of allocated objects per class. Require 'sigdump/setup', send SIGCONT, and see /tmp/sigdump-&lt;pid&gt;.log.
+%endif
+
 
 %prep
 %setup -q -c -T
 
-# ruby-19
-%{bindir19}/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
+%build
+build_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-# ruby-20
-%{bindir20}/gem install --local \
-    --install-dir .%{gemdir20} \
-    --bindir .%{bindir20} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
+    ${bindir}/gem install --local \
+        --no-env-shebang \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0}
+}
 
+%if %{build21}
 # ruby-21
-%{bindir21}/gem install --local \
-    --install-dir .%{gemdir21} \
-    --bindir .%{bindir21} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
+build_for 2.1
+%endif
+%if %{build22}
+# ruby-22
+build_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+build_for 2.4
+%endif
 
 %install
 rm -rf %{buildroot}
 
-# ruby-19
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
-
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir19}
-cp -a .%{bindir19}/* \
-   %{buildroot}%{bindir19}/
+%if %{generate_executable}
+mkdir -p %{buildroot}/%{_bindir}
 %endif
 
-# ruby-20
-mkdir -p %{buildroot}/%{gemdir20}
-cp -a .%{gemdir20}/* \
-    %{buildroot}/%{gemdir20}/
+install_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir20}
-cp -a .%{bindir20}/* \
-   %{buildroot}%{bindir20}/
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
+
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
+%if %{generate_executable}
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
 %endif
 
+}
+
+%if %{build21}
 # ruby-21
-mkdir -p %{buildroot}/%{gemdir21}
-cp -a .%{gemdir21}/* \
-    %{buildroot}/%{gemdir21}/
-
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir21}
-cp -a .%{bindir21}/* \
-   %{buildroot}%{bindir21}/
+install_for 2.1
+%endif
+%if %{build22}
+# ruby-22
+install_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+install_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+install_for 2.4
 %endif
 
 %clean
@@ -120,20 +217,53 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
+
+%if %{build21}
+%files 21
+%defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.1
-
-%files 19
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
+%endif
+%if %{build22}
+%files 22
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/1.9
-
-%files 20
+/usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+%if %{build23}
+%files 23
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/2.0
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+%if %{build24}
+%files 24
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.4
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*24
+%endif
+%endif
 
 %changelog
+* Mon Dec 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.2.4 and build packges for ruby-23 and ruby-24
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.23 and build package for ruby-22
 * Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for Ruby 2.1
 * Wed Apr 23 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

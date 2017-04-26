@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.3.10
+%define tarball_version  9.3.16
 %define major_version	 9.3
 %define prefix_name      SFEpostgres-93
 %define _basedir         %{_prefix}/%{major_version}
@@ -651,12 +651,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config/missing
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/makefiles
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test/regress
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/config
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/config/missing
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/makefiles
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/test
@@ -1202,6 +1204,14 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/vacuumlo
 
 %changelog
+* Fri Feb 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.16
+* Mon Nov 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.15
+* Fri Jul 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.13
+* Mon Apr 04 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.12
 * Fri Nov 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - change definition 'oracle_solaris_11_2' to 'after_oracle_solaris_11_2' because it is used also with Oracle Solaris 11.3.
 - bump to 9.3.10

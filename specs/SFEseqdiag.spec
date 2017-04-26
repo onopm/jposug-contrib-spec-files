@@ -14,14 +14,14 @@ License:                 Apache License 2.0
 Source:                  http://pypi.python.org/packages/source/%{tarball_index}/%{tarball_name}/%{tarball_name}-%{tarball_version}.tar.gz
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:           runtime/python-26
-BuildRequires:           library/python-2/setuptools-26
-Requires:                runtime/python-26
-Requires:                library/python-2/setuptools-26
-Requires:                library/python-2/funcparserlib-26 >= 0.3.6
-Requires:                library/python-2/ordereddict-26
-Requires:                library/python-2/pillow-26 >= 2.2.1
-Requires:                library/python-2/webcolors-26
+BuildRequires:           runtime/python-27
+BuildRequires:           library/python/setuptools-27
+Requires:                runtime/python-27
+Requires:                library/python/funcparserlib-27
+Requires:                library/python/ordereddict-27
+Requires:                library/python/pillow-27
+Requires:                library/python/webcolors-27
+Requires:                image/blockdiag
 
 %description
 seqdiag generate sequence-diagram image file from spec-text file.
@@ -30,12 +30,12 @@ seqdiag generate sequence-diagram image file from spec-text file.
 %setup -q -n %{tarball_name}-%{tarball_version}
 
 %build
-/usr/bin/python2.6 setup.py build
+/usr/bin/python2.7 setup.py build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-/usr/bin/python2.6 setup.py install \
+/usr/bin/python2.7 setup.py install \
     --skip-build \
     --root=$RPM_BUILD_ROOT
 
@@ -48,9 +48,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_bindir}
 %{_bindir}/seqdiag
 %dir %attr (0755, root, bin) %{_libdir}
-%{_libdir}/python2.6/site-packages
+%{_libdir}/python2.7/site-packages
 
 %changelog
+* Tue Dec 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use python-27 instead of python-27
 * Fri Jan 23 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.9.5
 - add Requires

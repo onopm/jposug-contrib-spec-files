@@ -31,7 +31,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-584
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/compress-raw-bzip2-584
 Requires:         library/perl-5/compress-raw-zlib-584
-Requires:         library/perl-5/scalar-util-584
+Requires:         library/perl-5/scalar-list-utils-584
 
 %description 584
 IO Interface to compressed data files/buffers
@@ -46,7 +46,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-512
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/compress-raw-bzip2-512
 Requires:         library/perl-5/compress-raw-zlib-512
-Requires:         library/perl-5/scalar-util-512
+Requires:         library/perl-5/scalar-list-utils-512
 
 %description 512
 IO Interface to compressed data files/buffers
@@ -61,7 +61,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-516
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/compress-raw-bzip2-516
 Requires:         library/perl-5/compress-raw-zlib-516
-Requires:         library/perl-5/scalar-util-516
+Requires:         library/perl-5/scalar-list-utils-516
 
 %description 516
 IO Interface to compressed data files/buffers
@@ -76,7 +76,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-520
 Requires:         runtime/perl-520 = *
 Requires:         library/perl-5/compress-raw-bzip2-520
 Requires:         library/perl-5/compress-raw-zlib-520
-Requires:         library/perl-5/scalar-util-520
+Requires:         library/perl-5/scalar-list-utils-520
 
 %description 520
 IO Interface to compressed data files/buffers
@@ -221,6 +221,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update Requires
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.069 and build packages for perl-516 and perl-520
 * Mon Dec 08 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

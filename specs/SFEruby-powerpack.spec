@@ -1,40 +1,18 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
+%define keep_dependency 0
 
 %define gemname powerpack
-
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
+%define sfe_gemname powerpack
 
 Summary:          A few useful extensions to core Ruby classes.
-Name:             SFEruby-%{gemname}
+Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
 Version:          0.1.1
 License:          MIT
@@ -42,141 +20,130 @@ URL:              https://github.com/bbatsov/powerpack
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-
-
 %description
 A few useful extensions to core Ruby classes.
 
-%if %{build19}
-%package 19-old
-IPS_package_name: library/ruby-19/%{gemname}
-Summary:          A library for working with Abstract Syntax Trees.
-BuildRequires:    runtime/ruby-19 = *
-Requires:         runtime/ruby-19 = *
-Requires:         library/ruby/%{gemname}-19
-
-%description 19-old
-A library for working with Abstract Syntax Trees.
-
-%package 19
-IPS_package_name: library/ruby/%{gemname}-19
-Summary:          A few useful extensions to core Ruby classes.
-BuildRequires:    runtime/ruby-19 = *
-Requires:         runtime/ruby-19 = *
-
-%description 19
-A few useful extensions to core Ruby classes.
-%endif
-
-%if %{build20}
-%package 20-old
-IPS_package_name: library/ruby-20/%{gemname}
-Summary:          A library for working with Abstract Syntax Trees.
-BuildRequires:    runtime/ruby-20 = *
-Requires:         runtime/ruby-20 = *
-Requires:         library/ruby/%{gemname}-20
-
-%description 20-old
-A library for working with Abstract Syntax Trees.
-
-%package 20
-IPS_package_name: library/ruby/%{gemname}-20
-Summary:          A few useful extensions to core Ruby classes.
-BuildRequires:    runtime/ruby-20 = *
-Requires:         runtime/ruby-20 = *
-
-%description 20
-A few useful extensions to core Ruby classes.
-%endif
-
 %if %{build21}
+%if %{keep_dependency}
 %package 21-old
 IPS_package_name: library/ruby-21/%{gemname}
-Summary:          A library for working with Abstract Syntax Trees.
+Summary:          A few useful extensions to core Ruby classes.
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
-A library for working with Abstract Syntax Trees.
+A few useful extensions to core Ruby classes.
+%endif
 
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
 Summary:          A few useful extensions to core Ruby classes.
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}
 
 %description 21
 A few useful extensions to core Ruby classes.
 %endif
 
 %if %{build22}
+%if %{keep_dependency}
 %package 22-old
 IPS_package_name: library/ruby-22/%{gemname}
-Summary:          A library for working with Abstract Syntax Trees.
+Summary:          A few useful extensions to core Ruby classes.
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
-A library for working with Abstract Syntax Trees.
+A few useful extensions to core Ruby classes.
+%endif
 
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
 Summary:          A few useful extensions to core Ruby classes.
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}
 
 %description 22
 A few useful extensions to core Ruby classes.
 %endif
 
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          A few useful extensions to core Ruby classes.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+A few useful extensions to core Ruby classes.
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          A few useful extensions to core Ruby classes.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}
+
+%description 23
+A few useful extensions to core Ruby classes.
+%endif
+
+%if %{build24}
+
+%package 24
+IPS_package_name: library/ruby/%{gemname}-24
+Summary:          A few useful extensions to core Ruby classes.
+BuildRequires:    runtime/ruby-24 = *
+Requires:         runtime/ruby-24 = *
+Requires:         library/ruby/%{gemname}
+
+%description 24
+A few useful extensions to core Ruby classes.
+%endif
+
+
 %prep
 %setup -q -c -T
 
 %build
-%if %{build19}
-# ruby-19
-%{bindir19}/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
-%endif
+build_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-%if %{build20}
-# ruby-20
-%{bindir20}/gem install --local \
-    --install-dir .%{gemdir20} \
-    --bindir .%{bindir20} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
-%endif
+    ${bindir}/gem install --local \
+        --no-env-shebang \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0}
+}
 
 %if %{build21}
 # ruby-21
-%{bindir21}/gem install --local \
-    --install-dir .%{gemdir21} \
-    --bindir .%{bindir21} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
+build_for 2.1
 %endif
-
 %if %{build22}
 # ruby-22
-%{bindir22}/gem install --local \
-    --install-dir .%{gemdir22} \
-    --bindir .%{bindir22} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
+build_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+build_for 2.4
 %endif
 
 %install
@@ -186,56 +153,63 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/%{_bindir}
 %endif
 
-%if %{build19}
-# ruby-19
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
+install_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
+
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
 %if %{generate_executable}
-mkdir -p %{buildroot}%{bindir19}
-cp -a .%{bindir19}/* \
-    %{buildroot}%{bindir19}/
-%endif
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
 %endif
 
-%if %{build20}
-# ruby-20
-mkdir -p %{buildroot}/%{gemdir20}
-cp -a .%{gemdir20}/* \
-    %{buildroot}/%{gemdir20}/
-
-%if %{generate_executable}
-mkdir -p %{buildroot}%{bindir20}
-cp -a .%{bindir20}/* \
-    %{buildroot}%{bindir20}/
-%endif
-%endif
+}
 
 %if %{build21}
 # ruby-21
-mkdir -p %{buildroot}/%{gemdir21}
-cp -a .%{gemdir21}/* \
-    %{buildroot}/%{gemdir21}/
-
-%if %{generate_executable}
-mkdir -p %{buildroot}%{bindir21}
-cp -a .%{bindir21}/* \
-    %{buildroot}%{bindir21}/
+install_for 2.1
 %endif
-%endif
-
 %if %{build22}
 # ruby-22
-mkdir -p %{buildroot}/%{gemdir22}
-cp -a .%{gemdir22}/* \
-    %{buildroot}/%{gemdir22}/
-
-%if %{generate_executable}
-mkdir -p %{buildroot}%{bindir22}
-cp -a .%{bindir22}/* \
-    %{buildroot}%{bindir22}/
+install_for 2.2
 %endif
+%if %{build23}
+# ruby-23
+install_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+install_for 2.4
 %endif
 
 %clean
@@ -244,47 +218,50 @@ rm -rf %{buildroot}
 %files
 %defattr(0755,root,bin,-)
 
-%if %{build19}
-%files 19-old
-%defattr(0755,root,bin,-)
-
-%files 19
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/1.9
-%endif
-
-%if %{build20}
-%files 20-old
-%defattr(0755,root,bin,-)
-
-%files 20
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.0
-%endif
-
 %if %{build21}
-%files 21-old
-%defattr(0755,root,bin,-)
-
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
 %endif
-
+%endif
 %if %{build22}
-%files 22-old
-%defattr(0755,root,bin,-)
-
 %files 22
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+%if %{build24}
+%files 24
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.4
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*24
+%endif
 %endif
 
 %changelog
+* Mon Dec 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update spec file to build package for Ruby 2.3 and 2.4
 * Sat Jun 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate empty packages to avoid dependency problem
 * Tue Jun 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

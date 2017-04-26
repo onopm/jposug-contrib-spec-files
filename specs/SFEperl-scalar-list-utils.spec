@@ -117,16 +117,11 @@ build_with_makefile.pl_for() {
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
 
-    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
-    if [ $? -eq 0 ]
-    then
-        make CC='cc -m32' LD='cc -m32'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
-    else
-        make CC='cc -m64' LD='cc -m64'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
-    fi
-
+    export CC='cc -m32'
+    export LD='cc -m32'
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    make CC="${CC}" LD="${LD}"
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
@@ -290,6 +285,7 @@ rm -rf %{buildroot}
 %changelog
 * Wed Apr 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.47, package for perl-522 is added and for perl-520 is obsolete
+- fix build
 * Wed Dec 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix sfe_cpan_name_old
 * Mon Nov 09 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

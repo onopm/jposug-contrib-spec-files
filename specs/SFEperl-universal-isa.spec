@@ -1,4 +1,4 @@
-n%include Solaris.inc
+%include Solaris.inc
 
 %define build584 0
 %define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
@@ -299,6 +299,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Jan 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix typo
 * Sat Dec 05 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.20150614
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

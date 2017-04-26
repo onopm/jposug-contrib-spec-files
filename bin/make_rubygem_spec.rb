@@ -54,36 +54,6 @@ __END__
 %define gemname <%= data['name'] %>
 %define sfe_gemname <%= data['name'].gsub(/_/, '-') %>
 
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build23}
-%define bindir23 /usr/ruby/2.3/bin
-%define gemdir23 %(%{bindir23}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
-
 Summary:          <%= data['info'] %>
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}

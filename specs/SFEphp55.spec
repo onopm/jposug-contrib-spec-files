@@ -3,10 +3,13 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  5.5.30
+%define tarball_version  5.5.38
 %define major_version	 5.5
 %define prefix_name      SFEphp55
 %define _basedir         %{_prefix}/%{major_version}
+
+%define apache22         %( if [ -x /usr/apache2/2.2/bin/apxs ]; then echo '1'; else echo '0'; fi)
+%define apache24         %( if [ -x /usr/apache2/2.4/bin/apxs ]; then echo '1'; else echo '0'; fi)
 
 %define use_libedit %(egrep 'Oracle Solaris (11.[23]|12)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
@@ -69,7 +72,7 @@ sed -e 's/ -Wno-write-strings//' < config.m4.dist > config.m4
 popd
 
 %build
-mkdir build-cgi build-apache build-embedded build-zts build-ztscli build-fpm
+mkdir build-cgi build-apache22 build-apache24 build-embedded build-zts22 build-zts24 build-ztscli build-fpm
 
 export CFLAGS="-m64 -xO4 -xchip=pentium -xregs=no%frameptr -mt"
 export CPPFLAGS="-m64 -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I../CPPFLAGSTEST"
@@ -188,12 +191,23 @@ without_shared="--without-gd \
     --disable-sysvmsg --disable-sysvshm --disable-sysvsem"
 
 # Build Apache module, and the CLI SAPI, /usr/bin/php
-pushd build-apache
+%if %{apache22}
+pushd build-apache22
 build --with-apxs2=/usr/apache2/2.2/bin/apxs \
     --enable-pdo=shared \
     --with-pdo-sqlite=shared,%{_prefix} \
     ${without_shared}
 popd
+%endif
+
+%if %{apache24}
+pushd build-apache24
+build --with-apxs2=/usr/apache2/2.4/bin/apxs \
+    --enable-pdo=shared \
+    --with-pdo-sqlite=shared,%{_prefix} \
+    ${without_shared}
+popd
+%endif
 
 # Build php-fpm
 pushd build-fpm
@@ -252,7 +266,8 @@ build --enable-force-cgi-redirect \
 popd
 
 # Build a special thread-safe Apache SAPI
-pushd build-zts
+%if %{apache22}
+pushd build-zts22
 build --with-apxs2=/usr/apache2/2.2/bin/apxs \
     --includedir=/usr/php/5.5/include/php-zts \
     --libdir=/usr/php/5.5/lib/php-zts \
@@ -263,6 +278,21 @@ build --with-apxs2=/usr/apache2/2.2/bin/apxs \
     --with-sqlite3=shared \
     ${without_shared}
 popd
+%endif
+
+%if %{apache24}
+pushd build-zts24
+build --with-apxs2=/usr/apache2/2.4/bin/apxs \
+    --includedir=/usr/php/5.5/include/php-zts \
+    --libdir=/usr/php/5.5/lib/php-zts \
+    --enable-maintainer-zts \
+    --with-config-file-scan-dir=%{_sysconfdir}/php/5.5/php-zts.d \
+    --enable-pdo=shared \
+    --with-pdo-sqlite=shared \
+    --with-sqlite3=shared \
+    ${without_shared}
+popd
+%endif
 
 %install
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
@@ -272,8 +302,16 @@ make -C build-ztscli install \
     INSTALL_ROOT=$RPM_BUILD_ROOT
 
 # Install the extensions for the ZTS version modules for libmysql
-make -C build-zts install-modules \
-    INSTALL_ROOT=$RPM_BUILD_ROOT
+%if %{apache22}
+make -C build-zts22 install-modules \
+     INSTALL_ROOT=$RPM_BUILD_ROOT
+%endif
+
+%if %{apache24}
+make -C build-zts24 install-modules \
+     INSTALL_ROOT=$RPM_BUILD_ROOT
+%endif
+
 
 # rename ZTS binary
 mv $RPM_BUILD_ROOT/usr/php/5.5/bin/php        $RPM_BUILD_ROOT/usr/php/5.5/bin/zts-php
@@ -292,11 +330,6 @@ make -C build-fpm install-fpm \
 make -C build-cgi install \
     INSTALL_ROOT=$RPM_BUILD_ROOT
 
-
-# Install the mysql extension build with libmysql
-make -C build-apache install-modules \
-    INSTALL_ROOT=$RPM_BUILD_ROOT
-
 # Install the default configuration file and icons
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/
 # install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/php.ini
@@ -307,8 +340,39 @@ install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/
 install -m 755 -d $RPM_BUILD_ROOT%{_datadir}/php
 
 # install the DSO
+%if %{apache22}
+make -C build-apache22 install-modules \
+    INSTALL_ROOT=$RPM_BUILD_ROOT
+
 install -m 755 -d $RPM_BUILD_ROOT/usr/apache2/2.2/libexec
-install -m 755 build-apache/libs/libphp5.so $RPM_BUILD_ROOT/usr/apache2/2.2/libexec/mod_php5.5.so
+install -m 755 build-apache22/libs/libphp5.so $RPM_BUILD_ROOT/usr/apache2/2.2/libexec/mod_php5.5.so
+install -m 755 -d $RPM_BUILD_ROOT/etc
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php/php5.5.conf
+pushd $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php > /dev/null
+ln -s php5.5.conf php.conf
+popd > /dev/null
+%endif
+
+%if %{apache24}
+make -C build-apache24 install-modules \
+    INSTALL_ROOT=$RPM_BUILD_ROOT
+install -m 755 -d $RPM_BUILD_ROOT/usr/apache2/2.4/libexec
+install -m 755 build-apache24/libs/libphp5.so $RPM_BUILD_ROOT/usr/apache2/2.4/libexec/mod_php5.5.so
+install -m 755 -d $RPM_BUILD_ROOT/etc
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.4
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.4/conf.d
+install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.4/conf.d/php
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/etc/apache2/2.4/conf.d/php/php5.5.conf
+pushd $RPM_BUILD_ROOT/etc/apache2/2.4/conf.d/php > /dev/null
+ln -s php5.5.conf php.conf
+popd > /dev/null
+%endif
+
 
 # install the ZTS DSO
 # install -m 755 build-zts/libs/libphp5.so $RPM_BUILD_ROOT%{_libdir}/httpd/modules/libphp5-zts.so
@@ -323,15 +387,6 @@ install -m 755 build-apache/libs/libphp5.so $RPM_BUILD_ROOT/usr/apache2/2.2/libe
 # # install -D -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_httpd_modconfdir}/10-php.conf
 # # install -D -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
 # %endif
-install -m 755 -d $RPM_BUILD_ROOT/etc
-install -m 755 -d $RPM_BUILD_ROOT/etc/apache2
-install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2
-install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d
-install -m 755 -d $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php
-install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php/php5.5.conf
-pushd $RPM_BUILD_ROOT/etc/apache2/2.2/conf.d/php > /dev/null
-ln -s php5.5.conf php.conf
-popd > /dev/null
 
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php/5.5
@@ -442,17 +497,42 @@ rm -rf $RPM_BUILD_ROOT
 # %dir %attr (0755, root, sys) /var/run
 # %attr (0755, root, root) /var/run/php-fpm
 %dir %attr (0755, root, bin) /usr/apache2
+%dir %attr (0755, root, bin) /etc/apache2
+%if %{apache22}
 %dir %attr (0755, root, bin) /usr/apache2/2.2
 %dir %attr (0755, root, bin) /usr/apache2/2.2/libexec
 %attr (0444, root, bin) /usr/apache2/2.2/libexec/mod_php5.5.so
-%dir %attr (0755, root, bin) /etc/apache2
 %dir %attr (0755, root, bin) /etc/apache2/2.2
 %dir %attr (0755, root, bin) /etc/apache2/2.2/conf.d
 %dir %attr (0755, root, bin) /etc/apache2/2.2/conf.d/php
 %attr (0644, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /etc/apache2/2.2/conf.d/php/php.conf
 %attr (0644, root, bin) %config(noreplace) /etc/apache2/2.2/conf.d/php/php5.5.conf
+%endif
+
+%if %{apache24}
+%dir %attr (0755, root, bin) /usr/apache2/2.4
+%dir %attr (0755, root, bin) /usr/apache2/2.4/libexec
+%attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php5.5.so
+%dir %attr (0755, root, bin) /etc/apache2/2.4
+%dir %attr (0755, root, bin) /etc/apache2/2.4/conf.d
+%dir %attr (0755, root, bin) /etc/apache2/2.4/conf.d/php
+%attr (0644, root, bin) %ips_tag (mediator=php mediator-version=%{major_version}) /etc/apache2/2.4/conf.d/php/php.conf
+%attr (0644, root, bin) %config(noreplace) /etc/apache2/2.4/conf.d/php/php5.5.conf
+%endif
 
 %changelog
+* Fri Jul 22 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.38
+* Fri Jun 24 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.37
+* Thu Jun 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.36
+* Tue Apr 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.34 and fix file list
+* Tue Mar 08 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.33
+* Wed Feb 10 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.5.32 and ready for Oralce Apache 2.4 package
 * Wed Nov 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 - update '%define use_libedit' for Oracle Solaris 11.3

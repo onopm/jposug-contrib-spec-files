@@ -5,6 +5,7 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 %define include_executable 0
 
 %define cpan_name Module-Build
@@ -38,6 +39,7 @@ BuildRequires:    library/perl-5/perl-ostype-584
 BuildRequires:    library/perl-5/test-harness-584
 BuildRequires:    library/perl-5/test-simple-584
 BuildRequires:    library/perl-5/version-584
+%if %{enable_test}
 BuildRequires:    library/perl-5/cpan-meta-584
 BuildRequires:    library/perl-5/data-dumper-584
 BuildRequires:    library/perl-5/extutils-cbuilder-584
@@ -55,6 +57,7 @@ BuildRequires:    library/perl-5/test-harness-584
 BuildRequires:    library/perl-5/text-abbrev-584
 BuildRequires:    library/perl-5/text-parsewords-584
 BuildRequires:    library/perl-5/version-584
+%endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/cpan-meta-584
@@ -148,6 +151,7 @@ BuildRequires:    library/perl-5/perl-ostype-512
 BuildRequires:    library/perl-5/test-harness-512
 BuildRequires:    library/perl-5/test-simple-512
 BuildRequires:    library/perl-5/version-512
+%if %{enable_test}
 BuildRequires:    library/perl-5/cpan-meta-512
 BuildRequires:    library/perl-5/data-dumper-512
 BuildRequires:    library/perl-5/extutils-cbuilder-512
@@ -165,6 +169,7 @@ BuildRequires:    library/perl-5/test-harness-512
 BuildRequires:    library/perl-5/text-abbrev-512
 BuildRequires:    library/perl-5/text-parsewords-512
 BuildRequires:    library/perl-5/version-512
+%endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/cpan-meta-512
@@ -204,6 +209,7 @@ BuildRequires:    library/perl-5/test-harness-516
 BuildRequires:    library/perl-5/test-simple-516
 BuildRequires:    library/perl-5/version-516
 Requires:         library/perl-5/%{ips_cpan_name}
+%if %{enable_test}
 BuildRequires:    library/perl-5/cpan-meta-516
 BuildRequires:    library/perl-5/data-dumper-516
 BuildRequires:    library/perl-5/extutils-cbuilder-516
@@ -221,6 +227,7 @@ BuildRequires:    library/perl-5/test-harness-516
 BuildRequires:    library/perl-5/text-abbrev-516
 BuildRequires:    library/perl-5/text-parsewords-516
 BuildRequires:    library/perl-5/version-516
+%endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/cpan-meta-516
@@ -259,6 +266,7 @@ BuildRequires:    library/perl-5/perl-ostype-522
 BuildRequires:    library/perl-5/test-harness-522
 BuildRequires:    library/perl-5/test-simple-522
 BuildRequires:    library/perl-5/version-522
+%if %{enable_test}
 BuildRequires:    library/perl-5/cpan-meta-522
 BuildRequires:    library/perl-5/data-dumper-522
 BuildRequires:    library/perl-5/extutils-cbuilder-522
@@ -276,6 +284,7 @@ BuildRequires:    library/perl-5/test-harness-522
 BuildRequires:    library/perl-5/text-abbrev-522
 BuildRequires:    library/perl-5/text-parsewords-522
 BuildRequires:    library/perl-5/version-522
+%endif
 Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/cpan-meta-522
@@ -317,16 +326,11 @@ build_with_makefile.pl_for() {
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
 
-    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
-    if [ $? -eq 0 ]
-    then
-        make CC='cc -m32' LD='cc -m32'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
-    else
-        make CC='cc -m64' LD='cc -m64'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
-    fi
-
+    export CC='cc -m32'
+    export LD='cc -m32'
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    make CC="${CC}" LD="${LD}"
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
@@ -492,6 +496,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Apr 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix build
 * Wed Apr 05 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.4222 and package for perl-522 is added, for perl-520 is obsolete
 * Tue Nov 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

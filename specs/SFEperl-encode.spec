@@ -6,7 +6,7 @@
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
-%define include_executable 1
+%define include_executable 0
 
 %define cpan_name Encode
 %define sfe_cpan_name encode
@@ -249,6 +249,8 @@ then
     mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 fi
 
+rm -rf ${RPM_BUILD_ROOT}/usr/perl5/5.*
+
 %clean
 rm -rf %{buildroot}
 
@@ -309,6 +311,7 @@ rm -rf %{buildroot}
 %changelog
 * Wed Apr 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.89, package for perl-522 is added and for perl-520 is obsolete
+- not include executable files because of conflicting with files included in perl-5XX
 * Fri Nov 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.78 and build packages for perl-510, perl-516 and perl-520
 * Thu Oct 30 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

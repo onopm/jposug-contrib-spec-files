@@ -5,6 +5,7 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 %define include_executable 0
 
 %define cpan_name Test-Pod-Coverage
@@ -31,8 +32,10 @@ Summary:          Check for pod coverage in your distribution
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
 BuildRequires:    library/perl-5/test-simple-584
+%if %{enable_test}
 BuildRequires:    library/perl-5/pod-coverage-584
 BuildRequires:    library/perl-5/test-simple-584
+%endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/pod-coverage-584
@@ -67,8 +70,10 @@ Summary:          Check for pod coverage in your distribution
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
 BuildRequires:    library/perl-5/test-simple-512
+%if %{enable_test}
 BuildRequires:    library/perl-5/pod-coverage-512
 BuildRequires:    library/perl-5/test-simple-512
+%endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/pod-coverage-512
@@ -86,8 +91,10 @@ BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
 BuildRequires:    library/perl-5/test-simple-516
 Requires:         library/perl-5/%{ips_cpan_name}
+%if %{enable_test}
 BuildRequires:    library/perl-5/pod-coverage-516
 BuildRequires:    library/perl-5/test-simple-516
+%endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/pod-coverage-516
@@ -104,8 +111,10 @@ Summary:          Check for pod coverage in your distribution
 BuildRequires:    runtime/perl-522 = *
 BuildRequires:    library/perl-5/extutils-makemaker-522
 BuildRequires:    library/perl-5/test-simple-522
+%if %{enable_test}
 BuildRequires:    library/perl-5/pod-coverage-522
 BuildRequires:    library/perl-5/test-simple-522
+%endif
 Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/pod-coverage-522
@@ -132,16 +141,11 @@ build_with_makefile.pl_for() {
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
 
-    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
-    if [ $? -eq 0 ]
-    then
-        make CC='cc -m32' LD='cc -m32'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
-    else
-        make CC='cc -m64' LD='cc -m64'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
-    fi
-
+    export CC='cc -m32'
+    export LD='cc -m32'
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    make CC="${CC}" LD="${LD}"
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
@@ -303,6 +307,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Apr 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix build
 * Wed Apr 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - package for perl-522 is added and for perl-520 is obsolete
 * Wed Nov 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

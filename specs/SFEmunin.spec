@@ -7,7 +7,7 @@
 
 Name:      munin
 IPS_package_name:        diagnostic/munin
-Version:   2.0.25
+Version:   2.0.30
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -403,7 +403,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 
 %files common
 %defattr(-, root, bin)
-%doc Announce-2.0 ChangeLog COPYING HACKING.pod perltidyrc README RELEASE UPGRADING
+%doc Announce-2.0 ChangeLog COPYING HACKING.pod INSTALL README UPGRADING UPGRADING-1.4 perltidyrc
 %attr(0755, root, sys) %dir /usr
 %dir %attr(0755, root, sys) %{_datadir}
 %dir %attr(0755, root, other) %{_docdir}
@@ -442,7 +442,9 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
-* Fri Dec 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Thu Apr 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.30
+- Fri Dec 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add patch3 to make mysql_innodb_insert_buf to work
 * Sun Dec 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires

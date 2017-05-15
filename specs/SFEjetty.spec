@@ -67,6 +67,7 @@ install -d -m 0640 %{buildroot}/var/jetty/logs
 cp -r etc %{buildroot}/var/jetty
 cp -r demo-base/start.d %{buildroot}/var/jetty
 install start.ini %{buildroot}/var/jetty
+install demo-base/etc/keystore %{buildroot}/var/jetty/etc
 
 pushd %{buildroot}/usr/jetty
 ln -s ../../var/jetty/etc .
@@ -215,6 +216,7 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/etc/jetty.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jminix.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jolokia.xml
+%config %attr(0644, root, bin) /var/jetty/etc/keystore
 %config %attr(0644, root, bin) /var/jetty/etc/krb5.ini
 %config %attr(0644, root, bin) /var/jetty/etc/rewrite-compactpath.xml
 %config %attr(0644, root, bin) /var/jetty/etc/spnego.conf
@@ -272,6 +274,8 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-http2c.xml
 
 %changelog
+* Mon May 15 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update SMF manifest and add keystore
 * Fri Apr 06 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.3.18.v20170406
 * Thu Jun 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

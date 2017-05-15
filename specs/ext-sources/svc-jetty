@@ -11,6 +11,7 @@ JETTY_JAVA=`getproparg jetty/java`
 JETTY_HOME=`getproparg jetty/jetty_home`
 JETTY_BASE=`getproparg jetty/jetty_base`
 JETTY_EXEC_USER=`getproparg jetty/exec_user`
+JETTY_LANG=`getproparg jetty/lang`
 PIDFILE='/var/run/jetty/jetty.pid'
 
 JAVA_OPTIONS="-Djetty.logs=/var/jetty/logs -Djetty.home=${JETTY_HOME} -Djetty.base=${JETTY_BASE} `getproparg jetty/java_options`"
@@ -29,7 +30,7 @@ case "$1" in
 	    mkdir -p `dirname ${PIDFILE}`
 	fi
 	cd ${JETTY_BASE}
-	sudo -u ${JETTY_EXEC_USER} ${JETTY_JAVA} ${JAVA_OPTIONS} -jar ${JETTY_HOME}/start.jar &
+	sudo -u ${JETTY_EXEC_USER} LANG=${JETTY_LANG} ${JETTY_JAVA} ${JAVA_OPTIONS} -jar ${JETTY_HOME}/start.jar &
 	echo $! > ${PIDFILE}
         ;;
 'stop')

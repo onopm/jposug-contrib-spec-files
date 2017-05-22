@@ -69,6 +69,8 @@
                     		 value='webservd' />
                 	<propval name='java_options' type='astring'
                     		 value='-Xmx1024m' />
+                	<propval name='lang' type='astring'
+                    		 value='en_US.UTF-8' />
         	</property_group>
         </instance>
 

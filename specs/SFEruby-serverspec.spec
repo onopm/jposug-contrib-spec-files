@@ -14,7 +14,7 @@
 Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.38.0
+Version:          2.39.1
 License:          MIT
 URL:              http://serverspec.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -47,7 +47,7 @@ Requires:         library/ruby/multi_json-21
 Requires:         library/ruby/rspec-21
 # rspec-its >= 0
 Requires:         library/ruby/rspec-its-21
-# specinfra ~> 2.53
+# specinfra ~> 2.68
 Requires:         library/ruby/specinfra-21
 Requires:         library/ruby/%{gemname}
 
@@ -79,7 +79,7 @@ Requires:         library/ruby/multi_json-22
 Requires:         library/ruby/rspec-22
 # rspec-its >= 0
 Requires:         library/ruby/rspec-its-22
-# specinfra ~> 2.53
+# specinfra ~> 2.68
 Requires:         library/ruby/specinfra-22
 Requires:         library/ruby/%{gemname}
 
@@ -111,7 +111,7 @@ Requires:         library/ruby/multi_json-23
 Requires:         library/ruby/rspec-23
 # rspec-its >= 0
 Requires:         library/ruby/rspec-its-23
-# specinfra ~> 2.53
+# specinfra ~> 2.68
 Requires:         library/ruby/specinfra-23
 Requires:         library/ruby/%{gemname}
 
@@ -132,7 +132,7 @@ Requires:         library/ruby/multi_json-24
 Requires:         library/ruby/rspec-24
 # rspec-its >= 0
 Requires:         library/ruby/rspec-its-24
-# specinfra ~> 2.53
+# specinfra ~> 2.68
 Requires:         library/ruby/specinfra-24
 Requires:         library/ruby/%{gemname}
 
@@ -294,6 +294,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue May 23 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.39.1
 * Mon Apr 17 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - package for ruby-24 is added, ruby-19 and ruby-20 are obsolete
 * Tue Feb 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

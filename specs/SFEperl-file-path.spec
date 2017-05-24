@@ -34,13 +34,11 @@ BuildRequires:    library/perl-5/extutils-makemaker-584
 %if %{enable_test}
 BuildRequires:    library/perl-5/carp-584
 BuildRequires:    library/perl-5/pathtools-584
-BuildRequires:    library/perl-5/selectsaver-584
 %endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-584
 Requires:         library/perl-5/pathtools-584
-Requires:         library/perl-5/selectsaver-584
 
 %description 584
 Create or remove directory trees
@@ -54,12 +52,10 @@ BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
 BuildRequires:    library/perl-5/carp-510
 BuildRequires:    library/perl-5/pathtools-510
-BuildRequires:    library/perl-5/selectsaver-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-510
 Requires:         library/perl-5/pathtools-510
-Requires:         library/perl-5/selectsaver-510
 
 %description 510
 Create or remove directory trees
@@ -74,13 +70,11 @@ BuildRequires:    library/perl-5/extutils-makemaker-512
 %if %{enable_test}
 BuildRequires:    library/perl-5/carp-512
 BuildRequires:    library/perl-5/pathtools-512
-BuildRequires:    library/perl-5/selectsaver-512
 %endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-512
 Requires:         library/perl-5/pathtools-512
-Requires:         library/perl-5/selectsaver-512
 
 %description 512
 Create or remove directory trees
@@ -96,13 +90,11 @@ Requires:         library/perl-5/%{ips_cpan_name}
 %if %{enable_test}
 BuildRequires:    library/perl-5/carp-516
 BuildRequires:    library/perl-5/pathtools-516
-BuildRequires:    library/perl-5/selectsaver-516
 %endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-516
 Requires:         library/perl-5/pathtools-516
-Requires:         library/perl-5/selectsaver-516
 
 %description 516
 Create or remove directory trees
@@ -117,13 +109,11 @@ BuildRequires:    library/perl-5/extutils-makemaker-522
 %if %{enable_test}
 BuildRequires:    library/perl-5/carp-522
 BuildRequires:    library/perl-5/pathtools-522
-BuildRequires:    library/perl-5/selectsaver-522
 %endif
 Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-522
 Requires:         library/perl-5/pathtools-522
-Requires:         library/perl-5/selectsaver-522
 
 %description 522
 Create or remove directory trees
@@ -312,6 +302,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Wed May 24 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix requires. selectsaver is included in perl
 * Wed Apr 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - package for perl-522 is added and for perl-520 is obsolete
 * Wed Nov 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

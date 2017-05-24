@@ -1,150 +1,268 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define gemname tins
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
+%define keep_dependency 0
 
-%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-%define bindir18 /usr/ruby/1.8/bin
-
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%define bindir19 /usr/ruby/1.9/bin
-
-%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%define bindir20 /usr/ruby/2.0/bin
+%define gemname tins
+%define sfe_gemname tins
 
 Summary:          All the stuff that isn't good/big enough for a real library.
-Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby-18/%{gemname}
-Version:          0.8.0
+Name:             SFEruby-%{sfe_gemname}
+IPS_package_name: library/ruby/%{gemname}
+Version:          1.14.0
 License:          MIT
-URL:              http://rubygems.org/gems/%{gemname}
+URL:              https://github.com/flori/tins
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
-
-BuildRequires:    runtime/ruby-18
-Requires:         runtime/ruby-18
 
 %description
 All the stuff that isn't good/big enough for a real library.
 
-%package 19
-IPS_package_name: library/ruby-19/%{gemname}
+%if %{build21}
+%if %{keep_dependency}
+%package 21-old
+IPS_package_name: library/ruby-21/%{gemname}
 Summary:          All the stuff that isn't good/big enough for a real library.
-BuildRequires:	  runtime/ruby-19
-Requires:	  runtime/ruby-19
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}-21
 
-%description 19
+%description 21-old
 All the stuff that isn't good/big enough for a real library.
+%endif
 
-%package 20
-IPS_package_name: library/ruby-20/%{gemname}
+%package 21
+IPS_package_name: library/ruby/%{gemname}-21
 Summary:          All the stuff that isn't good/big enough for a real library.
-BuildRequires:	  runtime/ruby-20
-Requires:	  runtime/ruby-20
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}
 
-%description 20
+%description 21
 All the stuff that isn't good/big enough for a real library.
+%endif
+
+%if %{build22}
+%if %{keep_dependency}
+%package 22-old
+IPS_package_name: library/ruby-22/%{gemname}
+Summary:          All the stuff that isn't good/big enough for a real library.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}-22
+
+%description 22-old
+All the stuff that isn't good/big enough for a real library.
+%endif
+
+%package 22
+IPS_package_name: library/ruby/%{gemname}-22
+Summary:          All the stuff that isn't good/big enough for a real library.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}
+
+%description 22
+All the stuff that isn't good/big enough for a real library.
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          All the stuff that isn't good/big enough for a real library.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+All the stuff that isn't good/big enough for a real library.
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          All the stuff that isn't good/big enough for a real library.
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}
+
+%description 23
+All the stuff that isn't good/big enough for a real library.
+%endif
+
+%if %{build24}
+
+%package 24
+IPS_package_name: library/ruby/%{gemname}-24
+Summary:          All the stuff that isn't good/big enough for a real library.
+BuildRequires:    runtime/ruby-24 = *
+Requires:         runtime/ruby-24 = *
+Requires:         library/ruby/%{gemname}
+
+%description 24
+All the stuff that isn't good/big enough for a real library.
+%endif
+
 
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir18}
-mkdir -p .%{bindir18}
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
-mkdir -p .%{gemdir20}
-mkdir -p .%{bindir20}
 
 %build
+build_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-# ruby-18
-/usr/ruby/1.8/bin/gem install --local \
-    --install-dir .%{gemdir18} \
-    --bindir .%{bindir18} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
+    ${bindir}/gem install --local \
+        --no-env-shebang \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0}
 
-# ruby-19
-/usr/ruby/1.9/bin/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
+    rm -r .${gemdir}/cache
+}
 
-# ruby-20
-/usr/ruby/2.0/bin/gem install --local \
-    --install-dir .%{gemdir20} \
-    --bindir .%{bindir20} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
+%if %{build21}
+# ruby-21
+build_for 2.1
+%endif
+%if %{build22}
+# ruby-22
+build_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+build_for 2.4
+%endif
 
 %install
 rm -rf %{buildroot}
 
-# ruby-18
-mkdir -p %{buildroot}/%{gemdir18}
-cp -a .%{gemdir18}/* \
-    %{buildroot}/%{gemdir18}/
-
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir18}
-cp -a .%{bindir18}/* \
-   %{buildroot}%{bindir18}/
+%if %{generate_executable}
+mkdir -p %{buildroot}/%{_bindir}
 %endif
 
-# ruby-19
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
+install_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir19}
-cp -a .%{bindir19}/* \
-   %{buildroot}%{bindir19}/
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
+
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
+%if %{generate_executable}
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
 %endif
 
-# ruby-20
-mkdir -p %{buildroot}/%{gemdir20}
-cp -a .%{gemdir20}/* \
-    %{buildroot}/%{gemdir20}/
+}
 
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir20}
-cp -a .%{bindir20}/* \
-   %{buildroot}%{bindir20}/
+%if %{build21}
+# ruby-21
+install_for 2.1
+%endif
+%if %{build22}
+# ruby-22
+install_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+install_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+install_for 2.4
 %endif
 
 %clean
 rm -rf %{buildroot}
 
-
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
-%if %generate_executable
-/usr/ruby/1.8
+
+%if %{build21}
+%files 21
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
+%endif
+%if %{build22}
+%files 22
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+%if %{build24}
+%files 24
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.4
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*24
+%endif
 %endif
 
-%files 19
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/1.9
-
-%files 20
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.0
-
 %changelog
+* Wed May 24 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.14.0
 * Mon Jul 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

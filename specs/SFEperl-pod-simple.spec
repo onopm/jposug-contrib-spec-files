@@ -4,7 +4,8 @@
 %define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 %define include_executable 0
 
 %define cpan_name Pod-Simple
@@ -14,11 +15,11 @@
 Summary:               framework for parsing Pod
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               3.32
-IPS_component_version: 3.32
+Version:               3.35
+IPS_component_version: 3.35
 License:               perl_5
 URL:                   https://metacpan.org/pod/Pod::Simple
-Source0:               http://cpan.metacpan.org/authors/id/M/MA/MARCGREEN/Pod-Simple-%{version}.tar.gz
+Source0:               http://cpan.metacpan.org/authors/id/K/KH/KHW/Pod-Simple-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
@@ -29,8 +30,23 @@ framework for parsing Pod
 IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          framework for parsing Pod
 BuildRequires:    runtime/perl-584 = *
+BuildRequires:    library/perl-5/extutils-makemaker-584
+%if %{enable_test}
+BuildRequires:    library/perl-5/carp-584
+BuildRequires:    library/perl-5/encode-584
+BuildRequires:    library/perl-5/pathtools-584
+BuildRequires:    library/perl-5/pod-escapes-584
+BuildRequires:    library/perl-5/test-simple-584
+BuildRequires:    library/perl-5/text-tabs-wrap-584
+%endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/carp-584
+Requires:         library/perl-5/encode-584
+Requires:         library/perl-5/pathtools-584
+Requires:         library/perl-5/pod-escapes-584
+Requires:         library/perl-5/test-simple-584
+Requires:         library/perl-5/text-tabs-wrap-584
 
 %description 584
 framework for parsing Pod
@@ -41,8 +57,21 @@ framework for parsing Pod
 IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          framework for parsing Pod
 BuildRequires:    runtime/perl-510 = *
+BuildRequires:    library/perl-5/extutils-makemaker-510
+BuildRequires:    library/perl-5/carp-510
+BuildRequires:    library/perl-5/encode-510
+BuildRequires:    library/perl-5/pathtools-510
+BuildRequires:    library/perl-5/pod-escapes-510
+BuildRequires:    library/perl-5/test-simple-510
+BuildRequires:    library/perl-5/text-tabs-wrap-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/carp-510
+Requires:         library/perl-5/encode-510
+Requires:         library/perl-5/pathtools-510
+Requires:         library/perl-5/pod-escapes-510
+Requires:         library/perl-5/test-simple-510
+Requires:         library/perl-5/text-tabs-wrap-510
 
 %description 510
 framework for parsing Pod
@@ -53,8 +82,23 @@ framework for parsing Pod
 IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          framework for parsing Pod
 BuildRequires:    runtime/perl-512 = *
+BuildRequires:    library/perl-5/extutils-makemaker-512
+%if %{enable_test}
+BuildRequires:    library/perl-5/carp-512
+BuildRequires:    library/perl-5/encode-512
+BuildRequires:    library/perl-5/pathtools-512
+BuildRequires:    library/perl-5/pod-escapes-512
+BuildRequires:    library/perl-5/test-simple-512
+BuildRequires:    library/perl-5/text-tabs-wrap-512
+%endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/carp-512
+Requires:         library/perl-5/encode-512
+Requires:         library/perl-5/pathtools-512
+Requires:         library/perl-5/pod-escapes-512
+Requires:         library/perl-5/test-simple-512
+Requires:         library/perl-5/text-tabs-wrap-512
 
 %description 512
 framework for parsing Pod
@@ -65,29 +109,60 @@ framework for parsing Pod
 IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          framework for parsing Pod
 BuildRequires:    runtime/perl-516 = *
+BuildRequires:    library/perl-5/extutils-makemaker-516
+Requires:         library/perl-5/%{ips_cpan_name}
+%if %{enable_test}
+BuildRequires:    library/perl-5/carp-516
+BuildRequires:    library/perl-5/encode-516
+BuildRequires:    library/perl-5/pathtools-516
+BuildRequires:    library/perl-5/pod-escapes-516
+BuildRequires:    library/perl-5/test-simple-516
+BuildRequires:    library/perl-5/text-tabs-wrap-516
+%endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/carp-516
+Requires:         library/perl-5/encode-516
+Requires:         library/perl-5/pathtools-516
+Requires:         library/perl-5/pod-escapes-516
+Requires:         library/perl-5/test-simple-516
+Requires:         library/perl-5/text-tabs-wrap-516
 
 %description 516
 framework for parsing Pod
 %endif
 
-%if %{build520}
-%package 520
-IPS_package_name: library/perl-5/%{ips_cpan_name}-520
+%if %{build522}
+%package 522
+IPS_package_name: library/perl-5/%{ips_cpan_name}-522
 Summary:          framework for parsing Pod
-BuildRequires:    runtime/perl-520 = *
-Requires:         runtime/perl-520 = *
+BuildRequires:    runtime/perl-522 = *
+BuildRequires:    library/perl-5/extutils-makemaker-522
+%if %{enable_test}
+BuildRequires:    library/perl-5/carp-522
+BuildRequires:    library/perl-5/encode-522
+BuildRequires:    library/perl-5/pathtools-522
+BuildRequires:    library/perl-5/pod-escapes-522
+BuildRequires:    library/perl-5/test-simple-522
+BuildRequires:    library/perl-5/text-tabs-wrap-522
+%endif
+Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/carp-522
+Requires:         library/perl-5/encode-522
+Requires:         library/perl-5/pathtools-522
+Requires:         library/perl-5/pod-escapes-522
+Requires:         library/perl-5/test-simple-522
+Requires:         library/perl-5/text-tabs-wrap-522
 
-%description 520
+%description 522
 framework for parsing Pod
 %endif
 
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
-rm -rf %{buildroot}
+[ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
 build_with_makefile.pl_for() {
@@ -100,8 +175,12 @@ build_with_makefile.pl_for() {
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
-    make
-    [ x${test} = 'xwithout_test' ] || make test
+
+    export CC='cc -m32'
+    export LD='cc -m32'
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    make CC="${CC}" LD="${LD}"
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
@@ -116,8 +195,9 @@ build_with_build.pl_for() {
                    --installdirs vendor \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ x${test} = 'xwithout_test' ] || ${bindir}/perl ./Build test
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
+    ${bindir}/perl ./Build clean
 }
 
 modify_bin_dir() {
@@ -128,12 +208,12 @@ modify_bin_dir() {
       mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
     fi
       
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}bin ]
+    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin ]
     then
-        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}bin/*
+        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
         do
-            sed -ibak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${I}
-            [ -f ${i}.bak] || rm ${i}.bak
+            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
+            [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
 }
@@ -150,7 +230,11 @@ modify_man_dir() {
             mv $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
             rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
         fi
-        rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+        if [ %{include_executable} -eq 0 ]
+        then
+            rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+        fi
+
     fi
 }
 
@@ -185,8 +269,8 @@ build_for 5.12
 build_for 5.16
 %endif
 
-%if %{build520}
-build_for 5.20
+%if %{build522}
+build_for 5.22
 %endif
 
 %install
@@ -247,18 +331,19 @@ rm -rf %{buildroot}
 %endif
 %endif
 
-%if %{build520}
-%files 520
+%if %{build522}
+%files 522
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.20
+/usr/perl5/vendor_perl/5.22
 %if %{include_executable}
-/usr/perl5/5.20
+/usr/perl5/5.22
 %endif
 %endif
-
 
 %changelog
+* Thu Apr 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.35, package for perl-522 is added, for perl-520 is obsolete
 * Thu Nov 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.32 and build packages for perl-510, perl-516 and perl-520
 * Tue Dec 09 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

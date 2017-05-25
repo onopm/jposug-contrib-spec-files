@@ -4,14 +4,14 @@
 %define generate_executable 0
 
 %define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define gemdir21 %(%{bindir21}/ruby -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
 
 
 Name:             fluent-plugin-elasticsearch
 IPS_package_name: system/fluentd/plugins/elasticsearch
 Summary:          fluent plugin for elasticsearch
-Version:          1.1.0
+Version:          1.9.2
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -39,6 +39,7 @@ fluent plugin for elasticsearch
     --no-ri \
     -V \
     --force %{SOURCE0}
+rm -rf .%{gemdir21}/cache
 
 %install
 rm -rf %{buildroot}
@@ -63,6 +64,16 @@ rm -rf %{buildroot}
 /usr/ruby/2.1
 
 %changelog
+* Tue Feb 14 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.9.2
+* Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.9.1
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.4.0
+* Fri Jan 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.3.0
+* Sun Dec 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2.1
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.1.0
 * Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

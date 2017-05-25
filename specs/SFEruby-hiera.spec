@@ -38,7 +38,7 @@
 Summary:          A pluggable data store for hierarcical data
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          3.0.1
+Version:          3.0.5
 License:          Apache License 2.0
 URL:              https://github.com/puppetlabs/hiera
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -57,6 +57,7 @@ Summary:          A pluggable data store for hierarcical data
 BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 # json_pure >= 0
+Requires:         library/ruby/json_pure-19
 Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
@@ -83,6 +84,7 @@ Summary:          A pluggable data store for hierarcical data
 BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 # json_pure >= 0
+Requires:         library/ruby/json_pure-20
 Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
@@ -109,6 +111,7 @@ Summary:          A pluggable data store for hierarcical data
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 # json_pure >= 0
+Requires:         library/ruby/json_pure-21
 Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
@@ -135,6 +138,7 @@ Summary:          A pluggable data store for hierarcical data
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 # json_pure >= 0
+Requires:         library/ruby/json_pure-22
 Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
@@ -311,6 +315,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.0.5
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.0.1
 * Thu May 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

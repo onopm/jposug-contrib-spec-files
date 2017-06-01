@@ -30,7 +30,6 @@ the distribution metadata for a CPAN dist
 IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          the distribution metadata for a CPAN dist
 BuildRequires:    runtime/perl-584 = *
-BuildRequires:    library/perl-5/cpan-meta-584
 BuildRequires:    library/perl-5/data-dumper-584
 BuildRequires:    library/perl-5/extutils-makemaker-584
 BuildRequires:    library/perl-5/file-temp-584
@@ -71,7 +70,6 @@ the distribution metadata for a CPAN dist
 IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          the distribution metadata for a CPAN dist
 BuildRequires:    runtime/perl-510 = *
-BuildRequires:    library/perl-5/cpan-meta-510
 BuildRequires:    library/perl-5/data-dumper-510
 BuildRequires:    library/perl-5/extutils-makemaker-510
 BuildRequires:    library/perl-5/file-temp-510
@@ -110,7 +108,6 @@ the distribution metadata for a CPAN dist
 IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          the distribution metadata for a CPAN dist
 BuildRequires:    runtime/perl-512 = *
-BuildRequires:    library/perl-5/cpan-meta-512
 BuildRequires:    library/perl-5/data-dumper-512
 BuildRequires:    library/perl-5/extutils-makemaker-512
 BuildRequires:    library/perl-5/file-temp-512
@@ -151,7 +148,6 @@ the distribution metadata for a CPAN dist
 IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          the distribution metadata for a CPAN dist
 BuildRequires:    runtime/perl-516 = *
-BuildRequires:    library/perl-5/cpan-meta-516
 BuildRequires:    library/perl-5/data-dumper-516
 BuildRequires:    library/perl-5/extutils-makemaker-516
 BuildRequires:    library/perl-5/file-temp-516
@@ -193,7 +189,6 @@ the distribution metadata for a CPAN dist
 IPS_package_name: library/perl-5/%{ips_cpan_name}-522
 Summary:          the distribution metadata for a CPAN dist
 BuildRequires:    runtime/perl-522 = *
-BuildRequires:    library/perl-5/cpan-meta-522
 BuildRequires:    library/perl-5/data-dumper-522
 BuildRequires:    library/perl-5/extutils-makemaker-522
 BuildRequires:    library/perl-5/file-temp-522

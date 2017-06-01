@@ -268,5 +268,7 @@ rm -rf %{buildroot}
 - bump to 2.132510
 * Tue Jun 12 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for perl-584 and perl-512
+* Thu Jan 24 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Tue Jun 12 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for perl-584 and perl-512

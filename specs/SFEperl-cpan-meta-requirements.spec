@@ -237,5 +237,9 @@ rm -rf %{buildroot}
 - bump to 2.133 and buid packages for perl-516 and perl-520
 * Mon Sep 09 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.123
+* Wed Jan 23 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires to pass make test
+* Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

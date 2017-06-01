@@ -111,7 +111,6 @@ Requires:         library/perl-5/scalar-list-utils-520
 Read and write a subset of YAML for CPAN Meta files
 %endif
 
-
 %prep
 %setup -q -n %{cpan_name}-%{version}
 rm -rf %{buildroot}
@@ -250,6 +249,8 @@ rm -rf %{buildroot}
 - update Requires
 * Wed Nov 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.016 and build packages for perl-516 and perl-520
+* Sun Dec 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Buildrequires
 * Wed Nov 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires
 - bump to 0.012

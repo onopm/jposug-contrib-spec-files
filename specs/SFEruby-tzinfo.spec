@@ -14,7 +14,7 @@
 Summary:          TZInfo provides daylight savings aware transformations between times in different time zones.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.2.2
+Version:          1.2.3
 License:          MIT
 URL:              http://tzinfo.github.io
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -270,6 +270,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Fri Jun 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2.3
 * Wed Dec 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for ruby-24 and packages for ruby-19 and ruby-20 are obsolete
 * Mon Dec 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

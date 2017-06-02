@@ -6,7 +6,7 @@
 %define geminstdir23 %{gemdir23}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.14.12
+%define tarball_version 0.14.17
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -20,10 +20,10 @@ Source2:          svc-fluentd
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:	runtime/ruby-23
-BuildRequires:	library/ruby/jeweler-23
+# BuildRequires:	library/ruby/jeweler-23
 BuildRequires:	library/ruby/rr-23
 BuildRequires:	library/ruby/timecop-23
-BuildRequires:	library/text/yaml >= 0.1.6
+# BuildRequires:	library/text/yaml >= 0.1.6
 Requires:	runtime/ruby-23
 Requires:	library/ruby/cool.io-23 >= 1.4.6
 Requires:	library/ruby/http_parser.rb-23 >= 0.6.0
@@ -110,6 +110,8 @@ rm -rf %{buildroot}
 %attr(0555, root, bin) /usr/bin/fluent-debug
 %attr(0555, root, bin) /usr/bin/fluent-gem
 %attr(0555, root, bin) /usr/bin/fluentd
+%attr(0555, root, bin) /usr/bin/fluent-plugin-config-format
+%attr(0555, root, bin) /usr/bin/fluent-plugin-generate
 %{gemdir23}
 %dir %attr(0755, root, bin) /lib/
 %dir %attr(0755, root, bin) /lib/svc
@@ -125,6 +127,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Fri Jun 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.17
 * Thu Apr 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.14.12 and use ruby-23 instead of ruby-21
 * Wed Feb 01 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

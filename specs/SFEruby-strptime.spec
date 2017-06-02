@@ -14,7 +14,7 @@
 Summary:          a fast strptime engine which uses VM.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          0.1.8
+Version:          0.1.9
 License:          BSD-2-Clause
 URL:              https://github.com/nurse/strptime
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -262,5 +262,7 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Fri jun 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.1.9
 * Wed Dec 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

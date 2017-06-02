@@ -14,7 +14,7 @@
 Summary:          A framework to implement robust multiprocess servers like Unicorn
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.0.4
+Version:          2.0.5
 License:          Apache 2.0
 URL:              https://github.com/fluent/serverengine
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -270,6 +270,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Fri Jun 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.5
 * Wed Dec 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.4
 * Thu Sep 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

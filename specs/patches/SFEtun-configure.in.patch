@@ -1,0 +1,11 @@
+--- configure.in.orig	2013-11-10 10:58:06.000000000 +0900
++++ configure.in	2014-07-18 23:56:09.701617580 +0900
+@@ -89,7 +89,7 @@
+ 	DRV_DIR="/usr/kernel/drv/amd64"
+ 	if test -n "$IS_GNU_LD";
+ 	then
+-		LD_OPT="-melf_x86_64_sol2"
++		LD_OPT="-melf_x86_64"
+ 	fi
+ 	;;
+ esac

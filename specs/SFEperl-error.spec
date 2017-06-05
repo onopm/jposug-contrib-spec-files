@@ -6,6 +6,8 @@
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define include_executable 0
 
+%define install_to_site_dir 1
+
 %define cpan_name Error
 %define sfe_cpan_name error
 
@@ -83,13 +85,20 @@ rm -rf %{buildroot}
 build_with_makefile.pl_for() {
     perl_ver=$1
     test=$2
-    bindir="/usr/perl5/${perl_ver}/bin"
-    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    bindir="${perl_dir_prefix}/bin"
+    vendor_dir="${perl_dir_prefix}/vendor_perl/${perl_ver}"
+    site_dir="${perl_dir_prefix}/site_perl/${perl_ver}"
 
-    export PERL5LIB=${vendor_dir}
+    export PERL5LIB=${site_dir}:${vendor_dir}
+%if %{install_to_site_dir}
+    perl_libdir="${site_dir}"
+%else
+    perl_libdir="${vendor_dir}"
+%endif
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
-                   LIB=${vendor_dir}
+                   LIB=${perl_libdir}
     make
     [ ${test} == 'without_test' ] || make test
     make pure_install
@@ -171,44 +180,34 @@ rm -rf %{buildroot}
 %files 584
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.8.4
-%if %{include_executable}
 /usr/perl5/5.8.4
-%endif
 %endif
 
 %if %{build512}
 %files 512
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.12
-%if %{include_executable}
 /usr/perl5/5.12
-%endif
 %endif
 
 %if %{build516}
 %files 516
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.16
-%if %{include_executable}
 /usr/perl5/5.16
-%endif
 %endif
 
 %if %{build520}
 %files 520
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.20
-%if %{include_executable}
 /usr/perl5/5.20
-%endif
 %endif
 
 
 %changelog
+* Tue Sep 27 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use 'site_perl' instead of 'vendor_perl'
 * Tue Nov 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.17024 and build packages for perl-516 and perl-520
 * Fri Aug 23 2013 - Osamu Tabata <cantimerny.g@gmail.com>

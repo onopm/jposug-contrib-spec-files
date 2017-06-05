@@ -4,19 +4,22 @@
 Name:			SFEelasticsearch
 IPS_package_name:       database/elasticsearch
 Summary:		distributed restful search and analytics
-Version:		2.3.1
-Source:                 http://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-%{version}.zip
+Version:		5.3.0
+Source:                 https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-%{version}.zip
 Source1:		svc-elasticsearch
 Source2:		elasticsearch.xml
 URL:			https://www.elastic.co
 License:		Apache License 2.0
 
-Requires:	runtime/java/jre = *
+Requires:	runtime/java/jre-8 = *
 
 %prep
 %setup -q -n elasticsearch-%{version}
 
 %build
+
+echo 'path.data: /var/elasticsearch/data' >> config/elasticsearch.yml
+echo 'path.logs: /var/elasticsearch/logs' >> config/elasticsearch.yml
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -26,10 +29,10 @@ mkdir -p $RPM_BUILD_ROOT/etc/elasticsearch/scripts
 mkdir -p $RPM_BUILD_ROOT/etc/elasticsearch/templates
 
 mkdir -p $RPM_BUILD_ROOT/usr/elasticsearch
-mkdir -p $RPM_BUILD_ROOT/usr/elasticsearch/plugins
-mkdir -p $RPM_BUILD_ROOT/usr/elasticsearch/modules
 cp -r bin $RPM_BUILD_ROOT/usr/elasticsearch
 cp -r lib $RPM_BUILD_ROOT/usr/elasticsearch
+cp -r modules $RPM_BUILD_ROOT/usr/elasticsearch
+cp -r plugins $RPM_BUILD_ROOT/usr/elasticsearch
 
 pushd $RPM_BUILD_ROOT/usr/elasticsearch
 ln -s ../../etc/elasticsearch config
@@ -37,6 +40,7 @@ popd
 
 mkdir -p $RPM_BUILD_ROOT/etc/elasticsearch
 cp config/* $RPM_BUILD_ROOT/etc/elasticsearch
+
 mkdir -p $RPM_BUILD_ROOT/var/elasticsearch/data
 mkdir -p $RPM_BUILD_ROOT/var/elasticsearch/logs
 
@@ -59,7 +63,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(0755, root, bin) /etc/elasticsearch/scripts
 %dir %attr(0755, root, bin) /etc/elasticsearch/templates
 %attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/elasticsearch.yml
-%attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/logging.yml
+%attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/jvm.options
+%attr(0755, root, bin) %config(noreplace) /etc/elasticsearch/log4j2.properties
 %dir %attr(0755, root, sys) /usr
 /usr/elasticsearch
 %dir %attr(0755, root, bin) /lib
@@ -76,6 +81,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755, root, sys) /var/svc/manifest/application/elasticsearch.xml
 
 %changelog
+* Wed Mar 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.3.0
+* Wed Feb 22 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.2.1
+* Fri Feb 03 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.2.0
+* Mon Dec 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.1.1
+* Thu Oct 20 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.1
 * Tue Apr 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.3.1
 * Mon Apr 04 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

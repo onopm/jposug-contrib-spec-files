@@ -2,7 +2,7 @@
 %include base.inc
 
 %define module_name puppetlabs-stdlib
-%define module_version 4.9.1
+%define module_version 4.17.0
 
 Name:           puppet-modules-stdlib
 IPS_package_name:        system/management/puppet3/modules/puppetlabs/stdlib
@@ -20,8 +20,6 @@ Requires:      system/management/puppet3
 Puppet Module Standard Library
 
 %prep
-
-mkdir %{module_name}-%{module_version}
 
 %setup -T -c -n %{module_name}-%{module_version}
 
@@ -45,6 +43,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Jun 06 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 4.17.0
 * Tue Dec 15 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.9.1
 * Fri Feb 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

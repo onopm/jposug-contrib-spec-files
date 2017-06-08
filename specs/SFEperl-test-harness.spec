@@ -32,11 +32,9 @@ Summary:          contributing to TAP::Harness
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
 %if %{enable_test}
-BuildRequires:    library/perl-5/pod-usage-584
 %endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/pod-usage-584
 
 %description 584
 contributing to TAP::Harness
@@ -48,10 +46,8 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          contributing to TAP::Harness
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
-BuildRequires:    library/perl-5/pod-usage-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/pod-usage-510
 
 %description 510
 contributing to TAP::Harness
@@ -64,11 +60,9 @@ Summary:          contributing to TAP::Harness
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
 %if %{enable_test}
-BuildRequires:    library/perl-5/pod-usage-512
 %endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/pod-usage-512
 
 %description 512
 contributing to TAP::Harness
@@ -82,11 +76,9 @@ BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
 Requires:         library/perl-5/%{ips_cpan_name}
 %if %{enable_test}
-BuildRequires:    library/perl-5/pod-usage-516
 %endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/pod-usage-516
 
 %description 516
 contributing to TAP::Harness
@@ -99,11 +91,9 @@ Summary:          contributing to TAP::Harness
 BuildRequires:    runtime/perl-522 = *
 BuildRequires:    library/perl-5/extutils-makemaker-522
 %if %{enable_test}
-BuildRequires:    library/perl-5/pod-usage-522
 %endif
 Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/pod-usage-522
 
 %description 522
 contributing to TAP::Harness
@@ -294,6 +284,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Jun 08 2017 - Fumhisa TONAKA <fumi.ftnk@gmail.com>
+- fix requires. Pod::Usage is included in perl-5*
 * Mon Jun 05 2017 - Fumhisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.39
 * Sat Nov 07 2015 - Fumhisa TONAKA <fumi.ftnk@gmail.com>

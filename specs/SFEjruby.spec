@@ -2,7 +2,7 @@
 
 Name:			SFEjruby
 IPS_package_name:       runtime/jruby
-Version:		9.1.7.0
+Version:		9.1.12.0
 Summary:		The Ruby Programming Language on the JVM
 License:		Ruby license
 URL:			http://jruby.org/
@@ -65,6 +65,8 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/jruby/share
 
 %changelog
+* Wed Jul 05 2017 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.1.12.0
 * Tue Feb 21 2017 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.1.7.0
 * Sun Dec 27 2015 Fumihisa TONAKA <fumi.ftnk@gmail.com>

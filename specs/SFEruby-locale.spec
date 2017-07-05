@@ -1,93 +1,283 @@
 %include Solaris.inc
 %include default-depend.inc
 
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define generate_executable 0
+%define keep_dependency 0
+
 %define gemname locale
-%define gemdir18 %(ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-%define bindir18 /usr/ruby/1.8/bin
-%define gemdir19 %(ruby19 -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%define bindir19 /usr/ruby/1.9/bin
+%define sfe_gemname locale
 
-Summary: Ruby-Locale is the pure ruby library which provides basic APIs for localization.
-Name: SFEruby-%{gemname}
-IPS_package_name:        library/ruby-18/locale
-Version: 2.0.8
-License: Ruby
-URL: http://rubygems.org/gems/%{gemname}
-Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Summary:          Ruby-Locale is the pure ruby library which provides basic APIs for localization.
 
-BuildRequires: runtime/ruby-18
-Requires:      runtime/ruby-18
-
+Name:             SFEruby-%{sfe_gemname}
+IPS_package_name: library/ruby/%{gemname}
+Version:          2.1.2
+License:          Ruby, LGPLv3+
+URL:              https://github.com/ruby-gettext/locale
+Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
+BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 %description
 Ruby-Locale is the pure ruby library which provides basic APIs for localization.
 
-%package 19
-IPS_package_name: library/ruby-19/locale
-Summary: Ruby-Locale is the pure ruby library which provides basic APIs for localization.
-BuildRequires: runtime/ruby-19
-Requires:      runtime/ruby-19
 
-%description 19
+%if %{build21}
+%if %{keep_dependency}
+%package 21-old
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}-21
+
+%description 21-old
 Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+%endif
+
+%package 21
+IPS_package_name: library/ruby/%{gemname}-21
+Summary:          Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}
+
+%description 21
+Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+%endif
+
+%if %{build22}
+%if %{keep_dependency}
+%package 22-old
+IPS_package_name: library/ruby-22/%{gemname}
+Summary:          Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}-22
+
+%description 22-old
+Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+%endif
+
+%package 22
+IPS_package_name: library/ruby/%{gemname}-22
+Summary:          Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}
+
+%description 22
+Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}
+
+%description 23
+Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+%endif
+
+%if %{build24}
+
+%package 24
+IPS_package_name: library/ruby/%{gemname}-24
+Summary:          Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+BuildRequires:    runtime/ruby-24 = *
+Requires:         runtime/ruby-24 = *
+Requires:         library/ruby/%{gemname}
+
+%description 24
+Ruby-Locale is the pure ruby library which provides basic APIs for localization.
+
+%endif
+
 
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir18}
-mkdir -p .%{bindir18}
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
 
 %build
-# export CONFIGURE_ARGS="--with-cflags='%{optflags}'"
+build_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-# ruby-18
-/usr/ruby/1.8/bin/gem install --local \
-    --install-dir .%{gemdir18} \
-    --bindir .%{bindir18} \
-    -V \
-    --force %{SOURCE0}
+    ${bindir}/gem install --local \
+        --no-env-shebang \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0}
+    rm -r .${gemdir}/cache
+}
 
-# ruby-19
-/usr/ruby/1.9/bin/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    -V \
-    --force %{SOURCE0}
+%if %{build21}
+# ruby-21
+build_for 2.1
+%endif
+%if %{build22}
+# ruby-22
+build_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+build_for 2.4
+%endif
 
 %install
 rm -rf %{buildroot}
 
-# ruby-18
-mkdir -p %{buildroot}/%{gemdir18}
-cp -a .%{gemdir18}/* \
-    %{buildroot}/%{gemdir18}/
+%if %{generate_executable}
+mkdir -p %{buildroot}/%{_bindir}
+%endif
 
-# ruby-19
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
+install_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-rm -rf %{buildroot}%{geminstdir}/.yardoc/
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
+
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
+%if %{generate_executable}
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
+%endif
+
+}
+
+%if %{build21}
+# ruby-21
+install_for 2.1
+%endif
+%if %{build22}
+# ruby-22
+install_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+install_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+install_for 2.4
+%endif
 
 %clean
 rm -rf %{buildroot}
 
-
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
-%dir %attr (0755, root, sys) /usr
 
-%files 19
+%if %{build21}
+%files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/1.9
+/usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
+%endif
+%if %{build22}
+%files 22
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+%if %{build24}
+%files 24
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.4
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*24
+%endif
+%endif
 
 %changelog
+* Wed Jul 05 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.2
 * Tue Mar 26 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

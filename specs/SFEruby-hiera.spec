@@ -41,7 +41,7 @@ IPS_package_name: library/ruby/%{gemname}-21
 Summary:          A pluggable data store for hierarcical data
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 21
 A pluggable data store for hierarcical data
@@ -65,7 +65,7 @@ IPS_package_name: library/ruby/%{gemname}-22
 Summary:          A pluggable data store for hierarcical data
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 22
 A pluggable data store for hierarcical data
@@ -265,6 +265,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Fri Jul 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- not require library/ruby/hiera to avoid conflict between Oracle Solaris package and JPOSUG package
 * Wed Jul 05 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.4.0
 * Wed Nov 30 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

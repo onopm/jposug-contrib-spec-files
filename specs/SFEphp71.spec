@@ -203,59 +203,59 @@ build --enable-embed \
     ${without_shared}
 popd
 
-# # Build a special thread-safe (mainly for modules)
-# pushd build-ztscli
+# Build a special thread-safe (mainly for modules)
+pushd build-ztscli
 
-# EXTENSION_DIR=%{_libdir}/php-zts/modules
-# build \
-#     --includedir=/usr/php/%{major_version}/include/php-zts \
-#     --libdir=/usr/php/%{major_version}/lib/php-zts \
-#     --enable-maintainer-zts \
-#     --with-config-file-scan-dir=%{_sysconfdir}/php/%{major_version}/php-zts.d \
-#     --enable-pcntl \
-#     --enable-mbstring=shared \
-#     --enable-mbregex \
-#     --with-gd=shared \
-#     --enable-bcmath=shared \
-#     --enable-dba=shared --with-db4=%{_prefix} \
-#     --with-xmlrpc=shared \
-#     --enable-dom=shared \
-#     --enable-wddx=shared \
-#     --with-snmp=shared \
-#     --enable-soap=shared \
-#     --with-xsl=shared \
-#     --enable-xmlreader=shared --enable-xmlwriter=shared \
-#     --with-curl=shared \
-#     --enable-mysqlnd=shared \
-#     --with-mysqli=shared,mysqlnd \
-#     --enable-pdo=shared \
-#     --with-pdo-mysql=shared,mysqlnd \
-#     --with-pdo-sqlite=shared \
-#     --with-sqlite3=shared \
-#     --enable-json=shared \
-#     --enable-zip=shared \
-#     --without-readline \
-#     --with-libedit \
-#     --enable-phar=shared \
-#     --with-tidy=shared \
-#     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
-#     --enable-posix=shared \
-#     --enable-fileinfo=shared \
-#     --with-enchant=shared
-# popd
+EXTENSION_DIR=%{_libdir}/php-zts/modules
+build \
+    --includedir=/usr/php/%{major_version}/include/php-zts \
+    --libdir=/usr/php/%{major_version}/lib/php-zts \
+    --enable-maintainer-zts \
+    --with-config-file-scan-dir=%{_sysconfdir}/php/%{major_version}/php-zts.d \
+    --enable-pcntl \
+    --enable-mbstring=shared \
+    --enable-mbregex \
+    --with-gd=shared \
+    --enable-bcmath=shared \
+    --enable-dba=shared --with-db4=%{_prefix} \
+    --with-xmlrpc=shared \
+    --enable-dom=shared \
+    --enable-wddx=shared \
+    --with-snmp=shared \
+    --enable-soap=shared \
+    --with-xsl=shared \
+    --enable-xmlreader=shared --enable-xmlwriter=shared \
+    --with-curl=shared \
+    --enable-mysqlnd=shared \
+    --with-mysqli=shared,mysqlnd \
+    --enable-pdo=shared \
+    --with-pdo-mysql=shared,mysqlnd \
+    --with-pdo-sqlite=shared \
+    --with-sqlite3=shared \
+    --enable-json=shared \
+    --enable-zip=shared \
+    --without-readline \
+    --with-libedit \
+    --enable-phar=shared \
+    --with-tidy=shared \
+    --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
+    --enable-posix=shared \
+    --enable-fileinfo=shared \
+    --with-enchant=shared
+popd
 
 # Build a special thread-safe Apache SAPI
-# pushd build-zts
-# build --with-apxs2=/usr/apache2/2.4/bin/apxs \
-#     --includedir=/usr/php/%{major_version}/include/php-zts \
-#     --libdir=/usr/php/%{major_version}/lib/php-zts \
-#     --enable-maintainer-zts \
-#     --with-config-file-scan-dir=%{_sysconfdir}/php/%{major_version}/php-zts.d \
-#     --enable-pdo=shared \
-#     --with-pdo-sqlite=shared \
-#     --with-sqlite3=shared \
-#     ${without_shared}
-# popd
+pushd build-zts
+build --with-apxs2=/usr/apache2/2.4/bin/apxs \
+    --includedir=/usr/php/%{major_version}/include/php-zts \
+    --libdir=/usr/php/%{major_version}/lib/php-zts \
+    --enable-maintainer-zts \
+    --with-config-file-scan-dir=%{_sysconfdir}/php/%{major_version}/php-zts.d \
+    --enable-pdo=shared \
+    --with-pdo-sqlite=shared \
+    --with-sqlite3=shared \
+    ${without_shared}
+popd
 
 %install
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
@@ -434,5 +434,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}.so
 
 %changelog
+* Wed Aug 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build zts
 * Tue Jul 18 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

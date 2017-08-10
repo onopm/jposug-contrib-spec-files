@@ -27,6 +27,8 @@ BuildRequires: text/nkf
 BuildRequires: library/libedit
 BuildRequires: developer/icu
 BuildRequires: developer/gcc
+BuildRequires: image/library/libjpeg
+BuildRequires: image/library/libpng
 
 Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       text/tidy
@@ -35,10 +37,11 @@ Requires:       web/php-common
 Requires:       library/libedit
 Requires:       library/icu
 Requires:       system/library/gcc/gcc-runtime
+Requires:       image/library/libjpeg
+Requires:       image/library/libpng
 
 %description
 PHP 7.1
-
 
 %prep
 %setup -n %{tarball_name}-%{tarball_version}
@@ -434,6 +437,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}.so
 
 %changelog
+* Fri Aug 11 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- libpng and libjpeg are required by gd extension
 * Sun Aug 06 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.1.8
 * Wed Aug 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

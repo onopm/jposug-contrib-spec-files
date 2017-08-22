@@ -8,7 +8,7 @@
 Summary:	Validating, recursive, and caching DNS resolver
 IPS_Package_Name:	network/dns/unbound
 Name:		SFEunbound
-Version:	1.6.3
+Version:	1.6.5
 License:	BSD
 URL:		http://www.nlnetlabs.nl/unbound/
 Source:		http://www.unbound.net/downloads/unbound-%{version}.tar.gz
@@ -132,6 +132,8 @@ user ftpuser=false gcos-field="Unbound Reserved UID" username="unbound" password
 %{_libdir}/libunbound*
 
 %changelog
+* Tue Aug 21 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.5
 * Tue Jun 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.6.3
 * Wed Feb 22 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

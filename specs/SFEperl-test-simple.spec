@@ -14,8 +14,8 @@
 Summary:               Basic utilities for writing tests.
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               1.302083
-IPS_component_version: 1.302083
+Version:               1.302086
+IPS_component_version: 1.302086
 License:               perl_5
 URL:                   https://metacpan.org/pod/Test::Simple
 Source0:               http://cpan.metacpan.org/authors/id/E/EX/EXODIST/Test-Simple-%{version}.tar.gz
@@ -313,6 +313,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Aug 28 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.302086
 * Wed Apr 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.302083, package for perl-522 is added and for perl-520 is obsolete
 - fix build

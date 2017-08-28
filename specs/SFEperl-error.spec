@@ -123,7 +123,7 @@ build_with_makefile.pl_for() {
     perl_dir_prefix="/usr/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
     vendor_dir="${perl_dir_prefix}/vendor_perl/${perl_ver}"
-    site_dir="${perl_dir_prefix}/site_perl/${perl_ver}"
+    site_dir="/usr/perl5/site_perl/${perl_ver}"
 
     export PERL5LIB=${vendor_dir}
 %if %{install_to_site_dir}
@@ -150,7 +150,7 @@ build_with_build.pl_for() {
     perl_dir_prefix="/usr/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
     vendor_dir="${perl_dir_prefix}/vendor_perl/${perl_ver}"
-    site_dir="${perl_dir_prefix}/site_perl/${perl_ver}"
+    site_dir="/usr/perl5/site_perl/${perl_ver}"
 
 %if %{install_to_site_dir}
     installdir='site'
@@ -329,6 +329,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Aug 28 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix site_dir path
 * Thu Jun 15 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for perl-522
 * Tue Sep 27 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

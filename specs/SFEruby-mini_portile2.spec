@@ -15,7 +15,7 @@
 Summary:          Simplistic port-like solution for developers. It provides a standard and simplified way to compile against dependency libraries without messing up your system.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.0.0
+Version:          2.2.0
 License:          MIT
 URL:              http://github.com/flavorjones/mini_portile
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -325,5 +325,7 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sat Sep 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.0
 * Fri Feb 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

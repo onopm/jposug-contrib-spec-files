@@ -14,7 +14,7 @@
 Summary:          HTTP/REST API client library.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          0.10.0
+Version:          0.13.1
 License:          MIT
 URL:              https://github.com/lostisland/faraday
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -269,6 +269,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Sun Sep 03 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.13.1
 * Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.0
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

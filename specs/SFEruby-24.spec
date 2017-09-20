@@ -29,11 +29,15 @@ Requires:      library/text/yaml >= 0.1.6
 %build
 %ifarch sparcv9
 export CFLAGS='-m64 -xO4 -D__sparc -mt -DFFI_NO_RAW_API -Kpic'
+export LIBDIR="/usr/ruby/%{major_version}/lib/sparcv9"
 %endif
 
 %ifarch amd64
 export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr -mt -DFFI_NO_RAW_API'
+export LIBDIR="/usr/ruby/%{major_version}/lib/amd64"
 %endif
+
+export LDFLAGS="-m64 -L${LIBDIR} -R${LIBDIR}"
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -102,7 +106,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/ruby/%{major_version}
 
 %changelog
-* Fri Sep 15 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Wed Sep 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix libdir and add LDFLAGS
 - bump to 2.4.2
 * Thu Mar 23 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.4.1

@@ -5,6 +5,7 @@
 %define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build25 %( if [ -x /usr/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 0
 
@@ -116,6 +117,21 @@ Requires:         library/ruby/%{gemname}
 HTTP/REST API client library.
 %endif
 
+%if %{build25}
+
+%package 25
+IPS_package_name: library/ruby/%{gemname}-25
+Summary:          HTTP/REST API client library.
+BuildRequires:    runtime/ruby-25 = *
+Requires:         runtime/ruby-25 = *
+# multipart-post < 3, >= 1.2
+Requires:         library/ruby/multipart-post-25
+Requires:         library/ruby/%{gemname}
+
+%description 25
+HTTP/REST API client library.
+%endif
+
 
 %prep
 %setup -q -c -T
@@ -124,7 +140,7 @@ HTTP/REST API client library.
 build_for() {
     ruby_ver=$1
     bindir="/usr/ruby/${ruby_ver}/bin"
-    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
+    gemdir="$(${bindir}/ruby -rrubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
     ${bindir}/gem install --local \
@@ -135,6 +151,7 @@ build_for() {
         --no-rdoc \
         -V \
         --force %{SOURCE0}
+
     rm -r .${gemdir}/cache
 }
 
@@ -154,6 +171,10 @@ build_for 2.3
 # ruby-24
 build_for 2.4
 %endif
+%if %{build25}
+# ruby-25
+build_for 2.5
+%endif
 
 %install
 rm -rf %{buildroot}
@@ -165,7 +186,7 @@ mkdir -p %{buildroot}/%{_bindir}
 install_for() {
     ruby_ver=$1
     bindir="/usr/ruby/${ruby_ver}/bin"
-    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
+    gemdir="$(${bindir}/ruby -rrubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
     mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
@@ -220,6 +241,10 @@ install_for 2.3
 # ruby-24
 install_for 2.4
 %endif
+%if %{build25}
+# ruby-25
+install_for 2.5
+%endif
 
 %clean
 rm -rf %{buildroot}
@@ -267,10 +292,22 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/bin/*24
 %endif
 %endif
+%if %{build25}
+%files 25
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.5
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*25
+%endif
+%endif
 
 %changelog
+* Thu Oct 26 2017 - NAME <MAILADDR>
+- initial commit
 * Sun Sep 03 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 0.13.1
+- build package for ruby-25
 * Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.0
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

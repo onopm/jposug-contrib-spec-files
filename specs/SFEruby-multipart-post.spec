@@ -5,6 +5,7 @@
 %define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build25 %( if [ -x /usr/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 0
 
@@ -108,6 +109,19 @@ Requires:         library/ruby/%{gemname}
 Use with Net::HTTP to do multipart form posts.  IO values that have #content_type, #original_filename, and #local_path will be posted as a binary file.
 %endif
 
+%if %{build25}
+
+%package 25
+IPS_package_name: library/ruby/%{gemname}-25
+Summary:          Use with Net::HTTP to do multipart form posts.  IO values that have #content_type, #original_filename, and #local_path will be posted as a binary file.
+BuildRequires:    runtime/ruby-25 = *
+Requires:         runtime/ruby-25 = *
+Requires:         library/ruby/%{gemname}
+
+%description 25
+Use with Net::HTTP to do multipart form posts.  IO values that have #content_type, #original_filename, and #local_path will be posted as a binary file.
+%endif
+
 
 %prep
 %setup -q -c -T
@@ -116,7 +130,7 @@ Use with Net::HTTP to do multipart form posts.  IO values that have #content_typ
 build_for() {
     ruby_ver=$1
     bindir="/usr/ruby/${ruby_ver}/bin"
-    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
+    gemdir="$(${bindir}/ruby -rrubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
     ${bindir}/gem install --local \
@@ -127,6 +141,7 @@ build_for() {
         --no-rdoc \
         -V \
         --force %{SOURCE0}
+
     rm -r .${gemdir}/cache
 }
 
@@ -146,6 +161,10 @@ build_for 2.3
 # ruby-24
 build_for 2.4
 %endif
+%if %{build25}
+# ruby-25
+build_for 2.5
+%endif
 
 %install
 rm -rf %{buildroot}
@@ -157,7 +176,7 @@ mkdir -p %{buildroot}/%{_bindir}
 install_for() {
     ruby_ver=$1
     bindir="/usr/ruby/${ruby_ver}/bin"
-    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
+    gemdir="$(${bindir}/ruby -rrubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
     mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
@@ -212,6 +231,10 @@ install_for 2.3
 # ruby-24
 install_for 2.4
 %endif
+%if %{build25}
+# ruby-25
+install_for 2.5
+%endif
 
 %clean
 rm -rf %{buildroot}
@@ -259,8 +282,20 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/bin/*24
 %endif
 %endif
+%if %{build25}
+%files 25
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.5
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*25
+%endif
+%endif
 
 %changelog
+* Fri Oct 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build package for ruby-25
 * Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for ruby-24, obsolete ruby-19 and ruby-20
 * Tue Dec 22 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

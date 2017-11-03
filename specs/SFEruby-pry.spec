@@ -46,7 +46,7 @@ Requires:         library/ruby/coderay-21
 # method_source ~> 0.8.1
 Requires:         library/ruby/method_source-21
 # slop ~> 3.4
-Requires:         library/ruby/slop-21
+Requires:         library/ruby/slop-3-21
 Requires:         library/ruby/%{gemname}
 
 %description 21
@@ -76,7 +76,7 @@ Requires:         library/ruby/coderay-22
 # method_source ~> 0.8.1
 Requires:         library/ruby/method_source-22
 # slop ~> 3.4
-Requires:         library/ruby/slop-22
+Requires:         library/ruby/slop-3-22
 Requires:         library/ruby/%{gemname}
 
 %description 22
@@ -106,7 +106,7 @@ Requires:         library/ruby/coderay-23
 # method_source ~> 0.8.1
 Requires:         library/ruby/method_source-23
 # slop ~> 3.4
-Requires:         library/ruby/slop-23
+Requires:         library/ruby/slop-3-23
 Requires:         library/ruby/%{gemname}
 
 %description 23
@@ -125,7 +125,7 @@ Requires:         library/ruby/coderay-24
 # method_source ~> 0.8.1
 Requires:         library/ruby/method_source-24
 # slop ~> 3.4
-Requires:         library/ruby/slop-24
+Requires:         library/ruby/slop-3-24
 Requires:         library/ruby/%{gemname}
 
 %description 24
@@ -284,6 +284,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Apr 04 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix Requires
 * Mon Dec 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.4 and build packge for ruby-24
 * Tue Dec 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

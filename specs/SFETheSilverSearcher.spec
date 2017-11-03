@@ -2,7 +2,7 @@
 
 Name:		SFETheSilverSearcher
 IPS_package_name:        text/the_silver_searcher
-Version:	1.0.1
+Version:	2.0.0
 Summary:	A code-searching tool similar to ack, but faster.
 License:	Apache License
 URL:		http://geoff.greer.fm/ag/
@@ -45,12 +45,16 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) %{_bindir}/ag
 %attr (0755, root, bin) %{_datadir}/the_silver_searcher
 %attr (0755, root, bin) %{_datadir}/man
-%dir %attr (0755, root, sys) /usr/share/zsh
+%dir %attr (0755, root, bin) /usr/share/zsh
 %dir %attr (0755, root, bin) /usr/share/zsh/site-functions
 %attr (0755, root, bin) /usr/share/zsh/site-functions/_the_silver_searcher
 
 
 %changelog
+* Wed Jul 05 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.0
+* Thu Jan 12 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.2 and fix file attr
 * Thu Dec 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.1
 * Thu Oct 20 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
@@ -58,5 +62,6 @@ rm -rf %{buildroot}
 * Tue Mar 29 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.31.0
 * Sat Jun 20 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.30.0
 * Wed Mar 25 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

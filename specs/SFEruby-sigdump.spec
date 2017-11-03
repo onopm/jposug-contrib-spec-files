@@ -6,7 +6,7 @@
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
-%define keep_dependency 1
+%define keep_dependency 0
 
 %define gemname sigdump
 %define sfe_gemname sigdump
@@ -127,6 +127,8 @@ build_for() {
         --no-rdoc \
         -V \
         --force %{SOURCE0}
+
+    rm -r .${gemdir}/cache
 }
 
 %if %{build21}
@@ -260,6 +262,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Wed Dec 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- exclude gem file from packages
 * Mon Dec 05 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.2.4 and build packges for ruby-23 and ruby-24
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

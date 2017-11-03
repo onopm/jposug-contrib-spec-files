@@ -1,7 +1,7 @@
 %include Solaris.inc
 
-%define jetty_version 9.3.10
-%define jetty_date 20160621
+%define jetty_version 9.3.18
+%define jetty_date 20170406
 
 Name:			SFEjetty
 IPS_package_name:	web/server/jetty
@@ -67,6 +67,7 @@ install -d -m 0640 %{buildroot}/var/jetty/logs
 cp -r etc %{buildroot}/var/jetty
 cp -r demo-base/start.d %{buildroot}/var/jetty
 install start.ini %{buildroot}/var/jetty
+install demo-base/etc/keystore %{buildroot}/var/jetty/etc
 
 pushd %{buildroot}/usr/jetty
 ln -s ../../var/jetty/etc .
@@ -121,6 +122,9 @@ rm -rf %{buildroot}
 %attr(0755, root, bin) /usr/jetty/modules/deploy.mod
 %attr(0755, root, bin) /usr/jetty/modules/ext.mod
 %attr(0755, root, bin) /usr/jetty/modules/fcgi.mod
+%attr(0755, root, bin) /usr/jetty/modules/flight-recorder.mod
+%attr(0755, root, bin) /usr/jetty/modules/gcloud-memcached-sessions.mod
+%attr(0755, root, bin) /usr/jetty/modules/gcloud-session-idmgr.mod
 %attr(0755, root, bin) /usr/jetty/modules/gcloud-sessions.mod
 %attr(0755, root, bin) /usr/jetty/modules/gzip.mod
 %attr(0755, root, bin) /usr/jetty/modules/hawtio.mod
@@ -161,6 +165,7 @@ rm -rf %{buildroot}
 %attr(0755, root, bin) /usr/jetty/modules/setuid.mod
 %attr(0755, root, bin) /usr/jetty/modules/spring.mod
 %attr(0755, root, bin) /usr/jetty/modules/stats.mod
+%attr(0755, root, bin) /usr/jetty/modules/threadlimit.mod
 %attr(0755, root, bin) /usr/jetty/modules/webapp.mod
 %attr(0755, root, bin) /usr/jetty/modules/websocket.mod
 
@@ -168,6 +173,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, bin) /var/jetty/etc
 %attr(0644, root, bin) /var/jetty/etc/README.spnego
 %config %attr(0644, root, bin) /var/jetty/etc/example-quickstart.xml
+%config %attr(0644, root, bin) /var/jetty/etc/gcloud-memcached-session-context.xml
+%config %attr(0644, root, bin) /var/jetty/etc/gcloud-session-context.xml
 %config %attr(0644, root, bin) /var/jetty/etc/hawtio.xml
 %config %attr(0644, root, bin) /var/jetty/etc/home-base-warning.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jamon.xml
@@ -178,6 +185,8 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-debug.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-debuglog.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-deploy.xml
+%config %attr(0644, root, bin) /var/jetty/etc/jetty-gcloud-memcached-sessions.xml
+%config %attr(0644, root, bin) /var/jetty/etc/jetty-gcloud-session-idmgr.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-gcloud-sessions.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-gzip.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-http-forwarded.xml
@@ -202,10 +211,12 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-spring.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-started.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-stats.xml
+%config %attr(0644, root, bin) /var/jetty/etc/jetty-threadlimit.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jetty.conf
 %config %attr(0644, root, bin) /var/jetty/etc/jetty.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jminix.xml
 %config %attr(0644, root, bin) /var/jetty/etc/jolokia.xml
+%config %attr(0644, root, bin) /var/jetty/etc/keystore
 %config %attr(0644, root, bin) /var/jetty/etc/krb5.ini
 %config %attr(0644, root, bin) /var/jetty/etc/rewrite-compactpath.xml
 %config %attr(0644, root, bin) /var/jetty/etc/spnego.conf
@@ -263,6 +274,10 @@ rm -rf %{buildroot}
 %config %attr(0644, root, bin) /var/jetty/etc/jetty-http2c.xml
 
 %changelog
+* Mon May 15 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update SMF manifest and add keystore
+* Fri Apr 06 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.3.18.v20170406
 * Thu Jun 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.3.10.v20160621
 * Tue Feb 02 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

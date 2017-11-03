@@ -1,3 +1,5 @@
+%include Solaris.inc
+
 Name:			SFEGeoIP
 IPS_Package_Name:	library/GeoIP
 Summary:		Library for country/city/organization to IP address or hostname mapping
@@ -41,7 +43,7 @@ fi
 
 %configure \
     --prefix=/usr \
-    --libdir=/usr/lib/amd64 \
+    --libdir=/usr/lib/%{_arch64} \
     --disable-static \
     --disable-dependency-tracking
 
@@ -63,10 +65,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/geoiplookup
 %{_bindir}/geoiplookup6
 %dir %attr (0755, root, bin) /usr/lib
-%dir %attr (0755, root, bin) /usr/lib/amd64
-/usr/lib/amd64/libGeoIP.la
-/usr/lib/amd64/libGeoIP.so.1
-/usr/lib/amd64/libGeoIP.so.1.*
+%dir %attr (0755, root, bin) /usr/lib/%{_arch64}
+/usr/lib/%{_arch64}/libGeoIP.la
+/usr/lib/%{_arch64}/libGeoIP.so.1
+/usr/lib/%{_arch64}/libGeoIP.so.1.*
 %dir %attr (0755, root, sys) %{_datadir}
 %{_mandir}/man1/geoiplookup.1*
 %{_mandir}/man1/geoiplookup6.1*
@@ -76,11 +78,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/GeoIP.h
 %{_includedir}/GeoIPCity.h
 %dir %attr (0755, root, bin) /usr/lib
-%dir %attr (0755, root, bin) /usr/lib/amd64
-/usr/lib/amd64/libGeoIP.so
-%dir %attr (0755, root, other) /usr/lib/amd64/pkgconfig
-/usr/lib/amd64/pkgconfig/geoip.pc
+%dir %attr (0755, root, bin) /usr/lib/%{_arch64}
+/usr/lib/%{_arch64}/libGeoIP.so
+%dir %attr (0755, root, other) /usr/lib/%{_arch64}/pkgconfig
+/usr/lib/%{_arch64}/pkgconfig/geoip.pc
 
 %changelog
+* Wed Mar 08 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use %{_arch64} instead of amd64
 * Fri Jan 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

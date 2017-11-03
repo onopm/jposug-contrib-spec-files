@@ -14,8 +14,8 @@
 Summary:               Mozilla's CA cert bundle in PEM format
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               20150826
-IPS_component_version: 20150826
+Version:               20160104
+IPS_component_version: 20160104
 License:               unknown
 URL:                   https://metacpan.org/pod/Mozilla::CA
 Source0:               http://cpan.metacpan.org/authors/id/A/AB/ABH/Mozilla-CA-%{version}.tar.gz
@@ -269,6 +269,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Mar 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 20160104
 * Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 20150826
 * Tue Mon 26 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

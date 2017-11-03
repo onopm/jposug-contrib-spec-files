@@ -20,7 +20,7 @@
 %define runusergroupid  200
 
 Name:		SFEredis-32
-Version:        3.2.6
+Version:        3.2.11
 Summary:	Redis is an open source, advanced key-value store
 IPS_package_name:    service/redis-32
 URL:		http://redis.io
@@ -224,5 +224,7 @@ user ftpuser=false gcos-field="redis Reserved UID" username="%{runuser}" uid="%{
 %class(manifest) %attr (0444, root, sys) /var/svc/manifest/application/database/redis_32.xml
 
 %changelog
+* Sat Nov 03 2017 - Osamu Tabata <cantimerny.g@gmail.com>
+- bump up to 3.2.11
 * Sun Jan 29 2017 - Osamu Tabata <cantimerny.g@gmail.com>
 - initial commit

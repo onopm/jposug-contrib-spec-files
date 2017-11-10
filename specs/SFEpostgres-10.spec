@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  10.0
+%define tarball_version  10.1
 %define major_version	 10
 %define prefix_name      SFEpostgres-10
 %define _basedir         %{_prefix}/%{major_version}
@@ -1307,5 +1307,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_archivecleanup-%{major_version}.mo
 
 %changelog
+* Fri Nov 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 10.1
 * Tue Sep 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

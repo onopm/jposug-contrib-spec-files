@@ -119,7 +119,7 @@ CC=${CC} CXX=${CXX} ./configure --prefix=/usr \
     --with-mhash \
     --enable-opcache=yes \
     --enable-dtrace \
-    --enable-intl=shared \
+    --disable-intl \
     $*
     if test $? != 0; then
         tail -500 config.log
@@ -437,6 +437,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}.so
 
 %changelog
+* Tue Nov 28 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- disable intl because intl built with gcc does not work
 * Fri Oct 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.1.11
 * Thu Oct 05 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

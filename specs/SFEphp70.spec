@@ -59,6 +59,11 @@ do
 nkf -Lu --overwrite=.bak ${i}
 done
 
+echo "
+#if defined(__sun) && defined(__SVR4) //Solaris
+#include <ieeefp.h>
+#define isfinite finite
+#endif" >>  main/php_config.h.in
 
 %build
 mkdir build-cgi build-apache build-embedded build-zts build-ztscli build-fpm
@@ -448,6 +453,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Nov 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.0.26 and disable intl
+- add isfinite definition to main/php_config.h.in to build intl
 * Mon Feb 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.0.16
 * Thu Jan 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

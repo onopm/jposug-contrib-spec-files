@@ -5,7 +5,7 @@
 
 %define _prefix /usr
 %define php_version 7.1
-%define tarball_version  7.1.11
+%define tarball_version  7.1.12
 %define tarball_name     php
 %define zts 20160303
 
@@ -43,7 +43,8 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
     CPUS=1
 fi
 
-
+export CFLAGS='-m64'
+export CXXFLAGS='-m64'
 
 cd %{tarball_name}-%{tarball_version}
 %ifarch sparc
@@ -54,7 +55,6 @@ cd %{tarball_name}-%{tarball_version}
 
 pushd ext/intl
 /usr/php/%{php_version}/bin/phpize
-
 CFLAGS='-m64 -I../../Zend' \
       ./configure \
       --with-php-config=/usr/php/7.1/bin/php-config \
@@ -94,5 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/%{php_version}/conf.d/intl.ini
 
 %changelog
+* Wed Nov 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.1.12, add CFLAGS and CXXFLAGS
 * Tue Nov 28 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

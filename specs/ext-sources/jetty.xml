@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<service_bundle type='manifest' name='jetty'>
+
+<service
+        name='network/jetty'
+        type='service'
+        version='1'>
+
+	<!--
+	   Wait for network interfaces to be initialized.
+	-->
+        <dependency
+                name='network'
+                grouping='require_all'
+                restart_on='none'
+                type='service'>
+                <service_fmri value='svc:/milestone/network:default' />
+        </dependency>
+
+	<!--
+	   Wait for all local filesystems to be mounted.
+	-->
+        <dependency
+                name='filesystem-local'
+                grouping='require_all'
+                restart_on='none'
+                type='service'>
+                <service_fmri value='svc:/system/filesystem/local:default' />
+        </dependency>
+
+        <exec_method
+                type='method'
+                name='start'
+                exec='/lib/svc/method/svc-jetty start'
+                timeout_seconds='60' />
+
+        <exec_method
+                type='method'
+                name='stop'
+                exec='/lib/svc/method/svc-jetty stop'
+                timeout_seconds='60' />
+
+        <!--
+          Both action_authorization and value_authorization are needed
+          to allow the framework general/enabled property to be changed
+          when performing action (enable, disable, etc) on the service.
+        -->
+        <property_group name='general' type='framework'>
+		<propval name='value_authorization' type='astring'
+			value='solaris.smf.value.postgres' />
+		<propval name='action_authorization' type='astring'
+			value='solaris.smf.manage.postgres' />
+        </property_group>
+
+        <instance name='default' enabled='false'>
+        	<method_context>
+                	<method_credential user='root' group='sys' />
+        	</method_context>
+
+        	<property_group name='jetty' type='application'>
+                	<propval name='java' type='astring'
+                    	   value='/usr/bin/java' />
+                	<propval name='jetty_home' type='astring'
+                    	   value='/usr/jetty' />
+                	<propval name='jetty_base' type='astring'
+                    	   value='/var/jetty' />
+                	<propval name='exec_user' type='astring'
+                    		 value='webservd' />
+                	<propval name='java_options' type='astring'
+                    		 value='-Xmx1024m' />
+                	<propval name='lang' type='astring'
+                    		 value='en_US.UTF-8' />
+        	</property_group>
+        </instance>
+
+        <stability value='Evolving' />
+
+        <template>
+                <common_name>
+                        <loctext xml:lang='C'>
+                                jetty
+                        </loctext>
+                </common_name>
+                <documentation>
+                </documentation>
+        </template>
+
+</service>
+
+</service_bundle>

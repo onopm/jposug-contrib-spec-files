@@ -1,0 +1,10 @@
+--- libmemcached/byteorder.cc.dist	2017-09-22 21:39:53.606943405 +0900
++++ libmemcached/byteorder.cc	2017-09-23 06:30:09.861366203 +0900
+@@ -37,6 +37,7 @@
+ 
+ #include "mem_config.h"
+ #include "libmemcached/byteorder.h"
++#include <sys/byteorder.h>
+ 
+ /* Byte swap a 64-bit number. */
+ #ifndef swap64

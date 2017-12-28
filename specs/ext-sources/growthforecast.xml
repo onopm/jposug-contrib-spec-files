@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<service_bundle type="manifest" name="growthforecast">
+  
+  <service name="site/growthforecast" type="service" version="1">
+    
+    <create_default_instance enabled="false"/>
+    <single_instance/>
+    
+    <!--
+       Wait for network interfaces to be initialized.
+      -->
+    <dependency name='network'
+		grouping='require_all'
+		restart_on='error'
+		type='service'>
+      <service_fmri value='svc:/milestone/network:default'/>
+    </dependency>
+    
+    <!--
+       Wait for all local filesystems to be mounted.
+      -->
+    <dependency name='filesystem-local'
+		grouping='require_all'
+		restart_on='none'
+		type='service'>
+      <service_fmri
+	 value='svc:/system/filesystem/local:default'/>
+    </dependency>
+
+    <dependency name="milestone"
+		grouping="require_all"
+		restart_on="none"
+		type="service">
+      <service_fmri value="svc:/milestone/multi-user"/>
+    </dependency>
+
+    <exec_method type="method" name="start" 
+                 exec="/lib/svc/method/svc-growthforecast start"
+                 timeout_seconds="60"/>
+    <exec_method type="method" name="stop"
+                 exec="/lib/svc/method/svc-growthforecast stop"
+                 timeout_seconds="60"/>
+
+    <property_group name='growthforecast' type='application'>
+      <propval name='bin' type='astring'
+	       value='/usr/perl5/5.12/bin/growthforecast.pl' />
+      <propval name='runfile' type='astring'
+	       value='/var/run/growthforecast.pid' />
+      <propval name='lockdir' type='astring'
+	       value='/var/lock/subsys' />
+      <propval name='lockfile' type='astring'
+	       value='growthforecast' />
+      <propval name='host' type='astring'
+	       value='0.0.0.0' />
+      <propval name='port' type='astring'
+	       value='5125' />
+      <propval name='datadir' type='astring'
+	       value='/var/growthforecast/data' />
+      <propval name='user' type='astring'
+	       value='growthforecast' />
+      <propval name='group' type='astring'
+	       value='growthforecast' />
+    </property_group>
+    
+    <stability value="Unstable"/>
+    
+    <template>
+      <common_name>
+        <loctext xml:lang="C">Lighting Fast Graphing/Visualization</loctext>
+      </common_name>
+      <documentation>
+        <doc_link name='growthforecast'
+                  uri='http://kazeburo.github.com/GrowthForecast/' />
+      </documentation>
+    </template>
+  </service>
+</service_bundle>

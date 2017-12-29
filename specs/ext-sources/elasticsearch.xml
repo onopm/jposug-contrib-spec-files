@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<service_bundle type='manifest' name='fluentd'>
+
+<service
+        name='database/elasticsearch'
+        type='service'
+        version='1'>
+
+	<!--
+	   Wait for network interfaces to be initialized.
+	-->
+        <dependency
+                name='network'
+                grouping='require_all'
+                restart_on='none'
+                type='service'>
+                <service_fmri value='svc:/milestone/network:default' />
+        </dependency>
+
+	<!--
+	   Wait for all local filesystems to be mounted.
+	-->
+        <dependency
+                name='filesystem-local'
+                grouping='require_all'
+                restart_on='none'
+                type='service'>
+                <service_fmri value='svc:/system/filesystem/local:default' />
+        </dependency>
+
+        <exec_method
+                type='method'
+                name='start'
+                exec='/lib/svc/method/svc-elasticsearch start'
+                timeout_seconds='60' />
+
+        <exec_method
+                type='method'
+                name='stop'
+                exec='/lib/svc/method/svc-elasticsearch stop'
+                timeout_seconds='60' />
+
+        <!--
+          Both action_authorization and value_authorization are needed
+          to allow the framework general/enabled property to be changed
+          when performing action (enable, disable, etc) on the service.
+        -->
+        <property_group name='general' type='framework'>
+		<propval name='value_authorization' type='astring'
+			value='solaris.smf.value.postgres' />
+		<propval name='action_authorization' type='astring'
+			value='solaris.smf.manage.postgres' />
+        </property_group>
+
+        <instance name='default' enabled='false'>
+        	<method_context working_directory='/var/elasticsearch'>
+                	<method_credential user='elasticsearch' group='elasticsearch' />
+        	</method_context>
+
+        	<property_group name='elasticsearch' type='application'>
+                	<propval name='bin' type='astring'
+                    	   value='/usr/elasticsearch/bin/elasticsearch' />
+        	</property_group>
+        </instance>
+
+        <stability value='Evolving' />
+
+        <template>
+                <common_name>
+                        <loctext xml:lang='C'>
+                                elasticsearch
+                        </loctext>
+                </common_name>
+                <documentation>
+                </documentation>
+        </template>
+
+</service>
+
+</service_bundle>

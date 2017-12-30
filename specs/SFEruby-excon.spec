@@ -341,7 +341,7 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Sat Dec 30 2017 - NAME <MAILADDR>
+* Sat Dec 30 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.60.0 and build packges for ruby-2{3,4,5}jposug
 * Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.54.0

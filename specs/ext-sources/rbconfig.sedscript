@@ -34,7 +34,7 @@ s/\'CC=.*\/cc\'/\'CC=\/usr\/bin\/gcc\'/
 s/\'CXX=.*\/CC\'/\'CXX=\/usr\/bin\/g++\'/
 s/CONFIG\[\"CC\"\].*$/CONFIG\[\"CC\"\] = \"\/usr\/bin\/gcc\"/
 s/CONFIG\[\"CXX\"\].*$/CONFIG\[\"CXX\"\] = \"\/usr\/bin\/g++\"/
-s/CONFIG\[\"CFLAGS\"\].*$/CONFIG\[\"CFLAGS\"\] = \"-g -O3 -fPIC\"/
+s/CONFIG\[\"CFLAGS\"\].*$/CONFIG\[\"CFLAGS\"\] = \"-g -O3 -fPIC -std=gnu99\"/
 s/CONFIG\[\"CCDLFLAGS\"\].*$/CONFIG\[\"CCDLFLAGS\"\] = \"-fPIC\"/
 s/"$(CC) -G"/"$(CC) -shared"/
 s/"$(CXX) -G"/"$(CXX) -shared"/

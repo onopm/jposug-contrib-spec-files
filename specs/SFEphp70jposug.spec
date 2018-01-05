@@ -3,7 +3,7 @@
 
 %define _prefix /opt/jposug/php
 %define tarball_name     php
-%define tarball_version  7.0.26
+%define tarball_version  7.0.27
 %define major_version	 7.0
 %define prefix_name      SFEphp70jposug
 %define _basedir         %{_prefix}/%{major_version}
@@ -449,5 +449,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
+* Fri Jan 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.27
 * Wed Dec 13 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

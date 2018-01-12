@@ -4,9 +4,11 @@
 %define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build25jposug %( if [ -x /opt/jposug/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
-%define keep_dependency 1
+%define keep_dependency 0
 
 %define gemname cool.io
 %define sfe_gemname coolio
@@ -14,10 +16,7 @@
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.4.5
-IPS_Component_Version: 1.4.5
-IPS_Build_Version: %(pkg list -H entire |awk '{print $2}' | cut -d- -f1 |sed -e 's/^0\.//')
-IPS_Vendor_Version: %(pkg list -H entire |awk '{print $2}' | cut -d- -f2)
+Version:          1.5.3
 License:          MIT License
 URL:              http://coolio.github.com
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -31,8 +30,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 21-old
 IPS_package_name: library/ruby-21/%{gemname}
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-# BuildRequires:    runtime/ruby-21
-Requires:         runtime/ruby-21
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
 Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
@@ -42,8 +41,9 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 21
 IPS_package_name: library/ruby/%{gemname}-21
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-# BuildRequires:    runtime/ruby-21
-Requires:         runtime/ruby-21
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}
 
 %description 21
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
@@ -54,8 +54,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 22-old
 IPS_package_name: library/ruby-22/%{gemname}
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-# BuildRequires:    runtime/ruby-22
-Requires:         runtime/ruby-22
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
 Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
@@ -65,8 +65,9 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 22
 IPS_package_name: library/ruby/%{gemname}-22
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-# BuildRequires:    runtime/ruby-22
-Requires:         runtime/ruby-22
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}
 
 %description 22
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
@@ -77,8 +78,8 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 23-old
 IPS_package_name: library/ruby-23/%{gemname}
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-# BuildRequires:    runtime/ruby-23
-Requires:         runtime/ruby-23
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
 Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
@@ -88,32 +89,68 @@ Cool.io provides a high performance event framework for Ruby which uses the libe
 %package 23
 IPS_package_name: library/ruby/%{gemname}-23
 Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-# BuildRequires:    runtime/ruby-23
-Requires:         runtime/ruby-23
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}
 
 %description 23
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
 %endif
 
-%if %{build24}
-%package 24
-IPS_package_name: library/ruby/%{gemname}-24
-Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
-# BuildRequires:    runtime/ruby-24
-Requires:         runtime/ruby-24
+%if %{build23jposug}
 
-%description 24
+%package 23jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-23jposug
+Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
+BuildRequires:    jposug/runtime/ruby-23jposug = *
+Requires:         jposug/runtime/ruby-23jposug = *
+Requires:         jposug/library/ruby/%{gemname}
+
+%description 23jposug
 Cool.io provides a high performance event framework for Ruby which uses the libev C library
 %endif
+
+%if %{build24jposug}
+
+%package 24jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-24jposug
+Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
+BuildRequires:    jposug/runtime/ruby-24jposug = *
+Requires:         jposug/runtime/ruby-24jposug = *
+Requires:         jposug/library/ruby/%{gemname}
+
+%description 24jposug
+Cool.io provides a high performance event framework for Ruby which uses the libev C library
+%endif
+
+%if %{build25jposug}
+
+%package 25jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-25jposug
+Summary:          Cool.io provides a high performance event framework for Ruby which uses the libev C library
+BuildRequires:    jposug/runtime/ruby-25jposug = *
+Requires:         jposug/runtime/ruby-25jposug = *
+Requires:         jposug/library/ruby/%{gemname}
+
+%description 25jposug
+Cool.io provides a high performance event framework for Ruby which uses the libev C library
+%endif
+
 
 %prep
 %setup -q -c -T
 
 %build
 build_for() {
-    ruby_ver=$1
-    bindir="/usr/ruby/${ruby_ver}/bin"
-    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    then
+        ruby_ver=$(echo $1 | sed -e 's/jposug//')
+        bindir="/opt/jposug/ruby/${ruby_ver}/bin"
+    else
+        ruby_ver=$1
+        bindir="/usr/ruby/${ruby_ver}/bin"
+    fi
+    gemdir="$(${bindir}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
     ${bindir}/gem install --local \
@@ -124,30 +161,32 @@ build_for() {
         --no-rdoc \
         -V \
         --force %{SOURCE0}
-
-    rm -r .${gemdir}/cache
 }
 
 %if %{build21}
 # ruby-21
 build_for 2.1
 %endif
-
 %if %{build22}
 # ruby-22
 build_for 2.2
 %endif
-
 %if %{build23}
 # ruby-23
 build_for 2.3
 %endif
-
-%if %{build24}
-# ruby-24
-build_for 2.4
+%if %{build23jposug}
+# ruby-23jposug
+build_for 2.3jposug
 %endif
-
+%if %{build24jposug}
+# ruby-24jposug
+build_for 2.4jposug
+%endif
+%if %{build25jposug}
+# ruby-25jposug
+build_for 2.5jposug
+%endif
 
 %install
 rm -rf %{buildroot}
@@ -157,14 +196,25 @@ mkdir -p %{buildroot}/%{_bindir}
 %endif
 
 install_for() {
-    ruby_ver=$1
-    bindir="/usr/ruby/${ruby_ver}/bin"
-    gemdir="$(${bindir}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    then
+        ruby_ver=$(echo $1 | sed -e 's/jposug//')
+        dir_prefix="/opt/jposug/ruby/${ruby_ver}"
+        dir_prefix_relative="../../opt/jposug/ruby/${ruby_ver}"
+        jposug='jposug'
+    else
+        ruby_ver=$1
+        dir_prefix="/usr/ruby/${ruby_ver}"
+        dir_prefix_relative="../ruby/${ruby_ver}"
+        jposug=''
+    fi
+    bindir="${dir_prefix}/bin"
+    gemdir="$(${bindir}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)"
     geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
-    cp -a ./usr/ruby/${ruby_ver}/* \
-        %{buildroot}/usr/ruby/${ruby_ver}/
+    mkdir -p %{buildroot}${dir_prefix}
+    cp -a .${dir_prefix}/* \
+        %{buildroot}/${dir_prefix}/
 
     for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
     do
@@ -176,9 +226,9 @@ install_for() {
 		if [ -f ${i} ]
 		then
 		    mv ${i} ${i}.bak
-		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
-			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
-			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!${bindir}/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!${bindir}/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!${bindir}/ruby!" \
 			${i}.bak > ${i}
 		    rm ${i}.bak
 		fi
@@ -189,9 +239,9 @@ install_for() {
    
 %if %{generate_executable}
     pushd %{buildroot}%{_bindir}
-    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    for i in $(ls ${dir_prefix_relative}/bin/*)
     do
-	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')${jposug}
     done
     popd
 %endif
@@ -199,23 +249,22 @@ install_for() {
 }
 
 %if %{build21}
-# ruby-21
 install_for 2.1
 %endif
-
 %if %{build22}
-# ruby-22
 install_for 2.2
 %endif
-
 %if %{build23}
-# ruby-23
 install_for 2.3
 %endif
-
-%if %{build24}
-# ruby-24
-install_for 2.4
+%if %{build23jposug}
+install_for 2.3jposug
+%endif
+%if %{build24jposug}
+install_for 2.4jposug
+%endif
+%if %{build25jposug}
+install_for 2.5jposug
 %endif
 
 %clean
@@ -257,18 +306,43 @@ rm -rf %{buildroot}
 %endif
 %endif
 
-%if %{build24}
-%files 24
+%if %{build23jposug}
+%files 23jposug
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.4
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.3
 %if %{generate_executable}
 %dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*24
+%attr (0755, root, bin) /usr/bin/*23jposug
 %endif
 %endif
 
+%if %{build24jposug}
+%files 24jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.4
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*24jposug
+%endif
+%endif
+
+%if %{build25jposug}
+%files 25jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.5
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*25jposug
+%endif
+%endif
+
+
 %changelog
+* Mon Jan 01 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.3 and build packages for ruby-2{3,4,5}jposug
 * Thu Dec 29 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for ruby-24 and packages for ruby-19 and ruby-20 are obsolete
 * Thu Sep 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

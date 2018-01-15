@@ -3,25 +3,25 @@
 %define gemname fluent-plugin-elasticsearch
 %define generate_executable 0
 
-%define bindir23 /usr/ruby/2.3/bin
-%define gemdir23 %(%{bindir23}/ruby -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir23 %{gemdir23}/gems/%{gemname}-%{version}
+%define bindir25 /opt/jposug/ruby/2.5/bin
+%define gemdir25 %(%{bindir25}/ruby -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir25 %{gemdir25}/gems/%{gemname}-%{version}
 
 
 Name:             fluent-plugin-elasticsearch
 IPS_package_name: system/fluentd/plugins/elasticsearch
 Summary:          fluent plugin for elasticsearch
-Version:          1.9.3
+Version:          2.4.1
 License:          MIT License
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:    runtime/ruby-23 = *
-Requires:         runtime/ruby-23 = *
-Requires:         system/fluentd >= 0.10.43
-Requires:         library/ruby/elasticsearch-23 = *
-Requires:         library/ruby/excon-23 = *
+BuildRequires:    jposug/runtime/ruby-25jposug = *
+Requires:         jposug/runtime/ruby-25jposug = *
+Requires:         system/fluentd >= 0.14.8
+Requires:         library/ruby/elasticsearch-25jposug = *
+Requires:         library/ruby/excon-25jposug = *
 
 %description
 fluent plugin for elasticsearch
@@ -31,27 +31,27 @@ fluent plugin for elasticsearch
 
 %build
 
-# ruby-23
-%{bindir23}/gem install --local \
-    --install-dir .%{gemdir23} \
-    --bindir .%{bindir23} \
+# ruby-25jposug
+%{bindir25}/gem install --local \
+    --install-dir .%{gemdir25} \
+    --bindir .%{bindir25} \
     --no-rdoc \
     --no-ri \
     -V \
     --force %{SOURCE0}
-rm -rf .%{gemdir23}/cache
+rm -rf .%{gemdir25}/cache
 
 %install
 rm -rf %{buildroot}
 
-mkdir -p %{buildroot}/%{gemdir23}
-cp -a .%{gemdir23}/* \
-    %{buildroot}/%{gemdir23}/
+mkdir -p %{buildroot}/%{gemdir25}
+cp -a .%{gemdir25}/* \
+    %{buildroot}/%{gemdir25}/
 
 %if %generate_executable
-mkdir -p %{buildroot}%{bindir23}
-cp -a .%{bindir23}/* \
-   %{buildroot}%{bindir23}/
+mkdir -p %{buildroot}%{bindir25}
+cp -a .%{bindir25}/* \
+   %{buildroot}%{bindir25}/
 %endif
 
 %clean
@@ -60,10 +60,12 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.3
+%dir %attr (0755, root, sys) /opt
+%{gemdir25}
 
 %changelog
+* Mon Jan 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.1 and use ruby-25jposug
 * Thu Apr 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.9.3 and use ruby-23 instead of ruby-21
 * Tue Feb 14 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

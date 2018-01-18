@@ -3,27 +3,27 @@
 %define gemname fluent-plugin-geoip
 %define generate_executable 0
 
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+%define bindir23 /usr/ruby/2.3/bin
+%define gemdir23 %(%{bindir23}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir23 %{gemdir23}/gems/%{gemname}-%{version}
 
 
 Name:             fluent-plugin-geoip
 IPS_package_name: system/fluentd/plugins/geoip
 Summary:          Fluentd Output plugin to add information about geographical location of IP addresses with Maxmind GeoIP databases.
-Version:          0.5.1
+Version:          0.7.0
 License:          Apache-2.0
 URL:              https://github.com/y-ken/fluent-plugin-geoip
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	  runtime/ruby-21 = *
+BuildRequires:    runtime/ruby-23 = *
 BuildRequires:    library/GeoIP/devel
-Requires:         runtime/ruby-21 = *
+Requires:         runtime/ruby-23 = *
 Requires:         system/fluentd >= 0.10.43
 Requires:         system/fluent/mixin-rewrite-tag-name
-Requires:         library/GeoIP
-Requires:         library/ruby/geoip-c-21 = *
+Requires:         library/ruby/geoip-c-23 = *
+Requires:         library/ruby/dig_rb-23 = *
 
 %description
 Fluentd Output plugin to add information about geographical location of IP addresses with Maxmind GeoIP databases.
@@ -33,10 +33,10 @@ Fluentd Output plugin to add information about geographical location of IP addre
 
 %build
 
-# ruby-21
-%{bindir21}/gem install --local \
-    --install-dir .%{gemdir21} \
-    --bindir .%{bindir21} \
+# ruby-23
+%{bindir23}/gem install --local \
+    --install-dir .%{gemdir23} \
+    --bindir .%{bindir23} \
     --no-rdoc \
     --no-ri \
     -V \
@@ -45,14 +45,14 @@ Fluentd Output plugin to add information about geographical location of IP addre
 %install
 rm -rf %{buildroot}
 
-mkdir -p %{buildroot}/%{gemdir21}
-cp -a .%{gemdir21}/* \
-    %{buildroot}/%{gemdir21}/
+mkdir -p %{buildroot}/%{gemdir23}
+cp -a .%{gemdir23}/* \
+    %{buildroot}/%{gemdir23}/
 
 %if %generate_executable
-mkdir -p %{buildroot}%{bindir21}
-cp -a .%{bindir21}/* \
-   %{buildroot}%{bindir21}/
+mkdir -p %{buildroot}%{bindir23}
+cp -a .%{bindir23}/* \
+   %{buildroot}%{bindir23}/
 %endif
 
 %clean
@@ -62,9 +62,11 @@ rm -rf %{buildroot}
 %files
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
+/usr/ruby/2.3
 
 %changelog
+* Thu Apr 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.7.0 and use ruby-23 instead of ruby-21
 * Sat Jan 16 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix Requires
 * Fri Jan 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

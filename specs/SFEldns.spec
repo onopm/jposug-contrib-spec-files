@@ -12,7 +12,7 @@ Name:		SFEldns
 IPS_Package_Name:	library/ldns
 URL:		http://www.nlnetlabs.nl/projects/ldns/
 Summary:	ldns library for DNS programming
-Version:	1.6.17
+Version:	1.7.0
 Group:		System/Libraries
 License:	BSD
 SUNW_Copyright:	ldns.copyright
@@ -45,8 +45,8 @@ export PATH=/usr/perl5/5.12/bin:${PATH}
 	--sysconfdir=%{_sysconfdir} \
 	--disable-static \
 	--disable-gost \
-        --disable-ecdsa
-
+        --disable-ecdsa \
+        --disable-dane
 make
 
 %install
@@ -70,6 +70,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}
 
 %changelog
+* Tue Mar 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7.0
 * Thu Jun 16 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use perl 5.12 to build man pages, because building man pages failed with perl 5.22.
 * Wed May 07 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

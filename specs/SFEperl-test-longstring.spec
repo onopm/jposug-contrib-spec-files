@@ -3,12 +3,9 @@
 %define build584 0
 %define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
-# %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-# %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
-# %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build516 0
-%define build520 0
-%define build522 0
+%define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 %define include_executable 0
 
 %define cpan_name Test-LongString
@@ -34,7 +31,9 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          tests strings for equality, with more helpful failures
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
+%if %{enable_test}
 BuildRequires:    library/perl-5/test-simple-584
+%endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/test-simple-584
@@ -64,7 +63,9 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          tests strings for equality, with more helpful failures
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
+%if %{enable_test}
 BuildRequires:    library/perl-5/test-simple-512
+%endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/test-simple-512
@@ -80,27 +81,14 @@ Summary:          tests strings for equality, with more helpful failures
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
 Requires:         library/perl-5/%{ips_cpan_name}
+%if %{enable_test}
 BuildRequires:    library/perl-5/test-simple-516
+%endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/test-simple-516
 
 %description 516
-tests strings for equality, with more helpful failures
-%endif
-
-%if %{build520}
-%package 520
-IPS_package_name: library/perl-5/%{ips_cpan_name}-520
-Summary:          tests strings for equality, with more helpful failures
-BuildRequires:    runtime/perl-520 = *
-BuildRequires:    library/perl-5/extutils-makemaker-520
-BuildRequires:    library/perl-5/test-simple-520
-Requires:         runtime/perl-520 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/test-simple-520
-
-%description 520
 tests strings for equality, with more helpful failures
 %endif
 
@@ -110,7 +98,9 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-522
 Summary:          tests strings for equality, with more helpful failures
 BuildRequires:    runtime/perl-522 = *
 BuildRequires:    library/perl-5/extutils-makemaker-522
+%if %{enable_test}
 BuildRequires:    library/perl-5/test-simple-522
+%endif
 Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/test-simple-522
@@ -122,7 +112,7 @@ tests strings for equality, with more helpful failures
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
-rm -rf %{buildroot}
+[ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
 build_with_makefile.pl_for() {
@@ -136,16 +126,11 @@ build_with_makefile.pl_for() {
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
 
-    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
-    if [ $? -eq 0 ]
-    then
-        make CC='cc -m32' LD='cc -m32'
-        [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
-    else
-        make CC='cc -m64' LD='cc -m64'
-        [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
-    fi
-
+    export CC='cc -m32'
+    export LD='cc -m32'
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    make CC="${CC}" LD="${LD}"
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
@@ -160,7 +145,7 @@ build_with_build.pl_for() {
                    --installdirs vendor \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build clean
 }
@@ -177,7 +162,7 @@ modify_bin_dir() {
     then
         for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
@@ -232,10 +217,6 @@ build_for 5.12
 
 %if %{build516}
 build_for 5.16
-%endif
-
-%if %{build520}
-build_for 5.20
 %endif
 
 %if %{build522}
@@ -300,16 +281,6 @@ rm -rf %{buildroot}
 %endif
 %endif
 
-%if %{build520}
-%files 520
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.20
-%if %{include_executable}
-/usr/perl5/5.20
-%endif
-%endif
-
 %if %{build522}
 %files 522
 %defattr(0755,root,bin,-)
@@ -321,6 +292,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Apr 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add package for perl-522
 * Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.17
 * Sat Dec 22 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -1,13 +1,12 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
-%define keep_dependency 1
+%define keep_dependency 0
 
 %define gemname rr
 %define sfe_gemname rr
@@ -15,62 +14,14 @@
 Summary:          RR is a test double framework that features a rich selection of double techniques and a terse syntax.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.1.2
+Version:          1.2.0
 License:          MIT
-URL:              http://rr.github.com/rr
+URL:              https://rr.github.io/rr
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-
-
 %description
 RR is a test double framework that features a rich selection of double techniques and a terse syntax.
-
-%if %{build19}
-%if %{keep_dependency}
-%package 19-old
-IPS_package_name: library/ruby-19/%{gemname}
-Summary:          RR is a test double framework that features a rich selection of double techniques and a terse syntax.
-BuildRequires:    runtime/ruby-19 = *
-Requires:         runtime/ruby-19 = *
-Requires:         library/ruby/%{gemname}-19
-
-%description 19-old
-RR is a test double framework that features a rich selection of double techniques and a terse syntax.
-%endif
-
-%package 19
-IPS_package_name: library/ruby/%{gemname}-19
-Summary:          RR is a test double framework that features a rich selection of double techniques and a terse syntax.
-BuildRequires:    runtime/ruby-19 = *
-Requires:         runtime/ruby-19 = *
-
-%description 19
-RR is a test double framework that features a rich selection of double techniques and a terse syntax.
-%endif
-
-%if %{build20}
-%if %{keep_dependency}
-%package 20-old
-IPS_package_name: library/ruby-20/%{gemname}
-Summary:          RR is a test double framework that features a rich selection of double techniques and a terse syntax.
-BuildRequires:    runtime/ruby-20 = *
-Requires:         runtime/ruby-20 = *
-Requires:         library/ruby/%{gemname}-20
-
-%description 20-old
-RR is a test double framework that features a rich selection of double techniques and a terse syntax.
-%endif
-
-%package 20
-IPS_package_name: library/ruby/%{gemname}-20
-Summary:          RR is a test double framework that features a rich selection of double techniques and a terse syntax.
-BuildRequires:    runtime/ruby-20 = *
-Requires:         runtime/ruby-20 = *
-
-%description 20
-RR is a test double framework that features a rich selection of double techniques and a terse syntax.
-%endif
 
 %if %{build21}
 %if %{keep_dependency}
@@ -90,6 +41,7 @@ IPS_package_name: library/ruby/%{gemname}-21
 Summary:          RR is a test double framework that features a rich selection of double techniques and a terse syntax.
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}
 
 %description 21
 RR is a test double framework that features a rich selection of double techniques and a terse syntax.
@@ -113,6 +65,7 @@ IPS_package_name: library/ruby/%{gemname}-22
 Summary:          RR is a test double framework that features a rich selection of double techniques and a terse syntax.
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}
 
 %description 22
 RR is a test double framework that features a rich selection of double techniques and a terse syntax.
@@ -136,10 +89,25 @@ IPS_package_name: library/ruby/%{gemname}-23
 Summary:          RR is a test double framework that features a rich selection of double techniques and a terse syntax.
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}
 
 %description 23
 RR is a test double framework that features a rich selection of double techniques and a terse syntax.
 %endif
+
+%if %{build24}
+
+%package 24
+IPS_package_name: library/ruby/%{gemname}-24
+Summary:          RR is a test double framework that features a rich selection of double techniques and a terse syntax.
+BuildRequires:    runtime/ruby-24 = *
+Requires:         runtime/ruby-24 = *
+Requires:         library/ruby/%{gemname}
+
+%description 24
+RR is a test double framework that features a rich selection of double techniques and a terse syntax.
+%endif
+
 
 %prep
 %setup -q -c -T
@@ -159,31 +127,25 @@ build_for() {
         --no-rdoc \
         -V \
         --force %{SOURCE0}
+
+    rm -r .${gemdir}/cache
 }
-
-%if %{build19}
-# ruby-19
-build_for 1.9
-%endif
-
-%if %{build20}
-# ruby-20
-build_for 2.0
-%endif
 
 %if %{build21}
 # ruby-21
 build_for 2.1
 %endif
-
 %if %{build22}
 # ruby-22
 build_for 2.2
 %endif
-
 %if %{build23}
 # ruby-23
 build_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+build_for 2.4
 %endif
 
 %install
@@ -235,28 +197,21 @@ install_for() {
 
 }
 
-%if %{build19}
-# ruby-19
-install_for 1.9
-%endif
-
-%if %{build20}
-install_for 2.0
-%endif
-
 %if %{build21}
 # ruby-21
 install_for 2.1
 %endif
-
 %if %{build22}
 # ruby-22
 install_for 2.2
 %endif
-
 %if %{build23}
 # ruby-23
 install_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+install_for 2.4
 %endif
 
 %clean
@@ -264,28 +219,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build19}
-%files 19
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/1.9
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*19
-%endif
-%endif
-
-%if %{build20}
-%files 20
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.0
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*20
-%endif
-%endif
 
 %if %{build21}
 %files 21
@@ -297,7 +230,6 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/bin/*21
 %endif
 %endif
-
 %if %{build22}
 %files 22
 %defattr(0755,root,bin,-)
@@ -308,7 +240,6 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/bin/*22
 %endif
 %endif
-
 %if %{build23}
 %files 23
 %defattr(0755,root,bin,-)
@@ -319,8 +250,20 @@ rm -rf %{buildroot}
 %attr (0755, root, bin) /usr/bin/*23
 %endif
 %endif
+%if %{build24}
+%files 24
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.4
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*24
+%endif
+%endif
 
 %changelog
+* Wed Dec 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build package for ruby-24 and packages for ruby-19 and ruby-20 are obsolete
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.1.2 and build packages for ruby-22 and ruby-23
 * Sat Dec 13 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

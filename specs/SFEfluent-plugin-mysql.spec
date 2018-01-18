@@ -3,24 +3,24 @@
 %define gemname fluent-plugin-mysql
 %define generate_executable 0
 
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+%define bindir23 /usr/ruby/2.3/bin
+%define gemdir23 %(%{bindir23}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir23 %{gemdir23}/gems/%{gemname}-%{version}
 
 Name:             fluent-plugin-mysql
 IPS_package_name: system/fluentd/plugins/mysql
 Summary:          fluent plugin to insert mysql as json(single column) or insert statement
-Version:          0.1.0
+Version:          0.2.1
 License:          APLv2
 URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	  runtime/ruby-21
-Requires:         runtime/ruby-21
-Requires:         system/fluentd
-Requires:         library/ruby-21/jsonpath
-Requires:         library/ruby-21/mysql2-cs-bind
+BuildRequires:	  runtime/ruby-23
+Requires:         runtime/ruby-23
+Requires:         system/fluentd >= 0.14.8
+Requires:         library/ruby-23/jsonpath
+Requires:         library/ruby-23/mysql2-cs-bind
 
 %description
 fluent plugin to insert mysql as json(single column) or insert statement
@@ -30,10 +30,10 @@ fluent plugin to insert mysql as json(single column) or insert statement
 
 %build
 
-# ruby-21
-%{bindir21}/gem install --local \
-    --install-dir .%{gemdir21} \
-    --bindir .%{bindir21} \
+# ruby-23
+%{bindir23}/gem install --local \
+    --install-dir .%{gemdir23} \
+    --bindir .%{bindir23} \
     --no-rdoc \
     --no-ri \
     -V \
@@ -42,14 +42,14 @@ fluent plugin to insert mysql as json(single column) or insert statement
 %install
 rm -rf %{buildroot}
 
-mkdir -p %{buildroot}/%{gemdir21}
-cp -a .%{gemdir21}/* \
-    %{buildroot}/%{gemdir21}/
+mkdir -p %{buildroot}/%{gemdir23}
+cp -a .%{gemdir23}/* \
+    %{buildroot}/%{gemdir23}/
 
 %if %generate_executable
-mkdir -p %{buildroot}%{bindir21}
-cp -a .%{bindir21}/* \
-   %{buildroot}%{bindir21}/
+mkdir -p %{buildroot}%{bindir23}
+cp -a .%{bindir23}/* \
+   %{buildroot}%{bindir23}/
 %endif
 
 %clean
@@ -59,9 +59,11 @@ rm -rf %{buildroot}
 %files
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
+/usr/ruby/2.3
 
 %changelog
+* Thu Apr 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.2.1 and use ruby-23 instead of ruby-21
 * Thu Feb 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.1.0
 * Sun Nov 02 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

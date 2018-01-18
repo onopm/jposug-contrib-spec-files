@@ -61,16 +61,6 @@
         	<property_group name='elasticsearch' type='application'>
                 	<propval name='bin' type='astring'
                     	   value='/usr/elasticsearch/bin/elasticsearch' />
-                	<propval name='homedir' type='astring'
-                    	   value='/usr/elasticsearch' />
-                	<propval name='datadir' type='astring'
-                    	   value='/var/elasticsearch/data' />
-                	<propval name='logdir' type='astring'
-                    	   value='/var/elasticsearch/logs' />
-                	<propval name='config' type='astring'
-                    	   value='/etc/elasticsearch' />
-                	<propval name='heapsize' type='astring'
-                    	   value='1g' />
         	</property_group>
         </instance>
 

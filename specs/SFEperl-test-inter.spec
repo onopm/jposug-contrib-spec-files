@@ -4,7 +4,8 @@
 %define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 %define include_executable 0
 
 %define cpan_name Test-Inter
@@ -31,6 +32,9 @@ Summary:          framework for more readable interactive test scripts
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/module-build-584
 BuildRequires:    library/perl-5/test-simple-584
+%if %{enable_test}
+BuildRequires:    library/perl-5/io-584
+%endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/io-584
@@ -46,6 +50,7 @@ Summary:          framework for more readable interactive test scripts
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/module-build-510
 BuildRequires:    library/perl-5/test-simple-510
+BuildRequires:    library/perl-5/io-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/io-510
@@ -61,6 +66,9 @@ Summary:          framework for more readable interactive test scripts
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/module-build-512
 BuildRequires:    library/perl-5/test-simple-512
+%if %{enable_test}
+BuildRequires:    library/perl-5/io-512
+%endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/io-512
@@ -76,6 +84,10 @@ Summary:          framework for more readable interactive test scripts
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/module-build-516
 BuildRequires:    library/perl-5/test-simple-516
+Requires:         library/perl-5/%{ips_cpan_name}
+%if %{enable_test}
+BuildRequires:    library/perl-5/io-516
+%endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/io-516
@@ -84,25 +96,28 @@ Requires:         library/perl-5/io-516
 framework for more readable interactive test scripts
 %endif
 
-%if %{build520}
-%package 520
-IPS_package_name: library/perl-5/%{ips_cpan_name}-520
+%if %{build522}
+%package 522
+IPS_package_name: library/perl-5/%{ips_cpan_name}-522
 Summary:          framework for more readable interactive test scripts
-BuildRequires:    runtime/perl-520 = *
-BuildRequires:    library/perl-5/module-build-520
-BuildRequires:    library/perl-5/test-simple-520
-Requires:         runtime/perl-520 = *
+BuildRequires:    runtime/perl-522 = *
+BuildRequires:    library/perl-5/module-build-522
+BuildRequires:    library/perl-5/test-simple-522
+%if %{enable_test}
+BuildRequires:    library/perl-5/io-522
+%endif
+Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/io-520
+Requires:         library/perl-5/io-522
 
-%description 520
+%description 522
 framework for more readable interactive test scripts
 %endif
 
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
-rm -rf %{buildroot}
+[ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
 build_with_makefile.pl_for() {
@@ -115,8 +130,12 @@ build_with_makefile.pl_for() {
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
-    make
-    [ x${test} = 'xwithout_test' ] || make test
+
+    export CC='cc -m32'
+    export LD='cc -m32'
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    make CC="${CC}" LD="${LD}"
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
@@ -131,7 +150,7 @@ build_with_build.pl_for() {
                    --installdirs vendor \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ x${test} = 'xwithout_test' ] || ${bindir}/perl ./Build test
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build clean
 }
@@ -148,7 +167,7 @@ modify_bin_dir() {
     then
         for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
@@ -205,8 +224,8 @@ build_for 5.12
 build_for 5.16
 %endif
 
-%if %{build520}
-build_for 5.20
+%if %{build522}
+build_for 5.22
 %endif
 
 %install
@@ -267,18 +286,19 @@ rm -rf %{buildroot}
 %endif
 %endif
 
-%if %{build520}
-%files 520
+%if %{build522}
+%files 522
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.20
+/usr/perl5/vendor_perl/5.22
 %if %{include_executable}
-/usr/perl5/5.20
+/usr/perl5/5.22
 %endif
 %endif
-
 
 %changelog
+* Thu Apr 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- package for perl-522 is added, for perl-520 is obsolete
 * Sat Dec 05 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.06
 * Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

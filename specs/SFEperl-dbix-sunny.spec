@@ -4,7 +4,8 @@
 %define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 %define include_executable 0
 
 %define cpan_name DBIx-Sunny
@@ -14,8 +15,8 @@
 Summary:               Simple DBI wrapper
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               0.22
-IPS_component_version: 0.22
+Version:               0.23
+IPS_component_version: 0.23
 License:               perl_5
 URL:                   https://metacpan.org/pod/DBIx::Sunny
 Source0:               http://cpan.metacpan.org/authors/id/K/KA/KAZEBURO/DBIx-Sunny-%{version}.tar.gz
@@ -30,16 +31,20 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          Simple DBI wrapper
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/capture-tiny-584
-BuildRequires:    library/perl-5/class-accessor-lite-584
-BuildRequires:    library/perl-5/class-data-inheritable-584
-BuildRequires:    library/perl-5/cpan-meta-584
-BuildRequires:    library/perl-5/data-validator-584
 BuildRequires:    library/perl-5/dbd-sqlite-584
-BuildRequires:    library/perl-5/dbi-584
-BuildRequires:    library/perl-5/dbix-transactionmanager-584
-BuildRequires:    library/perl-5/module-build-584
+BuildRequires:    library/perl-5/module-build-tiny-584
 BuildRequires:    library/perl-5/test-requires-584
 BuildRequires:    library/perl-5/test-simple-584
+BuildRequires:    library/perl-5/test-tcp-584
+%if %{enable_test}
+BuildRequires:    library/perl-5/class-accessor-lite-584
+BuildRequires:    library/perl-5/class-data-inheritable-584
+BuildRequires:    library/perl-5/data-validator-584
+BuildRequires:    library/perl-5/dbi-584
+BuildRequires:    library/perl-5/dbix-transactionmanager-584
+BuildRequires:    library/perl-5/parent-584
+BuildRequires:    library/perl-5/scalar-list-utils-584
+%endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/class-accessor-lite-584
@@ -60,16 +65,18 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          Simple DBI wrapper
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/capture-tiny-510
-BuildRequires:    library/perl-5/class-accessor-lite-510
-BuildRequires:    library/perl-5/class-data-inheritable-510
-BuildRequires:    library/perl-5/cpan-meta-510
-BuildRequires:    library/perl-5/data-validator-510
 BuildRequires:    library/perl-5/dbd-sqlite-510
-BuildRequires:    library/perl-5/dbi-510
-BuildRequires:    library/perl-5/dbix-transactionmanager-510
-BuildRequires:    library/perl-5/module-build-510
+BuildRequires:    library/perl-5/module-build-tiny-510
 BuildRequires:    library/perl-5/test-requires-510
 BuildRequires:    library/perl-5/test-simple-510
+BuildRequires:    library/perl-5/test-tcp-510
+BuildRequires:    library/perl-5/class-accessor-lite-510
+BuildRequires:    library/perl-5/class-data-inheritable-510
+BuildRequires:    library/perl-5/data-validator-510
+BuildRequires:    library/perl-5/dbi-510
+BuildRequires:    library/perl-5/dbix-transactionmanager-510
+BuildRequires:    library/perl-5/parent-510
+BuildRequires:    library/perl-5/scalar-list-utils-510
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/class-accessor-lite-510
@@ -90,16 +97,20 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          Simple DBI wrapper
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/capture-tiny-512
-BuildRequires:    library/perl-5/class-accessor-lite-512
-BuildRequires:    library/perl-5/class-data-inheritable-512
-BuildRequires:    library/perl-5/cpan-meta-512
-BuildRequires:    library/perl-5/data-validator-512
 BuildRequires:    library/perl-5/dbd-sqlite-512
-BuildRequires:    library/perl-5/dbi-512
-BuildRequires:    library/perl-5/dbix-transactionmanager-512
-BuildRequires:    library/perl-5/module-build-512
+BuildRequires:    library/perl-5/module-build-tiny-512
 BuildRequires:    library/perl-5/test-requires-512
 BuildRequires:    library/perl-5/test-simple-512
+BuildRequires:    library/perl-5/test-tcp-512
+%if %{enable_test}
+BuildRequires:    library/perl-5/class-accessor-lite-512
+BuildRequires:    library/perl-5/class-data-inheritable-512
+BuildRequires:    library/perl-5/data-validator-512
+BuildRequires:    library/perl-5/dbi-512
+BuildRequires:    library/perl-5/dbix-transactionmanager-512
+BuildRequires:    library/perl-5/parent-512
+BuildRequires:    library/perl-5/scalar-list-utils-512
+%endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/class-accessor-lite-512
@@ -120,16 +131,21 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          Simple DBI wrapper
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/capture-tiny-516
-BuildRequires:    library/perl-5/class-accessor-lite-516
-BuildRequires:    library/perl-5/class-data-inheritable-516
-BuildRequires:    library/perl-5/cpan-meta-516
-BuildRequires:    library/perl-5/data-validator-516
 BuildRequires:    library/perl-5/dbd-sqlite-516
-BuildRequires:    library/perl-5/dbi-516
-BuildRequires:    library/perl-5/dbix-transactionmanager-516
-BuildRequires:    library/perl-5/module-build-516
+BuildRequires:    library/perl-5/module-build-tiny-516
 BuildRequires:    library/perl-5/test-requires-516
 BuildRequires:    library/perl-5/test-simple-516
+BuildRequires:    library/perl-5/test-tcp-516
+Requires:         library/perl-5/%{ips_cpan_name}
+%if %{enable_test}
+BuildRequires:    library/perl-5/class-accessor-lite-516
+BuildRequires:    library/perl-5/class-data-inheritable-516
+BuildRequires:    library/perl-5/data-validator-516
+BuildRequires:    library/perl-5/dbi-516
+BuildRequires:    library/perl-5/dbix-transactionmanager-516
+BuildRequires:    library/perl-5/parent-516
+BuildRequires:    library/perl-5/scalar-list-utils-516
+%endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/class-accessor-lite-516
@@ -144,40 +160,44 @@ Requires:         library/perl-5/scalar-list-utils-516
 Simple DBI wrapper
 %endif
 
-%if %{build520}
-%package 520
-IPS_package_name: library/perl-5/%{ips_cpan_name}-520
+%if %{build522}
+%package 522
+IPS_package_name: library/perl-5/%{ips_cpan_name}-522
 Summary:          Simple DBI wrapper
-BuildRequires:    runtime/perl-520 = *
-BuildRequires:    library/perl-5/capture-tiny-520
-BuildRequires:    library/perl-5/class-accessor-lite-520
-BuildRequires:    library/perl-5/class-data-inheritable-520
-BuildRequires:    library/perl-5/cpan-meta-520
-BuildRequires:    library/perl-5/data-validator-520
-BuildRequires:    library/perl-5/dbd-sqlite-520
-BuildRequires:    library/perl-5/dbi-520
-BuildRequires:    library/perl-5/dbix-transactionmanager-520
-BuildRequires:    library/perl-5/module-build-520
-BuildRequires:    library/perl-5/test-requires-520
-BuildRequires:    library/perl-5/test-simple-520
-Requires:         runtime/perl-520 = *
+BuildRequires:    runtime/perl-522 = *
+BuildRequires:    library/perl-5/capture-tiny-522
+BuildRequires:    library/perl-5/dbd-sqlite-522
+BuildRequires:    library/perl-5/module-build-tiny-522
+BuildRequires:    library/perl-5/test-requires-522
+BuildRequires:    library/perl-5/test-simple-522
+BuildRequires:    library/perl-5/test-tcp-522
+%if %{enable_test}
+BuildRequires:    library/perl-5/class-accessor-lite-522
+BuildRequires:    library/perl-5/class-data-inheritable-522
+BuildRequires:    library/perl-5/data-validator-522
+BuildRequires:    library/perl-5/dbi-522
+BuildRequires:    library/perl-5/dbix-transactionmanager-522
+BuildRequires:    library/perl-5/parent-522
+BuildRequires:    library/perl-5/scalar-list-utils-522
+%endif
+Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/class-accessor-lite-520
-Requires:         library/perl-5/class-data-inheritable-520
-Requires:         library/perl-5/data-validator-520
-Requires:         library/perl-5/dbi-520
-Requires:         library/perl-5/dbix-transactionmanager-520
-Requires:         library/perl-5/parent-520
-Requires:         library/perl-5/scalar-list-utils-520
+Requires:         library/perl-5/class-accessor-lite-522
+Requires:         library/perl-5/class-data-inheritable-522
+Requires:         library/perl-5/data-validator-522
+Requires:         library/perl-5/dbi-522
+Requires:         library/perl-5/dbix-transactionmanager-522
+Requires:         library/perl-5/parent-522
+Requires:         library/perl-5/scalar-list-utils-522
 
-%description 520
+%description 522
 Simple DBI wrapper
 %endif
 
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
-rm -rf %{buildroot}
+[ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
 build_with_makefile.pl_for() {
@@ -190,8 +210,12 @@ build_with_makefile.pl_for() {
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${vendor_dir}
-    make
-    [ x${test} = 'xwithout_test' ] || make test
+
+    export CC='cc -m32'
+    export LD='cc -m32'
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    make CC="${CC}" LD="${LD}"
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
@@ -206,7 +230,7 @@ build_with_build.pl_for() {
                    --installdirs vendor \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ x${test} = 'xwithout_test' ] || ${bindir}/perl ./Build test
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build clean
 }
@@ -223,7 +247,7 @@ modify_bin_dir() {
     then
         for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
@@ -280,8 +304,8 @@ build_for 5.12
 build_for 5.16
 %endif
 
-%if %{build520}
-build_for 5.20
+%if %{build522}
+build_for 5.22
 %endif
 
 %install
@@ -342,18 +366,19 @@ rm -rf %{buildroot}
 %endif
 %endif
 
-%if %{build520}
-%files 520
+%if %{build522}
+%files 522
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.20
+/usr/perl5/vendor_perl/5.22
 %if %{include_executable}
-/usr/perl5/5.20
+/usr/perl5/5.22
 %endif
 %endif
-
 
 %changelog
+* Thu May 25 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.23
 * Fri Dec 04 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.22
 * Wed Dec 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

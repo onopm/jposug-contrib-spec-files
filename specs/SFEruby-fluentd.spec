@@ -1,12 +1,12 @@
 %include Solaris.inc
 
 %define gemname fluentd
-%define bindir23 /usr/ruby/2.3/bin
-%define gemdir23 %(%{bindir23}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define bindir23 /opt/jposug/ruby/2.3/bin
+%define gemdir23 %(%{bindir23}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir23 %{gemdir23}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.14.17
+%define tarball_version 1.0.2
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -19,22 +19,19 @@ Source1:          fluentd.xml
 Source2:          svc-fluentd
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	runtime/ruby-23
-# BuildRequires:	library/ruby/jeweler-23
-BuildRequires:	library/ruby/rr-23
-BuildRequires:	library/ruby/timecop-23
-# BuildRequires:	library/text/yaml >= 0.1.6
-Requires:	runtime/ruby-23
-Requires:	library/ruby/cool.io-23 >= 1.4.6
-Requires:	library/ruby/http_parser.rb-23 >= 0.6.0
-Requires:	library/ruby/json-23
-Requires:	library/ruby/msgpack-23 >= 1.0.2
-Requires:	library/ruby/serverengine-23 >= 2.0.4
-Requires:	library/ruby/sigdump-23 >= 0.2.2
-Requires:	library/ruby/strptime >= 0.1.7
-Requires:	library/ruby/yajl-ruby-23 >= 1.0
-Requires:	library/ruby/tzinfo-23 >= 1.0.0
-Requires:	library/ruby/tzinfo-data-23 >= 1.0.0
+BuildRequires:	jposug/runtime/ruby-23jposug
+Requires:	jposug/runtime/ruby-23jposug
+Requires:	library/ruby/cool.io-23jposug >= 1.4.6
+Requires:	library/ruby/http_parser.rb-23jposug >= 0.6.0
+Requires:	library/ruby/json-23jposug
+Requires:	library/ruby/msgpack-23jposug >= 1.0.2
+Requires:	library/ruby/serverengine-23jposug >= 2.0.4
+Requires:	library/ruby/sigdump-23jposug >= 0.2.2
+Requires:	library/ruby/strptime-23jposug >= 0.1.7
+Requires:	library/ruby/dig_rb-23jposug >= 0.1.7
+Requires:	library/ruby/yajl-ruby-23jposug >= 1.0
+Requires:	library/ruby/tzinfo-23jposug >= 1.0.0
+Requires:	library/ruby/tzinfo-data-23jposug >= 1.0.0
 
 %description
 Fluentd is a log collector daemon written in Ruby. Fluentd receives logs as JSON streams, buffers them, and sends them to other systems like MySQL, MongoDB, or even other instances of Fluentd.
@@ -44,14 +41,16 @@ Fluentd is a log collector daemon written in Ruby. Fluentd receives logs as JSON
 
 mkdir -p .%{gemdir23}
 %build
+
+mkdir -p .%{_bindir}
 %{bindir23}/gem install --local --install-dir .%{gemdir23} \
             --bindir .%{_bindir} \
             --force %{SOURCE0}
 
-pushd usr/bin
+pushd ./%{_bindir}
 for i in fluent*
 do
-    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/usr/ruby/2.3/bin/ruby$' > ${i}.tmp
+    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/opt/jposug/ruby/2.5/bin/ruby$' > ${i}.tmp
     mv ${i}.tmp ${i}
 done
 popd
@@ -59,7 +58,7 @@ popd
 pushd .%{geminstdir23}/bin
 for i in fluent*
 do
-    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/usr/ruby/2.3/bin/ruby$' > ${i}.tmp
+    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/opt/jposug/ruby/2.5/bin/ruby$' > ${i}.tmp
     mv ${i}.tmp ${i}
 done
 popd
@@ -127,6 +126,10 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Tue Jan 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use ruby-23jposug. can not build ruby-25jposug on some environments.
+* Mon Jan 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.2 and use ruby-25jposug
 * Fri Jun 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.14.17
 * Thu Apr 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

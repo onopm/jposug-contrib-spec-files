@@ -10,7 +10,7 @@
 
 Name:		SFEnagios-plugins
 IPS_package_name:        diagnostic/nagios/plugins
-Version:	2.2.0
+Version:	2.2.1
 Summary:	Nagios plugins
 Group:		Applications/System
 License:	GPLv2
@@ -254,6 +254,8 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Wed Feb 14 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.1
 * Thu Feb 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.2.0
 * Fri Dec 16 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

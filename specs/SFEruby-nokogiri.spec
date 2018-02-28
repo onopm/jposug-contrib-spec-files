@@ -46,7 +46,7 @@ or CSS3 selectors.
 IPS_package_name: library/ruby/%{gemname}-21
 Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
 BuildRequires:    runtime/ruby-21 = *
-BuildRequires:    library/ruby/mini_portile2-23 >= 2.3.0
+BuildRequires:    library/ruby/mini_portile2-21 >= 2.3.0
 BuildRequires:    library/libxml2
 BuildRequires:    library/libxslt
 Requires:         runtime/ruby-21 = *
@@ -82,7 +82,7 @@ or CSS3 selectors.
 IPS_package_name: library/ruby/%{gemname}-22
 Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
 BuildRequires:    runtime/ruby-22 = *
-BuildRequires:    library/ruby/mini_portile2-23 >= 2.3.0
+BuildRequires:    library/ruby/mini_portile2-22 >= 2.3.0
 BuildRequires:    library/libxml2
 BuildRequires:    library/libxslt
 Requires:         runtime/ruby-22 = *
@@ -408,6 +408,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Feb 28 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix typo
 * Sun Jan 21 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.8.1 and build packages for ruby-2{3,4,5}jposug
 * Sat Sep 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

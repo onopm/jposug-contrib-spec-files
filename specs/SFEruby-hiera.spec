@@ -7,7 +7,8 @@
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build25jposug %( if [ -x /opt/jposug/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define generate_executable 0
+%define build26jposug %( if [ -x /opt/jposug/ruby/2.6/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define generate_executable 1
 %define keep_dependency 0
 
 %define gemname hiera
@@ -136,13 +137,26 @@ Requires:         jposug/runtime/ruby-25jposug = *
 A pluggable data store for hierarcical data
 %endif
 
+%if %{build26jposug}
+
+%package 26jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-26jposug
+Summary:          A pluggable data store for hierarcical data
+BuildRequires:    jposug/runtime/ruby-26jposug = *
+Requires:         jposug/runtime/ruby-26jposug = *
+# Requires:         library/ruby/%{gemname}
+
+%description 26jposug
+A pluggable data store for hierarcical data
+%endif
+
 
 %prep
 %setup -q -c -T
 
 %build
 build_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         bindir="/opt/jposug/ruby/${ruby_ver}/bin"
@@ -187,6 +201,10 @@ build_for 2.4jposug
 # ruby-25jposug
 build_for 2.5jposug
 %endif
+%if %{build26jposug}
+# ruby-26jposug
+build_for 2.6jposug
+%endif
 
 %install
 rm -rf %{buildroot}
@@ -196,7 +214,7 @@ mkdir -p %{buildroot}/%{_bindir}
 %endif
 
 install_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         dir_prefix="/opt/jposug/ruby/${ruby_ver}"
@@ -267,6 +285,9 @@ install_for 2.4jposug
 %endif
 %if %{build25jposug}
 install_for 2.5jposug
+%endif
+%if %{build26jposug}
+install_for 2.6jposug
 %endif
 
 %clean
@@ -341,8 +362,21 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build26jposug}
+%files 26jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.6
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*26jposug
+%endif
+%endif
+
 
 %changelog
+* Thu Mar 01 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build packages for ruby-26jposug
 * Fri Feb 02 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.4.2 and build packages for ruby-2{3,4,5}jposug
 * Fri Jul 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -3,7 +3,7 @@
 
 %define _prefix /opt/jposug/php
 %define tarball_name     php
-%define tarball_version  7.0.27
+%define tarball_version  7.0.28
 %define major_version	 7.0
 %define prefix_name      SFEphp70jposug
 %define _basedir         %{_prefix}/%{major_version}
@@ -11,7 +11,7 @@
 %define oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[23]|12.0)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}
-IPS_package_name:        jposug/web/php-70
+IPS_package_name:        jposug/web/php-70jposug
 Summary:	         php
 Version:                 %{tarball_version}
 License:		 PHP
@@ -449,6 +449,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
+* Fri Mar 02 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.28 and change IPS_package_name
 * Fri Jan 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.0.27
 * Wed Dec 13 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

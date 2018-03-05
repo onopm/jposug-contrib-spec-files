@@ -49,7 +49,7 @@ Requires:         library/ruby/net-scp-21
 # net-ssh < 5.0, >= 2.7
 Requires:         library/ruby/net-ssh-21
 # net-telnet >= 0
-Requires:         library/ruby/net-telnet-21
+# Requires:         library/ruby/net-telnet-21
 # sfl >= 0
 Requires:         library/ruby/sfl-21
 # Requires:         library/ruby/%{gemname}
@@ -81,7 +81,7 @@ Requires:         library/ruby/net-scp-22
 # net-ssh < 5.0, >= 2.7
 Requires:         library/ruby/net-ssh-22
 # net-telnet >= 0
-Requires:         library/ruby/net-telnet-22
+# Requires:         library/ruby/net-telnet-22
 # sfl >= 0
 Requires:         library/ruby/sfl-22
 # Requires:         library/ruby/%{gemname}
@@ -113,7 +113,7 @@ Requires:         library/ruby/net-scp-23
 # net-ssh < 5.0, >= 2.7
 Requires:         library/ruby/net-ssh-23
 # net-telnet >= 0
-Requires:         library/ruby/net-telnet-23
+# Requires:         library/ruby/net-telnet-23
 # sfl >= 0
 Requires:         library/ruby/sfl-23
 # Requires:         library/ruby/%{gemname}
@@ -134,7 +134,7 @@ Requires:         jposug/library/ruby/net-scp-23jposug
 # net-ssh < 5.0, >= 2.7
 Requires:         jposug/library/ruby/net-ssh-23jposug
 # net-telnet >= 0
-Requires:         jposug/library/ruby/net-telnet-23jposug
+# Requires:         jposug/library/ruby/net-telnet-23jposug
 # sfl >= 0
 Requires:         jposug/library/ruby/sfl-23jposug
 # Requires:         library/ruby/%{gemname}
@@ -155,7 +155,7 @@ Requires:         jposug/library/ruby/net-scp-24jposug
 # net-ssh < 5.0, >= 2.7
 Requires:         jposug/library/ruby/net-ssh-24jposug
 # net-telnet >= 0
-Requires:         jposug/library/ruby/net-telnet-24jposug
+# Requires:         jposug/library/ruby/net-telnet-24jposug
 # sfl >= 0
 Requires:         jposug/library/ruby/sfl-24jposug
 # Requires:         library/ruby/%{gemname}
@@ -176,7 +176,7 @@ Requires:         jposug/library/ruby/net-scp-25jposug
 # net-ssh < 5.0, >= 2.7
 Requires:         jposug/library/ruby/net-ssh-25jposug
 # net-telnet >= 0
-Requires:         jposug/library/ruby/net-telnet-25jposug
+# Requires:         jposug/library/ruby/net-telnet-25jposug
 # sfl >= 0
 Requires:         jposug/library/ruby/sfl-25jposug
 # Requires:         library/ruby/%{gemname}
@@ -197,7 +197,7 @@ Requires:         jposug/library/ruby/net-scp-26jposug
 # net-ssh < 5.0, >= 2.7
 Requires:         jposug/library/ruby/net-ssh-26jposug
 # net-telnet >= 0
-Requires:         jposug/library/ruby/net-telnet-26jposug
+# Requires:         jposug/library/ruby/net-telnet-26jposug
 # sfl >= 0
 Requires:         jposug/library/ruby/sfl-26jposug
 # Requires:         library/ruby/%{gemname}
@@ -431,6 +431,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Mar 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete dependencies to net-telnet because net-telnet is included in ruby packages
 * Sun Mar 04 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.73.2 and build packges for ruby-26jposug
 * Sat Dec 30 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

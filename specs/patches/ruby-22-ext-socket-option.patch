@@ -1,0 +1,23 @@
+--- ruby-2.2.0-rc1/ext/socket/option.c	2014-12-05 17:09:12.000000000 +0900
++++ ruby-2.2.0-rc1.modified/ext/socket/option.c	2014-12-24 19:31:57.477522051 +0900
+@@ -1,4 +1,20 @@
+ #include "rubysocket.h"
++#include <libnet.h>
++
++
++enum tcp_ca_state {
++TCP_CA_Open = 0,
++#define TCPF_CA_Open    (1<<TCP_CA_Open)
++TCP_CA_Disorder = 1,
++#define TCPF_CA_Disorder (1<<TCP_CA_Disorder)
++  TCP_CA_CWR = 2,
++#define TCPF_CA_CWR     (1<<TCP_CA_CWR)
++  TCP_CA_Recovery = 3,
++#define TCPF_CA_Recovery (1<<TCP_CA_Recovery)
++  TCP_CA_Loss = 4
++#define TCPF_CA_Loss    (1<<TCP_CA_Loss)
++  };
++
+ 
+ VALUE rb_cSockOpt;
+ 

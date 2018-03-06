@@ -1,0 +1,10 @@
+diff --git a/autogen b/autogen
+index 1d593d8..7cb7343 100755
+--- a/autogen
++++ b/autogen
+@@ -57,4 +57,4 @@ autoheader || die "autoheader failed"
+ touch config/config.h.in
+ 
+ echo "..automake"
+-automake --force --copy --warnings=none || die "automake failed"
++automake --add-missing --force --copy --warnings=none || die "automake failed"

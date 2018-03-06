@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<service_bundle type="manifest" name="nagios">
+  
+  <service name="site/nagios" type="service" version="1">
+    
+    <create_default_instance enabled="true"/>
+    <single_instance/>
+    
+    <!--
+       Wait for network interfaces to be initialized.
+      -->
+    <dependency name='network'
+		grouping='require_all'
+		restart_on='error'
+		type='service'>
+      <service_fmri value='svc:/milestone/network:default'/>
+    </dependency>
+    
+    <!--
+       Wait for all local filesystems to be mounted.
+      -->
+    <dependency name='filesystem-local'
+		grouping='require_all'
+		restart_on='none'
+		type='service'>
+      <service_fmri
+	 value='svc:/system/filesystem/local:default'/>
+    </dependency>
+
+    <dependency name="milestone"
+		grouping="require_all"
+		restart_on="none"
+		type="service">
+      <service_fmri value="svc:/milestone/multi-user"/>
+    </dependency>
+
+    <exec_method type="method" name="start" 
+                 exec="/lib/svc/method/svc-nagios start"
+                 timeout_seconds="60"/>
+    <exec_method type="method" name="stop"
+                 exec="/lib/svc/method/svc-nagios stop"
+                 timeout_seconds="60"/>
+    <exec_method type="method" name="refresh"
+                 exec="/lib/svc/method/svc-nagios refresh"
+                 timeout_seconds="60"/>
+
+    <property_group name='nagios' type='application'>
+      <propval name='bin' type='astring'
+	       value='/usr/sbin/nagios' />
+      <propval name='cfgfile' type='astring'
+	       value='/etc/nagios/nagios.cfg' />
+      <propval name='statusfile' type='astring'
+	       value='/var/log/nagios/status.dat' />
+      <propval name='retensionfile' type='astring'
+	       value='/var/log/nagios/retention.dat' />
+      <propval name='commandfile' type='astring'
+	       value='/var/log/nagios/rw/nagios.cmd' />
+      <propval name='vardir' type='astring'
+	       value='/var/log/nagios' />
+      <propval name='runfile' type='astring'
+	       value='/var/run/nagios.pid' />
+      <propval name='lockdir' type='astring'
+	       value='/var/lock/subsys' />
+      <propval name='lockfile' type='astring'
+	       value='nagios' />
+      <propval name='cgidir' type='astring'
+	       value='/usr/lib/nagios/cgi-bin' />
+      <propval name='user' type='astring'
+	       value='nagios' />
+      <propval name='group' type='astring'
+	       value='nagios' />
+    </property_group>
+    
+    <stability value="Unstable"/>
+    
+    <template>
+      <common_name>
+        <loctext xml:lang="C"> nagios monitoring</loctext>
+      </common_name>
+      <documentation>
+        <doc_link name='nagios.org'
+                  uri='http://www.nagios.org' />
+      </documentation>
+    </template>
+  </service>
+</service_bundle>

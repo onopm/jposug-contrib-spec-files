@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+<!DOCTYPE service_bundle SYSTEM "c:/Users/yamachan/Documents/service_bundle.dtd.1">
+-->
+<service_bundle type="manifest" name="mailman">
+	<service name="application/internet/mailman" type="service" version="1">
+		<single_instance/>
+		<dependency name="fs-local" grouping="require_all" restart_on="none" type="service">
+			<service_fmri value="svc:/system/filesystem/local"/>
+		</dependency>
+		<dependency name="network-service" grouping="require_all" restart_on="none" type="service">
+			<service_fmri value="svc:/network/service"/>
+		</dependency>
+		<dependency name="name-services" grouping="require_all" restart_on="none" type="service">
+			<service_fmri value="svc:/milestone/name-services"/>
+		</dependency>
+		<dependency name="identity" grouping="optional_all" restart_on="none" type="service">
+			<service_fmri value="svc:/system/identity:domain"/>
+		</dependency>
+		<dependency name="system-log" grouping="optional_all" restart_on="none" type="service">
+			<service_fmri value="svc:/system/system-log"/>
+		</dependency>
+		<dependency name="postifx" grouping="require_all" restart_on="none" type="service">
+			<service_fmri value="svc:/network/smtp"/>
+		</dependency>
+		<instance name="default" enabled="false">
+			<dependency name="config-file" grouping="require_all" restart_on="refresh" type="path">
+				<service_fmri value="file://localhost/usr/lib/mailman/Mailman/Defaults.py"/>
+				<service_fmri value="file://localhost/usr/lib/mailman/Mailman/mm_cfg.py"/>
+			</dependency>
+			<exec_method type="method" name="start" exec="/lib/svc/method/svc-mailman start" timeout_seconds="60"/>
+			<exec_method type="method" name="stop" exec="/lib/svc/method/svc-mailman stop" timeout_seconds="30"/>
+			<exec_method type="method" name="refresh" exec="/lib/svc/method/svc-mailman restart" timeout_seconds="60"/>
+			<property_group name="startd" type="framework">
+				<propval name="ignore_error" type="astring" value="core,signal"/>
+			</property_group>
+			<property_group name="general" type="framework">
+				<propval name="action_authorization" type="astring" value="solaris.smf.manage.mailman"/>
+			</property_group>
+			<template>
+				<common_name>
+					<loctext xml:lang="C">
+                This is the GNU Mailing List manager.
+            </loctext>
+				</common_name>
+				<documentation>
+					<manpage title="add_members" section="8" manpath="/usr/share/man"/>
+				</documentation>
+			</template>
+		</instance>
+		<stability value="Unstable"/>
+	</service>
+</service_bundle>

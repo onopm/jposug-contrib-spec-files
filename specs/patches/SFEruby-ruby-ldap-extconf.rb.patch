@@ -1,0 +1,8 @@
+--- extconf.rb.orig	2014-08-03 23:58:25.540938987 +0900
++++ extconf.rb	2014-08-10 14:40:54.428307760 +0900
+@@ -308,3 +308,5 @@
+ EOF
+ 
+ end
++exec("sed -i -e 's/-fPIC//g' -e 's/-lldap//' -e 's/^CFLAGS[^=]*=/CFLAGS = -fPIC /' -e 's/-pthread/-lpthread/' Makefile")
++

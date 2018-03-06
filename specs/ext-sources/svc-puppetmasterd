@@ -1,0 +1,93 @@
+#!/bin/sh
+#
+
+. /lib/svc/share/smf_include.sh
+
+# prefix=/opt/csw
+# exec_prefix=/opt/csw
+sysconfdir=/etc
+sbindir=/usr/ruby/1.8/sbin
+
+pidfile=/var/lib/puppet/run/master.pid
+
+case "$1" in
+start)
+    cd /
+    # Start daemons.
+
+    printf "Starting Puppet server services:"
+
+    if [ ! `getent group puppet` ]
+    then 
+	groupadd puppet
+    fi
+
+    if [ ! `getent passwd puppet` ]
+    then 
+	useradd -g puppet -s /bin/false -d /var/lib/puppet puppet
+    fi
+
+    if [ ! -d /var/run/puppet ]
+    then
+	mkdir -p /var/run/puppet
+	chown puppet:puppet /var/run/puppet
+    fi
+
+    if [ ! -d /var/log/puppet ]
+    then
+	mkdir -p /var/log/puppet
+	chown puppet:puppet /var/log/puppet
+    fi
+
+    if [ ! -d /var/lib/puppet ]
+    then
+	mkdir -p /var/lib/puppet/run
+	chown -R puppet:puppet /var/lib/puppet
+    fi
+
+    ${sbindir}/puppetmasterd
+
+    printf " puppetmaster"
+    echo ""
+    ;;
+stop)
+    if [ -f $pidfile ]
+    then
+	printf "Stopping Puppet client services:"
+	kill `cat $pidfile`
+    else
+	echo "pid file not found."
+    fi
+
+    printf " puppetmasterd"
+    echo ""
+    ;;
+restart)
+    printf "Restarting Puppet server services:"
+    kill -HUP `cat $pidfile`
+
+    printf " puppetmasterd"
+    echo ""
+    ;;
+reload)
+    printf "Reloading Puppet server services:"
+
+    kill -HUP `cat $pidfile`
+
+    printf " puppetmasterd"
+    echo ""
+    ;;
+status)
+    if [ -f $pidfile ]; then
+        pid=`cat $pidfile`
+        curpid=`pgrep puppetmasterd`
+        if [ "$pid" -eq "$curpid" ]; then
+            exit 0
+        else
+            exit 1
+        fi
+    else
+        exit 1
+    fi
+esac
+exit 0

@@ -1,0 +1,11 @@
+--- php-5.4.16/configure.in.orig	2014-05-27 09:51:51.399540186 +0900
++++ php-5.4.16/configure.in	2014-05-27 09:52:06.549658350 +0900
+@@ -435,7 +435,7 @@
+    CPPFLAGS="$CPPFLAGS -I/usr/pkg/include"
+    LDFLAGS="$LDFLAGS -L/usr/pkg/lib"
+ fi
+-test -d /usr/ucblib && PHP_ADD_LIBPATH(/usr/ucblib)
++#test -d /usr/ucblib && PHP_ADD_LIBPATH(/usr/ucblib)
+ 
+ 
+ dnl First, library checks.

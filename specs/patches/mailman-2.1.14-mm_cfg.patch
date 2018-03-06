@@ -1,0 +1,141 @@
+--- mailman-2.1.14+j7/Mailman/mm_cfg.py.dist.in.orig	2011-12-11 16:56:23.000000000 +0900
++++ mailman-2.1.14+j7/Mailman/mm_cfg.py.dist.in	2014-04-28 23:04:25.670318626 +0900
+@@ -1,4 +1,6 @@
+ # -*- python -*-
++# -*- coding: utf-8 -*-
++# EUC-JP に変換する場合には、上の行を書き変えてください。
+ 
+ # Copyright (C) 1998,1999,2000,2001,2002 by the Free Software Foundation, Inc.
+ #
+@@ -43,10 +45,129 @@
+ 
+ """
+ 
++# 日本語訳および日本語用標準追加項目の解説：菊地時夫 2011/03/31
++# http://docs.python.jp/contrib/mailman/_static/mm_cfg.py.example.txt
++"""このモジュールにはあなたのサイトに特有の設定を入れておきます。
++
++新規の配布ソースからこれを mm_cfg.py にコピーしてください。もし、あなたの
++サイトに mm_cfg.py が既にあるなら、新しい設定だけを含むように注意深く追加
++してください。Mailman のインストール手続きでは既存の mm_cfg.py を上書きし
++たりはしません。
++
++説明付きの既定値は Defaults.py というファイルの中に入っています。mm_cfg.py では
++
++  from Defaults import *
++
++という行（下を参照）の後に変更したいことを書いて上書きします。
++
++これらは単にデフォルトの設定であって、多くは管理者やユーザのインタフェースから
++リストごと又はユーザごとに変更できることに注意してください。
++
++また、これらの多くの設定は Mailman を再起動しないと有効にならないことにも
++注意してください。つまり、このファイルを変更したら必ず Mailman を再起動し
++なければなりません。
++
++さらに、リストの host_name と web_page_url はここで変更した後に作成する
++リストにだけ効果があります。既に存在するリストについては FAQ 
++<http://wiki.list.org/x/mIA9> を見てください。
++"""
++
+ ###############################################
+-# Here's where we get the distributed defaults.
++# 配布ソースによるデフォルトを読み込みます。
+ 
+ from Defaults import *
+ 
+ ##################################################
+-# Put YOUR site-specific settings below this line.
++# あなたのサイト固有の設定を以下の行に書いてください。
++##################################################
++# 日本語対応バージョン (+j) での設定例を以下に説明付きで書いておきます。
++# 有効になっていないもの (# で始まる) もありますので、一読の上ご利用ください。
++##################################################
++
++# スパム対策が十分できていたり、非会員からの投稿に対して厳しく対応しているので
++# あれば、保存書庫に保管される HTML はそのままの方が見やすくなります。
++# また、ファイルの拡張子もそのままで OK です。
++# ただし、万が一ということもありえますので、自己責任で。
++#SCRUBBER_USE_ATTACHMENT_FILENAME_EXTENSION = True
++#ARCHIVE_HTML_SANITIZER = 3
++
++# MTA には Postfix を使うのが圧倒的にお勧めです。
++MTA = 'Postfix'
++# スパム防止が効率の妨げになるとき、amavis から受け取るポートを使うとよい
++# 場合があります。
++#SMTPPORT = 10025
++# Mailman でヘッダに手を加えますので DKIM ヘッダは取り除いておきます。
++REMOVE_DKIM_HEADERS = Yes
++
++# 日本語メールにの中には、JIS 規格外の文字を拡張的に ISO-2022-JP と称している
++# ため、Python の codec でうまく扱えないものが多く含まれています。そのような
++# メールは UTF-8 に変換して規格に忠実な文字コード (charset) 設定をします。
++# http://docs.python.jp/contrib/mailman/siteadmin.html
++# http://docs.python.jp/contrib/mailman/_static/README.japan.utf-8
++GLOBAL_PIPELINE.insert(1, 'iso2022jpfix')
++
++# ネットニュースとの交換はほとんど行われていません。
++GLOBAL_PIPELINE.remove('ToUsenet')
++
++# VERP を使うことでエラー処理が確実になります。ただし、Postfix の main.cf で
++#     recipient_delimiter = + 
++# になっていることを確認しておいてください。
++VERP_PROBES = Yes
++VERP_PASSWORD_REMINDERS = Yes
++VERP_PERSONALIZED_DELIVERIES = Yes
++VERP_DELIVERY_INTERVAL = 10
++VERP_CONFIRMATIONS = Yes
++
++# 応答メールに元のメッセージを含めておくと、バックスキャッタとして悪用される
++# おそれがあります。
++RESPONSE_INCLUDE_LEVEL = 0
++
++# 投稿リクエストに対して自動応答を返しません。
++DEFAULT_RESPOND_TO_POST_REQUESTS = No
++
++# Qrunner からネットニュースの処理を取り除きます。
++QRUNNERS.remove(('NewsRunner', 1))
++
++# サーバのデフォルトを日本語にします。
++DEFAULT_SERVER_LANGUAGE = 'ja'
++
++# 配送の個別化はトラフィックが多いリストでは負荷を増やしますが、
++# 普通には使えるケースの方が多いです。
++OWNERS_CAN_ENABLE_PERSONALIZATION = Yes
++
++# ネットニュースへの転送をしないのであれば、管理インタフェースでも必要あり
++# ません。
++ADMIN_CATEGORIES.remove('gateway')
++
++# notmeto で配送されないと不安になる会員の方が多いようです。
++DEFAULT_NEW_MEMBER_OPTIONS = 0
++
++# メールに番号を付けるのが日本でのデフォルトになっているようです。
++DEFAULT_SUBJECT_PREFIX = "[%(real_name)s %%d]"
++
++# 好みの問題ですが、[prefix] Re: の方がリストを通っていることがわかりやすい
++# です。
++OLD_STYLE_PREFIXING = No
++
++# 保留メールを保持する期間です。3日で消えてくれますので、申請案件メールを見て
++# スパムと判定できればそのまま放っておいても構いません。
++DEFAULT_MAX_DAYS_TO_HOLD = 3
++
++# Reply-To をどうするかは、かなり難しい問題です。しかし、あなたのポリシーに
++# よっては、以下の # をはずして 1 (リスト宛にする) にしておいてもよいでしょう。
++#DEFAULT_REPLY_GOES_TO_LIST = 1
++
++# +j7 での Gmail 対策用 「Message-ID を新規に振る」を利用します。
++USE_MAILMAN_MESSAGE_ID = Yes
++
++# https://mail.python.org/pipermail/mailman-users/2007-March/056359.html
++#It comes from DEFAULT_EMAIL_HOST.
++#DEFAULT_EMAIL_HOST and DEFAULT_URL_HOST must both be fully qualified
++#domain names. If they are not correct in Defaults.py, you have to
++#assign them the correct values in mm_cfg.py and also fix the
++#VIRTUAL_HOSTS dictionary as follows:
++#DEFAULT_EMAIL_HOST = 'ml.example.com'
++#DEFAULT_URL_HOST = 'example.com'
++#DEFAULT_URL_PATTERN = 'http://%s/mailman/'
++#VIRTUAL_HOSTS.clear()
++#add_virtualhost(DEFAULT_URL_HOST, DEFAULT_EMAIL_HOST)

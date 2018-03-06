@@ -1,6 +1,15 @@
 #!/bin/ksh
 
-PKGTOOL=/opt/dtbld/bin/pkgtool
+getcmd() {
+    CMD=''
+    for _CMD in $* ; do
+        CMD=`[ -x $_CMD ] && echo $_CMD`
+        [ -z "$CMD" ] || break;
+    done
+    echo $CMD
+}
+
+PKGTOOL=`getcmd /bin/pkgtool /opt/dtbld/bin/pkgtool`
 SOURCES=~/packages/SOURCES/
 
 SPEC=$1
@@ -20,22 +29,43 @@ NODE=${1%.spec}
 VERSION=`uname -v`
 
 case ${VERSION} in
-    snv*)
-	echo "OpenSolaris. set --ips"
+    11.*|s12_*)
+	echo "Solaris 11 mode. use IPS."
 	REPTYPE='--ips'
 	;;
+    snv*)
+	echo "OpenIndiana mode. use IPS."
+	REPTYPE='--ips'
+	;;
+    oi*)
+	echo "OpenIndiana mode. use IPS."
+	REPTYPE='--ips'
+	;;
+    omnios*)
+        echo "OpenIndiana(OmniOS) mode. use IPS."
+        REPTYPE='--ips'
+        ;;
     Generic*)
-	echo "Solaris. set --svr4"
+	echo "Solaris 10 mode. use SVr4."
 	REPTYPE='--svr4'
 	;;
     *)
-	echo "Default: set --ips"
-	REPTYPE='--ips'
+	echo "Warning: OS mode is known. VERSION=$VERSION"
+	exit 1
+	;;
 esac
 
 
-${PKGTOOL} build-only --patchdirs=`pwd`/patches --sourcedirs=`pwd` ${REPTYPE} --download ${SPEC}
+LC_ALL=C ${PKGTOOL} build-only \
+  --autodeps --nonotify --specdirs=`pwd`:`pwd`/include:`pwd`/base-specs \
+  --patchdirs=`pwd`/patches \
+  --sourcedirs=`pwd`/ext-sources:`pwd`/copyright:`pwd`/include \
+  ${REPTYPE} \
+  --download \
+  ${SPEC}
+
 RESULT=$?
 if [ ${RESULT} = 0 -a ${REPTYPE} = '--svr4' ];then
-    pkgtrans ~/packages/PKGS/ ~/packages/PKGS/${SPEC%.*}.pkg ${SPEC%.*}
+    LC_ALL=C pkgtrans ~/packages/PKGS/ ~/packages/PKGS/${SPEC%.*}.pkg ${SPEC%.*}
 fi
+exit ${RESULT}

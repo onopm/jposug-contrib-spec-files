@@ -1,0 +1,15 @@
+--- libs/wine/mmap.c.orig	2011-02-19 03:28:55.000000000 +0900
++++ libs/wine/mmap.c	2011-03-03 06:33:38.038703900 +0900
+@@ -347,12 +347,6 @@ void mmap_init(void)
+ 
+     reserve_malloc_space( 8 * 1024 * 1024 );
+ 
+-    if (!list_head( &reserved_areas ))
+-    {
+-        /* if we don't have a preloader, try to reserve some space below 2Gb */
+-        reserve_area( (void *)0x00110000, (void *)0x40000000 );
+-    }
+-
+     /* check for a reserved area starting at the user space limit */
+     /* to avoid wasting time trying to allocate it again */
+     LIST_FOR_EACH( ptr, &reserved_areas )

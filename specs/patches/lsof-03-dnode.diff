@@ -1,0 +1,19 @@
+--- lsof_4.83_src/dialects/sun/dnode.c	2010-01-18 11:03:59.000000000 -0800
++++ lsof_4.83_src-patched/dialects/sun/dnode.c	2012-03-11 10:04:36.905537113 -0700
+@@ -257,7 +264,7 @@
+ 
+ static	CTF_request_t ZFS_requests[] = {
+     { ZNODE_TYPE_NAME,		znode_members },
+-    { ZNODE_PHYS_TYPE_NAME,	znode_phys_members },
++    /* { ZNODE_PHYS_TYPE_NAME,	znode_phys_members }, */
+     { ZFSVFS_TYPE_NAME,		zfsvfs_members },
+     { NULL,			NULL }
+ };
+@@ -268,7 +275,7 @@
+  */
+ 
+ _PROTOTYPE(static int read_nzn,(KA_T na, KA_T nza, znode_t *z));
+-_PROTOTYPE(static int read_nznp,(KA_T nza, KA_T nzpa, znode_phys_t *zp));
++/* _PROTOTYPE(static int read_nznp,(KA_T nza, KA_T nzpa, znode_phys_t *zp)); */
+ _PROTOTYPE(static int read_nzvfs,(KA_T nza, KA_T nzva, zfsvfs_t *zv));
+ #endif	/* defined(HAS_ZFS) && defined(HAS_LIBCTF) */

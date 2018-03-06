@@ -63,8 +63,11 @@ unless($mod){
 }
 
 p $mod;
+# p $CPAN::META;
 my $pkg=$mod->{ID};
 $pkg=~ s/::/-/g;
+my $module_name=$pkg;
+$pkg=~ tr/A-Z/a-z/;
 my $pkgdir=$mod->{ID};
 $pkgdir=~ s/::/\//g;
 my $arch=`uname -p`;
@@ -81,11 +84,28 @@ chomp($logname);
 my $userid=$mod->{RO}->{CPAN_USERID};
 $userid=~ tr/A-Z/a-z/;
 
-open (OUT,">perl-$pkg.spec") or die ("cannot write perl-$pkg.spec");
+# ex) 1.01.1 -> 1.1.1
+my $ips_version="";
+foreach my $num (split(/\./,$mod->{RO}->{CPAN_VERSION})) {
+    $ips_version.=int($num).".";
+}
+chop($ips_version);
+
+# replace version number.
+my $version=$mod->{RO}->{CPAN_VERSION};
+my $cpan_file=$mod->{RO}->{CPAN_FILE};
+$cpan_file=~s/$version/\%\{tarball_version\}/;
+
+# get license file
+my $license_url="http://search.cpan.org/src/".$mod->{RO}->{CPAN_USERID}."/".$module_name."-".$mod->{RO}->{CPAN_VERSION}."/LICENSE";
+system("wget -O copyright/SFEperl-$pkg.copyright $license_url");
+
+# out spec files
+open (OUT,">SFEperl-$pkg.spec") or die ("cannot write SFEperl-$pkg.spec");
 
 print OUT <<_END ;
 #
-# spec file for package: perl-$pkg
+# spec file for package: SFEperl-$pkg
 #
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -95,17 +115,20 @@ print OUT <<_END ;
 \%include Solaris.inc
 
 \%define tarball_version $mod->{RO}->{CPAN_VERSION}
+\%define tarball_name    $module_name
 
-Name:		perl-$pkg
+Name:		SFEperl-$pkg
+IPS_package_name: library/perl-5/$pkg
 Version:	$mod->{RO}->{CPAN_VERSION}
+IPS_component_version: $ips_version
 Summary:	$mod->{RO}->{description}
 License:	Artistic
 Distribution:   OpenSolaris
 Vendor:         OpenSolaris Community
-Url:		http://search.cpan.org/~$userid/$pkg-\%{tarball_version}
+Url:		http://search.cpan.org/~$userid/\%{tarball_name}-\%{tarball_version}
 SUNW_Basedir:	\%{_basedir}
 SUNW_Copyright: \%{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/$mod->{RO}->{CPAN_FILE}
+Source0:	http://search.cpan.org/CPAN/authors/id/$cpan_file
 
 BuildRequires:	SUNWperl584core
 BuildRequires:	SUNWperl584usr
@@ -114,13 +137,13 @@ Requires:	SUNWperl584usr
 
 Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin\@justplayer.com>
 Meta(info.upstream):            $vendor
-Meta(info.upstream_url):        http://search.cpan.org/~$userid/$pkg-\%{tarball_version}
+Meta(info.upstream_url):        http://search.cpan.org/~$userid/\%{tarball_name}-\%{tarball_version}
 Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 \%description
 $mod->{RO}->{description}
 \%prep
-\%setup -q -n $pkg-\%{tarball_version}
+\%setup -q -n \%{tarball_name}-\%{tarball_version}
 
 \%build
 perl Makefile.PL PREFIX=\%{_prefix} DESTDIR=\$RPM_BUILD_ROOT LIB=/usr/perl5/vendor_perl/5.8.4
@@ -141,10 +164,15 @@ rm -rf \$RPM_BUILD_ROOT
 \%{_prefix}/perl5
 \%attr(755,root,sys) \%dir \%{_datadir}
 \%{_mandir}
-\%attr(755,root,sys) \%dir \%{_bindir}
-\%{_bindir}/*
+\#\%attr(755,root,sys) \%dir \%{_bindir}
+\#\%{_bindir}/*
 
 \%changelog
 _END
 
 close(OUT);
+
+print "1st, check SFEperl-$pkg.spec and copyright/SFEperl-$pkg.copyright.\n";
+print "License parameter is always Artistic. check it.\n";
+print "2nd,\n../bin/specbuild.sh SFEperl-$pkg.spec\n";
+

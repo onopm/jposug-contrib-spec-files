@@ -1,0 +1,28 @@
+--- openal-soft-1.13/CMakeLists.txt.orig	2011-02-16 05:05:40.000000000 +0900
++++ openal-soft-1.13/CMakeLists.txt	2011-03-03 05:34:36.329421125 +0900
+@@ -111,7 +111,7 @@
+         ENDFOREACH(flag_var)
+     ENDIF()
+ ELSE()
+-    ADD_DEFINITIONS(-Winline -Wall)
++    ADD_DEFINITIONS(-D__inline="")
+     CHECK_C_COMPILER_FLAG(-Wextra HAVE_W_EXTRA)
+     IF(HAVE_W_EXTRA)
+         ADD_DEFINITIONS(-Wextra)
+@@ -124,13 +124,13 @@
+     SET(CMAKE_C_FLAGS_RELWITHDEBINFO "-g -O2 -D_DEBUG" CACHE STRING
+         "Flags used by the compiler during Release with Debug Info builds."
+         FORCE)
+-    SET(CMAKE_C_FLAGS_MINSIZEREL "-Os -DNDEBUG" CACHE STRING
++    SET(CMAKE_C_FLAGS_MINSIZEREL "-O1 -DNDEBUG" CACHE STRING
+         "Flags used by the compiler during release minsize builds."
+         FORCE)
+-    SET(CMAKE_C_FLAGS_RELEASE "-O2 -fomit-frame-pointer -DNDEBUG" CACHE STRING
++    SET(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG" CACHE STRING
+         "Flags used by the compiler during release builds"
+         FORCE)
+-    SET(CMAKE_C_FLAGS_DEBUG "-g3 -D_DEBUG" CACHE STRING
++    SET(CMAKE_C_FLAGS_DEBUG "-g -D_DEBUG" CACHE STRING
+         "Flags used by the compiler during debug builds."
+         FORCE)
+ 

@@ -7,6 +7,7 @@
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build25jposug %( if [ -x /opt/jposug/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build26jposug %( if [ -x /opt/jposug/ruby/2.6/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 0
 
@@ -16,7 +17,7 @@
 Summary:          Common layer for serverspec and itamae
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.73.0
+Version:          2.73.2
 License:          MIT
 URL:              https://github.com/mizzy/specinfra
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -32,7 +33,7 @@ IPS_package_name: library/ruby-21/%{gemname}
 Summary:          Common layer for serverspec and itamae
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby/%{gemname}-21
+# Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
 Common layer for serverspec and itamae
@@ -48,10 +49,10 @@ Requires:         library/ruby/net-scp-21
 # net-ssh < 5.0, >= 2.7
 Requires:         library/ruby/net-ssh-21
 # net-telnet >= 0
-Requires:         library/ruby/net-telnet-21
+# Requires:         library/ruby/net-telnet-21
 # sfl >= 0
 Requires:         library/ruby/sfl-21
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 21
 Common layer for serverspec and itamae
@@ -64,7 +65,7 @@ IPS_package_name: library/ruby-22/%{gemname}
 Summary:          Common layer for serverspec and itamae
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-Requires:         library/ruby/%{gemname}-22
+# Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
 Common layer for serverspec and itamae
@@ -80,10 +81,10 @@ Requires:         library/ruby/net-scp-22
 # net-ssh < 5.0, >= 2.7
 Requires:         library/ruby/net-ssh-22
 # net-telnet >= 0
-Requires:         library/ruby/net-telnet-22
+# Requires:         library/ruby/net-telnet-22
 # sfl >= 0
 Requires:         library/ruby/sfl-22
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 22
 Common layer for serverspec and itamae
@@ -96,7 +97,7 @@ IPS_package_name: library/ruby-23/%{gemname}
 Summary:          Common layer for serverspec and itamae
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-Requires:         library/ruby/%{gemname}-23
+# Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
 Common layer for serverspec and itamae
@@ -112,10 +113,10 @@ Requires:         library/ruby/net-scp-23
 # net-ssh < 5.0, >= 2.7
 Requires:         library/ruby/net-ssh-23
 # net-telnet >= 0
-Requires:         library/ruby/net-telnet-23
+# Requires:         library/ruby/net-telnet-23
 # sfl >= 0
 Requires:         library/ruby/sfl-23
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 23
 Common layer for serverspec and itamae
@@ -133,10 +134,10 @@ Requires:         jposug/library/ruby/net-scp-23jposug
 # net-ssh < 5.0, >= 2.7
 Requires:         jposug/library/ruby/net-ssh-23jposug
 # net-telnet >= 0
-Requires:         jposug/library/ruby/net-telnet-23jposug
+# Requires:         jposug/library/ruby/net-telnet-23jposug
 # sfl >= 0
 Requires:         jposug/library/ruby/sfl-23jposug
-Requires:         jposug/library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 23jposug
 Common layer for serverspec and itamae
@@ -154,10 +155,10 @@ Requires:         jposug/library/ruby/net-scp-24jposug
 # net-ssh < 5.0, >= 2.7
 Requires:         jposug/library/ruby/net-ssh-24jposug
 # net-telnet >= 0
-Requires:         jposug/library/ruby/net-telnet-24jposug
+# Requires:         jposug/library/ruby/net-telnet-24jposug
 # sfl >= 0
 Requires:         jposug/library/ruby/sfl-24jposug
-Requires:         jposug/library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 24jposug
 Common layer for serverspec and itamae
@@ -175,12 +176,33 @@ Requires:         jposug/library/ruby/net-scp-25jposug
 # net-ssh < 5.0, >= 2.7
 Requires:         jposug/library/ruby/net-ssh-25jposug
 # net-telnet >= 0
-Requires:         jposug/library/ruby/net-telnet-25jposug
+# Requires:         jposug/library/ruby/net-telnet-25jposug
 # sfl >= 0
 Requires:         jposug/library/ruby/sfl-25jposug
-Requires:         jposug/library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 25jposug
+Common layer for serverspec and itamae
+%endif
+
+%if %{build26jposug}
+
+%package 26jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-26jposug
+Summary:          Common layer for serverspec and itamae
+BuildRequires:    jposug/runtime/ruby-26jposug = *
+Requires:         jposug/runtime/ruby-26jposug = *
+# net-scp >= 0
+Requires:         jposug/library/ruby/net-scp-26jposug
+# net-ssh < 5.0, >= 2.7
+Requires:         jposug/library/ruby/net-ssh-26jposug
+# net-telnet >= 0
+# Requires:         jposug/library/ruby/net-telnet-26jposug
+# sfl >= 0
+Requires:         jposug/library/ruby/sfl-26jposug
+# Requires:         library/ruby/%{gemname}
+
+%description 26jposug
 Common layer for serverspec and itamae
 %endif
 
@@ -190,7 +212,7 @@ Common layer for serverspec and itamae
 
 %build
 build_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         bindir="/opt/jposug/ruby/${ruby_ver}/bin"
@@ -235,6 +257,10 @@ build_for 2.4jposug
 # ruby-25jposug
 build_for 2.5jposug
 %endif
+%if %{build26jposug}
+# ruby-26jposug
+build_for 2.6jposug
+%endif
 
 %install
 rm -rf %{buildroot}
@@ -244,7 +270,7 @@ mkdir -p %{buildroot}/%{_bindir}
 %endif
 
 install_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         dir_prefix="/opt/jposug/ruby/${ruby_ver}"
@@ -253,7 +279,7 @@ install_for() {
     else
         ruby_ver=$1
         dir_prefix="/usr/ruby/${ruby_ver}"
-        dir_prefix_relative="../usr/ruby/${ruby_ver}"
+        dir_prefix_relative="../ruby/${ruby_ver}"
         jposug=''
     fi
     bindir="${dir_prefix}/bin"
@@ -284,7 +310,9 @@ install_for() {
 	    popd
 	fi
     done
-   
+
+    [ -d %{buildroot}${geminstdir}/test ] && rm -rf %{buildroot}${geminstdir}/test || true
+
 %if %{generate_executable}
     pushd %{buildroot}%{_bindir}
     for i in $(ls ${dir_prefix_relative}/bin/*)
@@ -313,6 +341,9 @@ install_for 2.4jposug
 %endif
 %if %{build25jposug}
 install_for 2.5jposug
+%endif
+%if %{build26jposug}
+install_for 2.6jposug
 %endif
 
 %clean
@@ -387,8 +418,23 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build26jposug}
+%files 26jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.6
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*26jposug
+%endif
+%endif
+
 
 %changelog
+* Mon Mar 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete dependencies to net-telnet because net-telnet is included in ruby packages
+* Sun Mar 04 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.73.2 and build packges for ruby-26jposug
 * Sat Dec 30 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.73.0 and build packges for ruby-2{3,4,5}jposug
 * Wed Sep 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

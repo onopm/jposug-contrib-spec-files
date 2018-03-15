@@ -11,7 +11,7 @@
 #%define cc_is_gcc 1
 
 %define tarball_name    nrpe
-%define tarball_version 3.1.0
+%define tarball_version 3.2.1
 
 Name:		SFEnagios-nrpe
 IPS_package_name:        diagnostic/nagios/nrpe
@@ -20,7 +20,7 @@ Summary:	NRPE - Nagios Remote Plugin Executor
 Group:		Applications/System
 License:	GPL
 URL:		http://www.nagios.org/
-Source:         http://github.com/NagiosEnterprises/nrpe/releases/download/release-%{tarball_version}/nrpe-%{tarball_version}.tar.gz
+Source:         https://github.com/NagiosEnterprises/nrpe/archive/nrpe-%{tarball_version}.tar.gz
 Source1:	nagios-nrpe.xml
 Source2:	svc-nagios-nrpe
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -31,7 +31,7 @@ Requires:       diagnostic/nagios/common
 NRPE allows you to remotely execute Nagios plugins on other Linux/Unix machines. This allows you to monitor remote machine metrics (disk usage, CPU load, etc.). NRPE can also communicate with some of the Windows agent addons, so you can execute scripts and check metrics on remote Windows machines as well.
 
 %prep
-%setup -q -n %{tarball_name}-%{tarball_version}
+%setup -q -n %{tarball_name}-%{tarball_name}-%{tarball_version}
 
 %build
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
@@ -79,7 +79,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-, root, bin)
-%doc Changelog LEGAL LICENSE README.SSL.md README.md SECURITY.md THANKS
+%doc CHANGELOG.md LEGAL LICENSE.md README.SSL.md README.md SECURITY.md THANKS
 %dir %attr (0755, root, sys) %{_sysconfdir}
 %dir %attr (0755, root, nagios) %{_sysconfdir}/nagios
 %config(noreplace) %{_sysconfdir}/nagios/nrpe.cfg
@@ -103,6 +103,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Mar 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.2.1
 * Wed Apr 19 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.1.0
 * Tue May 13 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -9,13 +9,13 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 2.14
+%define tarball_version 2.22
 %define tarball_name    App-Ack
 
 Name:		SFEack
 IPS_package_name: text/ack
-Version:	2.14
-IPS_component_version: 2.14
+Version:	2.22
+IPS_component_version: 2.22
 Summary:	grep-like text finder
 License:	Artistic
 Url:		http://search.cpan.org/~petdance/%{tarball_name}-%{tarball_version}
@@ -61,6 +61,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu May 10 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.22
 * Sun Nov 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add BuildRequires because 'make test' requires library/perl-5/file-next-512.
 * Mon Nov 24 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

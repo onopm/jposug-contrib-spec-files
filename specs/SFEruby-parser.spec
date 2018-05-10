@@ -16,7 +16,7 @@
 Summary:          A Ruby parser written in pure Ruby.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.4.0.2
+Version:          2.5.1.0
 License:          MIT
 URL:              https://github.com/whitequark/parser
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -353,6 +353,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu May 10 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.5.1.0
 * Sat Dec 30 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.4.0.2 and build packages for ruby-2{3,4,5}jposug
 * Fri Dec 02 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

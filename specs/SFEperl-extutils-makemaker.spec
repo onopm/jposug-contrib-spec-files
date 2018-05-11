@@ -5,7 +5,11 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define include_executable 0
+%define build526 %( if [ -x /usr/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
+
+%define include_executable 1
+%define install_to_site_dir 0
 
 %define cpan_name ExtUtils-MakeMaker
 %define sfe_cpan_name extutils-makemaker
@@ -14,8 +18,8 @@
 Summary:               Create a module Makefile
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               7.24
-IPS_component_version: 7.24
+Version:               7.34
+IPS_component_version: 7.34
 License:               perl_5
 URL:                   https://metacpan.org/pod/ExtUtils::MakeMaker
 Source0:               http://cpan.metacpan.org/authors/id/B/BI/BINGOS/ExtUtils-MakeMaker-%{version}.tar.gz
@@ -29,10 +33,12 @@ Create a module Makefile
 IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          Create a module Makefile
 BuildRequires:    runtime/perl-584 = *
+%if %{enable_test}
 BuildRequires:    library/perl-5/data-dumper-584
 BuildRequires:    library/perl-5/encode-584
 BuildRequires:    library/perl-5/pathtools-584
 BuildRequires:    library/perl-5/podlators-584
+%endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-584
@@ -69,10 +75,12 @@ Create a module Makefile
 IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          Create a module Makefile
 BuildRequires:    runtime/perl-512 = *
+%if %{enable_test}
 BuildRequires:    library/perl-5/data-dumper-512
 BuildRequires:    library/perl-5/encode-512
 BuildRequires:    library/perl-5/pathtools-512
 BuildRequires:    library/perl-5/podlators-512
+%endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-512
@@ -90,10 +98,12 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          Create a module Makefile
 BuildRequires:    runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
+%if %{enable_test}
 BuildRequires:    library/perl-5/data-dumper-516
 BuildRequires:    library/perl-5/encode-516
 BuildRequires:    library/perl-5/pathtools-516
 BuildRequires:    library/perl-5/podlators-516
+%endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-516
@@ -110,10 +120,12 @@ Create a module Makefile
 IPS_package_name: library/perl-5/%{ips_cpan_name}-522
 Summary:          Create a module Makefile
 BuildRequires:    runtime/perl-522 = *
+%if %{enable_test}
 BuildRequires:    library/perl-5/data-dumper-522
 BuildRequires:    library/perl-5/encode-522
 BuildRequires:    library/perl-5/pathtools-522
 BuildRequires:    library/perl-5/podlators-522
+%endif
 Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-522
@@ -125,22 +137,54 @@ Requires:         library/perl-5/podlators-522
 Create a module Makefile
 %endif
 
+%if %{build526}
+%package 526
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526
+Summary:          Create a module Makefile
+BuildRequires:    runtime/perl-526 = *
+%if %{enable_test}
+BuildRequires:    library/perl-5/data-dumper-526
+BuildRequires:    library/perl-5/encode-526
+BuildRequires:    library/perl-5/pathtools-526
+BuildRequires:    library/perl-5/podlators-526
+%endif
+Requires:         runtime/perl-526 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/data-dumper-526
+Requires:         library/perl-5/encode-526
+Requires:         library/perl-5/pathtools-526
+Requires:         library/perl-5/podlators-526
+
+%description 526
+Create a module Makefile
+%endif
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
 [ -d %{buildroot} ] && rm -rf %{buildroot}
+rm -rf ./inc
 
 %build
+export BUILDING_AS_PACKAGE=true
+
 build_with_makefile.pl_for() {
     perl_ver=$1
     test=$2
-    bindir="/usr/perl5/${perl_ver}/bin"
+    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    bindir="${perl_dir_prefix}/bin"
     vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+    site_dir="/usr/perl5/site_perl/${perl_ver}"
 
     export PERL5LIB=${vendor_dir}
+%if %{install_to_site_dir}
+    perl_libdir="${site_dir}"
+%else
+    perl_libdir="${vendor_dir}"
+%endif
+
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
-                   LIB=${vendor_dir}
+                   LIB=${perl_libdir}
 
     export CC='cc -m32'
     export LD='cc -m32'
@@ -153,12 +197,19 @@ build_with_makefile.pl_for() {
 build_with_build.pl_for() {
     perl_ver=$1
     test=$2
-    bindir="/usr/perl5/${perl_ver}/bin"
+    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    bindir="${perl_dir_prefix}/bin"
     vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+    site_dir="/usr/perl5/site_perl/${perl_ver}"
 
+%if %{install_to_site_dir}
+    installdir='site'
+%else
+    installdir='vendor'
+%endif
     export PERL5LIB=${vendor_dir}
     ${bindir}/perl Build.PL \
-                   --installdirs vendor \
+                   --installdirs ${installdir} \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
     [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
@@ -217,8 +268,6 @@ build_for() {
   modify_man_dir $*
 }
 
-export BUILDING_AS_PACKAGE=true
-
 # To build without test, pass 'without_test' to build_for commaond.
 # like 'build_for version without_test'
 %if %{build584}
@@ -241,6 +290,10 @@ build_for 5.16
 build_for 5.22
 %endif
 
+%if %{build526}
+build_for 5.26
+%endif
+
 %install
 if [ -d $RPM_BUILD_ROOT%{_prefix}/man ]
 then
@@ -253,7 +306,7 @@ then
 fi
 
 # instmodsh conflict with instmodsh included in perl-5XX
-rm -rf ${RPM_BUILD_ROOT}/usr/perl5/5.*
+rm -rf ${RPM_BUILD_ROOT}/usr/perl5/5.*/bin
 
 %clean
 rm -rf %{buildroot}
@@ -266,7 +319,11 @@ rm -rf %{buildroot}
 %files 584
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.8.4
+%else
 /usr/perl5/vendor_perl/5.8.4
+%endif
 %if %{include_executable}
 /usr/perl5/5.8.4
 %endif
@@ -276,7 +333,11 @@ rm -rf %{buildroot}
 %files 510
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.10
+%else
 /usr/perl5/vendor_perl/5.10
+%endif
 %if %{include_executable}
 /usr/perl5/5.1.0
 %endif
@@ -286,7 +347,11 @@ rm -rf %{buildroot}
 %files 512
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.12
+%else
 /usr/perl5/vendor_perl/5.12
+%endif
 %if %{include_executable}
 /usr/perl5/5.12
 %endif
@@ -296,7 +361,11 @@ rm -rf %{buildroot}
 %files 516
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.16
+%else
 /usr/perl5/vendor_perl/5.16
+%endif
 %if %{include_executable}
 /usr/perl5/5.16
 %endif
@@ -306,13 +375,33 @@ rm -rf %{buildroot}
 %files 522
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.22
+%else
 /usr/perl5/vendor_perl/5.22
+%endif
 %if %{include_executable}
 /usr/perl5/5.22
 %endif
 %endif
 
+%if %{build526}
+%files 526
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.26
+%else
+/usr/perl5/vendor_perl/5.26
+%endif
+%if %{include_executable}
+/usr/perl5/5.26
+%endif
+%endif
+
 %changelog
+* Fri May 11 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.34 and build package for perl-526
 * Wed Apr 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.24 and add packages for perl-510 and perl-522
 - not include instmodsh because it conflicts with instmodsh included in perl-5XX

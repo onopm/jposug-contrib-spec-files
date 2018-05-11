@@ -6,7 +6,7 @@
 %define geminstdir23 %{gemdir23}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 1.0.2
+%define tarball_version 1.1.3
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -111,6 +111,7 @@ rm -rf %{buildroot}
 %attr(0555, root, bin) /usr/bin/fluentd
 %attr(0555, root, bin) /usr/bin/fluent-plugin-config-format
 %attr(0555, root, bin) /usr/bin/fluent-plugin-generate
+%attr(0555, root, bin) /usr/bin/fluent-ca-generate
 %{gemdir23}
 %dir %attr(0755, root, bin) /lib/
 %dir %attr(0755, root, bin) /lib/svc
@@ -126,6 +127,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Fri May 11 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.1.3
 * Tue Jan 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use ruby-23jposug. can not build ruby-25jposug on some environments.
 * Mon Jan 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

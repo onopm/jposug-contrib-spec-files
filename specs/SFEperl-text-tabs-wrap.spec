@@ -5,8 +5,11 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526 %( if [ -x /usr/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
+
 %define include_executable 0
+%define install_to_site_dir 0
 
 %define cpan_name Text-Tabs+Wrap
 %define sfe_cpan_name text-tabs-wrap
@@ -99,6 +102,20 @@ Requires:         library/perl-5/%{ips_cpan_name}
 Expand tabs and do simple line wrapping
 %endif
 
+%if %{build526}
+%package 526
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526
+Summary:          Expand tabs and do simple line wrapping
+BuildRequires:    runtime/perl-526 = *
+BuildRequires:    library/perl-5/extutils-makemaker-526
+%if %{enable_test}
+%endif
+Requires:         runtime/perl-526 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+
+%description 526
+Expand tabs and do simple line wrapping
+%endif
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
@@ -108,13 +125,21 @@ Expand tabs and do simple line wrapping
 build_with_makefile.pl_for() {
     perl_ver=$1
     test=$2
-    bindir="/usr/perl5/${perl_ver}/bin"
+    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    bindir="${perl_dir_prefix}/bin"
     vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+    site_dir="/usr/perl5/site_perl/${perl_ver}"
 
     export PERL5LIB=${vendor_dir}
+%if %{install_to_site_dir}
+    perl_libdir="${site_dir}"
+%else
+    perl_libdir="${vendor_dir}"
+%endif
+
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
-                   LIB=${vendor_dir}
+                   LIB=${perl_libdir}
 
     export CC='cc -m32'
     export LD='cc -m32'
@@ -127,12 +152,19 @@ build_with_makefile.pl_for() {
 build_with_build.pl_for() {
     perl_ver=$1
     test=$2
-    bindir="/usr/perl5/${perl_ver}/bin"
+    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    bindir="${perl_dir_prefix}/bin"
     vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+    site_dir="/usr/perl5/site_perl/${perl_ver}"
 
+%if %{install_to_site_dir}
+    installdir='site'
+%else
+    installdir='vendor'
+%endif
     export PERL5LIB=${vendor_dir}
     ${bindir}/perl Build.PL \
-                   --installdirs vendor \
+                   --installdirs ${installdir} \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
     [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
@@ -213,6 +245,10 @@ build_for 5.16
 build_for 5.22
 %endif
 
+%if %{build526}
+build_for 5.26
+%endif
+
 %install
 if [ -d $RPM_BUILD_ROOT%{_prefix}/man ]
 then
@@ -235,7 +271,11 @@ rm -rf %{buildroot}
 %files 584
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.8.4
+%else
 /usr/perl5/vendor_perl/5.8.4
+%endif
 %if %{include_executable}
 /usr/perl5/5.8.4
 %endif
@@ -245,7 +285,11 @@ rm -rf %{buildroot}
 %files 510
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.10
+%else
 /usr/perl5/vendor_perl/5.10
+%endif
 %if %{include_executable}
 /usr/perl5/5.1.0
 %endif
@@ -255,7 +299,11 @@ rm -rf %{buildroot}
 %files 512
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.12
+%else
 /usr/perl5/vendor_perl/5.12
+%endif
 %if %{include_executable}
 /usr/perl5/5.12
 %endif
@@ -265,7 +313,11 @@ rm -rf %{buildroot}
 %files 516
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.16
+%else
 /usr/perl5/vendor_perl/5.16
+%endif
 %if %{include_executable}
 /usr/perl5/5.16
 %endif
@@ -275,12 +327,32 @@ rm -rf %{buildroot}
 %files 522
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.22
+%else
 /usr/perl5/vendor_perl/5.22
+%endif
 %if %{include_executable}
 /usr/perl5/5.22
 %endif
 %endif
 
+%if %{build526}
+%files 526
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.26
+%else
+/usr/perl5/vendor_perl/5.26
+%endif
+%if %{include_executable}
+/usr/perl5/5.26
+%endif
+%endif
+
 %changelog
+* Fri May 11 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build packge for perl-526
 * Thu Apr 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

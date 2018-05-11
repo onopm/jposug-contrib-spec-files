@@ -3,7 +3,7 @@
 %define gemname fluent-plugin-elasticsearch
 %define generate_executable 0
 
-%define bindir23 /usr/ruby/2.3/bin
+%define bindir23 /opt/jposug/ruby/2.3/bin
 %define gemdir23 %(%{bindir23}/ruby -e 'puts Gem::dir' 2>/dev/null)
 %define geminstdir23 %{gemdir23}/gems/%{gemname}-%{version}
 
@@ -17,11 +17,11 @@ URL:              http://rubygems.org/gems/%{gemname}
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:    runtime/ruby-23 = *
-Requires:         runtime/ruby-23 = *
+BuildRequires:    runtime/ruby-23jposug = *
+Requires:         runtime/ruby-23jposug = *
 Requires:         system/fluentd >= 0.10.43
-Requires:         library/ruby/elasticsearch-23 = *
-Requires:         library/ruby/excon-23 = *
+Requires:         library/ruby/elasticsearch-23jposug = *
+Requires:         library/ruby/excon-23jposug = *
 
 %description
 fluent plugin for elasticsearch
@@ -31,7 +31,7 @@ fluent plugin for elasticsearch
 
 %build
 
-# ruby-23
+# ruby-23jposug
 %{bindir23}/gem install --local \
     --install-dir .%{gemdir23} \
     --bindir .%{bindir23} \
@@ -60,10 +60,16 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.3
+%dir %attr (0755, root, sys) /opt
+%dir %attr (0755, root, bin) /opt/jposug
+/opt/jposug/ruby
+
 
 %changelog
+* Fri May 11 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use ruby-23jposug instead of ruby-25jposug
+* Mon Jan 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.1 and use ruby-25jposug
 * Thu Apr 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.9.3 and use ruby-23 instead of ruby-21
 * Tue Feb 14 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

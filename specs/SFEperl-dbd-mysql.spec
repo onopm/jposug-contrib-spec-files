@@ -5,6 +5,7 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526 %( if [ -x /usr/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 
 %define include_executable 0
@@ -146,6 +147,29 @@ Requires:         database/mysql-56/library
 A MySQL driver for the Perl5 Database Interface (DBI)
 %endif
 
+%if %{build526}
+%package 526
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526
+Summary:          A MySQL driver for the Perl5 Database Interface (DBI)
+BuildRequires:    runtime/perl-526 = *
+BuildRequires:    library/perl-5/data-dumper-526
+BuildRequires:    library/perl-5/dbi-526
+BuildRequires:    library/perl-5/extutils-makemaker-526
+BuildRequires:    library/perl-5/test-deep-526
+BuildRequires:    library/perl-5/test-simple-526
+BuildRequires:    library/perl-5/time-hires-526
+BuildRequires:    database/mysql-56/library
+%if %{enable_test}
+BuildRequires:    library/perl-5/dbi-526
+%endif
+Requires:         runtime/perl-526 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/dbi-526
+Requires:         database/mysql-56/library
+
+%description 526
+A MySQL driver for the Perl5 Database Interface (DBI)
+%endif
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
@@ -166,7 +190,6 @@ build_with_makefile.pl_for() {
 %else
     perl_libdir="${vendor_dir}"
 %endif
-    
 
      echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
      if [ $? -eq 0 ]
@@ -184,12 +207,14 @@ build_with_makefile.pl_for() {
 
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
-                   LIB=${perl_libdir} \
-                   --libs=${LIBS} \
-                   --mysql_config=${MYSQL_CONFIG} 
+                   LIB="${perl_libdir}" \
+                   --libs="${LIBS}" \
+                   --mysql_config="${MYSQL_CONFIG}"
 
     make CC="${CC}" LD="${LD}" LDFLAGS="${LDFLAGS}"
-    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
+%if %{enable_test}
+    [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
+%endif
     make pure_install
 }
 
@@ -212,7 +237,9 @@ build_with_build.pl_for() {
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
     [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
+%if %{enable_test}
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
+%endif
     ${bindir}/perl ./Build clean
 }
 
@@ -287,6 +314,10 @@ build_for 5.16
 
 %if %{build522}
 build_for 5.22
+%endif
+
+%if %{build526}
+build_for 5.26
 %endif
 
 %install
@@ -377,7 +408,23 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build526}
+%files 526
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.26
+%else
+/usr/perl5/vendor_perl/5.26
+%endif
+%if %{include_executable}
+/usr/perl5/5.26
+%endif
+%endif
+
 %changelog
+* Mon Mar 26 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build package for perl-526
 * Mon Feb 19 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.046 and use MySQL 5.6
 * Sat Dec 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

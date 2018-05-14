@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  10.1
+%define tarball_version  10.4
 %define major_version	 10
 %define prefix_name      SFEpostgres-10
 %define _basedir         %{_prefix}/%{major_version}
@@ -176,16 +176,17 @@ cd %{tarball_name}-%{tarball_version}
 %define target i386-sun-solaris
 %endif
 
-export CCAS=/usr/bin/cc
-export CCASFLAGS=
-export CC=cc
+# export CCAS=/usr/bin/cc
+# export CCASFLAGS=
+# export CC=cc
+export CC=/usr/bin/gcc
 
 %ifarch amd64
-export CFLAGS="-i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
+# export CFLAGS="-i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
 %endif
 
 %ifarch sparcv9
-export CFLAGS="-i -xO4 -D__sparc  -xspace -xstrconst -xCC"
+# export CFLAGS="-i -xO4 -D__sparc  -xspace -xstrconst -xCC"
 %endif
 
 export LDFLAGS="%_ldflags -L/usr/gnu/lib -R/usr/gnu/lib -lncurses"
@@ -228,11 +229,13 @@ gmake -j$CPUS world
 cd ../%{tarball_name}-%{tarball_version}-64
 
 %ifarch amd64
-export CFLAGS="-m64 -i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
+# export CFLAGS="-m64 -i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
+export CFLAGS="-m64"
 %endif
 
 %ifarch sparcv9
-export CFLAGS="-m64 -i -xO4 -D__sparc -xspace -xstrconst -xCC"
+# export CFLAGS="-m64 -i -xO4 -D__sparc -xspace -xstrconst -xCC"
+export CFLAGS="-m64"
 %endif
 
 export LDFLAGS="%_ldflags -L/usr/gnu/lib/%{_arch64} -R/usr/gnu/lib/%{_arch64} -lncurses"
@@ -1074,6 +1077,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/lib/%{_arch64}/tsm_system_time.so
 %{_prefix}/%{major_version}/lib/%{_arch64}/unaccent.so
 %{_prefix}/%{major_version}/share/extension/adminpack--1.0.sql
+%{_prefix}/%{major_version}/share/extension/adminpack--1.0--1.1.sql
 %{_prefix}/%{major_version}/share/extension/adminpack.control
 %{_prefix}/%{major_version}/share/extension/amcheck--1.0.sql
 %{_prefix}/%{major_version}/share/extension/amcheck.control
@@ -1307,6 +1311,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_archivecleanup-%{major_version}.mo
 
 %changelog
+* Mon May 14 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 10.4 and use gcc
 * Fri Nov 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 10.1
 * Tue Sep 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

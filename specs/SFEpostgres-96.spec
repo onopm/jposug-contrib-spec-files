@@ -7,11 +7,12 @@
 #
 %include Solaris.inc
 %include packagenamemacros.inc
+%define cc_is_gcc 1
 
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.6.6
+%define tarball_version  9.6.9
 %define major_version	 9.6
 %define prefix_name      SFEpostgres-96
 %define _basedir         %{_prefix}/%{major_version}
@@ -19,7 +20,7 @@
 # after Oracle Solaris 11.2,
 # - use library/libedit
 # - SFEpostgres-common is not needed, because user and group 'postgres' exist.
-%define after_oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[23]|12)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+%define after_oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[234]|12|Trunk)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-96
@@ -176,12 +177,13 @@ cd %{tarball_name}-%{tarball_version}
 %define target i386-sun-solaris
 %endif
 
-export CCAS=/usr/bin/cc
-export CCASFLAGS=
-export CC=cc
+# export CCAS=/usr/bin/cc
+# export CCASFLAGS=
+# export CC=cc
+export CC=/usr/bin/gcc
 
 %ifarch amd64
-export CFLAGS="-i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
+# export CFLAGS="-i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
 %endif
 
 %ifarch sparcv9
@@ -228,11 +230,13 @@ gmake -j$CPUS world
 cd ../%{tarball_name}-%{tarball_version}-64
 
 %ifarch amd64
-export CFLAGS="-m64 -i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
+# export CFLAGS="-m64 -i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
+export CFLAGS="-m64"
 %endif
 
 %ifarch sparcv9
-export CFLAGS="-m64 -i -xO4 -D__sparc -xspace -xstrconst -xCC"
+# export CFLAGS="-m64 -i -xO4 -D__sparc -xspace -xstrconst -xCC"
+export CFLAGS="-m64"
 %endif
 
 export LDFLAGS="%_ldflags -L/usr/gnu/lib/%{_arch64} -R/usr/gnu/lib/%{_arch64} -lncurses"
@@ -1080,6 +1084,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/lib/%{_arch64}/tsm_system_time.so
 %{_prefix}/%{major_version}/lib/%{_arch64}/unaccent.so
 %{_prefix}/%{major_version}/share/extension/adminpack--1.0.sql
+%{_prefix}/%{major_version}/share/extension/adminpack--1.0--1.1.sql
+%{_prefix}/%{major_version}/share/extension/adminpack--1.1.sql
 %{_prefix}/%{major_version}/share/extension/adminpack.control
 %{_prefix}/%{major_version}/share/extension/autoinc--1.0.sql
 %{_prefix}/%{major_version}/share/extension/autoinc--unpackaged--1.0.sql
@@ -1307,6 +1313,8 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/%{_arch64}/pg_recvlogical
 
 %changelog
+* Tue May 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.6.9 and use GCC
 * Fri Nov 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 9.6.6
 * Sat Sep 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

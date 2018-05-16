@@ -201,16 +201,18 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %dir %attr (0755, root, bin) /lib/svc
 %dir %attr (0755, root, bin) /lib/svc/method
 %attr (0555, root, bin) /lib/svc/method/svc-nagios
-
-%files common
-%defattr(-, root, bin)
-## %{_initrddir}/nagios
 %dir %attr(0755, root, sys) %{_sysconfdir}
 %dir %attr(0755, root, nagios) %{_sysconfdir}/nagios
 %config(noreplace) %{_sysconfdir}/nagios/*cfg
 %dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/objects
 %config(noreplace) %{_sysconfdir}/nagios/objects/*cfg
 %dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/private
+
+%files common
+%defattr(-, root, bin)
+## %{_initrddir}/nagios
+%dir %attr(0755, root, sys) %{_sysconfdir}
+%dir %attr(0755, root, nagios) %{_sysconfdir}/nagios
 %dir %attr(0755, root, sys) %{_localstatedir}
 %dir %attr(0755, root, sys) %{_localstatedir}/log
 %dir %attr(0755, root, bin) %{_localstatedir}/spool
@@ -226,6 +228,8 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_includedir}/nagios
 
 %changelog
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix file list
 * Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - delete apache-22 from Requries and BuildRequires because Oracle Solaris 11.3 provides apache-22 and apache-24
 - fix Requires

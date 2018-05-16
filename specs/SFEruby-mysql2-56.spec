@@ -1,211 +1,358 @@
 %include Solaris.inc
 %include default-depend.inc
 
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build25jposug %( if [ -x /opt/jposug/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define generate_executable 0
+%define keep_dependency 0
+
 %define gemname mysql2
-%define mysql_ver 5.6
+%define sfe_gemname mysql2
 
-%define gemdir18 %(/usr/ruby/1.8/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir18 %{gemdir18}/gems/%{gemname}-%{version}
-%define bindir18 /usr/ruby/1.8/bin
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+Name:             SFEruby-%{sfe_gemname}
+IPS_package_name: library/ruby/%{gemname}
+Version:          0.4.10
+License:          MIT
+URL:              http://github.com/brianmario/mysql2
+Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
+BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-%define gemdir19 %(/usr/ruby/1.9/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%define bindir19 /usr/ruby/1.9/bin
-
-%define gemdir20 %(/usr/ruby/2.0/bin/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%define bindir20 /usr/ruby/2.0/bin
-
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-
-Summary: A simple, fast Mysql library for Ruby, binding to libmysql
-Name: SFEruby-%{gemname}-56
-IPS_package_name:        library/ruby-18/mysql2-56
-Version: 0.3.15
-License: MIT License
-URL: http://rubygems.org/gems/%{gemname}
-Source0: http://rubygems.org/downloads/%{gemname}-%{version}.gem
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-
-BuildRequires:	runtime/ruby-18
-BuildRequires:	database/mysql-56
-BuildRequires:	database/mysql-56/library
-Requires:       runtime/ruby-18
-Requires:	database/mysql-56/library
+BuildRequires:    database/mysql-56
+BuildRequires:    database/mysql-56/library
+Requires:         database/mysql-56/library
 
 %description
 A simple, fast Mysql library for Ruby, binding to libmysql
 
-%package 19
-IPS_package_name: library/ruby-19/mysql2-56
-Summary: A simple, fast Mysql library for Ruby, binding to libmysql
-BuildRequires:	runtime/ruby-19
-BuildRequires:	database/mysql-56
-BuildRequires:	database/mysql-56/library
-Requires:	runtime/ruby-19
-Requires:	database/mysql-56/library
-
-%description 19
+%if %{build21}
+%if %{keep_dependency}
+%package 21-old
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}-21
+%description 21-old
 A simple, fast Mysql library for Ruby, binding to libmysql
-
-%package 20
-IPS_package_name: library/ruby-20/mysql2-56
-Summary: A simple, fast Mysql library for Ruby, binding to libmysql
-BuildRequires:	runtime/ruby-20
-BuildRequires:	database/mysql-56
-BuildRequires:	database/mysql-56/library
-Requires:	runtime/ruby-20
-Requires:	database/mysql-56/library
-
-%description 20
-A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
 
 %package 21
-IPS_package_name: library/ruby-21/mysql2-56
-Summary: A simple, fast Mysql library for Ruby, binding to libmysql
-BuildRequires:	runtime/ruby-21
-BuildRequires:	database/mysql-56
-BuildRequires:	database/mysql-56/library
-Requires:	runtime/ruby-21
-Requires:	database/mysql-56/library
+IPS_package_name: library/ruby/%{gemname}-21
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}
 
 %description 21
 A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
+%if %{build22}
+%if %{keep_dependency}
+%package 22-old
+IPS_package_name: library/ruby-22/%{gemname}
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}-22
+
+%description 22-old
+A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
+%package 22
+IPS_package_name: library/ruby/%{gemname}-22
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}
+
+%description 22
+A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}
+
+%description 23
+A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
+%if %{build23jposug}
+
+%package 23jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-23jposug
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    jposug/runtime/ruby-23jposug = *
+Requires:         jposug/runtime/ruby-23jposug = *
+Requires:         jposug/library/ruby/%{gemname}
+
+%description 23jposug
+A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
+%if %{build24jposug}
+
+%package 24jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-24jposug
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    jposug/runtime/ruby-24jposug = *
+Requires:         jposug/runtime/ruby-24jposug = *
+Requires:         jposug/library/ruby/%{gemname}
+
+%description 24jposug
+A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
+%if %{build25jposug}
+
+%package 25jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-25jposug
+Summary:          A simple, fast Mysql library for Ruby, binding to libmysql
+BuildRequires:    jposug/runtime/ruby-25jposug = *
+Requires:         jposug/runtime/ruby-25jposug = *
+Requires:         jposug/library/ruby/%{gemname}
+
+%description 25jposug
+A simple, fast Mysql library for Ruby, binding to libmysql
+%endif
+
 
 %prep
 %setup -q -c -T
-mkdir -p .%{gemdir18}
-mkdir -p .%{bindir18}
-mkdir -p .%{gemdir19}
-mkdir -p .%{bindir19}
-mkdir -p .%{gemdir20}
-mkdir -p .%{bindir20}
 
 %build
-export PATH=/usr/mysql/5.6/bin:$PATH
+build_for() {
+    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    then
+        ruby_ver=$(echo $1 | sed -e 's/jposug//')
+        bindir="/opt/jposug/ruby/${ruby_ver}/bin"
+    else
+        ruby_ver=$1
+        bindir="/usr/ruby/${ruby_ver}/bin"
+    fi
+    gemdir="$(${bindir}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-# ruby-18
-/usr/ruby/1.8/bin/gem install --local \
-    --install-dir .%{gemdir18} \
-    --bindir .%{bindir18} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0} \
-    -- --with-mysql-config=/usr/mysql/5.6/bin/mysql_config
+    ${bindir}/gem install --local \
+        --no-env-shebang \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0} \
+        -- --with-mysql-config=/usr/mysql/5.6/bin/mysql_config
+}
 
-mv .%{gemdir18}/gems//mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir18}/gems//mysql2-%{version}/lib/mysql2/mysql2-56.so
-
-# ruby-19
-export CFLAGS='-m64'
-export LDFLAGS='-L/usr/mysql/5.6/lib/%{_arch64}:/lib/%{_arch64}:/usr/lib/%{_arch64} -R/usr/mysql/5.6/lib/%{_arch64}:/lib/%{_arch64}:/usr/lib/%{_arch64}'
-
-/usr/ruby/1.9/bin/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0} \
-    -- --with-mysql-config=/usr/mysql/5.6/bin/%{_arch64}/mysql_config
-
-mv .%{gemdir19}/gems/mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir19}/gems/mysql2-%{version}/lib/mysql2/mysql2-56.so
-
-# ruby-20
-/usr/ruby/2.0/bin/gem install --local \
-    --install-dir .%{gemdir20} \
-    --bindir .%{bindir20} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0} \
-    -- --with-mysql-config=/usr/mysql/5.6/bin/%{_arch64}/mysql_config
-
-mv .%{gemdir20}/gems/mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir20}/gems/mysql2-%{version}/lib/mysql2/mysql2-56.so
-
+%if %{build21}
 # ruby-21
-%{bindir21}/gem install --local \
-    --install-dir .%{gemdir21} \
-    --bindir .%{bindir21} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0} \
-    -- --with-mysql-config=/usr/mysql/5.6/bin/%{_arch64}/mysql_config
-
-mv .%{gemdir21}/gems/mysql2-%{version}/lib/mysql2/mysql2.so .%{gemdir21}/gems/mysql2-%{version}/lib/mysql2/mysql2-56.so
-
+build_for 2.1
+%endif
+%if %{build22}
+# ruby-22
+build_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
+%if %{build23jposug}
+# ruby-23jposug
+build_for 2.3jposug
+%endif
+%if %{build24jposug}
+# ruby-24jposug
+build_for 2.4jposug
+%endif
+%if %{build25jposug}
+# ruby-25jposug
+build_for 2.5jposug
+%endif
 
 %install
 rm -rf %{buildroot}
 
-# ruby-18
-mkdir -p %{buildroot}/%{gemdir18}
-cp -a .%{gemdir18}/* \
-    %{buildroot}/%{gemdir18}/
+%if %{generate_executable}
+mkdir -p %{buildroot}/%{_bindir}
+%endif
 
-rm -rf %{buildroot}/%{gemdir18}/gems/mysql2-%{version}/ext
-pushd %{buildroot}/%{gemdir18}/gems/mysql2-%{version}/lib/mysql2
-ln -s mysql2-56.so mysql2.so
-popd
+install_for() {
+    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    then
+        ruby_ver=$(echo $1 | sed -e 's/jposug//')
+        dir_prefix="/opt/jposug/ruby/${ruby_ver}"
+        dir_prefix_relative="../../opt/jposug/ruby/${ruby_ver}"
+        jposug='jposug'
+    else
+        ruby_ver=$1
+        dir_prefix="/usr/ruby/${ruby_ver}"
+        dir_prefix_relative="../ruby/${ruby_ver}"
+        jposug=''
+    fi
+    bindir="${dir_prefix}/bin"
+    gemdir="$(${bindir}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-# ruby-19
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
+    mkdir -p %{buildroot}${dir_prefix}
+    cp -a .${dir_prefix}/* \
+        %{buildroot}/${dir_prefix}/
 
-rm -rf %{buildroot}/%{gemdir19}/gems/mysql2-%{version}/ext
-pushd %{buildroot}/%{gemdir19}/gems/mysql2-%{version}/lib/mysql2
-ln -s mysql2-56.so mysql2.so
-popd
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!${bindir}/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!${bindir}/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!${bindir}/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
+%if %{generate_executable}
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ${dir_prefix_relative}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')${jposug}
+    done
+    popd
+%endif
 
-# ruby-20
-mkdir -p %{buildroot}/%{gemdir20}
-cp -a .%{gemdir20}/* \
-    %{buildroot}/%{gemdir20}/
+}
 
-rm -rf %{buildroot}/%{gemdir20}/gems/mysql2-%{version}/ext
-pushd %{buildroot}/%{gemdir20}/gems/mysql2-%{version}/lib/mysql2
-ln -s mysql2-56.so mysql2.so
-popd
-
-# ruby-21
-mkdir -p %{buildroot}/%{gemdir21}
-cp -a .%{gemdir21}/* \
-    %{buildroot}/%{gemdir21}/
-
-rm -rf %{buildroot}/%{gemdir21}/gems/mysql2-%{version}/ext
-pushd %{buildroot}/%{gemdir21}/gems/mysql2-%{version}/lib/mysql2
-ln -s mysql2-56.so mysql2.so
-popd
+%if %{build21}
+install_for 2.1
+%endif
+%if %{build22}
+install_for 2.2
+%endif
+%if %{build23}
+install_for 2.3
+%endif
+%if %{build23jposug}
+install_for 2.3jposug
+%endif
+%if %{build24jposug}
+install_for 2.4jposug
+%endif
+%if %{build25jposug}
+install_for 2.5jposug
+%endif
 
 %clean
 rm -rf %{buildroot}
 
-
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /var
-%attr (0755, root, bin) /var/ruby/1.8/gem_home
 
-%files 19
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/1.9
-
-%files 20
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.0
-
+%if %{build21}
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
+%endif
+
+%if %{build22}
+%files 22
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+
+%if %{build23jposug}
+%files 23jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23jposug
+%endif
+%endif
+
+%if %{build24jposug}
+%files 24jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.4
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*24jposug
+%endif
+%endif
+
+%if %{build25jposug}
+%files 25jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.5
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*25jposug
+%endif
+%endif
+
 
 %changelog
+* Thu Jan 04 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.4.10 and build packages for ruby-2{3,4,5}jposug
+* Thu Oct 20 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.4.4
+* Tue Dec 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.4.2 and build package for ruby-23
+* Wed Jun 17 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.3.18
 * Mon Mar 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - generate package for ruby-21
 * Fri Jan 31 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

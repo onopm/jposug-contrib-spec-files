@@ -1,292 +1,319 @@
 %include Solaris.inc
 %include default-depend.inc
 
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build25jposug %( if [ -x /opt/jposug/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define generate_executable 1
+%define keep_dependency 0
+
 %define gemname serverspec
+%define sfe_gemname serverspec
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
-
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif 
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
-
-Summary:          RSpec tests for your provisioned servers
-Name:             SFEruby-%{gemname}
-IPS_package_name: library/ruby/serverspec
-Version:          2.24.2
-License:          MIT License
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+Name:             SFEruby-%{sfe_gemname}
+IPS_package_name: library/ruby/%{gemname}
+Version:          2.41.3
+License:          MIT
 URL:              http://serverspec.org/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 %description
-RSpec tests for your provisioned servers
-
-%if %{build19}
-%package 19-old
-IPS_package_name: library/ruby-19/serverspec
-Summary:          RSpec tests for your provisioned servers
-BuildRequires:    runtime/ruby-19 = *
-Requires:         runtime/ruby-19 = *
-Requires:         library/ruby/serverspec-19
-
-%description 19-old
-RSpec tests for your provisioned servers
-
-%package 19
-IPS_package_name: library/ruby/serverspec-19
-Summary:          RSpec tests for your provisioned servers
-BuildRequires:    runtime/ruby-19 = *
-Requires:         runtime/ruby-19 = *
-Requires:         library/ruby/rspec-19 >= 3.0.0
-Requires:         library/ruby/rspec-its-19
-Requires:         library/ruby/highline-19
-Requires:         library/ruby/specinfra-19 >= 2.43.0
-Requires:         library/ruby/multi_json-19
-
-%description 19
-RSpec tests for your provisioned servers
-%endif
-
-%if %{build20}
-%package 20-old
-IPS_package_name: library/ruby-20/serverspec
-Summary:          RSpec tests for your provisioned servers
-BuildRequires:    runtime/ruby-20 = *
-Requires:         runtime/ruby-20 = *
-Requires:         library/ruby/serverspec-20
-
-%description 20-old
-RSpec tests for your provisioned servers
-
-%package 20
-IPS_package_name: library/ruby/serverspec-20
-Summary:          RSpec tests for your provisioned servers
-BuildRequires:    runtime/ruby-20 = *
-Requires:         runtime/ruby-20 = *
-Requires:         library/ruby/rspec-20 >= 3.0.0
-Requires:         library/ruby/rspec-its-20
-Requires:         library/ruby/highline-20
-Requires:         library/ruby/specinfra-20 >= 2.43.0
-Requires:         library/ruby/multi_json-20
-
-%description 20
-RSpec tests for your provisioned servers
-%endif
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 
 %if %{build21}
+%if %{keep_dependency}
 %package 21-old
-IPS_package_name: library/ruby-21/serverspec
-Summary:          RSpec tests for your provisioned servers
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby/serverspec-21
+Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
-RSpec tests for your provisioned servers
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+%endif
 
 %package 21
-IPS_package_name: library/ruby/serverspec-21
-Summary:          RSpec tests for your provisioned servers
+IPS_package_name: library/ruby/%{gemname}-21
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby/rspec-21 >= 3.0.0
-Requires:         library/ruby/rspec-its-21
-Requires:         library/ruby/highline-21
-Requires:         library/ruby/specinfra-21 >= 2.43.0
+# multi_json >= 0
 Requires:         library/ruby/multi_json-21
+# rspec ~> 3.0
+Requires:         library/ruby/rspec-21
+# rspec-its >= 0
+Requires:         library/ruby/rspec-its-21
+# specinfra ~> 2.72
+Requires:         library/ruby/specinfra-21 >= 2.72.0
+Requires:         library/ruby/%{gemname}
 
 %description 21
-RSpec tests for your provisioned servers
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 %endif
 
 %if %{build22}
+%if %{keep_dependency}
 %package 22-old
-IPS_package_name: library/ruby-22/serverspec
-Summary:          RSpec tests for your provisioned servers
+IPS_package_name: library/ruby-22/%{gemname}
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-Requires:         library/ruby/serverspec-22
+Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
-RSpec tests for your provisioned servers
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+%endif
 
 %package 22
-IPS_package_name: library/ruby/serverspec-22
-Summary:          RSpec tests for your provisioned servers
+IPS_package_name: library/ruby/%{gemname}-22
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-Requires:         library/ruby/rspec-22 >= 3.0.0
-Requires:         library/ruby/rspec-its-22
-Requires:         library/ruby/highline-22
-Requires:         library/ruby/specinfra-22 >= 2.43.0
+# multi_json >= 0
 Requires:         library/ruby/multi_json-22
+# rspec ~> 3.0
+Requires:         library/ruby/rspec-22
+# rspec-its >= 0
+Requires:         library/ruby/rspec-its-22
+# specinfra ~> 2.72
+Requires:         library/ruby/specinfra-22 >= 2.72.0
+Requires:         library/ruby/%{gemname}
 
 %description 22
-RSpec tests for your provisioned servers
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
 %endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+# multi_json >= 0
+Requires:         library/ruby/multi_json-23
+# rspec ~> 3.0
+Requires:         library/ruby/rspec-23
+# rspec-its >= 0
+Requires:         library/ruby/rspec-its-23
+# specinfra ~> 2.72
+Requires:         library/ruby/specinfra-23 >= 2.72.0
+Requires:         library/ruby/%{gemname}
+
+%description 23
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+%endif
+
+%if %{build23jposug}
+
+%package 23jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-23jposug
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+BuildRequires:    jposug/runtime/ruby-23jposug = *
+Requires:         jposug/runtime/ruby-23jposug = *
+# multi_json >= 0
+Requires:         jposug/library/ruby/multi_json-23jposug
+# rspec ~> 3.0
+Requires:         jposug/library/ruby/rspec-23jposug
+# rspec-its >= 0
+Requires:         jposug/library/ruby/rspec-its-23jposug
+# specinfra ~> 2.72
+Requires:         jposug/library/ruby/specinfra-23jposug >= 2.72.0
+Requires:         jposug/library/ruby/%{gemname}
+
+%description 23jposug
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+%endif
+
+%if %{build24jposug}
+
+%package 24jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-24jposug
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+BuildRequires:    jposug/runtime/ruby-24jposug = *
+Requires:         jposug/runtime/ruby-24jposug = *
+# multi_json >= 0
+Requires:         jposug/library/ruby/multi_json-24jposug
+# rspec ~> 3.0
+Requires:         jposug/library/ruby/rspec-24jposug
+# rspec-its >= 0
+Requires:         jposug/library/ruby/rspec-its-24jposug
+# specinfra ~> 2.72
+Requires:         jposug/library/ruby/specinfra-24jposug >= 2.72.0
+Requires:         jposug/library/ruby/%{gemname}
+
+%description 24jposug
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+%endif
+
+%if %{build25jposug}
+
+%package 25jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-25jposug
+Summary:          RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+BuildRequires:    jposug/runtime/ruby-25jposug = *
+Requires:         jposug/runtime/ruby-25jposug = *
+# multi_json >= 0
+Requires:         jposug/library/ruby/multi_json-25jposug
+# rspec ~> 3.0
+Requires:         jposug/library/ruby/rspec-25jposug
+# rspec-its >= 0
+Requires:         jposug/library/ruby/rspec-its-25jposug
+# specinfra ~> 2.72
+Requires:         jposug/library/ruby/specinfra-25jposug >= 2.72.0
+Requires:         jposug/library/ruby/%{gemname}
+
+%description 25jposug
+RSpec tests for your servers configured by Puppet, Chef, Itamae or anything else
+%endif
+
 
 %prep
 %setup -q -c -T
 
 %build
-# ruby-19
-%if %{build19}
-%{bindir19}/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
+build_for() {
+    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    then
+        ruby_ver=$(echo $1 | sed -e 's/jposug//')
+        bindir="/opt/jposug/ruby/${ruby_ver}/bin"
+    else
+        ruby_ver=$1
+        bindir="/usr/ruby/${ruby_ver}/bin"
+    fi
+    gemdir="$(${bindir}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-pushd .%{gemdir19}/gems/%{gemname}-%{version}/bin/
-ls
-mv serverspec-init serverspec-init.bak
-sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/1.9\/bin\/ruby/' < serverspec-init.bak > serverspec-init
-rm serverspec-init.bak
-popd
-%endif
+    ${bindir}/gem install --local \
+        --no-env-shebang \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0}
+}
 
-# ruby-20
-%if %{build20}
-%{bindir20}/gem install --local \
-    --install-dir .%{gemdir20} \
-    --bindir .%{bindir20} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
-
-pushd .%{gemdir20}/gems/%{gemname}-%{version}/bin/
-mv serverspec-init serverspec-init.bak
-sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.0\/bin\/ruby/' < serverspec-init.bak > serverspec-init
-rm serverspec-init.bak
-popd
-%endif
-
-# ruby-21
 %if %{build21}
-%{bindir21}/gem install --local \
-    --install-dir .%{gemdir21} \
-    --bindir .%{bindir21} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
-
-pushd .%{gemdir21}/gems/%{gemname}-%{version}/bin/
-mv serverspec-init serverspec-init.bak
-sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.1\/bin\/ruby/' < serverspec-init.bak > serverspec-init
-rm serverspec-init.bak
-popd
+# ruby-21
+build_for 2.1
 %endif
-
-# ruby-22
 %if %{build22}
-%{bindir22}/gem install --local \
-    --install-dir .%{gemdir22} \
-    --bindir .%{bindir22} \
-    --no-ri \
-    --no-rdoc \
-    -V \
-    --force %{SOURCE0}
-
-pushd .%{gemdir22}/gems/%{gemname}-%{version}/bin/
-mv serverspec-init serverspec-init.bak
-sed -e 's/\/usr\/bin\/env ruby/\/usr\/ruby\/2.2\/bin\/ruby/' < serverspec-init.bak > serverspec-init
-rm serverspec-init.bak
-popd
+# ruby-22
+build_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
+%if %{build23jposug}
+# ruby-23jposug
+build_for 2.3jposug
+%endif
+%if %{build24jposug}
+# ruby-24jposug
+build_for 2.4jposug
+%endif
+%if %{build25jposug}
+# ruby-25jposug
+build_for 2.5jposug
 %endif
 
 %install
 rm -rf %{buildroot}
+
+%if %{generate_executable}
 mkdir -p %{buildroot}/%{_bindir}
-
-# ruby-19
-%if %{build19}
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
-
-pushd %{buildroot}/%{_bindir}
-ln -s "../$( echo "%{geminstdir19}" | cut -d/ -f3-)/bin/serverspec-init" serverspec-init19
-popd
-
-mkdir -p %{buildroot}/%{bindir19}
-pushd %{buildroot}/%{bindir19}
-ln -s "../$( echo "%{geminstdir19}" | cut -d/ -f5-)/bin/serverspec-init" .
-popd
 %endif
 
-# ruby-20
-%if %{build20}
-mkdir -p %{buildroot}/%{gemdir20}
-cp -a .%{gemdir20}/* \
-    %{buildroot}/%{gemdir20}/
+install_for() {
+    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    then
+        ruby_ver=$(echo $1 | sed -e 's/jposug//')
+        dir_prefix="/opt/jposug/ruby/${ruby_ver}"
+        dir_prefix_relative="../../opt/jposug/ruby/${ruby_ver}"
+        jposug='jposug'
+    else
+        ruby_ver=$1
+        dir_prefix="/usr/ruby/${ruby_ver}"
+        dir_prefix_relative="../ruby/${ruby_ver}"
+        jposug=''
+    fi
+    bindir="${dir_prefix}/bin"
+    gemdir="$(${bindir}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-pushd %{buildroot}/%{_bindir}
-ln -s "../$( echo "%{geminstdir20}" | cut -d/ -f3-)/bin/serverspec-init" serverspec-init20
-popd
+    mkdir -p %{buildroot}${dir_prefix}
+    cp -a .${dir_prefix}/* \
+        %{buildroot}/${dir_prefix}/
 
-mkdir -p %{buildroot}/%{bindir20}
-pushd %{buildroot}/%{bindir20}
-ln -s "../$( echo "%{geminstdir20}" | cut -d/ -f5-)/bin/serverspec-init" .
-popd
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!${bindir}/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!${bindir}/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!${bindir}/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
+%if %{generate_executable}
+    [ -d %{buildroot}/usr/bin ] || mkdir -p %{buildroot}/usr/bin
+    pushd %{buildroot}/usr/bin
+    for i in $(ls ${dir_prefix_relative}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')${jposug}
+    done
+    popd
 %endif
 
-# ruby-21
+}
+
 %if %{build21}
-mkdir -p %{buildroot}/%{gemdir21}
-cp -a .%{gemdir21}/* \
-    %{buildroot}/%{gemdir21}/
-
-pushd %{buildroot}/%{_bindir}
-ln -s "../$( echo "%{geminstdir20}" | cut -d/ -f3-)/bin/serverspec-init" serverspec-init21
-popd
-
-mkdir -p %{buildroot}/%{bindir21}
-pushd %{buildroot}/%{bindir21}
-ln -s "../$( echo "%{geminstdir21}" | cut -d/ -f5-)/bin/serverspec-init" .
-popd
+install_for 2.1
 %endif
-
-# ruby-22
 %if %{build22}
-mkdir -p %{buildroot}/%{gemdir22}
-cp -a .%{gemdir22}/* \
-    %{buildroot}/%{gemdir22}/
-
-pushd %{buildroot}/%{_bindir}
-ln -s "../$( echo "%{geminstdir20}" | cut -d/ -f3-)/bin/serverspec-init" serverspec-init22
-popd
-
-mkdir -p %{buildroot}/%{bindir22}
-pushd %{buildroot}/%{bindir22}
-ln -s "../$( echo "%{geminstdir22}" | cut -d/ -f5-)/bin/serverspec-init" .
-popd
+install_for 2.2
+%endif
+%if %{build23}
+install_for 2.3
+%endif
+%if %{build23jposug}
+install_for 2.3jposug
+%endif
+%if %{build24jposug}
+install_for 2.4jposug
+%endif
+%if %{build25jposug}
+install_for 2.5jposug
 %endif
 
 %clean
@@ -295,52 +322,101 @@ rm -rf %{buildroot}
 %files
 %defattr(0755,root,bin,-)
 
-%if %{build19}
-%files 19-old
-%defattr(0755,root,bin,-)
-
-%files 19
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/bin/serverspec-init19
-/usr/ruby/1.9
-%endif
-
-%if %{build20}
-%files 20-old
-%defattr(0755,root,bin,-)
-
-%files 20
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/bin/serverspec-init20
-/usr/ruby/2.0
-%endif
-
 %if %{build21}
-%files 21-old
-%defattr(0755,root,bin,-)
-
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/bin/serverspec-init21
 /usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
 %endif
 
 %if %{build22}
-%files 22-old
-%defattr(0755,root,bin,-)
-
 %files 22
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
-/usr/bin/serverspec-init22
 /usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+
+%if %{build23jposug}
+%files 23jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23jposug
+%endif
+%endif
+
+%if %{build24jposug}
+%files 24jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.4
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*24jposug
+%endif
+%endif
+
+%if %{build25jposug}
+%files 25jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.5
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*25jposug
+%endif
 %endif
 
 
 %changelog
+* Sun Dec 31 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.41.3 and build packages for ruby-2{3,4,5}jposug
+* Wed Sep 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.40.0
+* Tue May 23 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.39.1
+* Mon Apr 17 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- package for ruby-24 is added, ruby-19 and ruby-20 are obsolete
+* Tue Feb 07 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.38.0
+* Mon Oct 24 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.37.2
+* Tue Oct 11 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.37.0
+* Mon May 23 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.36.0
+* Fri Apr 22 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.32.0
+* Mon Mar 07 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.30.0
+- bump to 2.30.1
+* Tue Feb 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.29.2
+* Sun Dec 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build package for ruby-23
+* Tue Dec 01 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.24.3
 * Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.24.2
 * Tue Oct 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

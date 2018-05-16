@@ -43,39 +43,16 @@ __END__
 %include Solaris.inc
 %include default-depend.inc
 
-%define build19 0
-%define build20 0
-%define build21 1
-%define build22 1
+%define build19 %( if [ -x /usr/ruby/1.9/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build20 %( if [ -x /usr/ruby/2.0/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 1
 
 %define gemname <%= data['name'] %>
 %define sfe_gemname <%= data['name'].gsub(/_/, '-') %>
-
-%if %{build19}
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build20}
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build21}
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-%endif
-
-%if %{build22}
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-%endif
 
 Summary:          <%= data['info'] %>
 Name:             SFEruby-%{sfe_gemname}
@@ -101,8 +78,9 @@ BuildRequires:    runtime/ruby-19 = *
 Requires:         runtime/ruby-19 = *
 <% data['dependencies']['runtime'].each do |req| -%>
 # <%= req['name'] %> <%= req['requirements'] %>
-Requires:         library/ruby/%{gemname}-19
+Requires:         library/ruby/<%= req['name'] %>-19
 <% end -%>
+Requires:         library/ruby/%{gemname}-19
 
 %description 19-old
 <%= data['info'] %>
@@ -131,8 +109,9 @@ BuildRequires:    runtime/ruby-20 = *
 Requires:         runtime/ruby-20 = *
 <% data['dependencies']['runtime'].each do |req| -%>
 # <%= req['name'] %> <%= req['requirements'] %>
-Requires:         library/ruby/%{gemname}-20
+Requires:         library/ruby/<%= req['name'] %>-20
 <% end -%>
+Requires:         library/ruby/%{gemname}-20
 
 %description 20-old
 <%= data['info'] %>
@@ -161,8 +140,9 @@ BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 <% data['dependencies']['runtime'].each do |req| -%>
 # <%= req['name'] %> <%= req['requirements'] %>
-Requires:         library/ruby/%{gemname}-21
+Requires:         library/ruby/<%= req['name'] %>-21
 <% end -%>
+Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
 <%= data['info'] %>
@@ -191,8 +171,9 @@ BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 <% data['dependencies']['runtime'].each do |req| -%>
 # <%= req['name'] %> <%= req['requirements'] %>
-Requires:         library/ruby/%{gemname}-22
+Requires:         library/ruby/<%= req['name'] %>-22
 <% end -%>
+Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
 <%= data['info'] %>
@@ -209,6 +190,37 @@ Requires:         library/ruby/<%= req['name'] %>-22
 <% end -%>
 
 %description 22
+<%= data['info'] %>
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          <%= data['info'] %>
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+<% data['dependencies']['runtime'].each do |req| -%>
+# <%= req['name'] %> <%= req['requirements'] %>
+Requires:         library/ruby/<%= req['name'] %>-23
+<% end -%>
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+<%= data['info'] %>
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          <%= data['info'] %>
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+<% data['dependencies']['runtime'].each do |req| -%>
+# <%= req['name'] %> <%= req['requirements'] %>
+Requires:         library/ruby/<%= req['name'] %>-23
+<% end -%>
+
+%description 23
 <%= data['info'] %>
 %endif
 
@@ -250,6 +262,11 @@ build_for 2.1
 %if %{build22}
 # ruby-22
 build_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+build_for 2.3
 %endif
 
 %install
@@ -316,7 +333,13 @@ install_for 2.1
 %endif
 
 %if %{build22}
+# ruby-22
 install_for 2.2
+%endif
+
+%if %{build23}
+# ruby-23
+install_for 2.3
 %endif
 
 %clean
@@ -366,6 +389,17 @@ rm -rf %{buildroot}
 %if %{generate_executable}
 %dir %attr (0755, root, bin) /usr/bin
 %attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
 %endif
 %endif
 

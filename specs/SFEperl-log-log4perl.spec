@@ -1,106 +1,319 @@
-#
-# spec file for package: SFEperl-log-log4perl
-#
-# This file and all modifications and additions to the pristine
-# package are under the same license as the package itself.
-#
-# includes module(s):
-#
 %include Solaris.inc
 
-%define tarball_version 1.42
-%define tarball_name    Log-Log4perl
+%define build584 0
+%define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define include_executable 1
 
-Name:		SFEperl-log-log4perl
-IPS_package_name: library/perl-5/log-log4perl
-Version:	1.42
-IPS_component_version: 1.42
-Summary:	Log4j implementation in Perl
-License:	Artistic
-Distribution:   OpenSolaris
-Vendor:         OpenSolaris Community
-Url:		http://search.cpan.org/~mschilli/%{tarball_name}-%{tarball_version}
-SUNW_Basedir:	%{_basedir}
-SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHILLI/Log-Log4perl-%{tarball_version}.tar.gz
+%define cpan_name Log-Log4perl
+%define sfe_cpan_name log-log4perl
+%define ips_cpan_name log-log4perl
 
-BuildRequires:	runtime/perl-584
-BuildRequires:	runtime/perl-512
-
-Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
-Meta(info.upstream):            Michael Schilli <m@perlmeister.com>
-Meta(info.upstream_url):        http://search.cpan.org/~mschilli/%{tarball_name}-%{tarball_version}
-Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
+Summary:               Log4j implementation for Perl
+Name:                  SFEperl-%{sfe_cpan_name}
+IPS_package_name:      library/perl-5/%{ips_cpan_name}
+Version:               1.49
+IPS_component_version: 1.49
+License:               unknown
+URL:                   https://metacpan.org/pod/Log::Log4perl
+Source0:               http://cpan.metacpan.org/authors/id/M/MS/MSCHILLI/Log-Log4perl-%{version}.tar.gz
+BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
-Log4j implementation in Perl
+Log4j implementation for Perl
 
+%if %{build584}
 %package 584
-IPS_package_name: library/perl-5/log-log4perl-584
-Summary: Log4j implementation in Perl for perl-584
-BuildRequires:	runtime/perl-584
-Requires:	runtime/perl-584
+IPS_package_name: library/perl-5/%{ips_cpan_name}-584
+Summary:          Log4j implementation for Perl
+BuildRequires:    runtime/perl-584 = *
+BuildRequires:    library/perl-5/extutils-makemaker-584
+BuildRequires:    library/perl-5/file-path-584
+BuildRequires:    library/perl-5/pathtools-584
+BuildRequires:    library/perl-5/test-simple-584
+Requires:         runtime/perl-584 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/file-path-584
+Requires:         library/perl-5/pathtools-584
+Requires:         library/perl-5/test-simple-584
 
+%description 584
+Log4j implementation for Perl
+%endif
+
+%if %{build510}
+%package 510
+IPS_package_name: library/perl-5/%{ips_cpan_name}-510
+Summary:          Log4j implementation for Perl
+BuildRequires:    runtime/perl-510 = *
+BuildRequires:    library/perl-5/extutils-makemaker-510
+BuildRequires:    library/perl-5/file-path-510
+BuildRequires:    library/perl-5/pathtools-510
+BuildRequires:    library/perl-5/test-simple-510
+Requires:         runtime/perl-510 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/file-path-510
+Requires:         library/perl-5/pathtools-510
+Requires:         library/perl-5/test-simple-510
+
+%description 510
+Log4j implementation for Perl
+%endif
+
+%if %{build512}
 %package 512
-IPS_package_name: library/perl-5/log-log4perl-512
-Summary: Log4j implementation in Perl for perl-512
-BuildRequires:	runtime/perl-512
-Requires:	runtime/perl-512
+IPS_package_name: library/perl-5/%{ips_cpan_name}-512
+Summary:          Log4j implementation for Perl
+BuildRequires:    runtime/perl-512 = *
+BuildRequires:    library/perl-5/extutils-makemaker-512
+BuildRequires:    library/perl-5/file-path-512
+BuildRequires:    library/perl-5/pathtools-512
+BuildRequires:    library/perl-5/test-simple-512
+Requires:         runtime/perl-512 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/file-path-512
+Requires:         library/perl-5/pathtools-512
+Requires:         library/perl-5/test-simple-512
+
+%description 512
+Log4j implementation for Perl
+%endif
+
+%if %{build516}
+%package 516
+IPS_package_name: library/perl-5/%{ips_cpan_name}-516
+Summary:          Log4j implementation for Perl
+BuildRequires:    runtime/perl-516 = *
+BuildRequires:    library/perl-5/extutils-makemaker-516
+Requires:         library/perl-5/%{ips_cpan_name}
+BuildRequires:    library/perl-5/file-path-516
+BuildRequires:    library/perl-5/pathtools-516
+BuildRequires:    library/perl-5/test-simple-516
+Requires:         runtime/perl-516 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/file-path-516
+Requires:         library/perl-5/pathtools-516
+Requires:         library/perl-5/test-simple-516
+
+%description 516
+Log4j implementation for Perl
+%endif
+
+%if %{build522}
+%package 522
+IPS_package_name: library/perl-5/%{ips_cpan_name}-522
+Summary:          Log4j implementation for Perl
+BuildRequires:    runtime/perl-522 = *
+BuildRequires:    library/perl-5/extutils-makemaker-522
+BuildRequires:    library/perl-5/file-path-522
+BuildRequires:    library/perl-5/pathtools-522
+BuildRequires:    library/perl-5/test-simple-522
+Requires:         runtime/perl-522 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/file-path-522
+Requires:         library/perl-5/pathtools-522
+Requires:         library/perl-5/test-simple-522
+
+%description 522
+Log4j implementation for Perl
+%endif
 
 
 %prep
-%setup -q -n %{tarball_name}-%{tarball_version}
+%setup -q -n %{cpan_name}-%{version}
+[ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
-export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
-/usr/perl5/5.8.4/bin/perl Makefile.PL PREFIX=%{_prefix} \
-  DESTDIR=$RPM_BUILD_ROOT \
-  LIB=/usr/perl5/vendor_perl/5.8.4
-make
-make test
+build_with_makefile.pl_for() {
+    perl_ver=$1
+    test=$2
+    bindir="/usr/perl5/${perl_ver}/bin"
+    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
 
-rm -rf $RPM_BUILD_ROOT
-make pure_install
-make clean
+    export PERL5LIB=${vendor_dir}
+    ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
+                   DESTDIR=$RPM_BUILD_ROOT \
+                   LIB=${vendor_dir}
 
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/perl5/5.8.4
-mv $RPM_BUILD_ROOT%{_prefix}/bin $RPM_BUILD_ROOT%{_prefix}/perl5/5.8.4
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
+    if [ $? -eq 0 ]
+    then
+        make CC='cc -m32' LD='cc -m32'
+        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
+    else
+        make CC='cc -m64' LD='cc -m64'
+        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
+    fi
 
+    make pure_install
+}
 
-export PERL5LIB=/usr/perl5/vendor_perl/5.12
-/usr/perl5/5.12/bin/perl Makefile.PL PREFIX=%{_prefix} \
-  DESTDIR=$RPM_BUILD_ROOT \
-  LIB=/usr/perl5/vendor_perl/5.12
-make
-make test
+build_with_build.pl_for() {
+    perl_ver=$1
+    test=$2
+    bindir="/usr/perl5/${perl_ver}/bin"
+    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+
+    export PERL5LIB=${vendor_dir}
+    ${bindir}/perl Build.PL \
+                   --installdirs vendor \
+                   --destdir $RPM_BUILD_ROOT
+    ${bindir}/perl ./Build
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
+    ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
+    ${bindir}/perl ./Build clean
+}
+
+modify_bin_dir() {
+    perl_ver=$1
+    if [ -d $RPM_BUILD_ROOT/usr/bin ]
+    then
+      [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+      mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
+    fi
+      
+    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin ]
+    then
+        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
+        do
+            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
+            [ -f ${i}.bak] || rm -f ${i}.bak
+        done
+    fi
+}
+
+modify_man_dir() {
+    perl_ver=$1
+    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man ]
+    then
+        if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
+        then
+            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+        else
+            mkdir -p $RPM_BUILD_ROOT%{_datadir}
+            mv $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
+            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+        fi
+        if [ %{include_executable} -eq 0 ]
+        then
+            rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+        fi
+
+    fi
+}
+
+build_for() {
+  if [ -f Build.PL ];
+  then
+    build_with_build.pl_for $*
+  elif [ -f Makefile.PL ];
+  then
+    build_with_makefile.pl_for $*
+  fi
+
+  modify_bin_dir $*
+  modify_man_dir $*
+}
+
+# To build without test, pass 'without_test' to build_for commaond.
+# like 'build_for version without_test'
+%if %{build584}
+build_for 5.8.4
+%endif
+
+%if %{build510}
+build_for 5.10
+%endif
+
+%if %{build512}
+build_for 5.12
+%endif
+
+%if %{build516}
+build_for 5.16
+%endif
+
+%if %{build522}
+build_for 5.22
+%endif
 
 %install
-make pure_install
-mkdir -p $RPM_BUILD_ROOT%{_datadir}
-mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
-mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/perl5/5.12
-mv $RPM_BUILD_ROOT%{_prefix}/bin $RPM_BUILD_ROOT%{_prefix}/perl5/5.12
+if [ -d $RPM_BUILD_ROOT%{_prefix}/man ]
+then
+    mkdir -p $RPM_BUILD_ROOT%{_datadir}
+    mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
+fi
+if [ -d $RPM_BUILD_ROOT%{_datadir}/man/man3 ]
+then
+    mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
+fi
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
-%defattr(-,root,bin)
-%attr(0755,root,sys) %dir %{_datadir}
-%{_mandir}
+%defattr(0755,root,bin,-)
+%{_datadir}/man
 
+%if %{build584}
 %files 584
-%defattr (-, root, bin)
-%{_prefix}/perl5/vendor_perl/5.8.4
-%{_prefix}/perl5/5.8.4/bin
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.8.4
+%if %{include_executable}
+/usr/perl5/5.8.4
+%endif
+%endif
 
+%if %{build510}
+%files 510
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.10
+%if %{include_executable}
+/usr/perl5/5.1.0
+%endif
+%endif
+
+%if %{build512}
 %files 512
-%defattr (-, root, bin)
-%{_prefix}/perl5/vendor_perl/5.12
-%{_prefix}/perl5/5.12/bin
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.12
+%if %{include_executable}
+/usr/perl5/5.12
+%endif
+%endif
+
+%if %{build516}
+%files 516
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.16
+%if %{include_executable}
+/usr/perl5/5.16
+%endif
+%endif
+
+%if %{build522}
+%files 522
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.22
+%if %{include_executable}
+/usr/perl5/5.22
+%endif
+%endif
 
 %changelog
+* Tue Apr 04 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix sed in modify_bin_dir
+* Tue Apr 04 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- package for perl-522 is added, for perl-520 is obsolete
+* Thu Nov 12 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.46 and build packages for perl-510, perl-516 and perl-520
 * Thu Nov 13 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.42
 * Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

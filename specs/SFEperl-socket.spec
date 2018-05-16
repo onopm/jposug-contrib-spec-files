@@ -1,7 +1,7 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build584 %( if [ -x /usr/perl5/5.8.4/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build584 0
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
@@ -28,6 +28,7 @@ networking constants and support functions
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-584 = *
+BuildRequires:    library/perl-5/extutils-cbuilder-584
 Requires:         library/perl-5/extutils-cbuilder-584
 Requires:         library/perl-5/extutils-constant-584
 Requires:         library/perl-5/extutils-makemaker-584
@@ -42,6 +43,7 @@ networking constants and support functions
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-512 = *
+BuildRequires:    library/perl-5/extutils-cbuilder-512
 Requires:         library/perl-5/extutils-cbuilder-512
 Requires:         library/perl-5/extutils-constant-512
 Requires:         library/perl-5/extutils-makemaker-512
@@ -56,6 +58,7 @@ networking constants and support functions
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-516 = *
+BuildRequires:    library/perl-5/extutils-cbuilder-516
 Requires:         library/perl-5/extutils-cbuilder-516
 Requires:         library/perl-5/extutils-constant-516
 Requires:         library/perl-5/extutils-makemaker-516
@@ -70,6 +73,7 @@ networking constants and support functions
 IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
 Summary:          networking constants and support functions
 BuildRequires:    runtime/perl-520 = *
+BuildRequires:    library/perl-5/extutils-cbuilder-520
 Requires:         library/perl-5/extutils-cbuilder-520
 Requires:         library/perl-5/extutils-constant-520
 Requires:         library/perl-5/extutils-makemaker-520
@@ -204,6 +208,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Jan 13 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- stop to build package for perl-584
+* Wed Dec 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
 - fix IPS package names

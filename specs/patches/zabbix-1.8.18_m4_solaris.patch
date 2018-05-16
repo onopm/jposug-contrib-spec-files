@@ -1,0 +1,65 @@
+diff -ru zabbix-1.8.18.orig/m4/ax_lib_mysql.m4 zabbix-1.8.18/m4/ax_lib_mysql.m4
+--- zabbix-1.8.18.orig/m4/ax_lib_mysql.m4	2013-10-08 20:22:40.000000000 +0900
++++ zabbix-1.8.18/m4/ax_lib_mysql.m4	2013-11-15 22:16:01.578811570 +0900
+@@ -85,7 +85,18 @@
+         if test -f "$MYSQL_CONFIG"; then
+ dnl            AC_MSG_CHECKING([for MySQL libraries])
+ 
+-            MYSQL_CFLAGS="`$MYSQL_CONFIG --cflags`"
++            _full_libmysql_cflags="`$MYSQL_CONFIG --cflags`"
++
++            for i in $_full_libmysql_cflags; do
++                case $i in
++                   -I*)
++                        MYSQL_CFLAGS="${MYSQL_CFLAGS} $i"
++                ;;
++                   -D*)
++                        MYSQL_CFLAGS="${MYSQL_CFLAGS} $i"
++                ;;
++                esac
++            done
+ 
+             _full_libmysql_libs="`$MYSQL_CONFIG --libs`"
+ 
+@@ -96,6 +107,9 @@
+                    -L*)
+                         MYSQL_LDFLAGS="${MYSQL_LDFLAGS} $i"
+                 ;;
++                   -R*)
++                        MYSQL_LDFLAGS="${MYSQL_LDFLAGS} $i"
++                ;;
+                 esac
+             done
+ 
+@@ -122,7 +136,8 @@
+ 		LIBS="${LIBS} ${MYSQL_LIBS}"
+ 		LDFLAGS="${LDFLAGS} ${MYSQL_LDFLAGS}"
+ 		CFLAGS="${CFLAGS} ${MYSQL_CFLAGS}"
+-
++		echo LDFLAGS="${LDFLAGS}"
++		echo CFLAGS="${CFLAGS}"
+ 		AC_CHECK_LIB(mysqlclient , main,[
+ 			MYSQL_LIBS="-lmysqlclient ${MYSQL_LIBS}"
+ 			],[
+diff -ru zabbix-1.8.18.orig/m4/iconv.m4 zabbix-1.8.18/m4/iconv.m4
+--- zabbix-1.8.18.orig/m4/iconv.m4	2013-10-08 20:22:40.000000000 +0900
++++ zabbix-1.8.18/m4/iconv.m4	2013-11-15 23:24:26.007848709 +0900
+@@ -33,11 +33,16 @@
+ [
+ 	AC_MSG_CHECKING(for ICONV support)
+ 
+-	if test -f /usr/include/iconv.h; then
++
++	if test -f /usr/gnu/include/iconv.h; then
++		ICONV_CFLAGS="-I/usr/gnu/include"
++		ICONV_LDFLAGS="-L/usr/gnu/lib -R/usr/gnu/lib"
++		found_iconv="yes"
++	elif test -f /usr/include/iconv.h; then
+ 		found_iconv="yes"
+ 	elif test -f /usr/local/include/iconv.h; then
+ 		ICONV_CFLAGS="-I/usr/local/include"
+-		ICONV_LDFLAGS="-L/usr/local/lib"
++		ICONV_LDFLAGS="-L/usr/local/lib -R/usr/local/lib"
+ 		found_iconv="yes"
+ 	else
+ 		found_iconv="no"

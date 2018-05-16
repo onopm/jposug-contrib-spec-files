@@ -1,0 +1,11 @@
+--- autoconf-2.68.orig/configure	2010-09-23 07:38:20.000000000 +0900
++++ autoconf-2.68/configure	2013-11-14 23:59:53.223740959 +0900
+@@ -2196,7 +2196,7 @@
+ 
+ 
+ # Define the identity of the package.
+- PACKAGE='autoconf'
++ PACKAGE='autoconf-2.68'
+  VERSION='2.68'
+ 
+ 

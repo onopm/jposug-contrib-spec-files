@@ -1,48 +1,52 @@
-diff -r 8aa0659f8400 -r e1cbf60e4b69 Lib/distutils/command/install.py
---- a/Lib/distutils/command/install.py	Fri May 11 00:30:53 2012 +0900
-+++ b/Lib/distutils/command/install.py	Fri May 11 00:50:01 2012 +0900
+diff --git a/Lib/distutils/command/install.py b/Lib/distutils/command/install.py
+--- a/Lib/distutils/command/install.py
++++ b/Lib/distutils/command/install.py
 @@ -44,8 +44,8 @@
  
  INSTALL_SCHEMES = {
      'unix_prefix': {
 -        'purelib': '$base/lib/python$py_version_short/site-packages',
 -        'platlib': '$platbase/lib/python$py_version_short/site-packages',
-+        'purelib': '$base/lib/amd64/python$py_version_short/site-packages',
-+        'platlib': '$platbase/lib/amd64/python$py_version_short/site-packages',
++        'purelib': '$base/lib64/python$py_version_short/site-packages',
++        'platlib': '$platbase/lib64/python$py_version_short/site-packages',
          'headers': '$base/include/python$py_version_short$abiflags/$dist_name',
          'scripts': '$base/bin',
          'data'   : '$base',
-diff -r 8aa0659f8400 -r e1cbf60e4b69 Lib/distutils/sysconfig.py
---- a/Lib/distutils/sysconfig.py	Fri May 11 00:30:53 2012 +0900
-+++ b/Lib/distutils/sysconfig.py	Fri May 11 00:50:01 2012 +0900
+diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
+--- a/Lib/distutils/sysconfig.py
++++ b/Lib/distutils/sysconfig.py
 @@ -123,7 +123,7 @@
  
      if os.name == "posix":
          libpython = os.path.join(prefix,
 -                                 "lib", "python" + get_python_version())
-+                                 "lib/amd64", "python" + get_python_version())
++                                 "lib64", "python" + get_python_version())
          if standard_lib:
              return libpython
          else:
-diff -r 8aa0659f8400 -r e1cbf60e4b69 Lib/site.py
---- a/Lib/site.py	Fri May 11 00:30:53 2012 +0900
-+++ b/Lib/site.py	Fri May 11 00:50:01 2012 +0900
-@@ -285,10 +285,10 @@
+diff --git a/Lib/site.py b/Lib/site.py
+--- a/Lib/site.py
++++ b/Lib/site.py
+@@ -285,13 +285,13 @@
          if sys.platform in ('os2emx', 'riscos'):
              sitepackages.append(os.path.join(prefix, "Lib", "site-packages"))
          elif os.sep == '/':
 -            sitepackages.append(os.path.join(prefix, "lib",
-+            sitepackages.append(os.path.join(prefix, "lib/amd64",
++            sitepackages.append(os.path.join(prefix, "lib64",
                                          "python" + sys.version[:3],
                                          "site-packages"))
 -            sitepackages.append(os.path.join(prefix, "lib", "site-python"))
-+            sitepackages.append(os.path.join(prefix, "lib/amd64", "site-python"))
++            sitepackages.append(os.path.join(prefix, "lib64", "site-python"))
          else:
              sitepackages.append(prefix)
-             sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
-diff -r 8aa0659f8400 -r e1cbf60e4b69 Lib/sysconfig.py
---- a/Lib/sysconfig.py	Fri May 11 00:30:53 2012 +0900
-+++ b/Lib/sysconfig.py	Fri May 11 00:50:01 2012 +0900
+-            sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
++            sitepackages.append(os.path.join(prefix, "lib64", "site-packages"))
+         if sys.platform == "darwin":
+             # for framework builds *only* we add the standard Apple
+             # locations.
+diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
+--- a/Lib/sysconfig.py
++++ b/Lib/sysconfig.py
 @@ -21,10 +21,10 @@
  
  _INSTALL_SCHEMES = {
@@ -51,85 +55,116 @@ diff -r 8aa0659f8400 -r e1cbf60e4b69 Lib/sysconfig.py
 -        'platstdlib': '{platbase}/lib/python{py_version_short}',
 -        'purelib': '{base}/lib/python{py_version_short}/site-packages',
 -        'platlib': '{platbase}/lib/python{py_version_short}/site-packages',
-+        'stdlib': '{base}/lib/amd64/python{py_version_short}',
-+        'platstdlib': '{platbase}/lib/amd64/python{py_version_short}',
-+        'purelib': '{base}/lib/amd64/python{py_version_short}/site-packages',
-+        'platlib': '{platbase}/lib/amd64/python{py_version_short}/site-packages',
++        'stdlib': '{base}/lib64/python{py_version_short}',
++        'platstdlib': '{platbase}/lib64/python{py_version_short}',
++        'purelib': '{base}/lib64/python{py_version_short}/site-packages',
++        'platlib': '{platbase}/lib64/python{py_version_short}/site-packages',
          'include':
              '{base}/include/python{py_version_short}{abiflags}',
          'platinclude':
-diff -r 8aa0659f8400 -r e1cbf60e4b69 Makefile.pre.in
---- a/Makefile.pre.in	Fri May 11 00:30:53 2012 +0900
-+++ b/Makefile.pre.in	Fri May 11 00:50:01 2012 +0900
+@@ -33,10 +33,10 @@
+         'data': '{base}',
+         },
+     'posix_home': {
+-        'stdlib': '{base}/lib/python',
+-        'platstdlib': '{base}/lib/python',
+-        'purelib': '{base}/lib/python',
+-        'platlib': '{base}/lib/python',
++        'stdlib': '{base}/lib64/python',
++        'platstdlib': '{base}/lib64/python',
++        'purelib': '{base}/lib64/python',
++        'platlib': '{base}/lib64/python',
+         'include': '{base}/include/python',
+         'platinclude': '{base}/include/python',
+         'scripts': '{base}/bin',
+diff --git a/Lib/test/test_site.py b/Lib/test/test_site.py
+--- a/Lib/test/test_site.py
++++ b/Lib/test/test_site.py
+@@ -223,15 +223,15 @@
+             self.assertEqual(dirs[0], wanted)
+         elif os.sep == '/':
+             self.assertEqual(len(dirs), 2)
+-            wanted = os.path.join('xoxo', 'lib', 'python' + sys.version[:3],
++            wanted = os.path.join('xoxo', 'lib64', 'python' + sys.version[:3],
+                                   'site-packages')
+             self.assertEqual(dirs[0], wanted)
+-            wanted = os.path.join('xoxo', 'lib', 'site-python')
++            wanted = os.path.join('xoxo', 'lib64', 'site-python')
+             self.assertEqual(dirs[1], wanted)
+         else:
+             self.assertEqual(len(dirs), 2)
+             self.assertEqual(dirs[0], 'xoxo')
+-            wanted = os.path.join('xoxo', 'lib', 'site-packages')
++            wanted = os.path.join('xoxo', 'lib64', 'site-packages')
+             self.assertEqual(dirs[1], wanted)
+ 
+         # let's try the specific Apple location
+diff --git a/Makefile.pre.in b/Makefile.pre.in
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
 @@ -106,7 +106,7 @@
  MANDIR=		@mandir@
  INCLUDEDIR=	@includedir@
  CONFINCLUDEDIR=	$(exec_prefix)/include
 -SCRIPTDIR=	$(prefix)/lib
-+SCRIPTDIR=	$(prefix)/lib/amd64
++SCRIPTDIR=	$(prefix)/lib64
  ABIFLAGS=	@ABIFLAGS@
  
  # Detailed destination directories
-diff -r 8aa0659f8400 -r e1cbf60e4b69 Modules/Setup.dist
---- a/Modules/Setup.dist	Fri May 11 00:30:53 2012 +0900
-+++ b/Modules/Setup.dist	Fri May 11 00:50:01 2012 +0900
+diff --git a/Modules/Setup.dist b/Modules/Setup.dist
+--- a/Modules/Setup.dist
++++ b/Modules/Setup.dist
 @@ -352,7 +352,7 @@
  # Andrew Kuchling's zlib module.
  # This require zlib 1.1.3 (or later).
  # See http://www.gzip.org/zlib/
 -#zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz
-+#zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib/amd64 -lz
++#zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib64 -lz
  
  # Interface to the Expat XML parser
  #
-diff -r 8aa0659f8400 -r e1cbf60e4b69 Modules/getpath.c
---- a/Modules/getpath.c	Fri May 11 00:30:53 2012 +0900
-+++ b/Modules/getpath.c	Fri May 11 00:50:01 2012 +0900
+diff --git a/Modules/getpath.c b/Modules/getpath.c
+--- a/Modules/getpath.c
++++ b/Modules/getpath.c
 @@ -135,7 +135,7 @@
  static wchar_t progpath[MAXPATHLEN+1];
  static wchar_t *module_search_path = NULL;
  static int module_search_path_malloced = 0;
 -static wchar_t *lib_python = L"lib/python" VERSION;
-+static wchar_t *lib_python = L"lib/amd64/python" VERSION;
++static wchar_t *lib_python = L"lib64/python" VERSION;
  
  static void
  reduce(wchar_t *dir)
-@@ -580,10 +580,12 @@
-     if (pfound > 0) { /* Use the reduced prefix returned by Py_GetPrefix() */
-         reduce(zip_path);
-         reduce(zip_path);
-+        reduce(zip_path);
+@@ -583,7 +583,7 @@
      }
      else
          wcsncpy(zip_path, _prefix, MAXPATHLEN);
 -    joinpath(zip_path, L"lib/python00.zip");
-+    /* Add amd64 directory*/
-+    joinpath(zip_path, L"lib/amd64/python00.zip");
++    joinpath(zip_path, L"lib64/python00.zip");
      bufsz = wcslen(zip_path);   /* Replace "00" with version */
      zip_path[bufsz - 6] = VERSION[0];
      zip_path[bufsz - 5] = VERSION[2];
-@@ -698,6 +700,8 @@
-     if (pfound > 0) {
-         reduce(prefix);
-         reduce(prefix);
-+	/* amd64 library path ajust */
-+	reduce(prefix);
-         /* The prefix is the root directory, but reduce() chopped
-          * off the "/". */
-         if (!prefix[0])
-@@ -710,6 +714,8 @@
-         reduce(exec_prefix);
-         reduce(exec_prefix);
-         reduce(exec_prefix);
-+	/* amd64 library path ajust */
-+	reduce(exec_prefix);
-         if (!exec_prefix[0])
-                 wcscpy(exec_prefix, separator);
+@@ -593,7 +593,7 @@
+             fprintf(stderr,
+                 "Could not find platform dependent libraries <exec_prefix>\n");
+         wcsncpy(exec_prefix, _exec_prefix, MAXPATHLEN);
+-        joinpath(exec_prefix, L"lib/lib-dynload");
++        joinpath(exec_prefix, L"lib64/lib-dynload");
      }
-diff -r 8aa0659f8400 -r e1cbf60e4b69 setup.py
---- a/setup.py	Fri May 11 00:30:53 2012 +0900
-+++ b/setup.py	Fri May 11 00:50:01 2012 +0900
-@@ -643,11 +643,11 @@
+     /* If we found EXEC_PREFIX do *not* reduce it!  (Yet.) */
+ 
+diff --git a/setup.py b/setup.py
+--- a/setup.py
++++ b/setup.py
+@@ -449,6 +449,7 @@
+         # if a file is found in one of those directories, it can
+         # be assumed that no additional -I,-L directives are needed.
+         lib_dirs = self.compiler.library_dirs + [
++            '/usr/lib/amd64', '/usr/sfw/lib/and64',
+             '/lib64', '/usr/lib64',
+             '/lib', '/usr/lib',
+             ]
+@@ -643,11 +644,11 @@
              elif curses_library:
                  readline_libs.append(curses_library)
              elif self.compiler.find_library_file(lib_dirs +

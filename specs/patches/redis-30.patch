@@ -1,0 +1,28 @@
+diff -r a6c62305ced9 src/cluster.c
+--- a/src/cluster.c	Wed Jul 15 08:16:53 2015 +0900
++++ b/src/cluster.c	Wed Jul 15 08:22:23 2015 +0900
+@@ -361,6 +361,8 @@
+     /* To lock it, we need to open the file in a way it is created if
+      * it does not exist, otherwise there is a race condition with other
+      * processes. */
++
++    struct flock lck;
+     int fd = open(filename,O_WRONLY|O_CREAT,0644);
+     if (fd == -1) {
+         redisLog(REDIS_WARNING,
+@@ -369,8 +371,13 @@
+         return REDIS_ERR;
+     }
+ 
+-    if (flock(fd,LOCK_EX|LOCK_NB) == -1) {
+-        if (errno == EWOULDBLOCK) {
++    lck.l_type = F_WRLCK;
++    lck.l_whence = 0;
++    lck.l_start = (off_t)0;
++    lck.l_len = (off_t)0;
++
++    if (fcntl(fd, F_SETLK, &lck) <0) {
++      if (errno == EAGAIN || errno == EACCES) {
+             redisLog(REDIS_WARNING,
+                  "Sorry, the cluster configuration file %s is already used "
+                  "by a different Redis Cluster node. Please make sure that "

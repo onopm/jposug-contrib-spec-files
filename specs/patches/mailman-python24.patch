@@ -1,0 +1,11 @@
+--- Mailman/Cgi/confirm.py
++++ Mailman/Cgi/confirm.py
+@@ -794,7 +794,7 @@
+         return
+ 
+     date = time.strftime('%A, %B %d, %Y',
+-                         time.localtime(time.mktime(info.date + (0,)*6)))
++                         time.localtime(time.mktime(info.date + (0,0,0,0,1,0))))
+     daysleft = int(info.noticesleft *
+                    mlist.bounce_you_are_disabled_warnings_interval /
+                    mm_cfg.days(1))

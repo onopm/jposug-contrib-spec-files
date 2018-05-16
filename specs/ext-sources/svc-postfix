@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# postfix       This shell script takes care of starting and stopping
+#               postfix.
+#
+#
+#
+# description: Postfix is a Mail Transport Agent, which is the program
+#              that moves mail from one machine to another.
+
+[ -f /usr/postfix/sbin/postfix ] || exit 0
+
+. /lib/svc/share/smf_include.sh
+ 
+# See how we were called.
+
+# Check for echo -n vs echo \c
+if echo '\c' | grep -s c >/dev/null 2>&1 ; then
+    ECHO_N="echo -n"
+    ECHO_C=""
+else
+    ECHO_N="echo"
+    ECHO_C='\c'
+fi
+
+case "$1" in
+  start)
+        # Start daemons.
+        $ECHO_N "Starting postfix: "$ECHO_C
+        /usr/postfix/sbin/postalias hash:/etc/mail/aliases
+        for I in access canonical relocated transport virtual vmailbox vmaildomains sasl_senders
+        do
+        if [ -f /etc/postfix/$I ] ; then
+           /usr/postfix/sbin/postmap hash:/etc/postfix/$I < /etc/postfix/$I
+        fi
+        done
+        /usr/postfix/sbin/postfix start 2>/dev/null
+        echo postfix
+        ;;
+  stop)
+        # Stop daemons.
+        $ECHO_N "Shutting down postfix: "$ECHO_C
+        /usr/postfix/sbin/postfix stop 2>/dev/null
+        echo postfix
+        ;;
+  restart)
+        $0 stop
+        $0 start
+        ;;
+  reload)
+        /usr/postfix/sbin/postfix reload
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart|reload}"
+        exit 1
+esac
+
+exit 0

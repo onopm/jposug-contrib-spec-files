@@ -12,7 +12,7 @@
 
 Name:		SFEperl-dbd-pg90
 IPS_package_name: library/perl-5/dbd-pg90
-Version:	2.19.2
+Version:	2.19.3
 Summary:	Postgres Driver for DBI
 License:	Artistic
 Distribution:   OpenSolaris
@@ -27,10 +27,11 @@ Requires:  	%{pnm_requires_perl_default}
 BuildRequires:	SFEperl-version
 BuildRequires:	SFEperl-test-simple
 BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
-BuildRequires:	SFEpostgres-90-library
-BuildRequires:	SFEpostgres-90-developer
+BuildRequires:	database/postgres-90/library
+BuildRequires:	database/postgres-90/developer
+
 Requires:	%{pnm_requires_SUNWpmdbi}
-Requires:	SFEpostgres-90-library
+Requires:	database/postgres-90/library
 
 Meta(info.maintainer):          taki@justplayer.com
 Meta(info.upstream):            Greg Sabino Mullane <greg@turnstep.com>
@@ -48,8 +49,8 @@ Postgres Driver for DBI
 # BuildRequires:	library/perl-5/test-simple-584
 # BuildRequires:	library/perl-5/json-pp-584 # not builded yet
 # BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
-# BuildRequires:	SFEpostgres-90-library
-# BuildRequires:	SFEpostgres-90-developer
+# BuildRequires:	SFEpostgres-90-libs
+# BuildRequires:	SFEpostgres-90-devel
 # Requires:	runtime/perl-584
 
 %package 512
@@ -60,8 +61,8 @@ BuildRequires:	library/perl-5/version-512
 BuildRequires:	library/perl-5/test-simple-512
 BuildRequires:	library/perl-5/json-pp-512
 BuildRequires:	%{pnm_buildrequires_SUNWpmdbi}
-BuildRequires:	SFEpostgres-90-library
-BuildRequires:	SFEpostgres-90-developer
+BuildRequires:	database/postgres-90/library
+BuildRequires:	database/postgres-90/developer
 Requires:	runtime/perl-512
 
 
@@ -101,11 +102,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,bin)
-%{_prefix}/perl5
-%attr(755,root,sys) %dir %{_datadir}
+%attr(0755,root,sys) %dir %{_datadir}
 %{_mandir}
-#%attr(755,root,sys) %dir %{_bindir}
-#%{_bindir}/*
 
 # %files 584
 # %defattr (-, root, bin)
@@ -116,6 +114,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Nov 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.19.3
+* Mon Jan 21 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
+* Sun Jan 06 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modifyl %files section because dbd-pg90 and dbd-pg90-512 included same file and conflicted
 * Fri Jun 15 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.19.2
 - generate packages for perl-512

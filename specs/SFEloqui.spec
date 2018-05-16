@@ -8,11 +8,12 @@
 %include Solaris.inc
 %define cc_is_gcc 1
 %include packagenamemacros.inc
+%include base.inc
 
 %define _prefix	         /usr
 %define _var_prefix      /var
 %define tarball_name     loqui
-%define tarball_version  0.5.1
+%define tarball_version  0.5.5
 %define major_version    0.5
 
 %define _basedir         %{_prefix}
@@ -20,7 +21,7 @@
 Name:                    SFEloqui
 IPS_package_name:        desktop/irc/loqui
 Summary:	         Loqui IRC Client for Gtk2
-Version:                 0.5.1
+Version:                 0.5.5
 License:		 GPL
 Url:                     https://launchpad.net/%{tarball_name}
 Source:			 http://launchpad.net/%{tarball_name}/%{major_version}/%{tarball_version}/+download/%{tarball_name}-%{tarball_version}.tar.gz
@@ -31,6 +32,13 @@ SUNW_Basedir:            %{_basedir}
 SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
+%if %( expr %{osbuild} '=' 175 )
+BuildRequires: developer/gcc-45
+Requires:      system/library/gcc-45-runtime
+%else
+BuildRequires: developer/gcc-46
+Requires:      system/library/gcc-runtime
+%endif
 BuildRequires: SFEgob
 Requires: SFEgob
 
@@ -136,16 +144,21 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr (0755, root, bin) %{_bindir}
 %{_bindir}/*
-%dir %attr (0755, root, bin) %{_prefix}/share
-%{_prefix}/share/*
+%dir %attr (0755, root, sys) %{_prefix}/share
+%attr (0755, root, other) %{_prefix}/share/*
 
 %changelog
+* Tue Mar 19 2013 - TAKI <taki@justplayer.com>
+- bump to 0.5.5
+* Tue Feb 05 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change BuildRequires that refer to gcc at OI
+* Tue Jan 19 JST 2013 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- Support for OpenIndiana
+* Sat Jan  5 JST 2013 TAKI, Yasushi <taki@justplayer.com>
+- bump to 0.5.3
+- add build requires gcc-45
 * Sun Jun  5 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - fix dependency using for pnm.
-* Mon Apr 18 JST 2011 TAKI, Yasushi <taki@justplayer.com>
-- Bump to 9.0.4
-* Fri Feb  4 JST 2011 TAKI, Yasushi <taki@justplayer.com>
-- Support 9.0.3
 * Tue Feb  1 JST 2011 TAKI, Yasushi <taki@justplayer.com>
 - Fix some problems.
 * Tue Jan 25 JST 2011 TAKI, Yasushi <taki@justplayer.com>

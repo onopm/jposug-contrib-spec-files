@@ -1,0 +1,24 @@
+--- mysql2-0.3.11/ext/mysql2/extconf.rb.orig	2014-06-05 16:09:06.109227018 +0900
++++ mysql2-0.3.11/ext/mysql2/extconf.rb	2014-06-05 16:13:59.711389863 +0900
+@@ -61,13 +61,15 @@
+   asplode h unless have_header h
+ end
+ 
+-unless RUBY_PLATFORM =~ /mswin/ or RUBY_PLATFORM =~ /sparc/
++#unless RUBY_PLATFORM =~ /mswin/ or RUBY_PLATFORM =~ /sparc/
+   $CFLAGS << ' -Wall -funroll-loops'
+-end
++#end
+ # $CFLAGS << ' -O0 -ggdb3 -Wextra'
+ 
+-if hard_mysql_path = $libs[%r{-L(/[^ ]+)}, 1]
+-	$LDFLAGS << " -Wl,-rpath,#{hard_mysql_path}"
+-end
+-
++#if hard_mysql_path = $libs[%r{-L(/[^ ]+)}, 1]
++#	$LDFLAGS << " -Wl,-rpath,#{hard_mysql_path}"
++#end
++$CPPFLAGS = $CPPFLAGS.gsub(/(-x[^\s]+|-f[^\s]+|-mt)/, '')
++$CFLAGS = $CFLAGS.gsub(/(-Xlinker|-i)/, '')
++$libs = $libs.gsub(/(-lCrun|-L\/opt\/SUNWspro\/lib)/, '')
+ create_makefile('mysql2/mysql2')

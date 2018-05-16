@@ -1,0 +1,31 @@
+--- nagios/html/Makefile.in.orig	2011-08-23 14:33:02.210279180 +0900
++++ nagios/html/Makefile.in	2011-08-23 14:35:12.514405289 +0900
+@@ -44,6 +44,8 @@
+ 	$(INSTALL) -m 775 $(INSTALL_OPTS) -d $(DESTDIR)$(HTMLDIR)/includes
+ 	$(INSTALL) -m 775 $(INSTALL_OPTS) -d $(DESTDIR)$(HTMLDIR)/includes/rss
+ 	$(INSTALL) -m 775 $(INSTALL_OPTS) -d $(DESTDIR)$(HTMLDIR)/includes/rss/extlib
++	$(INSTALL) -m 775 $(INSTALL_OPTS) -d $(DESTDIR)$(HTMLDIR)/includes/rss/htdocs
++	$(INSTALL) -m 775 $(INSTALL_OPTS) -d $(DESTDIR)$(HTMLDIR)/includes/rss/scripts
+ 	$(INSTALL) -m 775 $(INSTALL_OPTS) -d $(DESTDIR)$(HTMLDIR)/ssi
+ 	$(INSTALL) -m 664 $(INSTALL_OPTS) robots.txt $(DESTDIR)$(HTMLDIR)
+ #	$(INSTALL) -m 664 $(INSTALL_OPTS) docs/robots.txt $(DESTDIR)$(HTMLDIR)/docs
+@@ -75,10 +77,18 @@
+ 	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/images/logos; done
+ 	for file in includes/*.*; \
+ 	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes; done
+-	for file in includes/rss/*; \
++	for file in includes/rss/*.inc; \
+ 	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes/rss; done
+ 	for file in includes/rss/extlib/*; \
+ 	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes/rss/extlib; done
++	for file in includes/rss/htdocs/*; \
++	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes/rss/extlib; done
++	for file in includes/rss/scripts/*.php; \
++	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes/rss/extlib; done
++	for file in includes/rss/scripts/templates/*; \
++	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes/rss/extlib; done
++	for file in includes/rss/scripts/smarty_plugin/*; \
++	do $(INSTALL) -m 664 $(INSTALL_OPTS) $$file $(DESTDIR)$(HTMLDIR)/includes/rss/extlib; done
+ 
+ install-unstripped:
+ 	$(MAKE) install

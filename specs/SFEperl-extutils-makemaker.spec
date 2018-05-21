@@ -309,7 +309,6 @@ modify_man_dir() {
         then
             rmdir $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}
         fi
-
     fi
 }
 
@@ -378,6 +377,9 @@ if [ -d $RPM_BUILD_ROOT%{_datadir}/man/man3 ]
 then
     mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 fi
+
+gfind $RPM_BUILD_ROOT -type f |egrep '(ExtUtils/(Install|Installed|Packlist).pm|ExtUtils::(Install|Installed|Packlist).3)' | \
+    xargs rm
 
 %clean
 rm -rf %{buildroot}
@@ -485,6 +487,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon May 21 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete files to avoid conflict with ExtUtils-Install
 * Thu May 17 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for perl-526jposug
 * Fri May 11 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

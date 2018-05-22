@@ -1,0 +1,13 @@
+--- mysql-2.9.1/ext/mysql_api/extconf.rb.orig	2014-06-06 09:37:46.887711825 +0900
++++ mysql-2.9.1/ext/mysql_api/extconf.rb	2014-06-06 09:52:28.028295186 +0900
+@@ -41,7 +41,9 @@
+     have_library(libs.shift)
+   end
+ end
+-
++$CPPFLAGS = $CPPFLAGS.gsub(/(-x[^\s]+|-f[^\s]+|-mt)/, '')
++$CFLAGS = $CFLAGS.gsub(/(-Xlinker|-i)/, '')
++$libs = $libs.gsub(/(-lCrun|-L\/opt\/SUNWspro\/lib)/, '')
+ have_func('mysql_ssl_set')
+ have_func('rb_str_set_len')
+ have_func('rb_thread_start_timer')

@@ -1,0 +1,10 @@
+--- src/util/sys_defs.h	2012-12-08 00:57:17.507166092 +0900
++++ src/util/sys_defs.h.new	2012-12-08 00:57:33.356293525 +0900
+@@ -420,7 +420,6 @@
+ #define ALIAS_DB_MAP	"dbm:/etc/mail/aliases"
+ #ifndef NO_NIS
+ #define HAS_NIS
+-#define HAS_NISPLUS
+ #endif
+ #define USE_SYS_SOCKIO_H		/* Solaris 2.5, changed sys/ioctl.h */
+ #define GETTIMEOFDAY(t)	gettimeofday(t)

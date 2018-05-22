@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+<!DOCTYPE service_bundle SYSTEM "C:\Users\yamachan\Documents\repos\selfnavi\SMF\service_bundle.dtd">
+-->
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<service_bundle type="manifest" name="zabbix18_agent">
+	<service name="site/zabbix18_agent" type="service" version="1">
+		<create_default_instance enabled="false"/>
+		<single_instance/>
+		<dependency name="network" grouping="require_all" restart_on="error" type="service">
+			<service_fmri value="svc:/milestone/network:default"/>
+		</dependency>
+		<dependency name="system-log" grouping="optional_all" restart_on="none" type="service">
+			<service_fmri value="svc:/system/system-log"/>
+		</dependency>
+		<dependency name="config-file" grouping="require_all" restart_on="none" type="path">
+			<service_fmri value="file:///etc/zabbix/1.8/zabbix_agent.conf"/>
+		</dependency>
+		<exec_method type="method" name="start" exec="/lib/svc/method/zabbix18_agent start" timeout_seconds="180"/>
+		<exec_method type="method" name="stop" exec="/lib/svc/method/zabbix18_agent stop" timeout_seconds="120"/>
+		<exec_method type="method" name="refresh" exec="/lib/svc/method/zabbix18_anget reload" timeout_seconds="120"/>
+		<!--
+	    The init scripts should never automatically be run twice.
+	    duration=transient tells svc.startd not to restart if no
+	    processes are left running, and timeout_retry=false tells
+	    svc.startd not to retry the start method if it times out.
+		-->
+		<stability value="Unstable"/>
+		<template>
+			<common_name>
+				<loctext xml:lang="C">
+				Zabbix is the ultimate enterprise-level software designed for monitoring availability and performance of IT infrastructure components. Zabbix is open source and comes at no cost.
+				</loctext>
+			</common_name>
+			<documentation>
+				<doc_link name="zabbix" uri="https://www.zabbix.com/documentation/doku.php?id=1.8/start"/>
+			</documentation>
+		</template>
+	</service>
+</service_bundle>

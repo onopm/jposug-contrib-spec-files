@@ -82,7 +82,7 @@ Requires:	system/library/freetype-2
 BuildRequires:  developer/gcc-3
 Requires:	system/header/header-audio
 Requires:	system/library/math/header-math
-BuildRequires:  library/media/header-gsm
+BuildRequires:  library/media/gsm/developer
 Requires:       library/media/gsm
 BuildRequires:  library/media/mpg123
 Requires:       media/mpg123
@@ -267,6 +267,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}
 
 %changelog
+* Tue Jan 29 2013 - YAMAMOTO Takashi<yamachan@selfnavi.com>
+- change dependecy
 * Wed Mar 02 2011 - Satoru MIYAZAKI<s.miyaza@gmail.com>
 - bump to 1.3.14
 - Support for Solaris11 Express.

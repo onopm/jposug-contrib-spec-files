@@ -4,27 +4,39 @@
 # includes module(s): bzr
 #
 %include Solaris.inc
+%include packagenamemacros.inc
 
 %define python_version 2.6
 
+%define bzr_major_version 2.5
+
 Name:		SFEbzr
-IPS_Package_Name:	developer/versioning/bazaar
+IPS_Package_Name:	developer/versioning/bzr
 Summary:	Bazaar Source Code Management System
 License:	GPLv2+
 SUNW_Copyright:	bzr.copyright
 Group:		Development/Source Code Management
-Version:	2.4.2
-Source:		http://launchpad.net/bzr/2.4/%{version}/+download/bzr-%{version}.tar.gz
+Version:	2.5.1
+Source:		http://launchpad.net/bzr/%{bzr_major_version}/%{version}/+download/bzr-%{version}.tar.gz
 URL:		http://bazaar-vcs.org
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:	%{_prefix}
-Requires: SUNWPython26
-%include default-depend.inc
-BuildRequires: SUNWPython26-devel
 
+#Requires: SUNWPython26
+Requires: %{pnm_requires_SUNWPython26}
+#BuildRequires: SUNWPython26-devel
+BuildRequires: %{pnm_buildrequires_SUNWPython26_devel}
 
 %description
 Bazaar source code management system.
+
+%if %build_l10n
+%package l10n
+Summary:                 %{summary} - l10n files
+SUNW_BaseDir:            %{_basedir}
+%include default-depend.inc
+Requires:        %{name}
+%endif
 
 %prep
 %setup -q -n bzr-%{version}
@@ -39,6 +51,11 @@ rm -rf $RPM_BUILD_ROOT
 /usr/bin/python%{python_version} setup.py install --prefix=$RPM_BUILD_ROOT%{_prefix}
 mv $RPM_BUILD_ROOT%{_libdir}/python%{python_version}/site-packages \
    $RPM_BUILD_ROOT%{_libdir}/python%{python_version}/vendor-packages
+
+%if %build_l10n
+%else
+rm -rf %{buildroot}%{_datadir}/locale
+%endif
 
 # Delete optimized py code
 find $RPM_BUILD_ROOT%{_prefix} -type f -name "*.pyo" -exec rm -f {} ';'
@@ -60,7 +77,21 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, sys) %{_datadir}
 %{_mandir}/man1/bzr.1
 
+%if %build_l10n
+%files l10n
+%defattr (-, root, bin)
+%dir %attr (0755, root, bin) %{_localedir}
+%{_localedir}/*
+%endif
+
 %changelog
+* Sun Dec 23 2012 - TAKI,Yasushi <taki@justplayer.com>
+- use packagenamemacros.inc.
+- use _localedir for /usr/local/locale
+* Mon Jul 23 2012 - Milan Jurik
+- bump to 2.5.1
+* Wed Mar 28 2012 - knut.hatlen@oracle.com
+- bump to 2.5.0
 * Sun Dec 11 2011 - Milan Jurik
 - bump to 2.4.2
 * Sat Jul 23 2011 - Guido Berhoerster <gber@openindiana.org>

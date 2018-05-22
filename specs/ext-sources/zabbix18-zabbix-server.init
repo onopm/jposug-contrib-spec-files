@@ -1,0 +1,88 @@
+#! /bin/sh
+#
+# chkconfig: - 85 15
+# description: zabbix server daemon
+#
+
+### BEGIN INIT INFO
+# Provides: zabbix
+# Required-Start: $local_fs $network
+# Required-Stop: $local_fs $network
+# Default-Start:
+# Default-Stop: 0 1 2 3 4 5 6
+# Short-Description: start and stop zabbix server
+# Description: Zabbix Server
+### END INIT INFO
+
+# zabbix details
+if [ -x /usr/sbin/zabbix_server ]; then
+    ZABBIX=zabbix_server
+elif [ -x /usr/sbin/zabbix_server_mysql ]; then
+    ZABBIX=zabbix_server_mysql
+elif [ -x /usr/sbin/zabbix_server_pgsql ]; then
+    ZABBIX=zabbix_server_pgsql
+elif [ -x /usr/sbin/zabbix_server_sqlite3 ]; then
+    ZABBIX=zabbix_server_sqlite3
+else
+    echo "Please install a package diagnostic/zabbix18/server/mysql or diagnostic/zabbix18/server/pgsql." 1>&2
+    exit 5
+fi
+
+CONF=/etc/zabbix/1.8/zabbix_server.conf
+PIDFILE=/var/zabbix/1.8/run/zabbix_server.pid
+
+# Source function library.
+#. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+#. /etc/sysconfig/network
+
+# Check that networking is up.
+#[ ${NETWORKING} = "no" ] && exit 0
+
+if [ ! -e $CONF ]; then
+    echo "Error in file $CONF." 1>&2
+    exit 6
+fi
+
+RETVAL=0
+
+case "$1" in
+    start)
+        echo "Starting zabbix server: \c"
+        $ZABBIX -c $CONF
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && touch /var/zabbix/1.8/run/zabbix.lock
+        ;;
+    stop)
+        echo "Shutting down zabbix server: \c"
+        pkill -9 -n zabbix_server
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && rm -f /var/zabbix/1.8/run/zabbix.lock
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        RETVAL=$?
+        ;;
+    condrestart)
+        if [ -f /var/zabbix/1.8/run/zabbix.lock ]; then
+            $0 stop
+            $0 start
+        fi
+        RETVAL=$?
+        ;;
+    reload)
+        $ZABBIX -c $CONF -R config_cache_reload
+        RETVAL=$?
+        ;;
+    *)
+	echo "Usage: $0 {start|stop|restart|condrestart|reload}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+

@@ -1,0 +1,52 @@
+#!/bin/sh
+
+. /lib/svc/share/smf_include.sh
+
+getproparg() {
+        val=`svcprop -p $1 $SMF_FMRI`
+        [ -n "$val" ] && echo $val
+}
+
+JETTY_JAVA=`getproparg jetty/java`
+JETTY_HOME=`getproparg jetty/jetty_home`
+JETTY_BASE=`getproparg jetty/jetty_base`
+JETTY_EXEC_USER=`getproparg jetty/exec_user`
+JETTY_LANG=`getproparg jetty/lang`
+PIDFILE='/var/run/jetty/jetty.pid'
+
+JAVA_OPTIONS="-Djetty.logs=/var/jetty/logs -Djetty.home=${JETTY_HOME} -Djetty.base=${JETTY_BASE} `getproparg jetty/java_options`"
+
+
+if [ -z $SMF_FMRI ]; then
+	echo "Error: SMF framework variables are not initialized"
+	exit $SMF_EXIT_ERR
+fi
+
+case "$1" in
+'start')
+	printf "Starting jetty:"
+	if [ ! -d `dirname ${PIDFILE}` ]
+	then
+	    mkdir -p `dirname ${PIDFILE}`
+	fi
+	cd ${JETTY_BASE}
+	sudo -u ${JETTY_EXEC_USER} LANG=${JETTY_LANG} ${JETTY_JAVA} ${JAVA_OPTIONS} -jar ${JETTY_HOME}/start.jar &
+	echo $! > ${PIDFILE}
+        ;;
+'stop')
+    if [ -f $PIDFILE ]
+    then
+	printf "Stopping jetty:"
+	kill `cat ${PIDFILE}`
+	rm ${PIDFILE}
+    else
+	printf "pid file not found: ${PIDFILE}"
+    fi
+    ;;
+*)
+        echo "Usage: $0 {start|stop}"
+        exit 1
+        ;;
+
+esac
+exit $SMF_EXIT_OK

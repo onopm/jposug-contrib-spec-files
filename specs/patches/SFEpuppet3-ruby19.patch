@@ -1,0 +1,11 @@
+--- /tmp/puppet.bak	2013-11-18 14:18:18.122408009 +0900
++++ /tmp/puppet	2013-11-18 14:18:29.407064178 +0900
+@@ -1,4 +1,8 @@
+ #!/usr/ruby/1.9/bin/ruby
++# -*- coding: utf-8 -*-
++
++Encoding.default_external = Encoding::UTF_8
++Encoding.default_internal = Encoding::UTF_8
+ 
+ require 'puppet/util/command_line'
+ Puppet::Util::CommandLine.new.execute

@@ -1,0 +1,55 @@
+#! /bin/sh
+#
+# chkconfig: - 84 16
+# description:	PHP FastCGI Process Manager
+# processname: php-fpm
+# config: /etc/php/5.4/php-fpm.conf
+# config: /etc/php/5.4/sysconfig/php-fpm
+# pidfile: /var/run/php-fpm/php-fpm.pid
+#
+### BEGIN INIT INFO
+# Provides: php-fpm
+# Required-Start: $local_fs $remote_fs $network $named
+# Required-Stop: $local_fs $remote_fs $network
+# Short-Description: start and stop PHP FPM
+# Description: PHP FastCGI Process Manager
+### END INIT INFO
+
+. /lib/svc/share/smf_include.sh
+
+# Additional environment file
+if [ -f /etc/php/5.4/sysconfig/php-fpm ]; then
+      . /etc/php/5.4/sysconfig/php-fpm
+fi
+
+RETVAL=0
+prog="php-fpm"
+
+start() {
+	echo $"Starting $prog: \c"
+	/usr/php/5.4/sbin/$prog --daemonize
+	echo "OK"
+}
+stop_fpm() {
+	echo "Stopping $prog: \c"
+	pkill $prog
+}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop_fpm
+	;;
+  configtest)
+ 	/usr/php/5.4/sbin/$prog --test
+	RETVAL=$?
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|configtest}"
+	RETVAL=2
+        ;;
+esac
+
+exit $RETVAL

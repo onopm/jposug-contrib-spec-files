@@ -1,0 +1,536 @@
+diff -ru OpenIPMI-2.0.19.orig/cmdlang/cmdlang.c OpenIPMI-2.0.19/cmdlang/cmdlang.c
+--- OpenIPMI-2.0.19.orig/cmdlang/cmdlang.c	2006-02-07 10:03:35.000000000 +0900
++++ OpenIPMI-2.0.19/cmdlang/cmdlang.c	2013-11-14 15:47:41.816014980 +0900
+@@ -54,7 +54,7 @@
+ /* Internal includes, do not use in your programs */
+ #include <OpenIPMI/internal/ipmi_locks.h>
+ #include <OpenIPMI/internal/ipmi_malloc.h>
+-
++#define u_int32_t uint32_t
+ /*
+  * This is the value passed to a command handler.
+  */
+diff -ru OpenIPMI-2.0.19.orig/cmdlang/Makefile.am OpenIPMI-2.0.19/cmdlang/Makefile.am
+--- OpenIPMI-2.0.19.orig/cmdlang/Makefile.am	2010-07-15 01:25:27.000000000 +0900
++++ OpenIPMI-2.0.19/cmdlang/Makefile.am	2013-11-14 15:47:41.817127334 +0900
+@@ -15,7 +15,7 @@
+ 	$(top_builddir)/utils/libOpenIPMIutils.la \
+ 	$(top_builddir)/lib/libOpenIPMI.la
+ libOpenIPMIcmdlang_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIcmdlang.map
++	 
+ 
+ bin_PROGRAMS = openipmish
+ 
+diff -ru OpenIPMI-2.0.19.orig/cmdlang/Makefile.in OpenIPMI-2.0.19/cmdlang/Makefile.in
+--- OpenIPMI-2.0.19.orig/cmdlang/Makefile.in	2011-10-13 00:35:09.000000000 +0900
++++ OpenIPMI-2.0.19/cmdlang/Makefile.in	2013-11-14 15:47:41.818576949 +0900
+@@ -310,7 +310,7 @@
+ 	$(top_builddir)/lib/libOpenIPMI.la
+ 
+ libOpenIPMIcmdlang_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIcmdlang.map
++	 
+ 
+ openipmish_SOURCES = ipmish.c os_debug.c
+ openipmish_LDADD = libOpenIPMIcmdlang.la \
+diff -ru OpenIPMI-2.0.19.orig/configure OpenIPMI-2.0.19/configure
+--- OpenIPMI-2.0.19.orig/configure	2011-10-13 00:35:11.000000000 +0900
++++ OpenIPMI-2.0.19/configure	2013-11-14 15:47:41.832931604 +0900
+@@ -12632,13 +12632,13 @@
+ ;;
+ esac
+ 
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for tgetent in -lcurses" >&5
+-$as_echo_n "checking for tgetent in -lcurses... " >&6; }
++{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for tgetent in -lncurses" >&5
++$as_echo_n "checking for tgetent in -lncurses... " >&6; }
+ if test "${ac_cv_lib_curses_tgetent+set}" = set; then :
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lcurses  $LIBS"
++LIBS="-lncurses  $LIBS"
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -12669,7 +12669,7 @@
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_curses_tgetent" >&5
+ $as_echo "$ac_cv_lib_curses_tgetent" >&6; }
+ if test "x$ac_cv_lib_curses_tgetent" = x""yes; then :
+-  TERM_LIBS=-lcurses
++  TERM_LIBS=-lncurses
+ else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for tgetent in -lncursesw" >&5
+ $as_echo_n "checking for tgetent in -lncursesw... " >&6; }
+@@ -13258,7 +13258,7 @@
+ 
+ fi
+ 
+-for ac_header in fcntl.h limits.h malloc.h stdlib.h string.h sys/ioctl.h sys/param.h termios.h unistd.h curses.h ncurses.h sys/cdefs.h
++for ac_header in fcntl.h limits.h malloc.h stdlib.h string.h sys/ioctl.h sys/param.h termios.h unistd.h ncurses/ncurses.h sys/cdefs.h
+ do :
+   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
+@@ -13276,9 +13276,9 @@
+ for ac_header in term.h
+ do :
+   ac_fn_c_check_header_compile "$LINENO" "term.h" "ac_cv_header_term_h" "#if HAVE_CURSES_H
+-# include <curses.h>
++# include <ncurses/curses.h>
+ #elif HAVE_NCURSES_H
+-# include <ncurses.h>
++# include <ncurses/ncurses.h>
+ #endif
+ 
+ "
+diff -ru OpenIPMI-2.0.19.orig/glib/Makefile.am OpenIPMI-2.0.19/glib/Makefile.am
+--- OpenIPMI-2.0.19.orig/glib/Makefile.am	2010-07-15 01:25:51.000000000 +0900
++++ OpenIPMI-2.0.19/glib/Makefile.am	2013-11-14 15:47:41.834281762 +0900
+@@ -12,13 +12,13 @@
+ libOpenIPMIglib_la_LIBADD = $(GDBM_LIB)
+ libOpenIPMIglib_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+ 	-rpath $(libdir) \
+-	-Wl,-Map -Wl,libOpenIPMIglib.map $(GLIB_LIBS)
++	  $(GLIB_LIBS)
+ 
+ libOpenIPMIglib12_la_SOURCES = glib_os_hnd.c
+ libOpenIPMIglib12_la_CFLAGS = $(GLIB12_CFLAGS) $(AM_CFLAGS)
+ libOpenIPMIglib12_la_LIBADD = $(GDBM_LIB)
+ libOpenIPMIglib12_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+ 	-rpath $(libdir) \
+-	-Wl,-Map -Wl,libOpenIPMIglib12.map $(GLIB12_LIBS)
++	  $(GLIB12_LIBS)
+ 
+ CLEANFILES = libOpenIPMIglib.map libOpenIPMIglib12.map glib12_os_hnd.c
+diff -ru OpenIPMI-2.0.19.orig/glib/Makefile.in OpenIPMI-2.0.19/glib/Makefile.in
+--- OpenIPMI-2.0.19.orig/glib/Makefile.in	2011-10-13 00:35:09.000000000 +0900
++++ OpenIPMI-2.0.19/glib/Makefile.in	2013-11-14 15:47:41.835739833 +0900
+@@ -295,14 +295,14 @@
+ libOpenIPMIglib_la_LIBADD = $(GDBM_LIB)
+ libOpenIPMIglib_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+ 	-rpath $(libdir) \
+-	-Wl,-Map -Wl,libOpenIPMIglib.map $(GLIB_LIBS)
++	  $(GLIB_LIBS)
+ 
+ libOpenIPMIglib12_la_SOURCES = glib_os_hnd.c
+ libOpenIPMIglib12_la_CFLAGS = $(GLIB12_CFLAGS) $(AM_CFLAGS)
+ libOpenIPMIglib12_la_LIBADD = $(GDBM_LIB)
+ libOpenIPMIglib12_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+ 	-rpath $(libdir) \
+-	-Wl,-Map -Wl,libOpenIPMIglib12.map $(GLIB12_LIBS)
++	  $(GLIB12_LIBS)
+ 
+ CLEANFILES = libOpenIPMIglib.map libOpenIPMIglib12.map glib12_os_hnd.c
+ all: all-am
+diff -ru OpenIPMI-2.0.19.orig/include/OpenIPMI/selector.h OpenIPMI-2.0.19/include/OpenIPMI/selector.h
+--- OpenIPMI-2.0.19.orig/include/OpenIPMI/selector.h	2004-12-03 10:30:48.000000000 +0900
++++ OpenIPMI-2.0.19/include/OpenIPMI/selector.h	2013-11-14 20:02:21.559248472 +0900
+@@ -33,7 +33,9 @@
+ 
+ #ifndef SELECTOR
+ #define SELECTOR
++#define selector_t __vendor_selector_t
+ #include <sys/time.h> /* For timeval */
++#undef __vendor_selector_t
+ #include <OpenIPMI/os_handler.h>
+ 
+ #ifdef __cplusplus
+diff -ru OpenIPMI-2.0.19.orig/lanserv/lanserv_emu.c OpenIPMI-2.0.19/lanserv/lanserv_emu.c
+--- OpenIPMI-2.0.19.orig/lanserv/lanserv_emu.c	2010-04-21 21:56:00.000000000 +0900
++++ OpenIPMI-2.0.19/lanserv/lanserv_emu.c	2013-11-14 15:47:41.837374419 +0900
+@@ -53,7 +53,8 @@
+  *      products derived from this software without specific prior
+  *      written permission.
+  */
+-
++#define _XPG4_2 1
++#define __EXTENSIONS__ 1
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ #include <netinet/in.h>
+@@ -521,7 +522,7 @@
+ 	}
+     }
+ }
+-
++#undef s_addr
+ int
+ main(int argc, const char *argv[])
+ {
+@@ -570,7 +571,7 @@
+ 	    ipaddr->sin_port = htons(port);
+ 	else
+ 	    ipaddr->sin_port = htons(623);
+-	ipaddr->sin_addr.s_addr = INADDR_ANY;
++	ipaddr->sin_addr.S_un.S_addr = INADDR_ANY;
+ 	addr_len[0] = sizeof(*ipaddr);
+ 	num_addr++;
+     }
+@@ -587,7 +588,7 @@
+ 	    exit(1);
+ 	}
+ 
+-	memcpy(addr_data, &addr[i].s_ipsock.s_addr4.sin_addr.s_addr, 4);
++	memcpy(addr_data, &addr[i].s_ipsock.s_addr4.sin_addr.S_un.S_addr, 4);
+ 	memcpy(addr_data+4, &addr[i].s_ipsock.s_addr4.sin_port, 2);
+ 	ipmi_emu_set_addr(emu, i, 0, addr_data, 6);
+     }
+diff -ru OpenIPMI-2.0.19.orig/lanserv/lanserv.c OpenIPMI-2.0.19/lanserv/lanserv.c
+--- OpenIPMI-2.0.19.orig/lanserv/lanserv.c	2010-07-15 02:03:48.000000000 +0900
++++ OpenIPMI-2.0.19/lanserv/lanserv.c	2013-11-14 15:47:41.838961129 +0900
+@@ -52,7 +52,8 @@
+  *      products derived from this software without specific prior
+  *      written permission.
+  */
+-
++#define _XPG4_2 1
++#define __EXTENSIONS__ 1
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ #include <netinet/in.h>
+@@ -72,6 +73,7 @@
+ #if HAVE_SYSLOG
+ #include <syslog.h>
+ #endif
++#include <drm/drm.h>
+ 
+ #include <OpenIPMI/ipmi_log.h>
+ #include <OpenIPMI/ipmi_err.h>
+@@ -633,7 +635,7 @@
+ 	struct sockaddr_in *ipaddr = (void *) &addr[0];
+ 	ipaddr->sin_family = AF_INET;
+ 	ipaddr->sin_port = htons(623);
+-	ipaddr->sin_addr.s_addr = INADDR_ANY;
++	ipaddr->sin_addr.S_un.S_addr = INADDR_ANY;
+ 	addr_len[0] = sizeof(*ipaddr);
+ 	num_addr++;
+     }
+diff -ru OpenIPMI-2.0.19.orig/lanserv/Makefile.am OpenIPMI-2.0.19/lanserv/Makefile.am
+--- OpenIPMI-2.0.19.orig/lanserv/Makefile.am	2010-07-15 01:29:41.000000000 +0900
++++ OpenIPMI-2.0.19/lanserv/Makefile.am	2013-11-14 15:47:41.839957856 +0900
+@@ -19,7 +19,7 @@
+ 	../utils/md5.c
+ libIPMIlanserv_la_LIBADD = $(OPENSSLLIBS)
+ libIPMIlanserv_la_LDFLAGS = -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libIPMIlanserv.map
++	 
+ 
+ ipmi_checksum_SOURCES = ipmi_checksum.c
+ 
+diff -ru OpenIPMI-2.0.19.orig/lanserv/Makefile.in OpenIPMI-2.0.19/lanserv/Makefile.in
+--- OpenIPMI-2.0.19.orig/lanserv/Makefile.in	2011-10-13 00:35:10.000000000 +0900
++++ OpenIPMI-2.0.19/lanserv/Makefile.in	2013-11-14 15:47:41.841575394 +0900
+@@ -357,7 +357,7 @@
+ 
+ libIPMIlanserv_la_LIBADD = $(OPENSSLLIBS)
+ libIPMIlanserv_la_LDFLAGS = -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libIPMIlanserv.map
++	 
+ 
+ ipmi_checksum_SOURCES = ipmi_checksum.c
+ ipmilan_SOURCES = lanserv.c
+diff -ru OpenIPMI-2.0.19.orig/lanserv/OpenIPMI/lanserv.h OpenIPMI-2.0.19/lanserv/OpenIPMI/lanserv.h
+--- OpenIPMI-2.0.19.orig/lanserv/OpenIPMI/lanserv.h	2010-04-21 21:55:59.000000000 +0900
++++ OpenIPMI-2.0.19/lanserv/OpenIPMI/lanserv.h	2013-11-14 15:47:41.842953443 +0900
+@@ -497,7 +497,7 @@
+ 
+ void ipmi_handle_smi_rsp(lan_data_t *lan, msg_t *msg,
+ 			 unsigned char *rsp, int rsp_len);
+-
++#undef s_addr
+ typedef struct sockaddr_ip_s {
+     union
+         {
+diff -ru OpenIPMI-2.0.19.orig/lib/ipmi_lan.c OpenIPMI-2.0.19/lib/ipmi_lan.c
+--- OpenIPMI-2.0.19.orig/lib/ipmi_lan.c	2010-07-15 02:36:56.000000000 +0900
++++ OpenIPMI-2.0.19/lib/ipmi_lan.c	2013-11-14 15:47:41.849476560 +0900
+@@ -46,6 +46,7 @@
+ #include <string.h>
+ #include <netdb.h>
+ #include <arpa/inet.h>
++#include <strings.h>
+ 
+ #include <OpenIPMI/ipmi_conn.h>
+ #include <OpenIPMI/ipmi_msgbits.h>
+@@ -56,6 +57,7 @@
+ #include <OpenIPMI/internal/ipmi_event.h>
+ #include <OpenIPMI/internal/ipmi_int.h>
+ #include <OpenIPMI/internal/locked_list.h>
++#undef s_addr   /* Windows, Solaris etc defines it as macro */
+ 
+ #if defined(DEBUG_MSG) || defined(DEBUG_RAWMSG)
+ static void
+@@ -1126,7 +1128,7 @@
+ 	    struct sockaddr_in *ip2 = &a2->s_ipsock.s_addr4;
+ 
+ 	    if ((ip1->sin_port == ip2->sin_port)
+-		&& (ip1->sin_addr.s_addr == ip2->sin_addr.s_addr))
++		&& (ip1->sin_addr.S_un.S_addr == ip2->sin_addr.S_un.S_addr))
+ 		return 1;
+ 	}
+ 	break;
+@@ -1373,7 +1375,7 @@
+     case PF_INET:
+ 	{
+ 	    struct sockaddr_in *iaddr = (struct sockaddr_in *) addr;
+-	    idx = ntohl(iaddr->sin_addr.s_addr) % LAN_HASH_SIZE;
++	    idx = ntohl(iaddr->sin_addr.S_un.S_addr) % LAN_HASH_SIZE;
+ 	    break;
+ 	}
+ #ifdef PF_INET6
+@@ -5847,7 +5849,7 @@
+ 		struct sockaddr_in *src, *dst;
+ 		src = (struct sockaddr_in *) src_addr;
+ 		dst = &(l->lan->cparm.ip_addr[i].s_ipsock.s_addr4);
+-		if (dst->sin_addr.s_addr == src->sin_addr.s_addr) {
++		if (dst->sin_addr.S_un.S_addr == src->sin_addr.S_un.S_addr) {
+ 		    /* We have a match, handle it */
+ 		    lan = l->lan;
+ 		    lan->refcount++;
+diff -ru OpenIPMI-2.0.19.orig/lib/Makefile.am OpenIPMI-2.0.19/lib/Makefile.am
+--- OpenIPMI-2.0.19.orig/lib/Makefile.am	2010-07-15 01:27:42.000000000 +0900
++++ OpenIPMI-2.0.19/lib/Makefile.am	2013-11-14 15:47:41.850636269 +0900
+@@ -19,6 +19,6 @@
+ libOpenIPMI_la_LIBADD = -lm $(top_builddir)/utils/libOpenIPMIutils.la \
+ 	$(OPENSSLLIBS)
+ libOpenIPMI_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMI.map
++	 
+ 
+ CLEANFILES = libOpenIPMI.map
+diff -ru OpenIPMI-2.0.19.orig/lib/Makefile.in OpenIPMI-2.0.19/lib/Makefile.in
+--- OpenIPMI-2.0.19.orig/lib/Makefile.in	2011-10-13 00:35:10.000000000 +0900
++++ OpenIPMI-2.0.19/lib/Makefile.in	2013-11-14 15:47:41.852050734 +0900
+@@ -306,7 +306,7 @@
+ 	$(OPENSSLLIBS)
+ 
+ libOpenIPMI_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMI.map
++	 
+ 
+ CLEANFILES = libOpenIPMI.map
+ all: all-am
+diff -ru OpenIPMI-2.0.19.orig/lib/oem_atca_conn.c OpenIPMI-2.0.19/lib/oem_atca_conn.c
+--- OpenIPMI-2.0.19.orig/lib/oem_atca_conn.c	2009-06-16 09:22:20.000000000 +0900
++++ OpenIPMI-2.0.19/lib/oem_atca_conn.c	2013-11-14 15:47:41.853946629 +0900
+@@ -40,6 +40,7 @@
+ #include <fcntl.h>
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
++#include <strings.h>
+ 
+ #include <OpenIPMI/ipmi_conn.h>
+ #include <OpenIPMI/ipmi_err.h>
+@@ -49,6 +50,7 @@
+ 
+ #include <OpenIPMI/internal/ipmi_oem.h>
+ #include <OpenIPMI/internal/ipmi_int.h>
++#undef s_addr   /* Windows, Solaris etc defines it as macro */
+ 
+ static unsigned char asf_iana[] = { 0x00, 0x00, 0x11, 0xbe };
+ 
+@@ -83,7 +85,7 @@
+ 	    struct sockaddr_in *ip2 = &a2->s_ipsock.s_addr4;
+ 
+ 	    if ((ip1->sin_port == ip2->sin_port)
+-		&& (ip1->sin_addr.s_addr == ip2->sin_addr.s_addr))
++		&& (ip1->sin_addr.S_un.S_addr == ip2->sin_addr.S_un.S_addr))
+ 		return 1;
+ 	}
+ 	break;
+@@ -305,7 +307,7 @@
+ 	    goto out;
+ 	}
+ 	ainfo->addr.s_ipsock.s_addr.sa_family = AF_INET;
+-	memcpy(&ainfo->addr.s_ipsock.s_addr4.sin_addr.s_addr, msg->data+10, 4);
++	memcpy(&ainfo->addr.s_ipsock.s_addr4.sin_addr.S_un.S_addr, msg->data+10, 4);
+ 	memcpy(&ainfo->addr.s_ipsock.s_addr4.sin_port, msg->data+14, 2);
+ 	ainfo->addr_len = sizeof(struct sockaddr_in);
+     } else {
+diff -ru OpenIPMI-2.0.19.orig/lib/oem_intel.c OpenIPMI-2.0.19/lib/oem_intel.c
+--- OpenIPMI-2.0.19.orig/lib/oem_intel.c	2010-04-21 21:56:00.000000000 +0900
++++ OpenIPMI-2.0.19/lib/oem_intel.c	2013-11-14 15:47:41.855363576 +0900
+@@ -33,6 +33,7 @@
+ 
+ #include <string.h>
+ #include <stdlib.h>
++#include <alloca.h>
+ 
+ #include <OpenIPMI/ipmiif.h>
+ #include <OpenIPMI/ipmi_err.h>
+diff -ru OpenIPMI-2.0.19.orig/sample/ipmi_serial_bmc_emu.c OpenIPMI-2.0.19/sample/ipmi_serial_bmc_emu.c
+--- OpenIPMI-2.0.19.orig/sample/ipmi_serial_bmc_emu.c	2010-07-15 02:16:37.000000000 +0900
++++ OpenIPMI-2.0.19/sample/ipmi_serial_bmc_emu.c	2013-11-14 15:47:41.857258964 +0900
+@@ -46,7 +46,7 @@
+ 
+ #define _GNU_SOURCE
+ #include <getopt.h>
+-
++#undef s_addr
+ typedef struct sockaddr_ip_s {
+     union
+         {
+diff -ru OpenIPMI-2.0.19.orig/tcl/Makefile.am OpenIPMI-2.0.19/tcl/Makefile.am
+--- OpenIPMI-2.0.19.orig/tcl/Makefile.am	2010-07-15 01:25:36.000000000 +0900
++++ OpenIPMI-2.0.19/tcl/Makefile.am	2013-11-14 15:47:41.858262664 +0900
+@@ -12,7 +12,7 @@
+ libOpenIPMItcl_la_LIBADD = $(GDBM_LIB)
+ libOpenIPMItcl_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+ 	-rpath $(libdir) \
+-	-Wl,-Map -Wl,libOpenIPMItcl.map $(TCL_LIBS)
++	  $(TCL_LIBS)
+ 
+ noinst_PROGRAMS = test_handlers
+ 
+diff -ru OpenIPMI-2.0.19.orig/tcl/Makefile.in OpenIPMI-2.0.19/tcl/Makefile.in
+--- OpenIPMI-2.0.19.orig/tcl/Makefile.in	2011-10-13 00:35:10.000000000 +0900
++++ OpenIPMI-2.0.19/tcl/Makefile.in	2013-11-14 15:47:41.859663952 +0900
+@@ -297,7 +297,7 @@
+ libOpenIPMItcl_la_LIBADD = $(GDBM_LIB)
+ libOpenIPMItcl_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+ 	-rpath $(libdir) \
+-	-Wl,-Map -Wl,libOpenIPMItcl.map $(TCL_LIBS)
++	  $(TCL_LIBS)
+ 
+ test_handlers_SOURCES = test_handlers.c
+ test_handlers_LDADD = libOpenIPMItcl.la \
+diff -ru OpenIPMI-2.0.19.orig/ui/Makefile.am OpenIPMI-2.0.19/ui/Makefile.am
+--- OpenIPMI-2.0.19.orig/ui/Makefile.am	2011-06-15 23:57:28.000000000 +0900
++++ OpenIPMI-2.0.19/ui/Makefile.am	2013-11-14 15:47:41.860626829 +0900
+@@ -15,7 +15,7 @@
+ libOpenIPMIui_la_SOURCES = ui.c ui_os.c ui_keypad.c ui_command.c 
+ libOpenIPMIui_la_LIBADD =
+ libOpenIPMIui_la_LDFLAGS = -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIui.map
++	 
+ 
+ ipmi_ui_SOURCES = basic_ui.c
+ ipmi_ui_LDADD = libOpenIPMIui.la $(top_builddir)/utils/libOpenIPMIutils.la $(top_builddir)/lib/libOpenIPMI.la $(top_builddir)/unix/libOpenIPMIposix.la $(TERM_LIBS) $(SNMPLIBS) $(OPENSSLLIBS) $(GDBM_LIB)
+diff -ru OpenIPMI-2.0.19.orig/ui/Makefile.in OpenIPMI-2.0.19/ui/Makefile.in
+--- OpenIPMI-2.0.19.orig/ui/Makefile.in	2011-10-13 00:35:10.000000000 +0900
++++ OpenIPMI-2.0.19/ui/Makefile.in	2013-11-14 15:47:41.862004763 +0900
+@@ -298,7 +298,7 @@
+ libOpenIPMIui_la_SOURCES = ui.c ui_os.c ui_keypad.c ui_command.c 
+ libOpenIPMIui_la_LIBADD = 
+ libOpenIPMIui_la_LDFLAGS = -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIui.map
++	 
+ 
+ ipmi_ui_SOURCES = basic_ui.c
+ ipmi_ui_LDADD = libOpenIPMIui.la $(top_builddir)/utils/libOpenIPMIutils.la $(top_builddir)/lib/libOpenIPMI.la $(top_builddir)/unix/libOpenIPMIposix.la $(TERM_LIBS) $(SNMPLIBS) $(OPENSSLLIBS) $(GDBM_LIB)
+diff -ru OpenIPMI-2.0.19.orig/ui/ui.c OpenIPMI-2.0.19/ui/ui.c
+--- OpenIPMI-2.0.19.orig/ui/ui.c	2007-07-24 02:16:48.000000000 +0900
++++ OpenIPMI-2.0.19/ui/ui.c	2013-11-14 15:47:41.868214537 +0900
+@@ -34,7 +34,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <curses.h>
++#include <ncurses/curses.h>
+ #include <stdarg.h>
+ #include <errno.h>
+ #include <unistd.h>
+@@ -60,6 +60,7 @@
+ 
+ #include <OpenIPMI/internal/ipmi_malloc.h>
+ #include <OpenIPMI/internal/ipmi_event.h>
++#define u_int32_t uint32_t
+ 
+ #include "ui_keypad.h"
+ #include "ui_command.h"
+diff -ru OpenIPMI-2.0.19.orig/unix/heap.h OpenIPMI-2.0.19/unix/heap.h
+--- OpenIPMI-2.0.19.orig/unix/heap.h	2005-11-17 03:25:19.000000000 +0900
++++ OpenIPMI-2.0.19/unix/heap.h	2013-11-14 15:47:41.869663676 +0900
+@@ -115,7 +115,8 @@
+ 
+ #ifdef HEAP_DEBUG
+ #include <stdio.h>
+-static FILE **HEAP_EXPORT_NAME(debug_out) = &stderr;
++static FILE *stderr_t = stderr;
++static FILE **HEAP_EXPORT_NAME(debug_out) = &stderr_t;
+ 
+ static void
+ HEAP_EXPORT_NAME(print_item)(struct heap_node_s *pos, int indent)
+diff -ru OpenIPMI-2.0.19.orig/unix/Makefile.am OpenIPMI-2.0.19/unix/Makefile.am
+--- OpenIPMI-2.0.19.orig/unix/Makefile.am	2010-07-15 01:27:29.000000000 +0900
++++ OpenIPMI-2.0.19/unix/Makefile.am	2013-11-14 15:47:41.870611545 +0900
+@@ -10,13 +10,13 @@
+ libOpenIPMIpthread_la_LIBADD = -lpthread $(GDBM_LIB) \
+ 	$(top_builddir)/utils/libOpenIPMIutils.la
+ libOpenIPMIpthread_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIpthread.map
++	 
+ 
+ libOpenIPMIposix_la_SOURCES = posix_os_hnd.c selector.c
+ libOpenIPMIposix_la_LIBADD = $(top_builddir)/utils/libOpenIPMIutils.la \
+ 	$(GDBM_LIB)
+ libOpenIPMIposix_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIposix.map -R$(libdir)
++	  -R$(libdir)
+ 
+ noinst_HEADERS = heap.h
+ 
+diff -ru OpenIPMI-2.0.19.orig/unix/Makefile.in OpenIPMI-2.0.19/unix/Makefile.in
+--- OpenIPMI-2.0.19.orig/unix/Makefile.in	2011-10-13 00:35:10.000000000 +0900
++++ OpenIPMI-2.0.19/unix/Makefile.in	2013-11-14 15:47:41.872146826 +0900
+@@ -314,14 +314,14 @@
+ 	$(top_builddir)/utils/libOpenIPMIutils.la
+ 
+ libOpenIPMIpthread_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIpthread.map
++	 
+ 
+ libOpenIPMIposix_la_SOURCES = posix_os_hnd.c selector.c
+ libOpenIPMIposix_la_LIBADD = $(top_builddir)/utils/libOpenIPMIutils.la \
+ 	$(GDBM_LIB)
+ 
+ libOpenIPMIposix_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIposix.map -R$(libdir)
++	  -R$(libdir)
+ 
+ noinst_HEADERS = heap.h
+ test_heap_SOURCES = test_heap.c
+diff -ru OpenIPMI-2.0.19.orig/unix/test_heap.c OpenIPMI-2.0.19/unix/test_heap.c
+--- OpenIPMI-2.0.19.orig/unix/test_heap.c	2010-04-21 21:56:00.000000000 +0900
++++ OpenIPMI-2.0.19/unix/test_heap.c	2013-11-14 15:47:41.873241465 +0900
+@@ -87,6 +87,7 @@
+     test_heap_node_t *val1;
+     struct sigaction act;
+     int              rand_val;
++    FILE*	     stdout_t = stdout;
+ 
+     i = 1;
+     while ((i < argc) && (argv[i][0] == '-')) {
+@@ -109,7 +110,7 @@
+     if (debug)
+ 	printf("Random seed is %d\n", random_seed);
+     srand(random_seed);
+-    test_debug_out = &stdout;
++    test_debug_out = &stdout_t;
+ 
+     act.sa_handler = handle_fault;
+     sigemptyset(&act.sa_mask);
+diff -ru OpenIPMI-2.0.19.orig/utils/Makefile.am OpenIPMI-2.0.19/utils/Makefile.am
+--- OpenIPMI-2.0.19.orig/utils/Makefile.am	2010-07-15 01:26:26.000000000 +0900
++++ OpenIPMI-2.0.19/utils/Makefile.am	2013-11-14 15:47:41.874143018 +0900
+@@ -10,6 +10,6 @@
+ 			      ipmi_malloc.c ilist.c locks.c hash.c \
+ 			      locked_list.c os_handler.c
+ libOpenIPMIutils_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIutils.map
++	 
+ 
+ CLEANFILES = libOpenIPMIutils.map
+diff -ru OpenIPMI-2.0.19.orig/utils/Makefile.in OpenIPMI-2.0.19/utils/Makefile.in
+--- OpenIPMI-2.0.19.orig/utils/Makefile.in	2011-10-13 00:35:10.000000000 +0900
++++ OpenIPMI-2.0.19/utils/Makefile.in	2013-11-14 15:47:41.875485034 +0900
+@@ -285,7 +285,7 @@
+ 			      locked_list.c os_handler.c
+ 
+ libOpenIPMIutils_la_LDFLAGS = -rdynamic -version-info $(LD_VERSION) \
+-	-Wl,-Map -Wl,libOpenIPMIutils.map
++	 
+ 
+ CLEANFILES = libOpenIPMIutils.map
+ all: all-am

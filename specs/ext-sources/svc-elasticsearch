@@ -1,0 +1,41 @@
+#!/bin/sh
+
+. /lib/svc/share/smf_include.sh
+
+getproparg() {
+        val=`svcprop -p $1 $SMF_FMRI`
+        [ -n "$val" ] && echo $val
+}
+
+ES_BIN=`getproparg elasticsearch/bin`
+PIDFILE='/var/elasticsearch/elasticsearch.pid'
+
+
+if [ -z $SMF_FMRI ]; then
+	echo "Error: SMF framework variables are not initialized"
+	exit $SMF_EXIT_ERR
+fi
+
+case "$1" in
+'start')
+	printf "Starting Elasticsearch:"
+	${ES_BIN} \
+	    -d \
+	    -p ${PIDFILE}
+        ;;
+'stop')
+    if [ -f $PIDFILE ]
+    then
+	printf "Stopping elasticsearch:"
+	kill `cat ${PIDFILE}`
+    else
+	printf "pid file not found: ${PIDFILE}"
+    fi
+    ;;
+*)
+        echo "Usage: $0 {start|stop}"
+        exit 1
+        ;;
+
+esac
+exit $SMF_EXIT_OK

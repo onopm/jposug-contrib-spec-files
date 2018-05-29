@@ -1,0 +1,19 @@
+--- php-5.3.20.orig/ext/standard/config.m4	2012-12-20 00:13:48.000000000 +0900
++++ php-5.3.20/ext/standard/config.m4	2013-01-23 11:18:46.079811605 +0900
+@@ -1,6 +1,6 @@
+ dnl $Id$ -*- autoconf -*-
+ 
+-divert(3)dnl
++divert(1003)dnl
+ 
+ dnl
+ dnl Check if flush should be called explicitly after buffered io
+@@ -342,7 +342,7 @@ dnl
+ AC_CHECK_FUNCS(getcwd getwd asinh acosh atanh log1p hypot glob strfmon nice fpclass isinf isnan mempcpy strpncpy)
+ AC_FUNC_FNMATCH	
+ 
+-divert(5)dnl
++divert(1005)dnl
+ 
+ dnl
+ dnl Check if there is a support means of creating a new process

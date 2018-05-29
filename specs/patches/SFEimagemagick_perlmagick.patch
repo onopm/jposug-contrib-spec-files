@@ -1,0 +1,5 @@
+--- ImageMagick-6.8.9-2.orig/PerlMagick/rewrite.sh	1970-01-01 09:00:00.000000000 +0900
++++ ImageMagick-6.8.9-2/PerlMagick/rewrite.sh	2014-06-04 11:08:03.376407191 +0900
+@@ -0,0 +1,2 @@
++#!/bin/bash
++find . -name 'Makefile' -exec sed -i -e 's/-xO3/-O3/' -e 's/-xspace//' -e 's/-xildoff//' -e 's/-KPIC//' {} \;

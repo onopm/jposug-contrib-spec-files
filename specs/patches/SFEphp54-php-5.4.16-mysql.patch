@@ -1,0 +1,34 @@
+--- php-5.4.16.orig/ext/mysql/config.m4	2013-06-05 14:03:57.000000000 +0900
++++ php-5.4.16/ext/mysql/config.m4	2014-05-27 10:41:05.113050605 +0900
+@@ -115,7 +115,7 @@
+       PHP_CHECK_LIBRARY($MYSQL_LIBNAME, mysql_error, [], [
+         AC_MSG_ERROR([mysql configure failed. Please check config.log for more information.])
+       ], [
+-        -L$PHP_ZLIB_DIR/$PHP_LIBDIR -L$MYSQL_LIB_DIR 
++        -L$PHP_ZLIB_DIR/$PHP_LIBDIR -L$MYSQL_LIB_DIR -R$MYSQL_LIB_DIR
+       ])  
+       MYSQL_LIBS="-L$PHP_ZLIB_DIR/$PHP_LIBDIR -lz"
+     else
+@@ -123,19 +123,19 @@
+       PHP_CHECK_LIBRARY($MYSQL_LIBNAME, mysql_errno, [], [
+         AC_MSG_ERROR([Try adding --with-zlib-dir=<DIR>. Please check config.log for more information.])
+       ], [
+-        -L$MYSQL_LIB_DIR
++        -L$MYSQL_LIB_DIR -R$MYSQL_LIB_DIR
+       ])   
+       MYSQL_LIBS="-lz"
+     fi
+   ], [
+-    -L$MYSQL_LIB_DIR 
++    -L$MYSQL_LIB_DIR -R$MYSQL_LIB_DIR
+   ])
+ 
+   PHP_ADD_LIBRARY_WITH_PATH($MYSQL_LIBNAME, $MYSQL_LIB_DIR, MYSQL_SHARED_LIBADD)
+   PHP_ADD_INCLUDE($MYSQL_INC_DIR)
+ 
+   MYSQL_MODULE_TYPE=external
+-  MYSQL_LIBS="-L$MYSQL_LIB_DIR -l$MYSQL_LIBNAME $MYSQL_LIBS"
++  MYSQL_LIBS="-L$MYSQL_LIB_DIR -R$MYSQL_LIB_DIR -l$MYSQL_LIBNAME $MYSQL_LIBS"
+   MYSQL_INCLUDE=-I$MYSQL_INC_DIR
+  
+   PHP_SUBST_OLD(MYSQL_MODULE_TYPE)

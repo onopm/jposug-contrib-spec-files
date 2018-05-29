@@ -5,17 +5,17 @@
 #
 # Owner: erwannc
 #
- 
+
 %include Solaris.inc
 %include usr-gnu.inc
 
- 
+
 Name:                   SFEgnugetopt
 Summary:                getopt - a GNU getopt(3) compatible getopt utility
 Version:                1.1.4
 Group:			Utility
 URL:                    http://software.frodo.looijaard.name/getopt/
-Source:			http://software.frodo.looijaard.name/getopt/files/getopt-%{version}.tar.gz
+Source:		http://frodo.looijaard.name/system/files/software/getopt/getopt-%{version}.tar.gz
 Patch1:                 getopt-01-locale.h.diff
 SUNW_BaseDir:           %{_basedir}
 SUNW_Copyright:         %{name}.copyright
@@ -23,7 +23,7 @@ BuildRoot:              %{_tmppath}/%{name}-%{version}-build
 IPS_package_name:       text/gnu-getopt
 %include default-depend.inc
 
-%define _pkg_docdir	%{_docdir}/getopt-%{version} 
+%define _pkg_docdir	%{_docdir}/getopt-%{version}
 
 %prep
 rm -rf %name-%version
@@ -58,6 +58,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, other) %{_docdir}
 
 %changelog
+* Wed Nov 19 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- update source URL
 * Web Feb 02 2011 - s.miyaza@gmail.com
 - Support for Solaris11 Express.
 - Change IPS Packagename
@@ -69,4 +71,3 @@ rm -rf $RPM_BUILD_ROOT
 - Update copyright
 * Tue Feb 13 2007 - laca@sun.com
 - create
-

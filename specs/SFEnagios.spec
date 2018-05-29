@@ -10,7 +10,7 @@
 
 Name:		SFEnagios
 IPS_package_name:        diagnostic/nagios
-Version:	3.3.1
+Version:	3.5.1
 Summary:	Host/service/network monitoring program
 Group:		Applications/System
 License:	GPLv2
@@ -18,21 +18,18 @@ URL:		http://www.nagios.org/
 Source:		%{sf_download}/nagios/nagios-%{version}.tar.gz
 Source1:	nagios.xml
 Source2:	svc-nagios
-Patch1:		SFEnagios-3.3.1.diff
+# Patch1:		SFEnagios-3.3.1.diff
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
 
 BuildRequires:	SUNWsndmu
 Requires:	SUNWsndmu
 BuildRequires:	SUNWjpg-devel
 Requires:	SUNWjpg
-BuildRequires:	SUNWgd2
-Requires:	SUNWgd2
-Requires:	SUNWapch22u
-Requires:	pkg:/web/server/apache-22/module/apache-php5
-Requires:	pkg:/diagnostic/nagios/plugins
-Requires:	%{name}-common
+BuildRequires:	library/gd
+Requires:	library/gd
+Requires:	diagnostic/nagios/common
+Requires:	diagnostic/nagios/plugins
 
 %description
 Nagios is a program that will monitor hosts and services on your
@@ -81,7 +78,7 @@ may compile against.
 
 %prep
 %setup -q -n nagios
-%patch1 -p1
+# %patch1 -p1
 
 %build
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
@@ -96,7 +93,7 @@ export CC=/usr/bin/gcc
 ./configure \
 	--prefix=%{_datadir}/nagios \
 	--exec-prefix=%{_libdir}/nagios \
-        --with-httpd-conf=%{_sysconfdir}/apache2/2.2/conf.d \
+	--with-httpd-conf=%{_datadir}/nagios/httpd \
 	--with-init-dir=%{_initrddir} \
 	--with-cgiurl=/nagios/cgi-bin \
 	--with-htmlurl=/nagios \
@@ -117,14 +114,12 @@ export CC=/usr/bin/gcc
 	# --enable-embedded-perl \
 	# --with-perlcache \
 
-
 make -j$CPUS all
 
 
 %install
 rm -rf %{buildroot}
-
-install -d -m 0755 %{buildroot}%{_sysconfdir}/apache2/2.2/conf.d
+install -d -m 0755 %{buildroot}%{_datadir}/nagios/httpd
 
 make DESTDIR=%{buildroot} INIT_OPTS="" INSTALL_OPTS="" COMMAND_OPTS="" CGIDIR="%{_libdir}/nagios/cgi-bin" CFGDIR="%{_sysconfdir}/nagios" fullinstall
 
@@ -152,7 +147,6 @@ install -d -m 0755 %{buildroot}%{_datadir}/nagios/html/includes/rss/extlib
 install -d -m 0755 %{buildroot}%{_datadir}/nagios/html/includes/rss/htdocs
 install -d -m 0755 %{buildroot}%{_datadir}/nagios/html/includes/rss/scripts
 
-
 install -d 0755 %{buildroot}%/var/svc/manifest/site
 install -m 0644 %{SOURCE1} %{buildroot}%/var/svc/manifest/site
 install -d 0755 %{buildroot}%/lib/svc/method
@@ -175,7 +169,7 @@ test -x $BASEDIR/var/lib/postrun/postrun || exit 0
   echo '/usr/sbin/groupdel nagios';
 ) | $BASEDIR/var/lib/postrun/postrun -i -a
 
-%actions
+%actions common
 group groupname="nagios"
 user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=NP group="nagios"
 # need to add user webservd to nagios group
@@ -184,39 +178,22 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %defattr(-, root, bin)
 %doc Changelog INSTALLING LICENSE README UPGRADING
 %dir %attr (0755, root, sys) %{_datadir}
-%dir %attr (0755, root, other) %{_docdir}
-%{_datadir}/nagios/html/robots.txt
-%{_datadir}/nagios/html/[^i]*
-%{_datadir}/nagios/html/contexthelp
-%{_datadir}/nagios/html/[^d]*
-%{_datadir}/nagios/html/[^m]*
-%{_datadir}/nagios/html/[^s]*
-%attr(0644, root, bin) %config(noreplace) %{_datadir}/nagios/html/config.inc.php
+%{_datadir}/nagios/httpd/nagios.conf
+# %{_datadir}/nagios/html/robots.txt
+# %{_datadir}/nagios/html/[^i]*
+# %{_datadir}/nagios/html/contexthelp
+# %{_datadir}/nagios/html/[^d]*
+# %{_datadir}/nagios/html/[^m]*
+# %{_datadir}/nagios/html/[^s]*
+# %attr(0644, root, bin) %config(noreplace) %{_datadir}/nagios/html/config.inc.php
+%{_datadir}/nagios/html
+%dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_sbindir}
 %{_sbindir}/*
 %{_libdir}/nagios/cgi-bin/*cgi
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins/eventhandlers
-
-%files common
-%defattr(-, root, sys)
-## %{_initrddir}/nagios
-%dir %attr(0755, root, bin) %{_sysconfdir}/apache2
-%dir %attr(0755, root, bin) %{_sysconfdir}/apache2/2.2
-%dir %attr(0755, root, bin) %{_sysconfdir}/apache2/2.2/conf.d
-%config(noreplace) %{_sysconfdir}/apache2/2.2/conf.d/nagios.conf
-%dir %attr(0755, root, nagios) %{_sysconfdir}/nagios
-%config(noreplace) %{_sysconfdir}/nagios/*cfg
-%dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/objects
-%config(noreplace) %{_sysconfdir}/nagios/objects/*cfg
-%dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/private
-%dir %attr(0755, root, bin) %{_localstatedir}/spool
-%dir %attr(0755, nagios, nagios) %{_localstatedir}/spool/nagios
-%dir %attr(0750, nagios, webservd) %{_localstatedir}/log/nagios
-%dir %attr(0750, nagios, webservd) %{_localstatedir}/log/nagios/archives
-%dir %attr(2775, nagios, webservd) %{_localstatedir}/log/nagios/rw
-%dir %attr(0750, nagios, nagios) %{_localstatedir}/log/nagios/spool/
-%dir %attr(0750, nagios,nagios) %{_localstatedir}/log/nagios/spool/checkresults
+%dir %attr (0755, root, sys) %{_localstatedir}
 %dir %attr (0755, root, sys) %{_localstatedir}/svc
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
@@ -224,25 +201,80 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %dir %attr (0755, root, bin) /lib/svc
 %dir %attr (0755, root, bin) /lib/svc/method
 %attr (0555, root, bin) /lib/svc/method/svc-nagios
+%dir %attr(0755, root, sys) %{_sysconfdir}
+%dir %attr(0755, root, nagios) %{_sysconfdir}/nagios
+%config(noreplace) %{_sysconfdir}/nagios/*cfg
+%dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/objects
+%config(noreplace) %{_sysconfdir}/nagios/objects/*cfg
+%dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/private
+
+%files common
+%defattr(-, root, bin)
+## %{_initrddir}/nagios
+%dir %attr(0755, root, sys) %{_sysconfdir}
+%dir %attr(0755, root, nagios) %{_sysconfdir}/nagios
+%dir %attr(0755, root, sys) %{_localstatedir}
+%dir %attr(0755, root, sys) %{_localstatedir}/log
+%dir %attr(0755, root, bin) %{_localstatedir}/spool
+%dir %attr(0755, nagios, nagios) %{_localstatedir}/spool/nagios
+%dir %attr(0750, nagios, webservd) %{_localstatedir}/log/nagios
+%dir %attr(0750, nagios, webservd) %{_localstatedir}/log/nagios/archives
+%dir %attr(2775, nagios, webservd) %{_localstatedir}/log/nagios/rw
+%dir %attr(0750, nagios, nagios) %{_localstatedir}/log/nagios/spool/
+%dir %attr(0750, nagios,nagios) %{_localstatedir}/log/nagios/spool/checkresults
 
 %files devel
 %defattr(-, root, bin)
 %{_includedir}/nagios
 
 %changelog
-* Tue Aug 23 2011 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix file list
+* Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete apache-22 from Requries and BuildRequires because Oracle Solaris 11.3 provides apache-22 and apache-24
+- fix Requires
+* Tue Nov 05 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.5.1
+
+* Thu Mar 21 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.5.0
+
+* Sat Dec 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix attr
+
+* Wed Dec 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.4.3
+
+* Wed Nov 14 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.4.2
+
+* Thu Jul 17 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- set %actions for nagios/common
+- move SMF files from nagios/common to nagios
+
+* Thu May 17 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 3.4.1
+
+* Wed May  9 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- Bump to 3.4.0
+- remove patch1
+
+* Tue Mar 27 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify owner, group and permission for Solaris 11
+
+* Tue Aug 23 2011 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - update to 3.3.1
 
-* Tue May 17 2011 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Tue May 17 2011 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add requires. apache-php5 and naios/plugins.
 - add "--sbindir=%{_libdir}/nagios/cgi-bin" to configure
 - modify attr of %{_sysconfdir}/nagios
 
-* Mon May 16 2011 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Mon May 16 2011 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - modify SMF manifest
 - modify SMF init file
 
-* Tue May 10 2011 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Tue May 10 2011 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add IPS_package_name to divide package
 - mv init script to /lib/svc/method
 - modify init script to adjust some file pathes

@@ -1,0 +1,20 @@
+--- CMakeLists.txt.sfe.orig	2013-05-16 14:47:59.299106156 +0900
++++ CMakeLists.txt	2013-05-16 14:57:21.855537492 +0900
+@@ -57,7 +57,7 @@
+ 
+ OPTION(UTILS  "Build and install utility programs"  ON)
+ 
+-OPTION(EXAMPLES  "Build and install example programs"  ON)
++OPTION(EXAMPLES  "Build and install example programs"  OFF)
+ 
+ OPTION(ALSOFT_CONFIG "Install alsoft.conf configuration file" OFF)
+ 
+@@ -751,7 +751,7 @@
+     ENDIF()
+ 
+     INSTALL(TARGETS openal-info makehrtf
+-            RUNTIME DESTINATION bin
++            RUNTIME DESTINATION "bin${LIB_SUFFIX}"
+             LIBRARY DESTINATION "lib${LIB_SUFFIX}"
+             ARCHIVE DESTINATION "lib${LIB_SUFFIX}"
+     )

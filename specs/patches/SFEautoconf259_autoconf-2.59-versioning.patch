@@ -1,0 +1,12 @@
+diff -Nur autoconf-2.59.orig/configure autoconf-2.59/configure
+--- autoconf-2.59.orig/configure	2003-11-06 04:33:28.000000000 -0500
++++ autoconf-2.59/configure	2007-12-04 19:39:02.000000000 -0500
+@@ -1534,7 +1534,7 @@
+ 
+ 
+ # Define the identity of the package.
+- PACKAGE='autoconf'
++ PACKAGE='autoconf-2.59'
+  VERSION='2.59'
+ 
+ 

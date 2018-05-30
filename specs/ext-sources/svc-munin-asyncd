@@ -1,0 +1,123 @@
+#!/bin/sh
+
+. /lib/svc/share/smf_include.sh
+
+# SMF_FMRI is the name of the target service. This allows multiple instances
+# to use the same script.
+
+SMF_FMRI=munin-asyncd
+getproparg() {
+    val=`svcprop -p $1 $SMF_FMRI`
+    [ -n "$val" ] && echo $val
+}
+
+status_munin_asyncd() {
+    if ps -p $MuninAsyncdPID > /dev/null 2>&1; then
+	return 0
+    else
+	return 1
+    fi
+    return 1
+}
+
+
+killproc_munin_asyncd() {
+    kill $2 $MuninAsyncdPID
+}
+
+
+pid_munin_asyncd() {
+    if test ! -f $MuninAsyncdRunFile; then
+	echo "No lock file found in $MuninAsyncdRunFile"
+	exit 1
+    fi
+    MuninAsyncdPID=`head -n 1 $MuninAsyncdRunFile`
+}
+
+
+MuninAsyncdBin=`getproparg munin-asyncd/bin`
+MuninAsyncdRunFile=`getproparg munin-asyncd/runfile`
+MuninAsyncdLockDir=`getproparg munin-asyncd/lockdir`
+MuninAsyncdLockFile=`getproparg munin-asyncd/lockfile`
+MuninAsyncdHost=`getproparg munin-asyncd/host`
+MuninAsyncdPort=`getproparg munin-asyncd/port`
+MuninAsyncdSpooldir=`getproparg munin-asyncd/spooldir`
+MuninAsyncdInterval=`getproparg munin-asyncd/interval`
+MuninAsyncdRetain=`getproparg munin-asyncd/retain`
+
+if [ -z $SMF_FMRI ]; then
+    echo "Error: SMF framework variables are not initialized"
+    exit $SMF_EXIT_ERR
+fi
+
+# Check that munin-asyncd exists.
+if [ ! -x $MuninAsyncdBin ]; then
+    echo "Executable file $MuninAsyncdBin not found.  Exiting."
+    exit $SMF_EXIT_ERR_CONFIG
+fi
+
+
+# See how we were called.
+case "$1" in
+
+    start)
+	echo -n "Starting munin-asyncd:"
+	if [ $? -eq 0 ]; then
+	    touch $MuninAsyncdRunFile
+	    $MuninAsyncdBin \
+		--host ${MuninAsyncdHost}:${MuninAsyncdPort} \
+		-s ${MuninAsyncdSpooldir} \
+		-i ${MuninAsyncdInterval} \
+		-r ${MuninAsyncdRetain} &
+	    echo $! > ${MuninAsyncdRunFile}
+	    if [ -d $MuninAsyncdLockDir ]; then touch $MuninAsyncdLockDir/$MuninAsyncdLockFile; fi
+	    echo " done."
+	    exit 0
+	fi
+	;;
+
+    stop)
+	echo -n "Stopping munin-asyncd: "
+
+	pid_munin_asyncd
+	killproc_munin_asyncd munin-asyncd
+
+ 	if status_munin_asyncd > /dev/null; then
+ 	    echo ''
+ 	    echo 'Warning - munin-asyncd did not exit in a timely manner'
+ 	else
+ 	    echo 'done.'
+ 	fi
+
+	rm -f $MuninAsyncdRunFile $MuninAsyncdLockDir/$MuninAsyncdLockFile
+	;;
+
+    refresh)
+	printf "Running configuration check..."
+	if [ $? -eq 0 ]; then
+	    echo "done."
+	    if test ! -f $MuninAsyncdRunFile; then
+		$0 start
+	    else
+		pid_munin_asyncd
+		if status_munin_asyncd > /dev/null; then
+		    printf "Reloading munin-asyncd configuration..."
+		    killproc_munin_asyncd munin-asyncd -HUP
+		    echo "done"
+		else
+		    $0 stop
+		    $0 start
+		fi
+	    fi
+	fi
+	;;
+
+    *)
+	echo "Usage: $0 {start|stop|refresh}"
+	exit 1
+	;;
+
+esac
+
+# End of this script
+exit $SMF_EXIT_OK

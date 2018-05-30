@@ -17,14 +17,47 @@ start)
 
     printf "Starting Puppet server services:"
 
+    if [ ! `getent group puppet` ]
+    then 
+	groupadd puppet
+    fi
+
+    if [ ! `getent passwd puppet` ]
+    then 
+	useradd -g puppet -s /bin/false -d /var/lib/puppet puppet
+    fi
+
+    if [ ! -d /var/run/puppet ]
+    then
+	mkdir -p /var/run/puppet
+	chown puppet:puppet /var/run/puppet
+    fi
+
+    if [ ! -d /var/log/puppet ]
+    then
+	mkdir -p /var/log/puppet
+	chown puppet:puppet /var/log/puppet
+    fi
+
+    if [ ! -d /var/lib/puppet ]
+    then
+	mkdir -p /var/lib/puppet/run
+	chown -R puppet:puppet /var/lib/puppet
+    fi
+
     ${sbindir}/puppetmasterd
 
     printf " puppetmaster"
     echo ""
     ;;
 stop)
-    printf "Stopping Puppet server services:"
-    kill `cat $pidfile`
+    if [ -f $pidfile ]
+    then
+	printf "Stopping Puppet client services:"
+	kill `cat $pidfile`
+    else
+	echo "pid file not found."
+    fi
 
     printf " puppetmasterd"
     echo ""

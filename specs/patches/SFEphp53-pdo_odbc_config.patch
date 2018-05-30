@@ -1,0 +1,11 @@
+--- ext/pdo_odbc/config.m4.orig	2013-01-17 14:51:54.819532616 +0900
++++ ext/pdo_odbc/config.m4	2013-01-17 14:52:34.109904556 +0900
+@@ -105,7 +105,7 @@
+   esac
+ 
+   if test -n "$pdo_odbc_dir"; then
+-    PDO_ODBC_INCDIR="$pdo_odbc_dir/include"
++    PDO_ODBC_INCDIR="$pdo_odbc_dir/include/odbc"
+     PDO_ODBC_LIBDIR="$pdo_odbc_dir/$PHP_LIBDIR"
+   else
+     PDO_ODBC_INCDIR="$pdo_odbc_def_incdir"

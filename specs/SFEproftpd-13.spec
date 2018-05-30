@@ -11,15 +11,18 @@
 %define _prefix		 /usr/proftpd
 %define major_version	 1.3
 %define tarball_name     proftpd
-%define tarball_version  1.3.3e
-%define gss_version      1.3.3
+%define tarball_version  1.3.4d
+%define gss_version      1.3.4
 %define _basedir	 /
+
+%define postgres_version 9.2
+%define mysql_version    5.1
 
 Name:                    SFEproftpd-13
 IPS_package_name:        service/network/proftpd-13
 Summary:                 Highly configurable GPL-licensed FTP server software
-Version:                 1.3.3
-IPS_component_version:   1.3.3.0.5
+Version:                 1.3.4
+IPS_component_version:   1.3.4.0.4
 License:		 GPL
 Url:                     http://www.proftpd.org/
 Source:                  ftp://ftp.proftpd.org/distrib/source/%{tarball_name}-%{tarball_version}.tar.gz
@@ -46,7 +49,8 @@ BuildRequires: %{pnm_buildrequires_database_mysql_51_library}
 BuildRequires: %{pnm_buildrequires_SUNWopenssl_devel}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWgssc_devel}
-BuildRequires: SFEpostgres-90
+#BuildRequires: SFEpostgres-92
+BuildRequires: database/postgres-92/developer
 
 Requires: %{pnm_requires_library_security_openssl}
 Requires: %{pnm_requires_SUNWgssc}
@@ -79,24 +83,31 @@ SUNW_BaseDir:            %{_prefix}/%{major_version}
 Requires:                %{name}
 
 %package postgres
-IPS_package_name:	 service/network/proftpd-13/module/postgres90
-Summary:		 %{summary} - MySQL module
+IPS_package_name:	 service/network/proftpd-13/module/postgres-92
+Summary:		 %{summary} - PostgreSQL module
 SUNW_BaseDir:            /
 Requires:                %{name}
 Requires:                %{name}-sql
-Requires:	         SFEpostgres-90-library
+#Requires:	         SFEpostgres-92-library
+Requires:	         database/postgres-92/library
 
 %package mysql
-IPS_package_name:	 service/network/proftpd-13/module/mysql51
-Summary:		 %{summary} - PostgreSQL module
+IPS_package_name:	 service/network/proftpd-13/module/mysql-51
+Summary:		 %{summary} - MySQL module
 SUNW_BaseDir:            /
 Requires:                %{name}
 Requires:                %{name}-sql
 Requires:	         %{pnm_requires_database_mysql_51_library}
 
+%package tls
+IPS_package_name:	 service/network/proftpd-13/module/tls
+Summary:		 %{summary} - TLS module
+SUNW_BaseDir:            /
+Requires:                %{name}
+
 
 %prep
-%setup -c -n %taball_name-%taball_version
+%setup -c -n %{tarball_name}-%{tarball_version}
 gzcat %{SOURCE10} | tar xf -
 
 %build
@@ -106,16 +117,19 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
     CPUS=1
 fi
 
-export CFLAGS="%optflags"
-export LDFLAGS="%_ldflags"
+export CFLAGS="%optflags -I /usr/include/kerberosv5"
+export LDFLAGS="%_ldflags -lkrb5"
 export install_user=$LOGNAME
 export install_group=`groups | awk '{print $1}'`
 
+%if %( expr %{osbuild} '=' 175 )
+# Solaris
 pushd mod_gss-%{gss_version}
 ./configure
 popd
 cp mod_gss-%{gss_version}/mod_gss.h include
 cp mod_gss-%{gss_version}/mod_gss.c contrib
+%endif
 
 cd %{tarball_name}-%{tarball_version}
 %ifarch sparc
@@ -124,21 +138,21 @@ cd %{tarball_name}-%{tarball_version}
 %define target i386-sun-solaris
 %endif
 
-LD_RUN_PATH=/lib:/usr/postgres/9.0/lib:/usr/mysql/5.1/lib/mysql ; export LD_RUN_PATH
+LD_RUN_PATH=/lib:/usr/lib:/usr/lib/krb5:/usr/postgres/%{postgres_version}/lib:/usr/mysql/%{mysql_version}/lib/mysql ; export LD_RUN_PATH
 ./configure \
  --prefix=%{_prefix}/%{major_version}/\
  --mandir=/usr/share/man \
- --sysconfdir=%{_sysconfdir}/proftpd/1.3 \
+ --sysconfdir=%{_sysconfdir}/proftpd/%{major_version} \
  --localstatedir=%{_localstatedir}/run \
- --with-includes=/usr/postgres/9.0/include/:/usr/mysql/5.1/include/mysql/ \
- --with-libraries=/usr/postgres/9.0/lib/:/usr/mysql/5.1/lib/mysql/ \
+ --with-includes=/usr/postgres/%{postgres_version}/include/:/usr/mysql/%{mysql_version}/include/mysql/ \
+ --with-libraries=/usr/postgres/%{postgres_version}/lib/:/usr/mysql/%{mysql_version}/lib/mysql/:/usr/lib/krb5 \
  --enable-ipv6 \
  --enable-ctrls \
  --enable-facl \
  --enable-nls \
  --enable-dso \
  --enable-openssl \
- --with-shared=mod_sql:mod_sql_mysql:mod_sql_postgres
+ --with-shared=mod_sql:mod_sql_mysql:mod_sql_postgres:mod_tls
 
 gmake -j$CPUS
 
@@ -163,23 +177,23 @@ mkdir -p ${RPM_BUILD_ROOT}/var/svc/manifest/network/
 cp %{SOURCE2} ${RPM_BUILD_ROOT}/var/svc/manifest/network/proftpd.xml
 
 # configuration
-mv ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/proftpd.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/proftpd.conf.original
-cp %{SOURCE3} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/proftpd.conf
-cp %{SOURCE3} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/proftpd.conf.dist
-mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/conf.d
+mv ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/proftpd.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/proftpd.conf.original
+cp %{SOURCE3} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/proftpd.conf
+cp %{SOURCE3} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/proftpd.conf.dist
+mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/conf.d
 
 # Sample Configuration
-mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/samples-conf.d
-cp %{SOURCE4} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/samples-conf.d/postgres.conf
-cp %{SOURCE5} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/samples-conf.d/mysql.conf
-cp %{SOURCE6} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/samples-conf.d/ftppasswd.conf
-cp %{SOURCE7} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/samples-conf.d/resume.conf
-cp %{SOURCE8} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/ftppasswd.sample
-cp %{SOURCE9} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/1.3/samples-conf.d/logs.conf
+mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d
+cp %{SOURCE4} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/postgres.conf
+cp %{SOURCE5} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/mysql.conf
+cp %{SOURCE6} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/ftppasswd.conf
+cp %{SOURCE7} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/resume.conf
+cp %{SOURCE8} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/ftppasswd.sample
+cp %{SOURCE9} ${RPM_BUILD_ROOT}%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/logs.conf
 
 # Other Directories
-mkdir -p ${RPM_BUILD_ROOT}/var/proftpd/1.3/pub
-mkdir -p ${RPM_BUILD_ROOT}/var/proftpd/1.3/logs
+mkdir -p ${RPM_BUILD_ROOT}/var/proftpd/%{major_version}/pub
+mkdir -p ${RPM_BUILD_ROOT}/var/proftpd/%{major_version}/logs
 
 rmdir ${RPM_BUILD_ROOT}/var/run
 
@@ -200,27 +214,26 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %attr (0755, root, sys) %{_sysconfdir}
 %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd
-%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3
-%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3/conf.d/
-%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3/samples-conf.d/
-%config(noreplace) %{_sysconfdir}/proftpd/1.3/proftpd.conf
-%{_sysconfdir}/proftpd/1.3/proftpd.conf.dist
-%{_sysconfdir}/proftpd/1.3/proftpd.conf.original
-%{_sysconfdir}/proftpd/1.3/ftppasswd.sample
-%{_sysconfdir}/proftpd/1.3/samples-conf.d/ftppasswd.conf
-%{_sysconfdir}/proftpd/1.3/samples-conf.d/resume.conf
-%{_sysconfdir}/proftpd/1.3/samples-conf.d/logs.conf
+%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/%{major_version}
+%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/%{major_version}/conf.d/
+%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/
+%config(noreplace) %{_sysconfdir}/proftpd/%{major_version}/proftpd.conf
+%{_sysconfdir}/proftpd/%{major_version}/proftpd.conf.dist
+%{_sysconfdir}/proftpd/%{major_version}/proftpd.conf.original
+%{_sysconfdir}/proftpd/%{major_version}/ftppasswd.sample
+%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/ftppasswd.conf
+%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/resume.conf
+%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/logs.conf
 %dir %attr (0755, root, sys) /var/proftpd
-%dir %attr (0755, root, sys) /var/proftpd/1.3
-%dir %attr (0755, root, bin) /var/proftpd/1.3/pub
-%dir %attr (0755, root, bin) /var/proftpd/1.3/logs
+%dir %attr (0755, root, sys) /var/proftpd/%{major_version}
+%dir %attr (0755, root, bin) /var/proftpd/%{major_version}/pub
+%dir %attr (0755, nobody, nogroup) /var/proftpd/%{major_version}/logs
 %dir %attr (0755, root, sys) %{_localstatedir}
 %dir %attr (0755, root, sys) /var/svc
 %dir %attr (0755, root, sys) /var/svc/manifest
 %dir %attr (0755, root, sys) /var/svc/manifest/network
 %class(manifest) %attr(0444, root, sys) /var/svc/manifest/network/proftpd.xml
 %attr (0511,root,bin) /lib/svc/method/proftpd
-
 
 %files devel
 %defattr (-, root, bin)
@@ -244,10 +257,10 @@ rm -rf $RPM_BUILD_ROOT
 %files postgres
 %defattr (-, root, bin)
 %dir %attr (0755, root, sys) %{_sysconfdir}
-%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3/samples-conf.d/
+%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/
 %dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/libexec
-%{_sysconfdir}/proftpd/1.3/samples-conf.d/postgres.conf
+%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/postgres.conf
 %{_prefix}/%{major_version}/libexec/mod_sql_postgres.a
 %{_prefix}/%{major_version}/libexec/mod_sql_postgres.la
 %{_prefix}/%{major_version}/libexec/mod_sql_postgres.so
@@ -255,17 +268,35 @@ rm -rf $RPM_BUILD_ROOT
 %files mysql
 %defattr (-, root, bin)
 %dir %attr (0755, root, sys) %{_sysconfdir}
-%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/1.3/samples-conf.d/
+%dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/
 %dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/libexec
-%{_sysconfdir}/proftpd/1.3/samples-conf.d/mysql.conf
+%{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/mysql.conf
 %{_prefix}/%{major_version}/libexec/mod_sql_mysql.a
 %{_prefix}/%{major_version}/libexec/mod_sql_mysql.la
 %{_prefix}/%{major_version}/libexec/mod_sql_mysql.so
 
+%files tls
+%defattr (-, root, bin)
+# %dir %attr (0755, root, sys) %{_sysconfdir}
+# %dir %attr (0755, root, bin) %{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/
+%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, bin) %{_prefix}/%{major_version}/libexec
+# %{_sysconfdir}/proftpd/%{major_version}/samples-conf.d/tls.conf
+%{_prefix}/%{major_version}/libexec/mod_tls.a
+%{_prefix}/%{major_version}/libexec/mod_tls.la
+%{_prefix}/%{major_version}/libexec/mod_tls.so
+
 
 
 %changelog
+* Sun May 11 2014 YAMAMOTO Takashi <yamachan@selfnavi.com>
+- disable GSSAPI when compile on the OpenIndiana
+- change log directory owner
+* Tue Aug 27 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add service/network/proftpd-13/module/tls
+* Thu Aug 08 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix typo
 * Wed May  6 2009 TAKI, Yasushi <taki@justplayer.com>
 - Initial Revision
 * Tue Jan 12 2010 TAKI, Yasushi <taki@justplayer.com>
@@ -274,3 +305,5 @@ rm -rf $RPM_BUILD_ROOT
 - Support 1.3.3d and mod_gss
 * Sun Mar 27 2011 TAKI, Yasushi <taki@justplayer.com>
 - Change Permission at /etc
+* Mon Aug  5 2013 TAKI, Yasushi <taki@justplayer.com>
+- Bump to 1.3.4d

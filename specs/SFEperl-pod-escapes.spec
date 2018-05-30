@@ -9,29 +9,22 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define tarball_version 1.04
+%define tarball_version 1.06
 %define tarball_name    Pod-Escapes
 
 Name:		SFEperl-pod-escapes
 IPS_package_name: library/perl-5/pod-escapes
-Version:	1.04
-IPS_component_version: 1.4
+Version:	1.06
+IPS_component_version: 1.6
 Summary:	Pod-Escapes
-License:	Artistic
-Distribution:   OpenSolaris
-Vendor:         OpenSolaris Community
+License:	Perl_5
 Url:		http://search.cpan.org/~sburke/%{tarball_name}-%{tarball_version}
 SUNW_Basedir:	%{_basedir}
 SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/S/SB/SBURKE/Pod-Escapes-%{tarball_version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/N/NE/NEILB/Pod-Escapes-%{version}.tar.gz
 
 BuildRequires:	runtime/perl-584
 BuildRequires:	runtime/perl-512
-
-Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
-Meta(info.upstream):            Sean M. Burke <sburke@cpan.org>
-Meta(info.upstream_url):        http://search.cpan.org/~sburke/%{tarball_name}-%{tarball_version}
-Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
 
 %description
 Pod-Escapes
@@ -96,5 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/perl5/vendor_perl/5.12
 
 %changelog
+* Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.06
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

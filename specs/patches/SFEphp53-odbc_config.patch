@@ -1,0 +1,11 @@
+--- ext/odbc/config.m4.orig	2013-01-17 14:40:39.372097142 +0900
++++ ext/odbc/config.m4	2013-01-17 14:42:27.707169807 +0900
+@@ -414,7 +414,7 @@
+     if test "$PHP_UNIXODBC" = "yes"; then
+       PHP_UNIXODBC=/usr/local
+     fi
+-    ODBC_INCDIR=$PHP_UNIXODBC/include
++    ODBC_INCDIR=$PHP_UNIXODBC/include/odbc
+     ODBC_LIBDIR=$PHP_UNIXODBC/$PHP_LIBDIR
+     ODBC_LFLAGS=-L$ODBC_LIBDIR
+     ODBC_INCLUDE=-I$ODBC_INCDIR

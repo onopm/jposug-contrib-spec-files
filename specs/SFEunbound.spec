@@ -130,10 +130,12 @@ user ftpuser=false gcos-field="Unbound Reserved UID" username="unbound" password
 %{_mandir}/*/*
 %{_includedir}/*
 %{_libdir}/libunbound*
-%dir %attr (0755, root, sys) /usr/lib/pkgconfig
+%dir %attr (0755, root, other) /usr/lib/pkgconfig
 %attr (0444, root, bin) /usr/lib/pkgconfig/libunbound.pc
 
 %changelog
+* Fri Jun 01 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix file attr
 * Thu May 10 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.7.1
 * Fri Mar 16 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

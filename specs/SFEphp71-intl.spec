@@ -5,7 +5,7 @@
 
 %define _prefix /usr
 %define php_version 7.1
-%define tarball_version  7.1.12
+%define tarball_version  7.1.18
 %define tarball_name     php
 %define zts 20160303
 
@@ -94,6 +94,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/%{php_version}/conf.d/intl.ini
 
 %changelog
+* Fri Jun 01 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.1.18
 * Wed Nov 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.1.12, add CFLAGS and CXXFLAGS
 * Tue Nov 28 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

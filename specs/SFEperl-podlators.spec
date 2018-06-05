@@ -9,7 +9,7 @@
 %define build526jposug %( if [ -x /opt/jposug/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 
-%define include_executable 1
+%define include_executable 0
 %define install_to_site_dir 0
 
 %define cpan_name podlators
@@ -358,6 +358,12 @@ then
     mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
 fi
 
+# to avoid conflict with executable files included in solaris/runtime/perl-5*
+if [ $( expr %{build510} \| %{build512} \| %{build516} \| %{build522} \| %{build526} ) -ne 0 ]
+then
+  rm -rf ${RPM_BUILD_ROOT}/usr/perl5/5.*
+fi
+
 %clean
 rm -rf %{buildroot}
 
@@ -458,12 +464,14 @@ rm -rf %{buildroot}
 %else
 /opt/jposug/perl5/vendor_perl/5.26
 %endif
-%if %{include_executable}
+# %if %{include_executable}
 /opt/jposug/perl5/5.26
-%endif
+# %endif
 %endif
 
 %changelog
+* Tue Jun 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete some files to avoid conflict with files included in solaris/runtime/perl-5*
 * Mon May 21 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.11 and build packages for perl-526{,jposug}
 * Thu Apr 27 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

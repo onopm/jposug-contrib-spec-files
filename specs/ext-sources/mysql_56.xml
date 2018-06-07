@@ -90,7 +90,7 @@
                         </loctext>
                 </common_name>
                 <documentation>
-                        <manpage title='MySQL 5.6.10' section='1' />
+                        <manpage title='MySQL 5.6.24' section='1' />
                         <doc_link name='mysql.com'
                                 uri='http://dev.mysql.com/doc' />
                 </documentation>

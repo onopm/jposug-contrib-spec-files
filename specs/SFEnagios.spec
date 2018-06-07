@@ -10,7 +10,7 @@
 
 Name:		SFEnagios
 IPS_package_name:        diagnostic/nagios
-Version:	3.4.3
+Version:	3.5.1
 Summary:	Host/service/network monitoring program
 Group:		Applications/System
 License:	GPLv2
@@ -28,10 +28,8 @@ BuildRequires:	SUNWjpg-devel
 Requires:	SUNWjpg
 BuildRequires:	library/gd
 Requires:	library/gd
-Requires:	SUNWapch22u
-Requires:	pkg:/web/server/apache-22/module/apache-php5
-Requires:	pkg:/diagnostic/nagios/plugins
-Requires:	%{name}-common
+Requires:	diagnostic/nagios/common
+Requires:	diagnostic/nagios/plugins
 
 %description
 Nagios is a program that will monitor hosts and services on your
@@ -95,7 +93,7 @@ export CC=/usr/bin/gcc
 ./configure \
 	--prefix=%{_datadir}/nagios \
 	--exec-prefix=%{_libdir}/nagios \
-        --with-httpd-conf=%{_sysconfdir}/apache2/2.2/conf.d \
+	--with-httpd-conf=%{_datadir}/nagios/httpd \
 	--with-init-dir=%{_initrddir} \
 	--with-cgiurl=/nagios/cgi-bin \
 	--with-htmlurl=/nagios \
@@ -116,14 +114,12 @@ export CC=/usr/bin/gcc
 	# --enable-embedded-perl \
 	# --with-perlcache \
 
-
 make -j$CPUS all
 
 
 %install
 rm -rf %{buildroot}
-
-install -d -m 0755 %{buildroot}%{_sysconfdir}/apache2/2.2/conf.d
+install -d -m 0755 %{buildroot}%{_datadir}/nagios/httpd
 
 make DESTDIR=%{buildroot} INIT_OPTS="" INSTALL_OPTS="" COMMAND_OPTS="" CGIDIR="%{_libdir}/nagios/cgi-bin" CFGDIR="%{_sysconfdir}/nagios" fullinstall
 
@@ -150,7 +146,6 @@ install -m 0644 sample-config/template-object/windows.cfg %{buildroot}%{_sysconf
 install -d -m 0755 %{buildroot}%{_datadir}/nagios/html/includes/rss/extlib
 install -d -m 0755 %{buildroot}%{_datadir}/nagios/html/includes/rss/htdocs
 install -d -m 0755 %{buildroot}%{_datadir}/nagios/html/includes/rss/scripts
-
 
 install -d 0755 %{buildroot}%/var/svc/manifest/site
 install -m 0644 %{SOURCE1} %{buildroot}%/var/svc/manifest/site
@@ -183,7 +178,7 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %defattr(-, root, bin)
 %doc Changelog INSTALLING LICENSE README UPGRADING
 %dir %attr (0755, root, sys) %{_datadir}
-%dir %attr (0755, root, other) %{_docdir}
+%{_datadir}/nagios/httpd/nagios.conf
 # %{_datadir}/nagios/html/robots.txt
 # %{_datadir}/nagios/html/[^i]*
 # %{_datadir}/nagios/html/contexthelp
@@ -206,20 +201,18 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %dir %attr (0755, root, bin) /lib/svc
 %dir %attr (0755, root, bin) /lib/svc/method
 %attr (0555, root, bin) /lib/svc/method/svc-nagios
-
-%files common
-%defattr(-, root, bin)
-## %{_initrddir}/nagios
 %dir %attr(0755, root, sys) %{_sysconfdir}
-%dir %attr(0755, root, bin) %{_sysconfdir}/apache2
-%dir %attr(0755, root, bin) %{_sysconfdir}/apache2/2.2
-%dir %attr(0755, root, bin) %{_sysconfdir}/apache2/2.2/conf.d
-%config(noreplace) %{_sysconfdir}/apache2/2.2/conf.d/nagios.conf
 %dir %attr(0755, root, nagios) %{_sysconfdir}/nagios
 %config(noreplace) %{_sysconfdir}/nagios/*cfg
 %dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/objects
 %config(noreplace) %{_sysconfdir}/nagios/objects/*cfg
 %dir %attr(0750, root, nagios) %{_sysconfdir}/nagios/private
+
+%files common
+%defattr(-, root, bin)
+## %{_initrddir}/nagios
+%dir %attr(0755, root, sys) %{_sysconfdir}
+%dir %attr(0755, root, nagios) %{_sysconfdir}/nagios
 %dir %attr(0755, root, sys) %{_localstatedir}
 %dir %attr(0755, root, sys) %{_localstatedir}/log
 %dir %attr(0755, root, bin) %{_localstatedir}/spool
@@ -235,10 +228,21 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_includedir}/nagios
 
 %changelog
-* Sat Dev 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix file list
+* Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- delete apache-22 from Requries and BuildRequires because Oracle Solaris 11.3 provides apache-22 and apache-24
+- fix Requires
+* Tue Nov 05 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.5.1
+
+* Thu Mar 21 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.5.0
+
+* Sat Dec 15 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix attr
 
-* Wed Dev 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Wed Dec 12 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.4.3
 
 * Wed Nov 14 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>

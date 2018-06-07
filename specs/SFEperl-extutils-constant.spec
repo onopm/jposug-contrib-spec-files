@@ -7,15 +7,12 @@
 %define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 
-%define build_with_makefile_pl 1
-%define build_with_build_pl 0
-
 %define cpan_name ExtUtils-Constant
 %define sfe_cpan_name extutils-constant
 
 Summary:          generate XS code to import C header constants
 Name:             SFEperl-%{sfe_cpan_name}
-IPS_package_name: library/perl/%{sfe_cpan_name}
+IPS_package_name: library/perl-5/%{sfe_cpan_name}
 Version:          0.23
 License:          unknown
 URL:              https://metacpan.org/pod/ExtUtils::Constant
@@ -27,7 +24,7 @@ generate XS code to import C header constants
 
 %if %{build584}
 %package 584
-IPS_package_name: library/perl/%{sfe_cpan_name}-584
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
 Summary:          generate XS code to import C header constants
 BuildRequires:    runtime/perl-584 = *
 Requires:         runtime/perl-584 = *
@@ -38,7 +35,7 @@ generate XS code to import C header constants
 
 %if %{build512}
 %package 512
-IPS_package_name: library/perl/%{sfe_cpan_name}-512
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
 Summary:          generate XS code to import C header constants
 BuildRequires:    runtime/perl-512 = *
 Requires:         runtime/perl-512 = *
@@ -49,7 +46,7 @@ generate XS code to import C header constants
 
 %if %{build516}
 %package 516
-IPS_package_name: library/perl/%{sfe_cpan_name}-516
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
 Summary:          generate XS code to import C header constants
 BuildRequires:    runtime/perl-516 = *
 Requires:         runtime/perl-516 = *
@@ -60,7 +57,7 @@ generate XS code to import C header constants
 
 %if %{build520}
 %package 520
-IPS_package_name: library/perl/%{sfe_cpan_name}-520
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
 Summary:          generate XS code to import C header constants
 BuildRequires:    runtime/perl-520 = *
 Requires:         runtime/perl-520 = *
@@ -112,17 +109,15 @@ modify_bin_dir() {
 }
 
 build_for() {
-%if %{build_with_makefile_pl}
-build_with_makefile.pl_for $*
-%endif
+    if [ -f Makefile.PL ];
+    then
+        build_with_makefile.pl_for $*
+    elif [ -f Build.PL ];
+    then
+        build_with_build.pl_for $*
+    fi
 
-%if %{build_with_build_pl}
-build_with_build.pl_for $*
-%endif
-
-%if %{generate_executable}
-modify_bin_dir $*
-%endif
+    modify_bin_dir $*
 }
 
 
@@ -198,3 +193,5 @@ rm -rf %{buildroot}
 %changelog
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- fix IPS package names
+- check existence of Makefile.PL and Build.PL instead of using variable

@@ -1,12 +1,12 @@
 %include Solaris.inc
 
 %define gemname fluentd
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
+%define bindir23 /opt/jposug/ruby/2.3/bin
+%define gemdir23 %(%{bindir23}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir23 %{gemdir23}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 0.10.57
+%define tarball_version 1.1.3
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -19,63 +19,70 @@ Source1:          fluentd.xml
 Source2:          svc-fluentd
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
+BuildRequires:	jposug/runtime/ruby-23jposug
+Requires:	jposug/runtime/ruby-23jposug
+Requires:	library/ruby/cool.io-23jposug >= 1.4.6
+Requires:	library/ruby/http_parser.rb-23jposug >= 0.6.0
+Requires:	library/ruby/json-23jposug
+Requires:	library/ruby/msgpack-23jposug >= 1.0.2
+Requires:	library/ruby/serverengine-23jposug >= 2.0.4
+Requires:	library/ruby/sigdump-23jposug >= 0.2.2
+Requires:	library/ruby/strptime-23jposug >= 0.1.7
+Requires:	library/ruby/dig_rb-23jposug >= 0.1.7
+Requires:	library/ruby/yajl-ruby-23jposug >= 1.0
+Requires:	library/ruby/tzinfo-23jposug >= 1.0.0
+Requires:	library/ruby/tzinfo-data-23jposug >= 1.0.0
+
 %description
 Fluentd is a log collector daemon written in Ruby. Fluentd receives logs as JSON streams, buffers them, and sends them to other systems like MySQL, MongoDB, or even other instances of Fluentd.
-
-BuildRequires:	runtime/ruby-21
-BuildRequires:	library/ruby-21/jeweler
-BuildRequires:	library/ruby-21/rr
-BuildRequires:	library/ruby-21/timecop
-BuildRequires:	library/text/yaml >= 0.1.6
-Requires:	runtime/ruby-21
-Requires:	library/ruby-21/cool.io >= 1.1.1
-Requires:	library/ruby-21/http_parser.rb >= 0.5.1
-Requires:	library/ruby-21/json >= 1.4.3
-Requires:	library/ruby-21/msgpack >= 0.5.8
-Requires:	library/ruby-21/sigdump >= 0.2.2
-Requires:	library/ruby-21/yajl-ruby >= 1.0
-Requires:	library/ruby-21/tzinfo >= 1.0.0
-Requires:	library/ruby-21/tzinfo-data >= 1.0.0
 
 %prep
 %setup -q -c -T
 
-mkdir -p .%{gemdir21}
-%{bindir21}/gem install --local --install-dir .%{gemdir21} \
+mkdir -p .%{gemdir23}
+%build
+
+mkdir -p .%{_bindir}
+%{bindir23}/gem install --local --install-dir .%{gemdir23} \
             --bindir .%{_bindir} \
             --force %{SOURCE0}
 
-%build
-
-pushd usr/bin
+pushd ./%{_bindir}
 for i in fluent*
 do
-    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/usr/ruby/2.1/bin/ruby$' > ${i}.tmp
+    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/opt/jposug/ruby/2.5/bin/ruby$' > ${i}.tmp
     mv ${i}.tmp ${i}
 done
 popd
 
-pushd usr/ruby/2.1/lib/%{_arch64}/ruby/gems/2.1.0/gems/fluentd-%{version}/bin
+pushd .%{geminstdir23}/bin
 for i in fluent*
 do
-    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/usr/ruby/2.1/bin/ruby$' > ${i}.tmp
+    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/opt/jposug/ruby/2.5/bin/ruby$' > ${i}.tmp
     mv ${i}.tmp ${i}
 done
 popd
 
+# ruby > 2.3 does not require string-scrub
+cp .%{gemdir23}/specifications/fluentd-%{version}.gemspec \
+    .%{gemdir23}/specifications/fluentd-%{version}.gemspec.tmp
+
+sed -e 's/.*string-scrub.*//' \
+    .%{gemdir23}/specifications/fluentd-%{version}.gemspec.tmp > \
+    .%{gemdir23}/specifications/fluentd-%{version}.gemspec
 
 %install
 rm -rf %{buildroot}
 
 mkdir -p %{buildroot}/usr/bin
-cp -a ./usr/bin/* \
+cp ./usr/bin/* \
         %{buildroot}/usr/bin/
 
-mkdir -p %{buildroot}%{gemdir21}
-cp -a .%{gemdir21}/* \
-        %{buildroot}%{gemdir21}/
+mkdir -p %{buildroot}%{gemdir23}
+cp -r .%{gemdir23}/* \
+        %{buildroot}%{gemdir23}/
 
-rm -rf %{buildroot}%{geminstdir21}/.yardoc/
+rm -rf %{buildroot}%{geminstdir23}/.yardoc/
 
 # SMF
 mkdir -p %{buildroot}/lib/svc/manifest/system
@@ -97,11 +104,15 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %dir %attr(0755, root, sys) /usr
 %dir %attr(0755, root, bin) /usr/bin
+%attr(0555, root, bin) /usr/bin/fluent-binlog-reader
 %attr(0555, root, bin) /usr/bin/fluent-cat
 %attr(0555, root, bin) /usr/bin/fluent-debug
 %attr(0555, root, bin) /usr/bin/fluent-gem
 %attr(0555, root, bin) /usr/bin/fluentd
-%{gemdir21}
+%attr(0555, root, bin) /usr/bin/fluent-plugin-config-format
+%attr(0555, root, bin) /usr/bin/fluent-plugin-generate
+%attr(0555, root, bin) /usr/bin/fluent-ca-generate
+%{gemdir23}
 %dir %attr(0755, root, bin) /lib/
 %dir %attr(0755, root, bin) /lib/svc
 %dir %attr(0755, root, sys) /lib/svc/manifest
@@ -116,6 +127,46 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Fri May 11 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.1.3
+* Tue Jan 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use ruby-23jposug. can not build ruby-25jposug on some environments.
+* Mon Jan 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.2 and use ruby-25jposug
+* Fri Jun 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.17
+* Thu Apr 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.12 and use ruby-23 instead of ruby-21
+* Wed Feb 01 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.12
+* Thu Nov 17 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.9
+* Thu Sep 01 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.4
+- fix requires
+* Mon Jun 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.14.0
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.22
+* Thu Feb 25 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.20
+* Wed Jan 13 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %description position
+* Thu Dec 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.19 and update Requires
+* Fri Nov 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.17
+* Tue Sep 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.15
+* Wed Jun 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.12
+* Tue Jun 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.11
+* Wed May 27 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use variables to aboid path problem
+- bump to 0.12.9
+* Sat Mar 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.12.6
 * Thu Dec 04 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.10.57
 * Mon Nov 03 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

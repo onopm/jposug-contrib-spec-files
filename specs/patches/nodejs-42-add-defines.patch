@@ -1,0 +1,10 @@
+--- common.gypi.orig	2015-12-17 18:20:24.993821087 +0900
++++ common.gypi	2015-12-17 18:22:06.533410643 +0900
+@@ -256,6 +256,7 @@
+ 	    'ldflags': [ '-m64' ],
+ 	   }],
+           [ 'OS=="solaris"', {
++            'defines': ['_GLIBCXX_USE_C99_MATH'],
+             'cflags': [ '-pthreads' ],
+             'ldflags': [ '-pthreads' ],
+             'cflags!': [ '-pthread' ],

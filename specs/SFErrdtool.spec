@@ -26,7 +26,7 @@ Name:                    rrdtool
 IPS_package_name:        image/jposug-rrdtool
 Summary:                 rrdtool - data logging and graphing system for time series data.
 URL:                     http://oss.oetiker.ch/rrdtool/
-Version:                 1.4.8
+Version:                 1.5.4
 Source:                  http://oss.oetiker.ch/rrdtool/pub/rrdtool-%{version}.tar.gz
 
 # SUNW_BaseDir:            %{_basedir}
@@ -52,7 +52,12 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 #want perl modules, right.
 Requires:                runtime/perl-512 = *
+Requires:                image/library/libpng
+Requires:                library/desktop/pango
 BuildRequires:           runtime/perl-512 = *
+
+#
+BuildRequires:           text/groff
 
 #bug and lacks perl modules (, ruby, python too)
 Conflicts: SUNWrrdtool
@@ -109,7 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-, root, bin)
-%doc README COPYING NEWS TODO THREADS
+%doc ABOUT-NLS  CHANGES  CONTRIBUTORS  COPYRIGHT  LICENSE  NEWS  THREADS  TODO  VERSION
 %dir %attr (0755, root, sys) /usr
 %dir %attr (0755, root, bin) %{_bindir}
 %{_bindir}/*
@@ -142,7 +147,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Mon Jun 10 2013 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
+* Sat Nov 07 2015 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
+- add BuildRequires
+- bump to 1.5.4
+* Wed Dec 03 2014 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
+- bump to 1.4.9
+* Mon Aug 05 2013 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
 - bump to 1.4.8
 * Fri Jun 22 2012 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
 - modify IPS_package_name

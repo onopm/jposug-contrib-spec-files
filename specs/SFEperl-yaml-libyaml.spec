@@ -1,124 +1,214 @@
-#
-# spec file for package: SFEperl-yaml-libyaml
-#
-# This file and all modifications and additions to the pristine
-# package are under the same license as the package itself.
-#
-# includes module(s):
-#
 %include Solaris.inc
-%include packagenamemacros.inc
 
-%define tarball_version 0.38
-%define tarball_name    YAML-LibYAML
-%define perl_version584 5.8.4
-%define perl_version512 5.12
+%define build584 0
+%define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define include_executable 0
 
-Name:		SFEperl-yaml-libyaml
-IPS_package_name: library/perl-5/yaml-libyaml
-Version:	0.38
-IPS_component_version: 0.38
-Summary:	YAML-LibYAML
-License:	Artistic
-Distribution:   OpenSolaris
-Vendor:         OpenSolaris Community
-Url:		http://search.cpan.org/~ingy/%{tarball_name}-%{tarball_version}
-SUNW_Basedir:	%{_basedir}
-SUNW_Copyright: %{name}.copyright
-Source0:	http://search.cpan.org/CPAN/authors/id/I/IN/INGY/%{tarball_name}-%{tarball_version}.tar.gz
+%define cpan_name YAML-LibYAML
+%define sfe_cpan_name yaml-libyaml
 
-BuildRoot:               %{_tmppath}/%{name}-%{version}-build
-
-BuildRequires:  %{pnm_buildrequires_perl_default}
-BuildRequires:  SFElibyaml
-Requires:  	%{pnm_requires_perl_default}
-Requires:  	SFElibyaml
-
-%ifarch sparc
-%define perl_dir sun4-solaris-64int
-%else
-%define perl_dir i86pc-solaris-64int 
-%endif
-
-Meta(info.maintainer):          roboporter by pkglabo.justplayer.com <pkgadmin@justplayer.com>
-Meta(info.upstream):            Ingy dot Net <ingy@cpan.org>
-Meta(info.upstream_url):        http://search.cpan.org/~ingy/%{tarball_name}-%{tarball_version}
-Meta(info.classification):	org.opensolaris.category.2008:Development/Perl
+Summary:               Perl YAML Serialization using XS and libyaml
+Name:                  SFEperl-%{sfe_cpan_name}
+IPS_package_name:      library/perl-5/%{sfe_cpan_name}
+Version:               0.59
+IPS_component_version: 0.59
+License:               perl_5
+URL:                   https://metacpan.org/pod/YAML::LibYAML
+Source0:               http://cpan.metacpan.org/authors/id/I/IN/INGY/YAML-LibYAML-%{version}.tar.gz
+BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
+Perl YAML Serialization using XS and libyaml
 
-# %package 584
-# IPS_package_name: library/perl-5/yaml-libyaml-584
-# Summary:  for perl-584
-# BuildRequires:	runtime/perl-584
-# BuildRequires:	library/perl-5/json-pp-584 # not builded yet
-# Requires:	runtime/perl-584
+%if %{build584}
+%package 584
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-584
+Summary:          Perl YAML Serialization using XS and libyaml
+BuildRequires:    runtime/perl-584 = *
+BuildRequires:    library/perl-5/extutils-makemaker-584
+Requires:         runtime/perl-584 = *
 
+%description 584
+Perl YAML Serialization using XS and libyaml
+%endif
+
+%if %{build512}
 %package 512
-IPS_package_name: library/perl-5/yaml-libyaml-512
-Summary:  for perl-512
-BuildRequires:	runtime/perl-512
-BuildRequires:	library/perl-5/json-pp-512
-Requires:	runtime/perl-512
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-512
+Summary:          Perl YAML Serialization using XS and libyaml
+BuildRequires:    runtime/perl-512 = *
+BuildRequires:    library/perl-5/extutils-makemaker-512
+Requires:         runtime/perl-512 = *
+
+%description 512
+Perl YAML Serialization using XS and libyaml
+%endif
+
+%if %{build516}
+%package 516
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-516
+Summary:          Perl YAML Serialization using XS and libyaml
+BuildRequires:    runtime/perl-516 = *
+BuildRequires:    library/perl-5/extutils-makemaker-516
+Requires:         runtime/perl-516 = *
+
+%description 516
+Perl YAML Serialization using XS and libyaml
+%endif
+
+%if %{build520}
+%package 520
+IPS_package_name: library/perl-5/%{sfe_cpan_name}-520
+Summary:          Perl YAML Serialization using XS and libyaml
+BuildRequires:    runtime/perl-520 = *
+BuildRequires:    library/perl-5/extutils-makemaker-520
+Requires:         runtime/perl-520 = *
+
+%description 520
+Perl YAML Serialization using XS and libyaml
+%endif
 
 
 %prep
-%setup -q -n %{tarball_name}-%{tarball_version}
+%setup -q -n %{cpan_name}-%{version}
+rm -rf %{buildroot}
 
 %build
-# export PERL5LIB=/usr/perl5/vendor_perl/5.8.4
-# /usr/perl5/5.8.4/bin/perl Makefile.PL \
-#     PREFIX=$RPM_BUILD_ROOT%{_prefix} \
-#     INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version584} \
-#     INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version584}/%{perl_dir} \
-#     INSTALLSITEMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-#     INSTALLSITEMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
-#     INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-#     INSTALLMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3
-# make
-# make test
+build_with_makefile.pl_for() {
+    perl_ver=$1
+    test=$2
+    bindir="/usr/perl5/${perl_ver}/bin"
+    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
 
-# rm -rf $RPM_BUILD_ROOT
-# make pure_install
+    export PERL5LIB=${vendor_dir}
+    ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
+                   DESTDIR=$RPM_BUILD_ROOT \
+                   LIB=${vendor_dir}
+    make
+    [ ${test} == 'without_test' ] || make test
+    make pure_install
+}
 
-export PERL5LIB=/usr/perl5/vendor_perl/5.12
-/usr/perl5/5.12/bin/perl Makefile.PL \
-    PREFIX=$RPM_BUILD_ROOT%{_prefix} \
-    INSTALLSITELIB=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version512} \
-    INSTALLSITEARCH=$RPM_BUILD_ROOT%{_prefix}/perl5/vendor_perl/%{perl_version512}/%{perl_dir} \
-    INSTALLSITEMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-    INSTALLSITEMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
-    INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-    INSTALLMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3
-make
-make test
+build_with_build.pl_for() {
+    perl_ver=$1
+    test=$2
+    bindir="/usr/perl5/${perl_ver}/bin"
+    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+
+    export PERL5LIB=${vendor_dir}
+    ${bindir}/perl Build.PL \
+                   --installdirs vendor \
+                   --destdir $RPM_BUILD_ROOT
+    ${bindir}/perl ./Build
+    [ ${test} == 'without_test' ] || ${bindir}/perl ./Build test
+    ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
+}
+
+modify_bin_dir() {
+  perl_ver=$1
+  if [ -d $RPM_BUILD_ROOT/usr/bin ]
+  then
+    [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+    mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
+  fi
+}
+
+build_for() {
+  if [ -f Makefile.PL ];
+  then
+    build_with_makefile.pl_for $*
+  elif [ -f Build.PL ];
+  then
+    build_with_build.pl_for $*
+  fi
+
+    modify_bin_dir $*
+}
+
+# To build without test, pass 'without_test' to build_for commaond.
+# like 'build_for version without_test'
+%if %{build584}
+build_for 5.8.4
+%endif
+
+%if %{build512}
+build_for 5.12
+%endif
+
+%if %{build516}
+build_for 5.16
+%endif
+
+%if %{build520}
+build_for 5.20
+%endif
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make pure_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}
+if [ -d $RPM_BUILD_ROOT%{_prefix}/man ]
+then
+    mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
+fi
+if [ -d $RPM_BUILD_ROOT%{_datadir}/man/man3 ]
+then
+    mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
+fi
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
-%defattr(-,root,bin)
-#%{_prefix}/perl5
-%attr(0755,root,sys) %dir %{_datadir}
-%{_mandir}
-#%attr(0755,root,bin) %dir %{_bindir}
-#%{_bindir}/*
+%defattr(0755,root,bin,-)
+%{_datadir}/man
 
-# %files 584
-# %defattr (-, root, bin)
-# %{_prefix}/perl5/vendor_perl/%{perl_version584}
+%if %{build584}
+%files 584
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.8.4
+%if %{include_executable}
+/usr/perl5/5.8.4
+%endif
+%endif
 
+%if %{build512}
 %files 512
-%defattr (-, root, bin)
-%{_prefix}/perl5/vendor_perl/%{perl_version512}
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.12
+%if %{include_executable}
+/usr/perl5/5.12
+%endif
+%endif
+
+%if %{build516}
+%files 516
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.16
+%if %{include_executable}
+/usr/perl5/5.16
+%endif
+%endif
+
+%if %{build520}
+%files 520
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/perl5/vendor_perl/5.20
+%if %{include_executable}
+/usr/perl5/5.20
+%endif
+%endif
 
 
 %changelog
+* Tue Nov 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build packages for perl-516 and perl-520
+* Sun Jun 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.59
 * Sun Dec 16 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - define perl_version584 and perl_version512 and use them
 * Thu Jun 14 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

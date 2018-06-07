@@ -10,7 +10,7 @@
 
 %define _prefix /usr
 %define php_version 5.5
-%define tarball_version  1.1.1
+%define tarball_version  1.3.0
 %define tarball_name     yaml
 
 Name:                    SFEphp55-yaml
@@ -97,6 +97,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/php/%{php_version}/conf.d/*
 
 %changelog
+* Fri Sep 30 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.3.0
 * Wed Mar 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.1.1
 * Thu Jul 10 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

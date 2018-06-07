@@ -1,183 +1,300 @@
 %include Solaris.inc
+%include default-depend.inc
+
+%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build24 %( if [ -x /usr/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define generate_executable 0
+%define keep_dependency 0
 
 %define gemname elasticsearch-api
-%define generate_executable 0
+%define sfe_gemname elasticsearch-api
 
-%define bindir19 /usr/ruby/1.9/bin
-%define gemdir19 %(%{bindir19}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir19 %{gemdir19}/gems/%{gemname}-%{version}
-
-%define bindir20 /usr/ruby/2.0/bin
-%define gemdir20 %(%{bindir20}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir20 %{gemdir20}/gems/%{gemname}-%{version}
-
-%define bindir21 /usr/ruby/2.1/bin
-%define gemdir21 %(%{bindir21}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir21 %{gemdir21}/gems/%{gemname}-%{version}
-
-%define bindir22 /usr/ruby/2.2/bin
-%define gemdir22 %(%{bindir22}/ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir22 %{gemdir22}/gems/%{gemname}-%{version}
-
-Summary:          Ruby client for Elasticsearch.
-Name:             SFEruby-es-api
-IPS_package_name: library/ruby-22/%{gemname}
-Version:          1.0.7
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+Name:             SFEruby-%{sfe_gemname}
+IPS_package_name: library/ruby/%{gemname}
+Version:          5.0.4
 License:          Apache 2
-URL:              http://rubygems.org/gems/%{gemname}
+URL:              https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	  runtime/ruby-22
-Requires:         runtime/ruby-22
-Requires:         library/ruby-22/multi_json
-
 %description
-Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
 
-%package 19
-IPS_package_name: library/ruby-19/%{gemname}
-Summary:          Ruby HTTP client library based on libcurl
-BuildRequires:	  runtime/ruby-19
-Requires:	  runtime/ruby-19
-Requires:         library/ruby-19/multi_json
 
-%description 19
-Ruby HTTP client library based on libcurl
+%if %{build21}
+%if %{keep_dependency}
+%package 21-old
+IPS_package_name: library/ruby-21/%{gemname}
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+Requires:         library/ruby/%{gemname}-21
 
-%package 20
-IPS_package_name: library/ruby-20/%{gemname}
-Summary:          Ruby HTTP client library based on libcurl
-BuildRequires:	  runtime/ruby-20
-Requires:	  runtime/ruby-20
-Requires:         library/ruby-20/multi_json
+%description 21-old
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
 
-%description 20
-Ruby HTTP client library based on libcurl
+%endif
 
 %package 21
-IPS_package_name: library/ruby-21/%{gemname}
-Summary:          Ruby HTTP client library based on libcurl
-BuildRequires:	  runtime/ruby-21
-Requires:	  runtime/ruby-21
-Requires:         library/ruby-21/multi_json
+IPS_package_name: library/ruby/%{gemname}-21
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+BuildRequires:    runtime/ruby-21 = *
+Requires:         runtime/ruby-21 = *
+# multi_json >= 0
+Requires:         library/ruby/multi_json-21
+Requires:         library/ruby/%{gemname}
 
 %description 21
-Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+%endif
+
+%if %{build22}
+%if %{keep_dependency}
+%package 22-old
+IPS_package_name: library/ruby-22/%{gemname}
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+Requires:         library/ruby/%{gemname}-22
+
+%description 22-old
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+%endif
+
+%package 22
+IPS_package_name: library/ruby/%{gemname}-22
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+BuildRequires:    runtime/ruby-22 = *
+Requires:         runtime/ruby-22 = *
+# multi_json >= 0
+Requires:         library/ruby/multi_json-22
+Requires:         library/ruby/%{gemname}
+
+%description 22
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+%endif
+
+%if %{build23}
+%if %{keep_dependency}
+%package 23-old
+IPS_package_name: library/ruby-23/%{gemname}
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+Requires:         library/ruby/%{gemname}-23
+
+%description 23-old
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+%endif
+
+%package 23
+IPS_package_name: library/ruby/%{gemname}-23
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+BuildRequires:    runtime/ruby-23 = *
+Requires:         runtime/ruby-23 = *
+# multi_json >= 0
+Requires:         library/ruby/multi_json-23
+Requires:         library/ruby/%{gemname}
+
+%description 23
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+%endif
+
+%if %{build24}
+
+%package 24
+IPS_package_name: library/ruby/%{gemname}-24
+Summary:          Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+BuildRequires:    runtime/ruby-24 = *
+Requires:         runtime/ruby-24 = *
+# multi_json >= 0
+Requires:         library/ruby/multi_json-24
+Requires:         library/ruby/%{gemname}
+
+%description 24
+Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+
+%endif
+
 
 %prep
 %setup -q -c -T
 
 %build
+build_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-# ruby-19
-%{bindir19}/gem install --local \
-    --install-dir .%{gemdir19} \
-    --bindir .%{bindir19} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
+    ${bindir}/gem install --local \
+        --no-env-shebang \
+        --install-dir .${gemdir} \
+        --bindir .${bindir} \
+        --no-ri \
+        --no-rdoc \
+        -V \
+        --force %{SOURCE0}
+    rm -rf .${gemdir}/cache
+}
 
-# ruby-20
-%{bindir20}/gem install --local \
-    --install-dir .%{gemdir20} \
-    --bindir .%{bindir20} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
-
+%if %{build21}
 # ruby-21
-%{bindir21}/gem install --local \
-    --install-dir .%{gemdir21} \
-    --bindir .%{bindir21} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
-
+build_for 2.1
+%endif
+%if %{build22}
 # ruby-22
-%{bindir22}/gem install --local \
-    --install-dir .%{gemdir22} \
-    --bindir .%{bindir22} \
-    --no-rdoc \
-    --no-ri \
-    -V \
-    --force %{SOURCE0}
+build_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+build_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+build_for 2.4
+%endif
 
 %install
 rm -rf %{buildroot}
 
-# ruby-19
-mkdir -p %{buildroot}/%{gemdir19}
-cp -a .%{gemdir19}/* \
-    %{buildroot}/%{gemdir19}/
-
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir19}
-cp -a .%{bindir19}/* \
-   %{buildroot}%{bindir19}/
+%if %{generate_executable}
+mkdir -p %{buildroot}/%{_bindir}
 %endif
 
-# ruby-20
-mkdir -p %{buildroot}/%{gemdir20}
-cp -a .%{gemdir20}/* \
-    %{buildroot}/%{gemdir20}/
+install_for() {
+    ruby_ver=$1
+    bindir="/usr/ruby/${ruby_ver}/bin"
+    gemdir="$(${bindir}/ruby -e 'puts Gem::dir' 2>/dev/null)"
+    geminstdir="${gemdir}/gems/%{gemname}-%{version}"
 
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir20}
-cp -a .%{bindir20}/* \
-   %{buildroot}%{bindir20}/
+    mkdir -p %{buildroot}/usr/ruby/${ruby_ver}
+    cp -a ./usr/ruby/${ruby_ver}/* \
+        %{buildroot}/usr/ruby/${ruby_ver}/
+
+    for dir in %{buildroot}${geminstdir}/bin %{buildroot}%{_bindir}
+    do
+	if [ -d ${dir} ]
+	then
+	    pushd ${dir}
+	    for i in ./*
+	    do
+		if [ -f ${i} ]
+		then
+		    mv ${i} ${i}.bak
+		    sed -e "s!^\#\!/usr/bin/env ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!/usr/bin/ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			-e "s!^\#\!ruby\$!\#\!/usr/ruby/${ruby_ver}/bin/ruby!" \
+			${i}.bak > ${i}
+		    rm ${i}.bak
+		fi
+	    done
+	    popd
+	fi
+    done
+   
+%if %{generate_executable}
+    pushd %{buildroot}%{_bindir}
+    for i in $(ls ../ruby/${ruby_ver}/bin/*)
+    do
+	[ -f ${i} ] && ln -s ${i} $(basename ${i})$(echo ${ruby_ver}|sed -e 's/\.//')
+    done
+    popd
 %endif
 
+}
+
+%if %{build21}
 # ruby-21
-mkdir -p %{buildroot}/%{gemdir21}
-cp -a .%{gemdir21}/* \
-    %{buildroot}/%{gemdir21}/
-
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir21}
-cp -a .%{bindir21}/* \
-   %{buildroot}%{bindir21}/
+install_for 2.1
 %endif
-
+%if %{build22}
 # ruby-22
-mkdir -p %{buildroot}/%{gemdir22}
-cp -a .%{gemdir22}/* \
-    %{buildroot}/%{gemdir22}/
-
-%if %generate_executable
-mkdir -p %{buildroot}%{bindir22}
-cp -a .%{bindir22}/* \
-   %{buildroot}%{bindir22}/
+install_for 2.2
+%endif
+%if %{build23}
+# ruby-23
+install_for 2.3
+%endif
+%if %{build24}
+# ruby-24
+install_for 2.4
 %endif
 
 %clean
 rm -rf %{buildroot}
 
-
 %files
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.2
 
-%files 19
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/1.9
-
-%files 20
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.0
-
+%if %{build21}
 %files 21
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
 /usr/ruby/2.1
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*21
+%endif
+%endif
+%if %{build22}
+%files 22
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.2
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*22
+%endif
+%endif
+%if %{build23}
+%files 23
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.3
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*23
+%endif
+%endif
+%if %{build24}
+%files 24
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+/usr/ruby/2.4
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*24
+%endif
+%endif
 
 %changelog
+* Tue Feb 14 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.0.4
+* Tue Feb 14 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.0.3
+* Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.18
+- obsolete ruby-19 and ruby-20
+- generate package for ruby-24
+- not include gem file
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.17
+* Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.15 and build package for ruby-23
+* Sun Nov 08 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.0.14
 * Tue Mar 10 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.0.7 and generate package for ruby-22
 * Mon Apr 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

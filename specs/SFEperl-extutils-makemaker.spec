@@ -379,7 +379,7 @@ then
 fi
 
 gfind $RPM_BUILD_ROOT -type f |egrep '(ExtUtils/(Install|Installed|Packlist).pm|ExtUtils::(Install|Installed|Packlist).3)' | \
-    xargs rm
+    xargs --no-run-if-empty rm
 
 # to avoid conflict with executable files included in solaris/runtime/perl-5*
 if [ $( expr %{build510} \| %{build512} \| %{build516} \| %{build522} \| %{build526} ) -ne 0 ]
@@ -493,6 +493,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Jun 18 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add '--no-run-if-empty' to xargs
 * Tue Jun 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - delete some files to avoid conflict with files included in solaris/runtime/perl-5*
 * Mon May 21 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

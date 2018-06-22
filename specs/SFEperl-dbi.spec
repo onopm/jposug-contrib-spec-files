@@ -35,25 +35,25 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-584
 Summary:          Database independent interface for Perl
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
-BuildRequires:    library/perl-5/test-simple-584
 %if %{enable_test}
-BuildRequires:    library/perl-5/dbd-amazon-584
-BuildRequires:    library/perl-5/dbd-anydata-584
-BuildRequires:    library/perl-5/dbd-csv-584
-BuildRequires:    library/perl-5/dbd-google-584
-BuildRequires:    library/perl-5/dbd-po-584
-BuildRequires:    library/perl-5/dbd-ram-584
-BuildRequires:    library/perl-5/sql-statement-584
+BuildRequires:    library/perl-5/test-simple-584
+# BuildRequires:    library/perl-5/dbd-amazon-584
+# BuildRequires:    library/perl-5/dbd-anydata-584
+# BuildRequires:    library/perl-5/dbd-csv-584
+# BuildRequires:    library/perl-5/dbd-google-584
+# BuildRequires:    library/perl-5/dbd-po-584
+# BuildRequires:    library/perl-5/dbd-ram-584
+# BuildRequires:    library/perl-5/sql-statement-584
 %endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/dbd-amazon-584
-Requires:         library/perl-5/dbd-anydata-584
-Requires:         library/perl-5/dbd-csv-584
-Requires:         library/perl-5/dbd-google-584
-Requires:         library/perl-5/dbd-po-584
-Requires:         library/perl-5/dbd-ram-584
-Requires:         library/perl-5/sql-statement-584
+# Requires:         library/perl-5/dbd-amazon-584
+# Requires:         library/perl-5/dbd-anydata-584
+# Requires:         library/perl-5/dbd-csv-584
+# Requires:         library/perl-5/dbd-google-584
+# Requires:         library/perl-5/dbd-po-584
+# Requires:         library/perl-5/dbd-ram-584
+# Requires:         library/perl-5/sql-statement-584
 
 %description 584
 Database independent interface for Perl
@@ -65,23 +65,25 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          Database independent interface for Perl
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
+%if %{enable_test}
 BuildRequires:    library/perl-5/test-simple-510
-BuildRequires:    library/perl-5/dbd-amazon-510
-BuildRequires:    library/perl-5/dbd-anydata-510
-BuildRequires:    library/perl-5/dbd-csv-510
-BuildRequires:    library/perl-5/dbd-google-510
-BuildRequires:    library/perl-5/dbd-po-510
-BuildRequires:    library/perl-5/dbd-ram-510
-BuildRequires:    library/perl-5/sql-statement-510
+# BuildRequires:    library/perl-5/dbd-amazon-510
+# BuildRequires:    library/perl-5/dbd-anydata-510
+# BuildRequires:    library/perl-5/dbd-csv-510
+# BuildRequires:    library/perl-5/dbd-google-510
+# BuildRequires:    library/perl-5/dbd-po-510
+# BuildRequires:    library/perl-5/dbd-ram-510
+# BuildRequires:    library/perl-5/sql-statement-510
+%endif
 Requires:         runtime/perl-510 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/dbd-amazon-510
-Requires:         library/perl-5/dbd-anydata-510
-Requires:         library/perl-5/dbd-csv-510
-Requires:         library/perl-5/dbd-google-510
-Requires:         library/perl-5/dbd-po-510
-Requires:         library/perl-5/dbd-ram-510
-Requires:         library/perl-5/sql-statement-510
+# Requires:         library/perl-5/dbd-amazon-510
+# Requires:         library/perl-5/dbd-anydata-510
+# Requires:         library/perl-5/dbd-csv-510
+# Requires:         library/perl-5/dbd-google-510
+# Requires:         library/perl-5/dbd-po-510
+# Requires:         library/perl-5/dbd-ram-510
+# Requires:         library/perl-5/sql-statement-510
 
 %description 510
 Database independent interface for Perl
@@ -93,25 +95,25 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-512
 Summary:          Database independent interface for Perl
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
-BuildRequires:    library/perl-5/test-simple-512
 %if %{enable_test}
-BuildRequires:    library/perl-5/dbd-amazon-512
-BuildRequires:    library/perl-5/dbd-anydata-512
-BuildRequires:    library/perl-5/dbd-csv-512
-BuildRequires:    library/perl-5/dbd-google-512
-BuildRequires:    library/perl-5/dbd-po-512
-BuildRequires:    library/perl-5/dbd-ram-512
-BuildRequires:    library/perl-5/sql-statement-512
+BuildRequires:    library/perl-5/test-simple-512
+# BuildRequires:    library/perl-5/dbd-amazon-512
+# BuildRequires:    library/perl-5/dbd-anydata-512
+# BuildRequires:    library/perl-5/dbd-csv-512
+# BuildRequires:    library/perl-5/dbd-google-512
+# BuildRequires:    library/perl-5/dbd-po-512
+# BuildRequires:    library/perl-5/dbd-ram-512
+# BuildRequires:    library/perl-5/sql-statement-512
 %endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/dbd-amazon-512
-Requires:         library/perl-5/dbd-anydata-512
-Requires:         library/perl-5/dbd-csv-512
-Requires:         library/perl-5/dbd-google-512
-Requires:         library/perl-5/dbd-po-512
-Requires:         library/perl-5/dbd-ram-512
-Requires:         library/perl-5/sql-statement-512
+# Requires:         library/perl-5/dbd-amazon-512
+# Requires:         library/perl-5/dbd-anydata-512
+# Requires:         library/perl-5/dbd-csv-512
+# Requires:         library/perl-5/dbd-google-512
+# Requires:         library/perl-5/dbd-po-512
+# Requires:         library/perl-5/dbd-ram-512
+# Requires:         library/perl-5/sql-statement-512
 
 %description 512
 Database independent interface for Perl
@@ -123,26 +125,26 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          Database independent interface for Perl
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
-BuildRequires:    library/perl-5/test-simple-516
 Requires:         library/perl-5/%{ips_cpan_name}
 %if %{enable_test}
-BuildRequires:    library/perl-5/dbd-amazon-516
-BuildRequires:    library/perl-5/dbd-anydata-516
-BuildRequires:    library/perl-5/dbd-csv-516
-BuildRequires:    library/perl-5/dbd-google-516
-BuildRequires:    library/perl-5/dbd-po-516
-BuildRequires:    library/perl-5/dbd-ram-516
-BuildRequires:    library/perl-5/sql-statement-516
+BuildRequires:    library/perl-5/test-simple-516
+# BuildRequires:    library/perl-5/dbd-amazon-516
+# BuildRequires:    library/perl-5/dbd-anydata-516
+# BuildRequires:    library/perl-5/dbd-csv-516
+# BuildRequires:    library/perl-5/dbd-google-516
+# BuildRequires:    library/perl-5/dbd-po-516
+# BuildRequires:    library/perl-5/dbd-ram-516
+# BuildRequires:    library/perl-5/sql-statement-516
 %endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/dbd-amazon-516
-Requires:         library/perl-5/dbd-anydata-516
-Requires:         library/perl-5/dbd-csv-516
-Requires:         library/perl-5/dbd-google-516
-Requires:         library/perl-5/dbd-po-516
-Requires:         library/perl-5/dbd-ram-516
-Requires:         library/perl-5/sql-statement-516
+# Requires:         library/perl-5/dbd-amazon-516
+# Requires:         library/perl-5/dbd-anydata-516
+# Requires:         library/perl-5/dbd-csv-516
+# Requires:         library/perl-5/dbd-google-516
+# Requires:         library/perl-5/dbd-po-516
+# Requires:         library/perl-5/dbd-ram-516
+# Requires:         library/perl-5/sql-statement-516
 
 %description 516
 Database independent interface for Perl
@@ -154,25 +156,25 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-522
 Summary:          Database independent interface for Perl
 BuildRequires:    runtime/perl-522 = *
 BuildRequires:    library/perl-5/extutils-makemaker-522
-BuildRequires:    library/perl-5/test-simple-522
 %if %{enable_test}
-BuildRequires:    library/perl-5/dbd-amazon-522
-BuildRequires:    library/perl-5/dbd-anydata-522
-BuildRequires:    library/perl-5/dbd-csv-522
-BuildRequires:    library/perl-5/dbd-google-522
-BuildRequires:    library/perl-5/dbd-po-522
-BuildRequires:    library/perl-5/dbd-ram-522
-BuildRequires:    library/perl-5/sql-statement-522
+BuildRequires:    library/perl-5/test-simple-522
+# BuildRequires:    library/perl-5/dbd-amazon-522
+# BuildRequires:    library/perl-5/dbd-anydata-522
+# BuildRequires:    library/perl-5/dbd-csv-522
+# BuildRequires:    library/perl-5/dbd-google-522
+# BuildRequires:    library/perl-5/dbd-po-522
+# BuildRequires:    library/perl-5/dbd-ram-522
+# BuildRequires:    library/perl-5/sql-statement-522
 %endif
 Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/dbd-amazon-522
-Requires:         library/perl-5/dbd-anydata-522
-Requires:         library/perl-5/dbd-csv-522
-Requires:         library/perl-5/dbd-google-522
-Requires:         library/perl-5/dbd-po-522
-Requires:         library/perl-5/dbd-ram-522
-Requires:         library/perl-5/sql-statement-522
+# Requires:         library/perl-5/dbd-amazon-522
+# Requires:         library/perl-5/dbd-anydata-522
+# Requires:         library/perl-5/dbd-csv-522
+# Requires:         library/perl-5/dbd-google-522
+# Requires:         library/perl-5/dbd-po-522
+# Requires:         library/perl-5/dbd-ram-522
+# Requires:         library/perl-5/sql-statement-522
 
 %description 522
 Database independent interface for Perl
@@ -215,14 +217,14 @@ Summary:          Database independent interface for Perl
 BuildRequires:    runtime/perl-526jposug = *
 BuildRequires:    library/perl-5/extutils-makemaker-526jposug
 %if %{enable_test}
-# BuildRequires:    library/perl-5/test-simple-526jposug
+BuildRequires:    library/perl-5/test-simple-526jposug
 # BuildRequires:    library/perl-5/dbd-amazon-526jposug
 # BuildRequires:    library/perl-5/dbd-anydata-526jposug
 # BuildRequires:    library/perl-5/dbd-csv-526jposug
 # BuildRequires:    library/perl-5/dbd-google-526jposug
 # BuildRequires:    library/perl-5/dbd-po-526jposug
 # BuildRequires:    library/perl-5/dbd-ram-526jposug
-BuildRequires:    library/perl-5/sql-statement-526jposug
+# BuildRequires:    library/perl-5/sql-statement-526jposug
 %endif
 Requires:         runtime/perl-526jposug = *
 Requires:         library/perl-5/%{ips_cpan_name}
@@ -328,7 +330,7 @@ modify_bin_dir() {
     if [ -d $RPM_BUILD_ROOT/${prefix}/bin ]
     then
       [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver} ] || mkdir -p ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}
-      mv ${RPM_BUILD_ROOT}${prefix}/bin ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin
+      mv $RPM_BUILD_ROOT${prefix}/bin $RPM_BUILD_ROOT/${prefix}/perl5/${perl_ver}/bin
     fi
       
     if [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin ]
@@ -351,19 +353,19 @@ modify_man_dir() {
         prefix=/usr
     fi
 
-    if [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/man ]
+    if [ -d $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man ]
     then
         if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
         then
-            rm -rf ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/man
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         else
             mkdir -p $RPM_BUILD_ROOT%{_datadir}
-            mv ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
-            rm -rf ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/man
+            mv $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         fi
         if [ %{include_executable} -eq 0 ]
         then
-            rmdir ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}
+            rmdir $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}
         fi
 
     fi
@@ -541,6 +543,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Fri Jun 22 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- comment out some unnecessary dependencies
 * Wed May 16 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.641 and build package for perl-526jposug
 * Sun Mar 18 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

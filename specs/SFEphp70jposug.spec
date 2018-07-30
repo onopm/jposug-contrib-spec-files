@@ -3,12 +3,10 @@
 
 %define _prefix /opt/jposug/php
 %define tarball_name     php
-%define tarball_version  7.0.30
+%define tarball_version  7.0.31
 %define major_version	 7.0
 %define prefix_name      SFEphp70jposug
 %define _basedir         %{_prefix}/%{major_version}
-
-%define oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[23]|12.0)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}
 IPS_package_name:        jposug/web/php-70jposug
@@ -26,22 +24,14 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:  library/spell-checking/enchant
 BuildRequires:  text/nkf
-%if %{oracle_solaris_11_2}
-BuildRequires: library/libedit
-%else
-BuildRequires: SFEeditline
-%endif
-BuildRequires: developer/icu
+BuildRequires:  jposug/library/editline
+BuildRequires:  developer/icu
 
 Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       text/tidy
 Requires:       library/libtool/libltdl
 Requires:       web/php-common
-%if %{oracle_solaris_11_2}
-Requires:       library/libedit
-%else
-Requires:       SFEeditline
-%endif
+Requires:       jposug/library/editline
 Requires:       library/icu
 
 
@@ -72,7 +62,8 @@ export CC=/usr/bin/gcc
 export CXX=/usr/bin/g++
 export CFLAGS="-std=gnu99 -m64 -O2"
 export CPPFLAGS="-std=gnu99 -m64 -O2 -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I../CPPFLAGSTEST"
-export LDFLAGS="-L/lib/`isainfo -k` -L/usr/lib/`isainfo -k` -R/lib/`isainfo -k` -R/usr/lib/`isainfo -k`"
+export LDFLAGS="-L/usr/lib/`isainfo -k` -L/lib/`isainfo -k` -R/opt/jposug/lib:/lib/`isainfo -k` -R/usr/lib/`isainfo -k`"
+export PKG_CONFIG_PATH="/opt/jposug/lib/pkgconfig:/usr/lib/`isainfo -k`/pkgconfig:/usr/share/pkgconfig"
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -148,8 +139,7 @@ CC=${CC} CXX=${CXX} ./configure --prefix=%{_prefix} \
 
 # Build /usr/bin/php-cgi with the CGI SAPI, and all the shared extensions
 pushd build-cgi
-build --enable-force-cgi-redirect \
-    --enable-pcntl \
+build --enable-pcntl \
     --enable-mbstring=shared \
     --enable-mbregex \
     --with-gd=shared \
@@ -163,7 +153,6 @@ build --enable-force-cgi-redirect \
     --with-xsl=shared \
     --enable-xmlreader=shared --enable-xmlwriter=shared \
     --with-curl=shared \
-    --enable-fastcgi \
     --with-sqlite3=shared \
     --enable-mysqlnd=shared \
     --with-mysqli=shared,mysqlnd \
@@ -175,7 +164,6 @@ build --enable-force-cgi-redirect \
     --without-readline \
     --with-libedit \
     --enable-phar=shared \
-    --disable-mcrypt \
     --with-tidy=shared \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
@@ -218,8 +206,7 @@ popd
 pushd build-ztscli
 
 EXTENSION_DIR=%{_libdir}/php-zts/modules
-build --enable-force-cgi-redirect \
-    --includedir=%{_basedir}/include/php-zts \
+build --includedir=%{_basedir}/include/php-zts \
     --libdir=%{_basedir}/lib/php-zts \
     --enable-maintainer-zts \
     --with-config-file-scan-dir=%{_sysconfdir}/php/%{major_version}/php-zts.d \
@@ -237,7 +224,6 @@ build --enable-force-cgi-redirect \
     --with-xsl=shared \
     --enable-xmlreader=shared --enable-xmlwriter=shared \
     --with-curl=shared \
-    --enable-fastcgi \
     --enable-mysqlnd=shared \
     --enable-mysqlnd-threading \
     --with-mysqli=shared,mysqlnd \
@@ -250,7 +236,6 @@ build --enable-force-cgi-redirect \
     --without-readline \
     --with-libedit \
     --enable-phar=shared \
-    --disable-mcrypt \
     --with-tidy=shared \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
     --enable-posix=shared \
@@ -449,6 +434,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
+* Mon Jul 30 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.31
+* Thu Jun 07 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use jposug/library/editline and delete unrecognized configure options
 * Mon May 14 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.0.30
 * Fri Mar 02 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -11,15 +11,10 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  10.4
+%define tarball_version  10.5
 %define major_version	 10
 %define prefix_name      SFEpostgres-10
 %define _basedir         %{_prefix}/%{major_version}
-
-# after Oracle Solaris 11.2,
-# - use library/libedit
-# - SFEpostgres-common is not needed, because user and group 'postgres' exist.
-%define after_oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[23]|12)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}-client
 IPS_package_name:        database/postgres-10
@@ -50,11 +45,7 @@ BuildRequires: %{pnm_buildrequires_SUNWcsl}
 BuildRequires: %{pnm_buildrequires_SUNWlibms}
 BuildRequires: %{pnm_buildrequires_SUNWgss}
 BuildRequires: %{pnm_buildrequires_SUNWTcl}
-%if %{after_oracle_solaris_11_2}
-BuildRequires: library/libedit
-%else
-BuildRequires: SFEeditline
-%endif
+BuildRequires: jposug/library/editline
 
 Requires: %{pnm_requires_SUNWlxsl}
 Requires: %{pnm_requires_SUNWlxml}
@@ -63,11 +54,7 @@ Requires: %{pnm_requires_SUNWcsl}
 Requires: %{pnm_requires_SUNWopenssl}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{pnm_requires_SUNWgss}
-%if %{after_oracle_solaris_11_2}
-Requires: library/libedit
-%else
-Requires: SFEeditline
-%endif
+Requires: jposug/library/editline
 
 Requires: %{prefix_name}-libs
 
@@ -133,11 +120,6 @@ Requires: %{pnm_requires_SUNWzlib}
 Requires: %{pnm_requires_SUNWlibms}
 Requires: %{name}
 Requires: %{prefix_name}-libs
-%if %{after_oracle_solaris_11_2}
-#
-%else
-Requires: SFEpostgres-common
-%endif
 
 %package -n %{prefix_name}-contrib
 IPS_package_name: database/postgres-10/contrib
@@ -1311,6 +1293,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_archivecleanup-%{major_version}.mo
 
 %changelog
+* Fri Aug 10 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 10.5 and use jposug/library/editline
 * Mon May 14 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 10.4 and use gcc
 * Fri Nov 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

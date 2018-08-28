@@ -6,7 +6,7 @@
 %define geminstdir23 %{gemdir23}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 1.2.2
+%define tarball_version 1.2.5
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -127,6 +127,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Tue Aug 28 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2.5
 * Fri Jun 29 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.2.2
 * Fri May 11 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

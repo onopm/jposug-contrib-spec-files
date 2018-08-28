@@ -7,16 +7,19 @@
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build25jposug %( if [ -x /opt/jposug/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build26jposug %( if [ -x /opt/jposug/ruby/2.6/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 0
 
 %define gemname tzinfo-data
 %define sfe_gemname tzinfo-data
 
+# TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
+
 Summary:          TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.2017.3
+Version:          1.2018.5
 License:          MIT
 URL:              http://tzinfo.github.io
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -32,7 +35,7 @@ IPS_package_name: library/ruby-21/%{gemname}
 Summary:          TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby/%{gemname}-21
+# Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
 TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
@@ -45,7 +48,7 @@ BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 # tzinfo >= 1.0.0
 Requires:         library/ruby/tzinfo-21
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 21
 TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
@@ -58,7 +61,7 @@ IPS_package_name: library/ruby-22/%{gemname}
 Summary:          TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-Requires:         library/ruby/%{gemname}-22
+# Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
 TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
@@ -71,7 +74,7 @@ BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 # tzinfo >= 1.0.0
 Requires:         library/ruby/tzinfo-22
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 22
 TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
@@ -84,7 +87,7 @@ IPS_package_name: library/ruby-23/%{gemname}
 Summary:          TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-Requires:         library/ruby/%{gemname}-23
+# Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
 TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
@@ -97,7 +100,7 @@ BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
 # tzinfo >= 1.0.0
 Requires:         library/ruby/tzinfo-23
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 23
 TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
@@ -112,7 +115,7 @@ BuildRequires:    jposug/runtime/ruby-23jposug = *
 Requires:         jposug/runtime/ruby-23jposug = *
 # tzinfo >= 1.0.0
 Requires:         jposug/library/ruby/tzinfo-23jposug
-Requires:         jposug/library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 23jposug
 TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
@@ -127,7 +130,7 @@ BuildRequires:    jposug/runtime/ruby-24jposug = *
 Requires:         jposug/runtime/ruby-24jposug = *
 # tzinfo >= 1.0.0
 Requires:         jposug/library/ruby/tzinfo-24jposug
-Requires:         jposug/library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 24jposug
 TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
@@ -142,9 +145,24 @@ BuildRequires:    jposug/runtime/ruby-25jposug = *
 Requires:         jposug/runtime/ruby-25jposug = *
 # tzinfo >= 1.0.0
 Requires:         jposug/library/ruby/tzinfo-25jposug
-Requires:         jposug/library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 25jposug
+TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
+%endif
+
+%if %{build26jposug}
+
+%package 26jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-26jposug
+Summary:          TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
+BuildRequires:    jposug/runtime/ruby-26jposug = *
+Requires:         jposug/runtime/ruby-26jposug = *
+# tzinfo >= 1.0.0
+Requires:         jposug/library/ruby/tzinfo-26jposug
+# Requires:         library/ruby/%{gemname}
+
+%description 26jposug
 TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
 %endif
 
@@ -154,7 +172,7 @@ TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby mod
 
 %build
 build_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         bindir="/opt/jposug/ruby/${ruby_ver}/bin"
@@ -199,6 +217,10 @@ build_for 2.4jposug
 # ruby-25jposug
 build_for 2.5jposug
 %endif
+%if %{build26jposug}
+# ruby-26jposug
+build_for 2.6jposug
+%endif
 
 %install
 rm -rf %{buildroot}
@@ -208,7 +230,7 @@ mkdir -p %{buildroot}/%{_bindir}
 %endif
 
 install_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         dir_prefix="/opt/jposug/ruby/${ruby_ver}"
@@ -248,7 +270,9 @@ install_for() {
 	    popd
 	fi
     done
-   
+
+    [ -d %{buildroot}${geminstdir}/test ] && rm -rf %{buildroot}${geminstdir}/test || true
+
 %if %{generate_executable}
     pushd %{buildroot}%{_bindir}
     for i in $(ls ${dir_prefix_relative}/bin/*)
@@ -277,6 +301,9 @@ install_for 2.4jposug
 %endif
 %if %{build25jposug}
 install_for 2.5jposug
+%endif
+%if %{build26jposug}
+install_for 2.6jposug
 %endif
 
 %clean
@@ -351,8 +378,21 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build26jposug}
+%files 26jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.6
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*26jposug
+%endif
+%endif
+
 
 %changelog
+* Fri Jun 29 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2018.5 and add package for ruby-26jposug
 * Mon Jan 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.2017.3 and build packages for ruby-2{3,4,5}jposug
 * Fri Jun 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

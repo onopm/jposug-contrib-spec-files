@@ -17,7 +17,7 @@
 Summary:          RSpec tests for your Puppet manifests
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.6.10
+Version:          2.7.1
 License:          MIT
 URL:              https://github.com/rodjek/rspec-puppet/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -389,6 +389,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Oct 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.7.1
 * Wed Mar 07 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.6.10 and build packages for ruby-26jposug
 * Fri Dec 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

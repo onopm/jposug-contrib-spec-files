@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  7.1.20
+%define tarball_version  7.1.23
 %define major_version    7.1
 %define prefix_name      SFEphp71
 %define _basedir         %{_prefix}/%{major_version}
@@ -23,7 +23,6 @@ SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires: library/spell-checking/enchant
-BuildRequires: text/nkf
 BuildRequires: library/libedit
 BuildRequires: developer/icu
 BuildRequires: developer/gcc
@@ -45,13 +44,6 @@ PHP 7.1
 
 %prep
 %setup -n %{tarball_name}-%{tarball_version}
-
-# fix opcache build problem with SolarisStudio
-# see https://bugs.php.net/bug.php?id=65207
-for i in ext/opcache/Optimizer/zend_optimizer{.c,.h,_internal.h}
-do
-nkf -Lu --overwrite=.bak ${i}
-done
 
 echo "
 #if defined(__sun) && defined(__SVR4) //Solaris
@@ -437,6 +429,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}.so
 
 %changelog
+* Mon Oct 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.1.23 and no need to use nkf
 * Mon Jul 30 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.1.20
 * Fri Jun 01 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

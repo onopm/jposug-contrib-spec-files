@@ -3,13 +3,13 @@
 
 %define _prefix /opt/jposug/php
 %define tarball_name     php
-%define tarball_version  7.2.8
+%define tarball_version  7.2.11
 %define major_version    7.2
 %define prefix_name      SFEphp72jposug
 %define _basedir         %{_prefix}/%{major_version}
 %define zts              20160731
 
-%define oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[23]|12.0)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+%define oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[234]|12.0)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}
 IPS_package_name:        jposug/web/php-72jposug
@@ -25,7 +25,6 @@ SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:  library/spell-checking/enchant
-BuildRequires:  text/nkf
 %if %{oracle_solaris_11_2}
 BuildRequires: library/libedit
 %else
@@ -53,13 +52,6 @@ PHP
 
 %prep
 %setup -n %{tarball_name}-%{tarball_version}
-
-# fix opcache build problem with SolarisStudio
-# see https://bugs.php.net/bug.php?id=65207
-for i in ext/opcache/Optimizer/zend_optimizer{.c,.h,_internal.h}
-do
-nkf -Lu --overwrite=.bak ${i}
-done
 
 echo "
 #if defined(__sun) && defined(__SVR4) //Solaris
@@ -446,6 +438,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
+* Mon Oct 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.2.11
 * Mon Jul 30 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.2.8
 * Fri Jun 01 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

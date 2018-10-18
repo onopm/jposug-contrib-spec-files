@@ -1,4 +1,4 @@
-%define version 2.4.3
+%define version 2.4.5
 %define major_version 2.4
 %define unmangled_version 2.4.0
 %define version_suffix 24jposug
@@ -116,5 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Thu Oct 18 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.5
 * Tue Dec 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

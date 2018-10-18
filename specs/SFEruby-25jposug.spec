@@ -1,4 +1,4 @@
-%define version 2.5.1
+%define version 2.5.2
 %define major_version 2.5
 %define unmangled_version 2.5.0
 %define version_suffix 25jposug
@@ -112,6 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Thu Oct 18 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.5.2
 * Thu Mar 29 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.5.1
 * Tue Dec 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

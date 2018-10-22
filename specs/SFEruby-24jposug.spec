@@ -23,6 +23,9 @@ Source:                 https://cache.ruby-lang.org/pub/ruby/%{major_version}/ru
 Source1:                rbconfig.sedscript
 
 # Patch0:                 ruby-23-disable-ssl.patch
+# With qsort_s, build fails on Solaris 11.4
+# https://bugs.ruby-lang.org/issues/15091
+patch1:                 ruby-24-disable-qsort_s-check.patch
 Url:                    http://www.ruby-lang.org/
 
 BuildRequires: library/text/yaml >= 0.1.6
@@ -36,6 +39,7 @@ Requires:      library/text/yaml >= 0.1.6
 %setup -n ruby-%{version}
 
 ## %patch0 -p0
+%patch1 -p0
 
 %build
 %ifarch sparcv9
@@ -116,6 +120,8 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Mon Oct 22 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add patch1 to build on Solaris 11.4
 * Thu Oct 18 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.4.5
 * Tue Dec 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -23,6 +23,10 @@ Source:                 https://cache.ruby-lang.org/pub/ruby/%{major_version}/ru
 Source1:                rbconfig.sedscript
 Url:                    http://www.ruby-lang.org/
 
+# With qsort_s, build fails on Solaris 11.4
+# https://bugs.ruby-lang.org/issues/15091
+patch0:                 ruby-25-disable-qsort_s-check.patch
+
 BuildRequires: library/text/yaml >= 0.1.6
 BuildRequires: system/network/bpf
 BuildRequires: system/library/libnet
@@ -32,6 +36,8 @@ Requires:      library/text/yaml >= 0.1.6
 
 %prep
 %setup -n ruby-%{version}
+
+%patch0 -p 0
 
 %build
 %ifarch sparcv9
@@ -112,6 +118,8 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Mon Oct 22 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add patch0 to build on Solaris 11.4
 * Thu Oct 18 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.5.2
 * Thu Mar 29 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -7,7 +7,7 @@
 %define build55 %( test -x /usr/php/5.5/bin/php && echo 1 || echo 0)
 %define build56 %( test -x /usr/php/5.6/bin/php && echo 1 || echo 0)
 %define build71 %( test -x /usr/php/7.1/bin/php && echo 1 || echo 0)
-%define build72 %( test -x /usr/php/7.2/bin/php && echo 2 || echo 0)
+%define build72 %( test -x /usr/php/7.2/bin/php && echo 1 || echo 0)
 %define build71jposug %( test -x /opt/jposug/php/7.1/bin/php && echo 1 || echo 0)
 %define build72jposug %( test -x /opt/jposug/php/7.2/bin/php && echo 1 || echo 0)
 

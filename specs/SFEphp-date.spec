@@ -1,9 +1,7 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define build52 %( test -x /usr/php/5.2/bin/php && echo 1 || echo 0)
 %define build53 %( test -x /usr/php/5.3/bin/php && echo 1 || echo 0)
-%define build54 %( test -x /usr/php/5.4/bin/php && echo 1 || echo 0)
 %define build55 %( test -x /usr/php/5.5/bin/php && echo 1 || echo 0)
 %define build56 %( test -x /usr/php/5.6/bin/php && echo 1 || echo 0)
 %define build71 %( test -x /usr/php/7.1/bin/php && echo 1 || echo 0)
@@ -35,15 +33,6 @@ It does not rely on 32-bit system date stamps, so
 you can display calendars and compare dates that date
 pre 1970 and post 2038.
 
-%if %{build52}
-%package 52
-IPS_package_name:	web/php-52/extension/php-date
-Summary:            PHP module for Date
-BuildRequires:		web/php-52 = *
-Requires:			web/php-52 = *
-%define pear_dir_52 %(/usr/php/5.2/bin/pear config-get php_dir)
-%endif
-
 %if %{build53}
 %package 53
 IPS_package_name:	web/php-53/extension/php-date
@@ -51,15 +40,6 @@ Summary:            PHP module for Date
 BuildRequires:		web/php-53 = *
 Requires:			web/php-53 = *
 %define pear_dir_53 %(/usr/php/5.3/bin/pear config-get php_dir)
-%endif
-
-%if %{build54}
-%package 54
-IPS_package_name:	web/php-54/extension/php-date
-Summary:            PHP module for Date
-BuildRequires:		web/php-54 = *
-Requires:			web/php-54 = *
-%define pear_dir_54 %(/usr/php/5.4/bin/pear config-get php_dir)
 %endif
 
 %if %{build55}
@@ -160,14 +140,8 @@ install_for() {
 	rm %{buildroot}${pear_dir}/.depdblock
 }
 
-%if %{build52}
-install_for 5.2
-%endif
 %if %{build53}
 install_for 5.3
-%endif
-%if %{build54}
-install_for 5.4
 %endif
 %if %{build55}
 install_for 5.5
@@ -194,28 +168,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr (-, root, bin)
 
-%if %{build52}
-%files 52
-%defattr (-, root, bin)
-%dir %attr(0755, root, bin) %{pear_dir_52}
-%{pear_dir_52}/*
-%{pear_dir_52}/.registry/date.reg
-%endif
-
 %if %{build53}
 %files 53
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_53}
 %{pear_dir_53}/*
 %{pear_dir_53}/.registry/date.reg
-%endif
-
-%if %{build54}
-%files 54
-%defattr (-, root, bin)
-%dir %attr(0755, root, bin) %{pear_dir_54}
-%{pear_dir_54}/*
-%{pear_dir_54}/.registry/date.reg
 %endif
 
 %if %{build55}
@@ -234,6 +192,7 @@ rm -rf $RPM_BUILD_ROOT
 %{pear_dir_56}/.registry/date.reg
 %endif
 
+%if %{build71}
 %files 71
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_71}
@@ -241,7 +200,14 @@ rm -rf $RPM_BUILD_ROOT
 %{pear_dir_71}/.registry/date.reg
 %endif
 
-%if %{build71}
+%if %{build72}
+%files 72
+%defattr (-, root, bin)
+%dir %attr(0755, root, bin) %{pear_dir_72}
+%{pear_dir_72}/*
+%{pear_dir_72}/.registry/date.reg
+%endif
+
 %if %{build71jposug}
 %files 71jposug
 %defattr (-, root, bin)
@@ -250,9 +216,6 @@ rm -rf $RPM_BUILD_ROOT
 %{pear_dir_71jposug}/.registry/date.reg
 %endif
 
-%if %{build72}
-install_for 7.2
-%endif
 %if %{build72jposug}
 %files 72jposug
 %defattr (-, root, bin)
@@ -262,6 +225,8 @@ install_for 7.2
 %endif
 
 %changelog
+* Sun Oct 28 2018 - <me@tsundoku.ne.jp>
+- remove unused/obsolete versions
 * Mon Oct 01 2018 - <me@tsundoku.ne.jp>
 - multiple PHP version support (from SFEphp55-date.spec)
 * Thu Jul 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

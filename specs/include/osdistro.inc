@@ -77,6 +77,11 @@
 ##TODO## be more precise later, for build 173 and 174 and later SRU
 %define osbuild 175
 %endif
+#From 11.4 (formerly 12) snv build numbers are no more?
+#Need to identify 11.4 without breaking existing conditionals, hence...
+%if %( uname -v | egrep '^11\.4' > /dev/null && echo 1 || echo 0 )
+%define s114 1
+%endif
 # OmniOS
 %if %( uname -v | egrep 'omnios' > /dev/null && echo 1 || echo 0 )
 %define osbuild %( cat /etc/release | head -1 | sed -e 's/.*r//' )
@@ -375,6 +380,8 @@
 
 
 %changelog
+* Sat Sep 29 2018 - <me@tsundoku.ne.jp>
+- add support for Solaris 11.4
 * Tue May 19 2015 - YAMAMOTO Takashi yamachan@piwikjapan.org
 - add support for OmniOS
 * Mon Nov  7 2011 - Thomas Wagner

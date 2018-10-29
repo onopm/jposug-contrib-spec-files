@@ -35,7 +35,6 @@ Provides an easy way to perform HTTP requests.
 %if %{build53}
 %package 53
 IPS_package_name: web/php-53/extension/php-http-request2
-Summary:          Provides an easy way to perform HTTP requests.
 BuildRequires:    web/php-53 = *
 Requires:         web/php-53 = *
 %define pear_dir_53 %(/usr/php/5.3/bin/pear config-get php_dir)
@@ -44,7 +43,6 @@ Requires:         web/php-53 = *
 %if %{build55}
 %package 55
 IPS_package_name: web/php-55/extension/php-http-request2
-Summary:          Provides an easy way to perform HTTP requests.
 BuildRequires:    web/php-55 = *
 Requires:         web/php-55 = *
 %define pear_dir_55 %(/usr/php/5.5/bin/pear config-get php_dir)
@@ -53,14 +51,12 @@ Requires:         web/php-55 = *
 %if %{build56}
 %package 56
 IPS_package_name: web/php-56/extension/php-http-request2
-Summary:          Provides an easy way to perform HTTP requests.
 BuildRequires:    web/php-56 = *
 Requires:         web/php-56 = *
 %define pear_dir_56 %(/usr/php/5.6/bin/pear config-get php_dir)
 
 %package 56-old
 IPS_package_name:   web/php-56/extension/php-http-request2
-Summary:            Provides an easy way to perform HTTP requests.
 BuildRequires:      web/php-56 = *
 Requires:           web/php-56 = *
 %define _use_internal_dependency_generator 0
@@ -218,7 +214,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Sun Oct 28 2018 - <me@tsundoku.ne.jp>
+* Sun Oct 28 2018 <me@tsundoku.ne.jp>
 - make consistent with other multiversion PHP extension specs
 * Tue Apr 19 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

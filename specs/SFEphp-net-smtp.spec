@@ -29,40 +29,18 @@ BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 %description
 Provides an implementation of the SMTP protocol using PEAR's Net_Socket class.
 
-%if %{build52}
-%package 52
-IPS_package_name:	web/php-52/extension/php-net-smtp
-Summary:            PHP module for Net_SMTP
-BuildRequires:		web/php-52 = *
-Requires:			web/php-52 = *
-Requires:			web/php-52/extension/php-net-socket
-%define pear_dir_52 %(/usr/php/5.2/bin/pear config-get php_dir)
-%endif
-
 %if %{build53}
 %package 53
 IPS_package_name:	web/php-53/extension/php-net-smtp
-Summary:            PHP module for Net_SMTP
 BuildRequires:		web/php-53 = *
 Requires:			web/php-53 = *
 Requires:			web/php-53/extension/php-net-socket
 %define pear_dir_53 %(/usr/php/5.3/bin/pear config-get php_dir)
 %endif
 
-%if %{build54}
-%package 54
-IPS_package_name:	web/php-54/extension/php-net-smtp
-Summary:            PHP module for Net_SMTP
-BuildRequires:		web/php-54 = *
-Requires:			web/php-54 = *
-Requires:			web/php-54/extension/php-net-socket
-%define pear_dir_54 %(/usr/php/5.4/bin/pear config-get php_dir)
-%endif
-
 %if %{build55}
 %package 55
 IPS_package_name:	web/php-55/extension/php-net-smtp
-Summary:            PHP module for Net_SMTP
 BuildRequires:		web/php-55 = *
 Requires:			web/php-55 = *
 Requires:			web/php-55/extension/php-net-socket
@@ -72,7 +50,6 @@ Requires:			web/php-55/extension/php-net-socket
 %if %{build56}
 %package 56
 IPS_package_name:	web/php/extension/php-net-smtp-56
-Summary:            PHP module for Net_SMTP
 BuildRequires:		web/php-56 = *
 Requires:			web/php-56 = *
 Requires:			web/php/extension/php-net-socket-56
@@ -80,7 +57,6 @@ Requires:			web/php/extension/php-net-socket-56
 
 %package 56-old
 IPS_package_name:   web/php-56/extension/php-net-smtp
-Summary:            PHP module for Net_SMTP
 BuildRequires:      web/php-56 = *
 Requires:           web/php-56 = *
 %define _use_internal_dependency_generator 0
@@ -93,7 +69,6 @@ Renamed_To:         web/php/extension/php-net-smtp-56 = *
 %if %{build71}
 %package 71
 IPS_package_name:	web/php/extension/php-net-smtp-71
-Summary:            PHP module for Net_SMTP
 BuildRequires:		web/php-71 = *
 Requires:			web/php-71 = *
 Requires:			web/php/extension/php-net-socket-71
@@ -103,7 +78,6 @@ Requires:			web/php/extension/php-net-socket-71
 %if %{build72}
 %package 72
 IPS_package_name:	web/php/extension/php-net-smtp-72
-Summary:            PHP module for Net_SMTP
 BuildRequires:		web/php-72 = *
 Requires:			web/php-72 = *
 Requires:			web/php/extension/php-net-socket-72
@@ -113,7 +87,6 @@ Requires:			web/php/extension/php-net-socket-72
 %if %{build71jposug}
 %package 71jposug
 IPS_package_name:	web/php/extension/php-net-smtp-71jposug
-Summary:            PHP module for Net_SMTP
 BuildRequires:		web/php-71jposug = *
 Requires:			web/php-71jposug = *
 Requires:			web/php/extension/php-net-socket-71jposug
@@ -123,7 +96,6 @@ Requires:			web/php/extension/php-net-socket-71jposug
 %if %{build72jposug}
 %package 72jposug
 IPS_package_name:	web/php/extension/php-net-smtp-72jposug
-Summary:            PHP module for Net_SMTP
 BuildRequires:		web/php-72jposug = *
 Requires:			web/php-72jposug = *
 Requires:			web/php/extension/php-net-socket-72jposug
@@ -270,6 +242,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun oct 28 2018 <me@tsundoku.ne.jp>
+- remove obsolete PHP versions
+- remove redundant subpackage summaries
 * Sun Sep 30 2018 <me@tsundoku.ne.jp>
 - multiple PHP version support
 * Thu Jul 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>

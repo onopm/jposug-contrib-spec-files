@@ -32,37 +32,17 @@ and non-blocking operation, with different reading and writing modes
 (byte-wise, block-wise, line-wise and special formats like network
 byte-order ip addresses).
 
-%if %{build52}
-%package 52
-IPS_package_name:	web/php-52/extension/php-net-socket
-Summary:            PHP module for Net_Socket
-BuildRequires:		web/php-52 = *
-Requires:			web/php-52 = *
-%define pear_dir_52 %(/usr/php/5.2/bin/pear config-get php_dir)
-%endif
-
 %if %{build53}
 %package 53
 IPS_package_name:	web/php-53/extension/php-net-socket
-Summary:            PHP module for Net_Socket
 BuildRequires:		web/php-53 = *
 Requires:			web/php-53 = *
 %define pear_dir_53 %(/usr/php/5.3/bin/pear config-get php_dir)
 %endif
 
-%if %{build54}
-%package 54
-IPS_package_name:	web/php-54/extension/php-net-socket
-Summary:            PHP module for Net_Socket
-BuildRequires:		web/php-54 = *
-Requires:			web/php-54 = *
-%define pear_dir_54 %(/usr/php/5.4/bin/pear config-get php_dir)
-%endif
-
 %if %{build55}
 %package 55
 IPS_package_name:	web/php-55/extension/php-net-socket
-Summary:            PHP module for Net_Socket
 BuildRequires:		web/php-55 = *
 Requires:			web/php-55 = *
 %define pear_dir_55 %(/usr/php/5.5/bin/pear config-get php_dir)
@@ -71,14 +51,12 @@ Requires:			web/php-55 = *
 %if %{build56}
 %package 56
 IPS_package_name:	web/php/extension/php-net-socket-56
-Summary:            PHP module for Net_Socket
 BuildRequires:		web/php-56 = *
 Requires:			web/php-56 = *
 %define pear_dir_56 %(/usr/php/5.6/bin/pear config-get php_dir)
 
 %package 56-old
 IPS_package_name:	web/php-56/extension/php-net-socket
-Summary:			PHP module for Net_Socket
 BuildRequires:		web/php-56 = *
 Requires:			web/php-56 = *
 %define _use_internal_dependency_generator 0
@@ -91,7 +69,6 @@ Renamed_To:			web/php/extension/php-net-socket-56 = *
 %if %{build71}
 %package 71
 IPS_package_name:	web/php/extension/php-net-socket-71
-Summary:            PHP module for Net_Socket
 BuildRequires:		web/php-71 = *
 Requires:			web/php-71 = *
 %define pear_dir_71 %(/usr/php/7.1/bin/pear config-get php_dir)
@@ -100,7 +77,6 @@ Requires:			web/php-71 = *
 %if %{build72}
 %package 72
 IPS_package_name:	web/php/extension/php-net-socket-72
-Summary:            PHP module for Net_Socket
 BuildRequires:		web/php-72 = *
 Requires:			web/php-72 = *
 %define pear_dir_72 %(/usr/php/7.2/bin/pear config-get php_dir)
@@ -109,7 +85,6 @@ Requires:			web/php-72 = *
 %if %{build71jposug}
 %package 71jposug
 IPS_package_name:	web/php/extension/php-net-socket-71jposug
-Summary:            PHP module for Net_Socket
 BuildRequires:		web/php-71jposug = *
 Requires:			web/php-71jposug = *
 %define pear_dir_71jposug %(/opt/jposug/php/7.1/bin/pear config-get php_dir)
@@ -118,7 +93,6 @@ Requires:			web/php-71jposug = *
 %if %{build72jposug}
 %package 72jposug
 IPS_package_name:	web/php/extension/php-net-socket-72jposug
-Summary:            PHP module for Net_Socket
 BuildRequires:		web/php-72jposug = *
 Requires:			web/php-72jposug = *
 %define pear_dir_72jposug %(/opt/jposug/php/7.2/bin/pear config-get php_dir)
@@ -157,14 +131,8 @@ install_for() {
 	rm %{buildroot}${pear_dir}/.depdblock
 }
 
-%if %{build52}
-install_for 5.2
-%endif
 %if %{build53}
 install_for 5.3
-%endif
-%if %{build54}
-install_for 5.4
 %endif
 %if %{build55}
 install_for 5.5
@@ -191,28 +159,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr (-, root, bin)
 
-%if %{build52}
-%files 52
-%defattr (-, root, bin)
-%dir %attr(0755, root, bin) %{pear_dir_52}
-%{pear_dir_52}/*
-%{pear_dir_52}/.registry/net_socket.reg
-%endif
-
 %if %{build53}
 %files 53
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_53}
 %{pear_dir_53}/*
 %{pear_dir_53}/.registry/net_socket.reg
-%endif
-
-%if %{build54}
-%files 54
-%defattr (-, root, bin)
-%dir %attr(0755, root, bin) %{pear_dir_54}
-%{pear_dir_54}/*
-%{pear_dir_54}/.registry/net_socket.reg
 %endif
 
 %if %{build55}
@@ -264,7 +216,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Sun Sep 30 2018 - <me@tsundoku.ne.jp>
+* Sun Oct 28 2018 <me@tsundoku.ne.jp>
+- remove unused/obsolete PHP versions
+- remove redundant subpackage summaries
+* Sun Sep 30 2018 <me@tsundoku.ne.jp>
 - multiple PHP version support
 - bump to 1.2.2
 * Wed Mar 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

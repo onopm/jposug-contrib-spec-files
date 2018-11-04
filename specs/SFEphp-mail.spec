@@ -15,7 +15,7 @@ Name:                    SFEphp-mail
 IPS_package_name:	 	web/php/extension/php-mail
 Summary:                 PHP module for MAIL
 Version:                 1.4.1
-License:				 PHP License
+License:				 BSD Style
 Url:                     http://pear.php.net/package/%{tarball_name}
 Source:                  http://download.pear.php.net/package/%{tarball_name}-%{version}.tgz
 Distribution:            OpenSolaris
@@ -223,5 +223,5 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Sun Nov 03 2018 <me@tsundoku.ne.jp>
+* Sun Nov 04 2018 <me@tsundoku.ne.jp>
 - new multi-PHP spec 1.4.1

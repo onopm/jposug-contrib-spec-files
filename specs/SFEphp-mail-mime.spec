@@ -15,7 +15,7 @@ Name:                    SFEphp-mail-mime
 IPS_package_name:	 	web/php/extension/php-mail-mime
 Summary:                 PHP module for MAIL_Mime
 Version:                 1.10.2
-License:				 PHP License
+License:				 BSD Style
 Url:                     http://pear.php.net/package/%{tarball_name}
 Source:                  http://download.pear.php.net/package/%{tarball_name}-%{version}.tgz
 Distribution:            OpenSolaris
@@ -221,5 +221,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Nov 04 2018 <me@tsundoku.ne.jp>
+- fix license
 * Sun Oct 28 2018 <me@tsundoku.ne.jp>
 - new multi-PHP spec 1.10.2

@@ -1,40 +1,36 @@
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%define build52 %( test -x /usr/php/5.2/bin/php && echo 1 || echo 0)
 %define build53 %( test -x /usr/php/5.3/bin/php && echo 1 || echo 0)
-%define build54 %( test -x /usr/php/5.4/bin/php && echo 1 || echo 0)
 %define build55 %( test -x /usr/php/5.5/bin/php && echo 1 || echo 0)
 %define build56 %( test -x /usr/php/5.6/bin/php && echo 1 || echo 0)
 %define build71 %( test -x /usr/php/7.1/bin/php && echo 1 || echo 0)
-%define build72 %( test -x /usr/php/7.1/bin/php && echo 1 || echo 0)
+%define build72 %( test -x /usr/php/7.2/bin/php && echo 1 || echo 0)
 %define build71jposug %( test -x /opt/jposug/php/7.1/bin/php && echo 1 || echo 0)
 %define build72jposug %( test -x /opt/jposug/php/7.2/bin/php && echo 1 || echo 0)
 
-%define tarball_name     Net_Socket
+%define tarball_name     Mail_mimeDecode
 
-Name:                    SFEphp-net-socket
-IPS_package_name:	  	 web/php/extension/php-net-socket
-Summary:                 PHP module for Net_Socket
-Version:                 1.2.2
-License:				 PHP License
+Name:                    SFEphp-mail-mimedecode
+IPS_package_name:	 	web/php/extension/php-mail-mimedecode
+Summary:                 PHP module for MAIL_mimeDecode
+Version:                 1.5.6
+License:				 BSD Style
 Url:                     http://pear.php.net/package/%{tarball_name}
 Source:                  http://download.pear.php.net/package/%{tarball_name}-%{version}.tgz
 Distribution:            OpenSolaris
-Vendor:		         	 OpenSolaris Community
+Vendor:		        	 OpenSolaris Community
 SUNW_Basedir:            /
 SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 %description
-Net_Socket is a class interface to TCP sockets. It provides blocking
-and non-blocking operation, with different reading and writing modes
-(byte-wise, block-wise, line-wise and special formats like network
-byte-order ip addresses).
+Provides a class to deal with the decoding and interpreting of mime messages.
+This package used to be part of the Mail_Mime package, but has been split off.
 
 %if %{build53}
 %package 53
-IPS_package_name:	web/php-53/extension/php-net-socket
+IPS_package_name:	web/php-53/extension/php-mail-mimedecode
 BuildRequires:		web/php-53 = *
 Requires:			web/php-53 = *
 %define pear_dir_53 %(/usr/php/5.3/bin/pear config-get php_dir)
@@ -42,7 +38,7 @@ Requires:			web/php-53 = *
 
 %if %{build55}
 %package 55
-IPS_package_name:	web/php-55/extension/php-net-socket
+IPS_package_name:	web/php-55/extension/php-mail-mimedecode
 BuildRequires:		web/php-55 = *
 Requires:			web/php-55 = *
 %define pear_dir_55 %(/usr/php/5.5/bin/pear config-get php_dir)
@@ -50,25 +46,25 @@ Requires:			web/php-55 = *
 
 %if %{build56}
 %package 56
-IPS_package_name:	web/php/extension/php-net-socket-56
+IPS_package_name:	web/php/extension/php-mail-mimedecode-56
 BuildRequires:		web/php-56 = *
 Requires:			web/php-56 = *
 %define pear_dir_56 %(/usr/php/5.6/bin/pear config-get php_dir)
 
 %package 56-old
-IPS_package_name:	web/php-56/extension/php-net-socket
+IPS_package_name:	web/php-56/extension/php-mail-mimedecode
 BuildRequires:		web/php-56 = *
 Requires:			web/php-56 = *
 %define _use_internal_dependency_generator 0
 IPS_legacy:			false
 Meta(pkg.renamed):	true
 PkgBuild_Make_Empty_Package: true
-Renamed_To:			web/php/extension/php-net-socket-56 = *
+Renamed_To:			web/php/extension/php-mail-mimedecode-56 = *
 %endif
 
 %if %{build71}
 %package 71
-IPS_package_name:	web/php/extension/php-net-socket-71
+IPS_package_name:	web/php/extension/php-mail-mimedecode-71
 BuildRequires:		web/php-71 = *
 Requires:			web/php-71 = *
 %define pear_dir_71 %(/usr/php/7.1/bin/pear config-get php_dir)
@@ -76,7 +72,7 @@ Requires:			web/php-71 = *
 
 %if %{build72}
 %package 72
-IPS_package_name:	web/php/extension/php-net-socket-72
+IPS_package_name:	web/php/extension/php-mail-mimedecode-72
 BuildRequires:		web/php-72 = *
 Requires:			web/php-72 = *
 %define pear_dir_72 %(/usr/php/7.2/bin/pear config-get php_dir)
@@ -84,7 +80,7 @@ Requires:			web/php-72 = *
 
 %if %{build71jposug}
 %package 71jposug
-IPS_package_name:	web/php/extension/php-net-socket-71jposug
+IPS_package_name:	web/php/extension/php-mail-mimedecode-71jposug
 BuildRequires:		web/php-71jposug = *
 Requires:			web/php-71jposug = *
 %define pear_dir_71jposug %(/opt/jposug/php/7.1/bin/pear config-get php_dir)
@@ -92,7 +88,7 @@ Requires:			web/php-71jposug = *
 
 %if %{build72jposug}
 %package 72jposug
-IPS_package_name:	web/php/extension/php-net-socket-72jposug
+IPS_package_name:	web/php/extension/php-mail-mimedecode-72jposug
 BuildRequires:		web/php-72jposug = *
 Requires:			web/php-72jposug = *
 %define pear_dir_72jposug %(/opt/jposug/php/7.2/bin/pear config-get php_dir)
@@ -164,7 +160,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_53}
 %{pear_dir_53}/*
-%{pear_dir_53}/.registry/net_socket.reg
+%{pear_dir_53}/.registry/mail_mimedecode.reg
 %endif
 
 %if %{build55}
@@ -172,7 +168,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_55}
 %{pear_dir_55}/*
-%{pear_dir_55}/.registry/net_socket.reg
+%{pear_dir_55}/.registry/mail_mimedecode.reg
 %endif
 
 %if %{build56}
@@ -180,7 +176,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_56}
 %{pear_dir_56}/*
-%{pear_dir_56}/.registry/net_socket.reg
+%{pear_dir_56}/.registry/mail_mimedecode.reg
 %endif
 
 %if %{build71}
@@ -188,7 +184,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_71}
 %{pear_dir_71}/*
-%{pear_dir_71}/.registry/net_socket.reg
+%{pear_dir_71}/.registry/mail_mimedecode.reg
 %endif
 
 %if %{build72}
@@ -196,7 +192,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_72}
 %{pear_dir_72}/*
-%{pear_dir_72}/.registry/net_socket.reg
+%{pear_dir_72}/.registry/mail_mimedecode.reg
 %endif
 
 %if %{build71jposug}
@@ -204,7 +200,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_71jposug}
 %{pear_dir_71jposug}/*
-%{pear_dir_71jposug}/.registry/net_socket.reg
+%{pear_dir_71jposug}/.registry/mail_mimedecode.reg
 %endif
 
 %if %{build72jposug}
@@ -212,19 +208,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr (-, root, bin)
 %dir %attr(0755, root, bin) %{pear_dir_72jposug}
 %{pear_dir_72jposug}/*
-%{pear_dir_72jposug}/.registry/net_socket.reg
+%{pear_dir_72jposug}/.registry/mail_mimedecode.reg
 %endif
 
 %changelog
 * Sun Nov 04 2018 <me@tsundoku.ne.jp>
-- restore copyright file
-* Sun Oct 28 2018 <me@tsundoku.ne.jp>
-- remove unused/obsolete PHP versions
-- remove redundant subpackage summaries
-* Sun Sep 30 2018 <me@tsundoku.ne.jp>
-- multiple PHP version support
-- bump to 1.2.2
-* Wed Mar 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 1.0.14
-* Thu Jul 10 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- initial commit
+- new multi-PHP spec 1.5.6

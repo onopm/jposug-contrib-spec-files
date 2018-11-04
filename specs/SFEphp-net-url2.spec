@@ -15,13 +15,13 @@ Name:                    SFEphp-net-url2
 IPS_package_name:		 web/php/extension/php-net-url2
 Summary:                 PHP module for Net_URL2
 Version:                 2.1.2
-License:				 PHP License
+License:				 BSD-3-Clause
 Url:                     http://pear.php.net/package/%{tarball_name}
 Source:                  http://download.pear.php.net/package/%{tarball_name}-%{version}.tgz
 Distribution:            OpenSolaris
 Vendor:		        	 OpenSolaris Community
 SUNW_Basedir:            /
-# SUNW_Copyright:          %{name}.copyright
+SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 %description
@@ -211,5 +211,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Nov 04 2018 <me@tsundoku.ne.jp>
+- fix license
 * Sun Oct 28 2018 <me@tsundoku.ne.jp>
 - new multi-PHP spec 2.1.2

@@ -14,16 +14,16 @@
 %define tarball_name     Net_SMTP
 
 Name:                    SFEphp-net-smtp
-IPS_package_name:	 web/php/extension/php-net-smtp
+IPS_package_name:	 	 web/php/extension/php-net-smtp
 Summary:                 PHP module for Net_SMTP
 Version:                 1.6.2
-License:		 PHP License
+License:		 		 PHP License
 Url:                     http://pear.php.net/package/%{tarball_name}
 Source:                  http://download.pear.php.net/package/%{tarball_name}-%{version}.tgz
 Distribution:            OpenSolaris
-Vendor:		         OpenSolaris Community
+Vendor:		         	 OpenSolaris Community
 SUNW_Basedir:            /
-# SUNW_Copyright:          %{name}.copyright
+SUNW_Copyright:          %{name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 %description
@@ -242,7 +242,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Sun oct 28 2018 <me@tsundoku.ne.jp>
+* Sun Nov 04 2018 <me@tsundoku.ne.jp>
+- restore copyright file
+* Sun Oct 28 2018 <me@tsundoku.ne.jp>
 - remove obsolete PHP versions
 - remove redundant subpackage summaries
 * Sun Sep 30 2018 <me@tsundoku.ne.jp>

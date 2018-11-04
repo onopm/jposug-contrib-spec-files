@@ -11,18 +11,18 @@
 
 %define tarball_name     Date
 
-Name:                    SFEphp-date
-IPS_package_name:	 web/php/extension/php-date
-Summary:                 PHP module for Date
-Version:                 1.4.7
-License:		 PHP License
-Url:                     http://pear.php.net/package/%{tarball_name}
-Source:                  http://download.pear.php.net/package/%{tarball_name}-%{version}.tgz
-Distribution:            OpenSolaris
-Vendor:		         OpenSolaris Community
-SUNW_Basedir:            /
-# SUNW_Copyright:          %{name}.copyright
-BuildRoot:               %{_tmppath}/%{name}-%{version}-build
+Name:                   SFEphp-date
+IPS_package_name:	 	web/php/extension/php-date
+Summary:                PHP module for Date
+Version:                1.4.7
+License:		 	 	BSD License
+Url:                    http://pear.php.net/package/%{tarball_name}
+Source:                 http://download.pear.php.net/package/%{tarball_name}-%{version}.tgz
+Distribution:           OpenSolaris
+Vendor:		         	OpenSolaris Community
+SUNW_Basedir:           /
+SUNW_Copyright:         %{name}.copyright
+BuildRoot:              %{_tmppath}/%{name}-%{version}-build
 
 %description
 Generic classes for representation and manipulation of
@@ -217,6 +217,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Nov 04 2018 <me@tsundoku.ne.jp>
+- fix license
 * Sun Oct 28 2018 <me@tsundoku.ne.jp>
 - remove unused/obsolete PHP versions
 - remove redundant subpackage summaries

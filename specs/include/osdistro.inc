@@ -81,6 +81,8 @@
 #Need to identify 11.4 without breaking existing conditionals, hence...
 %if %( uname -v | egrep '^11\.4' > /dev/null && echo 1 || echo 0 )
 %define s114 1
+%else
+%define s114 0
 %endif
 # OmniOS
 %if %( uname -v | egrep 'omnios' > /dev/null && echo 1 || echo 0 )
@@ -380,6 +382,8 @@
 
 
 %changelog
+* Wed Nov 14 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix Solaris 11.4 support to work also on Solaris 11.3
 * Sat Sep 29 2018 - <me@tsundoku.ne.jp>
 - add support for Solaris 11.4
 * Tue May 19 2015 - YAMAMOTO Takashi yamachan@piwikjapan.org

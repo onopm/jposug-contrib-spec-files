@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  7.1.23
+%define tarball_version  7.1.24
 %define major_version    7.1
 %define prefix_name      SFEphp71
 %define _basedir         %{_prefix}/%{major_version}
@@ -429,6 +429,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}.so
 
 %changelog
+* Wed Nov 28 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.1.24
 * Mon Oct 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.1.23 and no need to use nkf
 * Mon Jul 30 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

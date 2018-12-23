@@ -26,7 +26,7 @@ Version:	%{libzip.version}
 URL:            http://www.nih.at/libzip/index.html
 Source:         http://www.nih.at/libzip/libzip-%{version}.tar.xz
 License:        BSD
-SUNW_Copyright:	BSDlicense.copyright
+SUNW_Copyright:	%{license}.copyright
 SUNW_BaseDir:	%{_basedir}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 

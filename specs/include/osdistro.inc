@@ -77,13 +77,7 @@
 ##TODO## be more precise later, for build 173 and 174 and later SRU
 %define osbuild 175
 %endif
-#From 11.4 (formerly 12) snv build numbers are no more?
-#Need to identify 11.4 without breaking existing conditionals, hence...
-%if %( uname -v | egrep '^11\.4' > /dev/null && echo 1 || echo 0 )
-%define s114 1
-%else
-%define s114 0
-%endif
+
 # OmniOS
 %if %( uname -v | egrep 'omnios' > /dev/null && echo 1 || echo 0 )
 %define osbuild %( cat /etc/release | head -1 | sed -e 's/.*r//' )
@@ -117,6 +111,7 @@
 #no versioning here
 %define openindiana 0
 %define solaris11express 0
+%define solaris11 0
 %define omnios 0
 
 #boolean flags for major osdistro names - *with* versioning the releases
@@ -129,6 +124,19 @@
 ##TODO## replace oi201100
 %define oi201100 0
 %define oi201009 0
+
+#Solaris 11
+#always defined on 11.0 and all subsequent 11.xx versions.
+#11.0 build ??
+%define s110000 0
+#11.1 build ??
+%define s110100 0
+#11.2 build ??
+%define s110200 0
+#11.3 build ??
+%define s110300 0
+#11.4 build ??
+%define s110400 0
 
 #Solaris 11 Express and OpenSolaris
 ##TODO## replace s11ex201100
@@ -261,8 +269,43 @@
 %define solaris11express 1
 ##TODO## replace 201100
 %define osdistrelnumber 201100
-#                                below: subject to change!
-%define osdistrelname   "Solaris 11 Express"
+%define solaris11 1
+%define s110000 1
+#11.1 build ??
+%if %( uname -v | egrep '^11\.1$' > /dev/null && echo 1 || echo 0 )
+#additive
+%define s110100 1
+%define osdistrelnumber 201101
+%else
+%endif
+#11.2 build ??
+%if %( uname -v | egrep '^11\.2$' > /dev/null && echo 1 || echo 0 )
+#additive
+%define s110100 1
+%define s110200 1
+%define osdistrelnumber 201102
+%else
+%endif
+#11.3 build ??
+%if %( uname -v | egrep '^11\.3$' > /dev/null && echo 1 || echo 0 )
+#additive
+%define s110100 1
+%define s110200 1
+%define s110300 1
+%define osdistrelnumber 201103
+%else
+%endif
+#11.4 build ??
+%if %( uname -v | egrep '^11\.4$' > /dev/null && echo 1 || echo 0 )
+#additive
+%define s110100 1
+%define s110200 1
+%define s110300 1
+%define s110400 1
+%define osdistrelnumber 201104
+%else
+%endif
+%define osdistrelname   "Solaris 11"
 #this was the last check, skip all others
 %define osdet299999 0
 %else
@@ -382,6 +425,8 @@
 
 
 %changelog
+* Sun Dec 23 2018 - <me@tsundoku.ne.jp>
+- replace stopgap Solaris 11.4 support with more robust version from sourceforge SFE
 * Wed Nov 14 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix Solaris 11.4 support to work also on Solaris 11.3
 * Sat Sep 29 2018 - <me@tsundoku.ne.jp>

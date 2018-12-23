@@ -1212,14 +1212,14 @@
 #END omnios
 
 #set perl5 for Solaris 11.4
-%if %{s114}
+%if %{s110400}
 %define perl_version 5.22.1
 %define perl_major_minor_version 5.22
 %define perl_major_minor_micro_version 5.22.1
 %define pnm_buildrequires_perl_default runtime/perl-522
 %define pnm_requires_perl_default runtime/perl-522
 %endif
-#END s114
+#END s11040
 
 #END setting perl5, changes with specific builds and distros  - Part 2 of 3
 
@@ -1849,6 +1849,8 @@
 # 
 
 %changelog
+* Sun Dec 23 2018 - me@tsundoku.ne.jp
+- update define for Solaris 11.4 Perl macros
 * Sat Sep 29 2018 - me@tsundoku.ne.jp
 - add Perl defines for Solaris 11.4
 * Sun Dec  9 2012 - Thomas Wagner

@@ -1,4 +1,4 @@
-%define version 2.4.3
+%define version 2.4.5
 %define major_version 2.4
 %define unmangled_version 2.4.0
 %define version_suffix 24jposug
@@ -23,12 +23,15 @@ Source:                 https://cache.ruby-lang.org/pub/ruby/%{major_version}/ru
 Source1:                rbconfig.sedscript
 
 # Patch0:                 ruby-23-disable-ssl.patch
+# With qsort_s, build fails on Solaris 11.4
+# https://bugs.ruby-lang.org/issues/15091
+patch1:                 ruby-24-disable-qsort_s-check.patch
 Url:                    http://www.ruby-lang.org/
 
-BuildRequires: library/text/yaml >= 0.1.6
+BuildRequires: jposug/library/text/yaml >= 0.1.7
 BuildRequires: system/network/bpf
 BuildRequires: system/library/libnet
-Requires:      library/text/yaml >= 0.1.6
+Requires:      jposug/library/text/yaml >= 0.1.7
 
 %description
 
@@ -36,18 +39,20 @@ Requires:      library/text/yaml >= 0.1.6
 %setup -n ruby-%{version}
 
 ## %patch0 -p0
+%patch1 -p0
 
 %build
 %ifarch sparcv9
-export CFLAGS='-m64 -xO4 -D__sparc -mt -DFFI_NO_RAW_API -Kpic'
+export CFLAGS='-m64 -xO4 -D__sparc -mt -DFFI_NO_RAW_API -Kpic -I/opt/jposug/include'
 %endif
 
 %ifarch amd64
-export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr -mt -DFFI_NO_RAW_API'
+export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr -mt -DFFI_NO_RAW_API -I/opt/jposug/include'
 %endif
 
 export LIBDIR=%{libdir}
-export LDFLAGS="-m64 -L${LIBDIR} -R${LIBDIR}"
+export LDFLAGS="-m64 -L/opt/jposug/lib -L${LIBDIR} -R/opt/jposug/lib -R${LIBDIR}"
+export PKG_CONFIG_PATH=/opt/jposug/lib/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -116,5 +121,11 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use jposug/library/text/yaml instead of library/text/yaml
+* Mon Oct 22 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add patch1 to build on Solaris 11.4
+* Thu Oct 18 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.5
 * Tue Dec 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

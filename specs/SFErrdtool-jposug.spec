@@ -58,7 +58,9 @@ Requires:                runtime/perl-526jposug = *
 Requires:                image/library/libpng14
 Requires:                library/desktop/pango
 BuildRequires:           runtime/perl-526jposug = *
-
+BuildRequires:           developer/build/pkg-config
+BuildRequires:           library/glib2
+BuildRequires:           library/desktop/pango
 #
 BuildRequires:           text/groff
 
@@ -81,6 +83,7 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
   CPUS=1
 fi
 
+export CFLAGS='-m64'
 export PATH=%{perl_prefix}/bin:${PATH}
 ./configure --prefix=%{_prefix}  \
 	    --bindir=%{_bindir}  \
@@ -91,6 +94,7 @@ export PATH=%{perl_prefix}/bin:${PATH}
             --sysconfdir=%{_sysconfdir}/%{src_name} \
             --disable-lua \
             --disable-ruby \
+            --disable-tcl \
             --with-perl-options="PREL=%{perl_bin} PREFIX=%{_prefix} INSTALLSITELIB=%{_prefix}/perl5/vendor_perl/%{perl_version} INSTALLSITEARCH=%{_prefix}/perl5/vendor_perl/%{perl_version}/%{perl_dir} INSTALLSITEMAN1DIR=%{_mandir}/man1 INSTALLSITEMAN3DIR=%{_mandir}/man3 INSTALLMAN1DIR=%{_mandir}/man1 INSTALLMAN3DIR=%{_mandir}/man3" \
             --disable-static
 
@@ -151,4 +155,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- disable tcl
+- add some BuildRequires
+- add CFLAGS
 - initial commit

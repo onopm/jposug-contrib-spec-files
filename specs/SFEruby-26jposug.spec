@@ -20,7 +20,7 @@ Release:                %{patchlevel}
 IPS_component_version:  %{version}.%{patchlevel}
 License:                2-clause BSDL
 Source:                 https://cache.ruby-lang.org/pub/ruby/%{major_version}/ruby-%{version}.tar.xz
-Source1:                rbconfig.sedscript.ruby25
+Source1:                rbconfig.sedscript.ruby26
 Url:                    http://www.ruby-lang.org/
 
 
@@ -125,6 +125,8 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix source1
 * Wed Sep 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix libdir and add LDFLAGS
 - bump to 2.4.2

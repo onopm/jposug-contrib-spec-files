@@ -3,12 +3,12 @@
 
 %define _prefix /opt/jposug/php
 %define tarball_name     php
-%define tarball_version  7.1.20
+%define tarball_version  7.1.26
 %define major_version    7.1
 %define prefix_name      SFEphp71jposug
 %define _basedir         %{_prefix}/%{major_version}
 
-%define oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[23]|12.0)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
+%define oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[234]|12.0)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
 Name:                    %{prefix_name}
 IPS_package_name:        jposug/web/php-71jposug
@@ -25,23 +25,14 @@ SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
 BuildRequires:  library/spell-checking/enchant
-BuildRequires:  text/nkf
-%if %{oracle_solaris_11_2}
-BuildRequires: library/libedit
-%else
-BuildRequires: SFEeditline
-%endif
+BuildRequires: jposug/library/editline
 BuildRequires: developer/icu
 
 Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       text/tidy
 Requires:       library/libtool/libltdl
 Requires:       web/php-common
-%if %{oracle_solaris_11_2}
-Requires:       library/libedit
-%else
-Requires:       SFEeditline
-%endif
+Requires:       jposug/library/editline
 Requires:       library/icu
 
 
@@ -51,13 +42,6 @@ PHP
 
 %prep
 %setup -n %{tarball_name}-%{tarball_version}
-
-# fix opcache build problem with SolarisStudio
-# see https://bugs.php.net/bug.php?id=65207
-for i in ext/opcache/Optimizer/zend_optimizer{.c,.h,_internal.h}
-do
-nkf -Lu --overwrite=.bak ${i}
-done
 
 echo "
 #if defined(__sun) && defined(__SVR4) //Solaris
@@ -70,9 +54,12 @@ mkdir build-cgi build-apache build-embedded build-zts build-ztscli build-fpm
 # use GCC To avoid error with Solaris Studio,
 export CC=/usr/bin/gcc
 export CXX=/usr/bin/g++
-export CFLAGS="-std=gnu99 -m64 -O2"
+export CFLAGS="-std=gnu99 -m64 -O2 -I/opt/jposug/include"
 export CPPFLAGS="-std=gnu99 -m64 -O2 -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I../CPPFLAGSTEST"
-export LDFLAGS="-L/lib/`isainfo -k` -L/usr/lib/`isainfo -k` -R/lib/`isainfo -k` -R/usr/lib/`isainfo -k`"
+export LDFLAGS="-L/opt/jposug/lib -L/lib/%{_arch64} -L/usr/lib/%{_arch64} -R/opt/jposug/lib -R/lib/%{_arch64} -R/usr/lib/%{_arch64} -R%{_basedir}/lib/extensions/no-debug-non-zts-%{zts}"
+export PKG_CONFIG_PATH=/opt/jposug/lib/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig
+ 
+
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -173,7 +160,7 @@ build --enable-force-cgi-redirect \
     --enable-json=shared \
     --enable-zip=shared \
     --without-readline \
-    --with-libedit \
+    --with-libedit=opt/jposug/lib \
     --enable-phar=shared \
     --disable-mcrypt \
     --with-tidy=shared \
@@ -449,6 +436,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
+* Sat Feb 09 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.1.26 and use jposug/library/editline
+* Thu Nov 29 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.1.24
+* Mon Jul 30 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.1.23 and no need to use nkf
 * Mon Jul 30 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.1.20
 * Fri Jun 01 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

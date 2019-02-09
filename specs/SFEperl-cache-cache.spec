@@ -4,15 +4,19 @@
 %define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526 %( if [ -x /usr/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526jposug %( if [ -x /opt/jposug/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
+
 %define include_executable 0
+%define install_to_site_dir 0
 
 %define cpan_name Cache-Cache
 %define sfe_cpan_name cache-cache
 %define ips_cpan_name cache-cache
 
-Summary:               data about objects in the cache
+Summary:               extends Cache::SizeAwareMemoryCache
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
 Version:               1.08
@@ -23,19 +27,21 @@ Source0:               http://cpan.metacpan.org/authors/id/R/RJ/RJBS/Cache-Cache
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
-data about objects in the cache
+extends Cache::SizeAwareMemoryCache
 
 %if %{build584}
 %package 584
 IPS_package_name: library/perl-5/%{ips_cpan_name}-584
-Summary:          data about objects in the cache
+Summary:          extends Cache::SizeAwareMemoryCache
 BuildRequires:    runtime/perl-584 = *
 BuildRequires:    library/perl-5/extutils-makemaker-584
+%if %{enable_test}
 BuildRequires:    library/perl-5/digest-sha1-584
 BuildRequires:    library/perl-5/error-584
 BuildRequires:    library/perl-5/ipc-sharelite-584
 BuildRequires:    library/perl-5/pathtools-584
 BuildRequires:    library/perl-5/storable-584
+%endif
 Requires:         runtime/perl-584 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/digest-sha1-584
@@ -45,13 +51,13 @@ Requires:         library/perl-5/pathtools-584
 Requires:         library/perl-5/storable-584
 
 %description 584
-data about objects in the cache
+extends Cache::SizeAwareMemoryCache
 %endif
 
 %if %{build510}
 %package 510
 IPS_package_name: library/perl-5/%{ips_cpan_name}-510
-Summary:          data about objects in the cache
+Summary:          extends Cache::SizeAwareMemoryCache
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
 BuildRequires:    library/perl-5/digest-sha1-510
@@ -68,20 +74,22 @@ Requires:         library/perl-5/pathtools-510
 Requires:         library/perl-5/storable-510
 
 %description 510
-data about objects in the cache
+extends Cache::SizeAwareMemoryCache
 %endif
 
 %if %{build512}
 %package 512
 IPS_package_name: library/perl-5/%{ips_cpan_name}-512
-Summary:          data about objects in the cache
+Summary:          extends Cache::SizeAwareMemoryCache
 BuildRequires:    runtime/perl-512 = *
 BuildRequires:    library/perl-5/extutils-makemaker-512
+%if %{enable_test}
 BuildRequires:    library/perl-5/digest-sha1-512
 BuildRequires:    library/perl-5/error-512
 BuildRequires:    library/perl-5/ipc-sharelite-512
 BuildRequires:    library/perl-5/pathtools-512
 BuildRequires:    library/perl-5/storable-512
+%endif
 Requires:         runtime/perl-512 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/digest-sha1-512
@@ -91,21 +99,23 @@ Requires:         library/perl-5/pathtools-512
 Requires:         library/perl-5/storable-512
 
 %description 512
-data about objects in the cache
+extends Cache::SizeAwareMemoryCache
 %endif
 
 %if %{build516}
 %package 516
 IPS_package_name: library/perl-5/%{ips_cpan_name}-516
-Summary:          data about objects in the cache
+Summary:          extends Cache::SizeAwareMemoryCache
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
 Requires:         library/perl-5/%{ips_cpan_name}
+%if %{enable_test}
 BuildRequires:    library/perl-5/digest-sha1-516
 BuildRequires:    library/perl-5/error-516
 BuildRequires:    library/perl-5/ipc-sharelite-516
 BuildRequires:    library/perl-5/pathtools-516
 BuildRequires:    library/perl-5/storable-516
+%endif
 Requires:         runtime/perl-516 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/digest-sha1-516
@@ -115,43 +125,22 @@ Requires:         library/perl-5/pathtools-516
 Requires:         library/perl-5/storable-516
 
 %description 516
-data about objects in the cache
-%endif
-
-%if %{build520}
-%package 520
-IPS_package_name: library/perl-5/%{ips_cpan_name}-520
-Summary:          data about objects in the cache
-BuildRequires:    runtime/perl-520 = *
-BuildRequires:    library/perl-5/extutils-makemaker-520
-BuildRequires:    library/perl-5/digest-sha1-520
-BuildRequires:    library/perl-5/error-520
-BuildRequires:    library/perl-5/ipc-sharelite-520
-BuildRequires:    library/perl-5/pathtools-520
-BuildRequires:    library/perl-5/storable-520
-Requires:         runtime/perl-520 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/digest-sha1-520
-Requires:         library/perl-5/error-520
-Requires:         library/perl-5/ipc-sharelite-520
-Requires:         library/perl-5/pathtools-520
-Requires:         library/perl-5/storable-520
-
-%description 520
-data about objects in the cache
+extends Cache::SizeAwareMemoryCache
 %endif
 
 %if %{build522}
 %package 522
 IPS_package_name: library/perl-5/%{ips_cpan_name}-522
-Summary:          data about objects in the cache
+Summary:          extends Cache::SizeAwareMemoryCache
 BuildRequires:    runtime/perl-522 = *
 BuildRequires:    library/perl-5/extutils-makemaker-522
+%if %{enable_test}
 BuildRequires:    library/perl-5/digest-sha1-522
 BuildRequires:    library/perl-5/error-522
 BuildRequires:    library/perl-5/ipc-sharelite-522
 BuildRequires:    library/perl-5/pathtools-522
 BuildRequires:    library/perl-5/storable-522
+%endif
 Requires:         runtime/perl-522 = *
 Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/digest-sha1-522
@@ -161,9 +150,58 @@ Requires:         library/perl-5/pathtools-522
 Requires:         library/perl-5/storable-522
 
 %description 522
-data about objects in the cache
+extends Cache::SizeAwareMemoryCache
 %endif
 
+%if %{build526}
+%package 526
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526
+Summary:          extends Cache::SizeAwareMemoryCache
+BuildRequires:    runtime/perl-526 = *
+BuildRequires:    library/perl-5/extutils-makemaker-526
+%if %{enable_test}
+BuildRequires:    library/perl-5/digest-sha1-526
+BuildRequires:    library/perl-5/error-526
+BuildRequires:    library/perl-5/ipc-sharelite-526
+BuildRequires:    library/perl-5/pathtools-526
+BuildRequires:    library/perl-5/storable-526
+%endif
+Requires:         runtime/perl-526 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/digest-sha1-526
+Requires:         library/perl-5/error-526
+Requires:         library/perl-5/ipc-sharelite-526
+Requires:         library/perl-5/pathtools-526
+Requires:         library/perl-5/storable-526
+
+%description 526
+extends Cache::SizeAwareMemoryCache
+%endif
+
+%if %{build526jposug}
+%package 526jposug
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526jposug
+Summary:          extends Cache::SizeAwareMemoryCache
+BuildRequires:    runtime/perl-526jposug = *
+BuildRequires:    library/perl-5/extutils-makemaker-526jposug
+%if %{enable_test}
+BuildRequires:    library/perl-5/digest-sha1-526jposug
+BuildRequires:    library/perl-5/error-526jposug
+BuildRequires:    library/perl-5/ipc-sharelite-526jposug
+BuildRequires:    library/perl-5/pathtools-526jposug
+BuildRequires:    library/perl-5/storable-526jposug
+%endif
+Requires:         runtime/perl-526jposug = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/digest-sha1-526jposug
+Requires:         library/perl-5/error-526jposug
+Requires:         library/perl-5/ipc-sharelite-526jposug
+Requires:         library/perl-5/pathtools-526jposug
+Requires:         library/perl-5/storable-526jposug
+
+%description 526jposug
+extends Cache::SizeAwareMemoryCache
+%endif
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
@@ -171,38 +209,70 @@ data about objects in the cache
 
 %build
 build_with_makefile.pl_for() {
-    perl_ver=$1
     test=$2
-    bindir="/usr/perl5/${perl_ver}/bin"
-    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
-
-    export PERL5LIB=${vendor_dir}
-    ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
-                   DESTDIR=$RPM_BUILD_ROOT \
-                   LIB=${vendor_dir}
-
-    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
-    if [ $? -eq 0 ]
+    if [ "x${1}" = 'x5.26jposug' ]
     then
-        make CC='cc -m32' LD='cc -m32'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m32' LD='cc -m32'
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
     else
-        make CC='cc -m64' LD='cc -m64'
-        [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC='cc -m64' LD='cc -m64'
+        perl_ver=$1
+        prefix=/usr
     fi
 
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
+    bindir="${perl_dir_prefix}/bin"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
+
+    export PERL5LIB=${vendor_dir}
+%if %{install_to_site_dir}
+    perl_libdir="${site_dir}"
+%else
+    perl_libdir="${vendor_dir}"
+%endif
+
+    ${bindir}/perl Makefile.PL PREFIX=${prefix} \
+                   DESTDIR=$RPM_BUILD_ROOT \
+                   LIB=${perl_libdir}
+
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null && bin64=0 || bin64=1
+    if [ ${bin64} -eq 0 ]
+    then
+        export CC='cc -m32'
+        export LD='cc -m32'
+    else
+        export CC='cc -m64'
+        export LD='cc -m64'
+    fi
+    make CC="${CC}" LD="${LD}"
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
 build_with_build.pl_for() {
-    perl_ver=$1
     test=$2
-    bindir="/usr/perl5/${perl_ver}/bin"
-    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+    if [ "x${1}" = 'x5.26jposug' ]
+    then
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
 
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
+    bindir="${perl_dir_prefix}/bin"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
+
+%if %{install_to_site_dir}
+    installdir='site'
+%else
+    installdir='vendor'
+%endif
     export PERL5LIB=${vendor_dir}
     ${bindir}/perl Build.PL \
-                   --installdirs vendor \
+                   --installdirs ${installdir} \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
     [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
@@ -211,38 +281,54 @@ build_with_build.pl_for() {
 }
 
 modify_bin_dir() {
-    perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/bin ]
+    if [ "x${1}" = 'x5.26jposug' ]
     then
-      [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
-      mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+
+    if [ -d $RPM_BUILD_ROOT/${prefix}/bin ]
+    then
+      [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver} ] || mkdir -p ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}
+      mv $RPM_BUILD_ROOT${prefix}/bin $RPM_BUILD_ROOT/${prefix}/perl5/${perl_ver}/bin
     fi
       
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin ]
+    if [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin ]
     then
-        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
+        for i in ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!${prefix}/perl5/${perl_ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
 }
 
 modify_man_dir() {
-    perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man ]
+    if [ "x${1}" = 'x5.26jposug' ]
+    then
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+
+    if [ -d $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man ]
     then
         if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
         then
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         else
             mkdir -p $RPM_BUILD_ROOT%{_datadir}
-            mv $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            mv $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         fi
         if [ %{include_executable} -eq 0 ]
         then
-            rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+            rmdir $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}
         fi
 
     fi
@@ -279,12 +365,16 @@ build_for 5.12
 build_for 5.16
 %endif
 
-%if %{build520}
-build_for 5.20
-%endif
-
 %if %{build522}
 build_for 5.22
+%endif
+
+%if %{build526}
+build_for 5.26
+%endif
+
+%if %{build526jposug}
+build_for 5.26jposug
 %endif
 
 %install
@@ -293,6 +383,18 @@ then
     mkdir -p $RPM_BUILD_ROOT%{_datadir}
     mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 fi
+
+if [ -d $RPM_BUILD_ROOT/opt/jposug/man ]
+then
+    if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
+    then
+        rm -rf $RPM_BUILD_ROOT/opt/jposug/man
+    else
+        [ -d $RPM_BUILD_ROOT%{_datadir} ] || mkdir -p $RPM_BUILD_ROOT%{_datadir}
+        mv $RPM_BUILD_ROOT/opt/jposug/man $RPM_BUILD_ROOT%{_datadir}
+    fi
+fi
+
 if [ -d $RPM_BUILD_ROOT%{_datadir}/man/man3 ]
 then
     mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
@@ -309,7 +411,11 @@ rm -rf %{buildroot}
 %files 584
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.8.4
+%else
 /usr/perl5/vendor_perl/5.8.4
+%endif
 %if %{include_executable}
 /usr/perl5/5.8.4
 %endif
@@ -319,7 +425,11 @@ rm -rf %{buildroot}
 %files 510
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.10
+%else
 /usr/perl5/vendor_perl/5.10
+%endif
 %if %{include_executable}
 /usr/perl5/5.1.0
 %endif
@@ -329,7 +439,11 @@ rm -rf %{buildroot}
 %files 512
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.12
+%else
 /usr/perl5/vendor_perl/5.12
+%endif
 %if %{include_executable}
 /usr/perl5/5.12
 %endif
@@ -339,19 +453,13 @@ rm -rf %{buildroot}
 %files 516
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.16
+%else
 /usr/perl5/vendor_perl/5.16
+%endif
 %if %{include_executable}
 /usr/perl5/5.16
-%endif
-%endif
-
-%if %{build520}
-%files 520
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.20
-%if %{include_executable}
-/usr/perl5/5.20
 %endif
 %endif
 
@@ -359,13 +467,49 @@ rm -rf %{buildroot}
 %files 522
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.22
+%else
 /usr/perl5/vendor_perl/5.22
+%endif
 %if %{include_executable}
 /usr/perl5/5.22
 %endif
 %endif
 
+%if %{build526}
+%files 526
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.26
+%else
+/usr/perl5/vendor_perl/5.26
+%endif
+%if %{include_executable}
+/usr/perl5/5.26
+%endif
+%endif
+
+%if %{build526jposug}
+%files 526jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+%if %{install_to_site_dir}
+/opt/jposug/perl5/site_perl/5.26
+%else
+/opt/jposug/perl5/vendor_perl/5.26
+%endif
+%if %{include_executable}
+/opt/jposug/perl5/5.26
+%endif
+%endif
+
 %changelog
+* Thu May 17 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build packages for perl-526jposug
+* Thu Mar 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build packages for perl-526
 * Thu Mar 09 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build packages for perl-516 and perl-522
 * Wed Nov 11 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
@@ -373,6 +517,7 @@ rm -rf %{buildroot}
 * Thu Feb 20 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Sat Jan 18 JST 2014 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add Requires and BuildRequires
 * Sun Sep 09 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add Requires
 * Mon May 13 JST 2013 Fumihisa TONAKA <fumi.ftnk@gmail.com>

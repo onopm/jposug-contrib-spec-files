@@ -7,6 +7,7 @@
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build25jposug %( if [ -x /opt/jposug/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build26jposug %( if [ -x /opt/jposug/ruby/2.6/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 0
 
@@ -32,7 +33,7 @@ IPS_package_name: library/ruby-21/%{gemname}
 Summary:          A pure Ruby implementation of the SCP client protocol
 BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
-Requires:         library/ruby/%{gemname}-21
+# Requires:         library/ruby/%{gemname}-21
 
 %description 21-old
 A pure Ruby implementation of the SCP client protocol
@@ -45,7 +46,7 @@ BuildRequires:    runtime/ruby-21 = *
 Requires:         runtime/ruby-21 = *
 # net-ssh >= 2.6.5
 Requires:         library/ruby/net-ssh-21
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 21
 A pure Ruby implementation of the SCP client protocol
@@ -58,7 +59,7 @@ IPS_package_name: library/ruby-22/%{gemname}
 Summary:          A pure Ruby implementation of the SCP client protocol
 BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
-Requires:         library/ruby/%{gemname}-22
+# Requires:         library/ruby/%{gemname}-22
 
 %description 22-old
 A pure Ruby implementation of the SCP client protocol
@@ -71,7 +72,7 @@ BuildRequires:    runtime/ruby-22 = *
 Requires:         runtime/ruby-22 = *
 # net-ssh >= 2.6.5
 Requires:         library/ruby/net-ssh-22
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 22
 A pure Ruby implementation of the SCP client protocol
@@ -84,7 +85,7 @@ IPS_package_name: library/ruby-23/%{gemname}
 Summary:          A pure Ruby implementation of the SCP client protocol
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-Requires:         library/ruby/%{gemname}-23
+# Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
 A pure Ruby implementation of the SCP client protocol
@@ -97,7 +98,7 @@ BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
 # net-ssh >= 2.6.5
 Requires:         library/ruby/net-ssh-23
-Requires:         library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 23
 A pure Ruby implementation of the SCP client protocol
@@ -112,7 +113,7 @@ BuildRequires:    jposug/runtime/ruby-23jposug = *
 Requires:         jposug/runtime/ruby-23jposug = *
 # net-ssh >= 2.6.5
 Requires:         jposug/library/ruby/net-ssh-23jposug
-Requires:         jposug/library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 23jposug
 A pure Ruby implementation of the SCP client protocol
@@ -127,7 +128,7 @@ BuildRequires:    jposug/runtime/ruby-24jposug = *
 Requires:         jposug/runtime/ruby-24jposug = *
 # net-ssh >= 2.6.5
 Requires:         jposug/library/ruby/net-ssh-24jposug
-Requires:         jposug/library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 24jposug
 A pure Ruby implementation of the SCP client protocol
@@ -142,9 +143,24 @@ BuildRequires:    jposug/runtime/ruby-25jposug = *
 Requires:         jposug/runtime/ruby-25jposug = *
 # net-ssh >= 2.6.5
 Requires:         jposug/library/ruby/net-ssh-25jposug
-Requires:         jposug/library/ruby/%{gemname}
+# Requires:         library/ruby/%{gemname}
 
 %description 25jposug
+A pure Ruby implementation of the SCP client protocol
+%endif
+
+%if %{build26jposug}
+
+%package 26jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-26jposug
+Summary:          A pure Ruby implementation of the SCP client protocol
+BuildRequires:    jposug/runtime/ruby-26jposug = *
+Requires:         jposug/runtime/ruby-26jposug = *
+# net-ssh >= 2.6.5
+Requires:         jposug/library/ruby/net-ssh-26jposug
+# Requires:         library/ruby/%{gemname}
+
+%description 26jposug
 A pure Ruby implementation of the SCP client protocol
 %endif
 
@@ -154,7 +170,7 @@ A pure Ruby implementation of the SCP client protocol
 
 %build
 build_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         bindir="/opt/jposug/ruby/${ruby_ver}/bin"
@@ -199,6 +215,10 @@ build_for 2.4jposug
 # ruby-25jposug
 build_for 2.5jposug
 %endif
+%if %{build26jposug}
+# ruby-26jposug
+build_for 2.6jposug
+%endif
 
 %install
 rm -rf %{buildroot}
@@ -208,7 +228,7 @@ mkdir -p %{buildroot}/%{_bindir}
 %endif
 
 install_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         dir_prefix="/opt/jposug/ruby/${ruby_ver}"
@@ -248,7 +268,9 @@ install_for() {
 	    popd
 	fi
     done
-   
+
+    [ -d %{buildroot}${geminstdir}/test ] && rm -rf %{buildroot}${geminstdir}/test || true
+
 %if %{generate_executable}
     pushd %{buildroot}%{_bindir}
     for i in $(ls ${dir_prefix_relative}/bin/*)
@@ -277,6 +299,9 @@ install_for 2.4jposug
 %endif
 %if %{build25jposug}
 install_for 2.5jposug
+%endif
+%if %{build26jposug}
+install_for 2.6jposug
 %endif
 
 %clean
@@ -351,8 +376,21 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build26jposug}
+%files 26jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.6
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*26jposug
+%endif
+%endif
+
 
 %changelog
+* Mon Mar 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build packages for ruby-26jposug
 * Tue Jan 02 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build packages for ruby-2{3,4,5}jposug
 * Mon Apr 17 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

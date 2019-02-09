@@ -11,7 +11,7 @@
     <dependency name="filesystem" grouping="require_all" restart_on="error" type="service">
       <service_fmri value="svc:/system/filesystem/local"/>
     </dependency>
-    <dependent name="nginx" restart_on="none" grouping="optional_all">
+    <dependent name="multi-user" restart_on="none" grouping="optional_all">
       <service_fmri value="svc:/milestone/multi-user"/>
     </dependent>
     <method_context project=":default" resource_pool=":default" working_directory=":default"/>

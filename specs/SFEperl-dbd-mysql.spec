@@ -5,6 +5,8 @@
 %define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526 %( if [ -x /usr/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526jposug %( if [ -x /opt/jposug/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 
 %define include_executable 0
@@ -146,6 +148,51 @@ Requires:         database/mysql-56/library
 A MySQL driver for the Perl5 Database Interface (DBI)
 %endif
 
+%if %{build526}
+%package 526
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526
+Summary:          A MySQL driver for the Perl5 Database Interface (DBI)
+BuildRequires:    runtime/perl-526 = *
+BuildRequires:    library/perl-5/data-dumper-526
+BuildRequires:    library/perl-5/dbi-526
+BuildRequires:    library/perl-5/extutils-makemaker-526
+BuildRequires:    library/perl-5/test-deep-526
+BuildRequires:    library/perl-5/test-simple-526
+BuildRequires:    library/perl-5/time-hires-526
+BuildRequires:    database/mysql-56/library
+%if %{enable_test}
+BuildRequires:    library/perl-5/dbi-526
+%endif
+Requires:         runtime/perl-526 = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/dbi-526
+Requires:         database/mysql-56/library
+
+%description 526
+A MySQL driver for the Perl5 Database Interface (DBI)
+%endif
+
+%if %{build526jposug}
+%package 526jposug
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526jposug
+Summary:          A MySQL driver for the Perl5 Database Interface (DBI)
+BuildRequires:    runtime/perl-526jposug = *
+# BuildRequires:    library/perl-5/data-dumper-526jposug
+# BuildRequires:    library/perl-5/dbi-526jposug
+# BuildRequires:    library/perl-5/extutils-makemaker-526jposug
+# BuildRequires:    library/perl-5/test-deep-526jposug
+# BuildRequires:    library/perl-5/test-simple-526jposug
+# BuildRequires:    library/perl-5/time-hires-526jposug
+%if %{enable_test}
+BuildRequires:    library/perl-5/dbi-526jposug
+%endif
+Requires:         runtime/perl-526jposug = *
+Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/dbi-526jposug
+
+%description 526jposug
+A MySQL driver for the Perl5 Database Interface (DBI)
+%endif
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
@@ -153,12 +200,20 @@ A MySQL driver for the Perl5 Database Interface (DBI)
 
 %build
 build_with_makefile.pl_for() {
-    perl_ver=$1
-    test=$2
-    perl_dir_prefix="/usr/perl5/${perl_ver}"
+
+    if [ "x${1}" = 'x5.26jposug' ]
+    then
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
-    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
-    site_dir="/usr/perl5/site_perl/${perl_ver}"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
 
     export PERL5LIB=${vendor_dir}
 %if %{install_to_site_dir}
@@ -166,40 +221,48 @@ build_with_makefile.pl_for() {
 %else
     perl_libdir="${vendor_dir}"
 %endif
-    
 
-     echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null
-     if [ $? -eq 0 ]
-     then
-         export CC='cc -m32'
-         export LD='cc -m32'
-         export MYSQL_CONFIG=/usr/mysql/5.6/bin/i86/mysql_config
-         export LIBS='-L/usr/mysql/5.6/lib -R/usr/mysql/5.6/lib -lmysqlclient -lthread -lsocket -lnsl -lm -lstdc++'
-     else
-         export CC='cc -m64'
-         export LD='cc -m64'
-         export MYSQL_CONFIG=/usr/mysql/5.6/bin/mysql_config
-         export LIBS='-L/usr/mysql/5.6/lib/64 -R/usr/mysql/5.6/lib/64 -lmysqlclient -lthread -lsocket -lnsl -lm -lstdc++'
-     fi
-
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null && bin64=0 || bin64=1
+    if [ ${bin64} -eq 0 ]
+    then
+        export CC='cc -m32'
+        export LD='cc -m32'
+        export MYSQL_CONFIG=/usr/mysql/5.6/bin/i86/mysql_config
+        export LIBS='-L/usr/mysql/5.6/lib -R/usr/mysql/5.6/lib -lmysqlclient -lthread -lsocket -lnsl -lm -lstdc++'
+    else
+        export CC='cc -m64'
+        export LD='cc -m64'
+        export MYSQL_CONFIG=/usr/mysql/5.6/bin/mysql_config
+        export LIBS='-L/usr/mysql/5.6/lib/64 -R/usr/mysql/5.6/lib/64 -lmysqlclient -lthread -lsocket -lnsl -lm -lstdc++'
+    fi
     ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
-                   LIB=${perl_libdir} \
-                   --libs=${LIBS} \
-                   --mysql_config=${MYSQL_CONFIG} 
+                   LIB="${perl_libdir}" \
+                   --libs="${LIBS}" \
+                   --mysql_config="${MYSQL_CONFIG}"
 
     make CC="${CC}" LD="${LD}" LDFLAGS="${LDFLAGS}"
-    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
+%if %{enable_test}
+    [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
+%endif
     make pure_install
 }
 
 build_with_build.pl_for() {
-    perl_ver=$1
     test=$2
-    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    if [ "x${1}" = 'x5.26jposug' ]
+    then
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+    
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
-    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
-    site_dir="/usr/perl5/site_perl/${perl_ver}"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
 
 %if %{install_to_site_dir}
     installdir='site'
@@ -212,43 +275,61 @@ build_with_build.pl_for() {
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
     [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
+%if %{enable_test}
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
+%endif
     ${bindir}/perl ./Build clean
 }
 
 modify_bin_dir() {
-    perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/bin ]
+    if [ "x${1}" = 'x5.26jposug' ]
     then
-      [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
-      mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+
+    if [ -d $RPM_BUILD_ROOT/${prefix}/bin ]
+    then
+      [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver} ] || mkdir -p ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}
+      mv $RPM_BUILD_ROOT${prefix}/bin $RPM_BUILD_ROOT/${prefix}/perl5/${perl_ver}/bin
     fi
       
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin ]
+    if [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin ]
     then
-        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
+        for i in ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!${prefix}/perl5/${perl_ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
 }
 
 modify_man_dir() {
-    perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man ]
+    if [ "x${1}" = 'x5.26jposug' ]
+    then
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+
+    if [ -d $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man ]
     then
         if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
         then
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         else
             mkdir -p $RPM_BUILD_ROOT%{_datadir}
-            mv $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            mv $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         fi
         if [ %{include_executable} -eq 0 ]
         then
-            rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+            rmdir $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}
         fi
 
     fi
@@ -287,6 +368,14 @@ build_for 5.16
 
 %if %{build522}
 build_for 5.22
+%endif
+
+%if %{build526}
+build_for 5.26
+%endif
+
+%if %{build526jposug}
+build_for 5.26jposug
 %endif
 
 %install
@@ -377,7 +466,39 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build526}
+%files 526
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /usr
+%if %{install_to_site_dir}
+/usr/perl5/site_perl/5.26
+%else
+/usr/perl5/vendor_perl/5.26
+%endif
+%if %{include_executable}
+/usr/perl5/5.26
+%endif
+%endif
+
+%if %{build526jposug}
+%files 526jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+%if %{install_to_site_dir}
+/opt/jposug/perl5/site_perl/5.26
+%else
+/opt/jposug/perl5/vendor_perl/5.26
+%endif
+%if %{include_executable}
+/opt/jposug/perl5/5.26
+%endif
+%endif
+
 %changelog
+* Mon Mar 26 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add package for perl-526jposug
+* Mon Mar 26 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- build package for perl-526
 * Mon Feb 19 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.046 and use MySQL 5.6
 * Sat Dec 14 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

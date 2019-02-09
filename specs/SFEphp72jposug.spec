@@ -3,7 +3,7 @@
 
 %define _prefix /opt/jposug/php
 %define tarball_name     php
-%define tarball_version  7.2.12
+%define tarball_version  7.2.13
 %define major_version    7.2
 %define prefix_name      SFEphp72jposug
 %define _basedir         %{_prefix}/%{major_version}
@@ -18,18 +18,14 @@ Version:                 %{tarball_version}
 License:                 PHP
 Url:                     http://php.net/
 Source:                  http://jp2.php.net/distributions/%{tarball_name}-%{tarball_version}.tar.xz
-Source1:                 php-fpm72.xml
+Source1:                 php-fpm72jposug.xml
 Distribution:            OpenSolaris
 Vendor:                  OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:  library/spell-checking/enchant
-%if %{oracle_solaris_11_2}
-BuildRequires: library/libedit
-%else
-BuildRequires: SFEeditline
-%endif
+BuildRequires: library/spell-checking/enchant
+BuildRequires: jposug/library/editline
 BuildRequires: developer/icu
 BuildRequires: developer/gcc
 
@@ -38,11 +34,7 @@ Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       text/tidy
 Requires:       library/libtool/libltdl
 Requires:       web/php-common
-%if %{oracle_solaris_11_2}
-Requires:       library/libedit
-%else
-Requires:       SFEeditline
-%endif
+Requires:       jposug/library/editline
 Requires:       library/icu
 Requires:       system/library/gcc/gcc-runtime
 
@@ -78,7 +70,7 @@ build() {
     # bison-1.875-2 seems to produce a broken parser; workaround.
     # mkdir Zend && cp ../Zend/zend_{language,ini}_{parser,scanner}.[ch] Zend
     ln -sf ../configure
-CC=${CC} CXX=${CXX} ./configure --prefix=%{_prefirx} \
+CC=${CC} CXX=${CXX} ./configure --prefix=%{_prefix} \
     --bindir=%{_basedir}/bin \
     --datadir=%{_basedir}/share \
     --exec-prefix=%{_basedir} \
@@ -338,8 +330,8 @@ install -m 700 -d $RPM_BUILD_ROOT%{_localstatedir}/php/%{major_version}jposug/se
 
 # PHP-FPM stuff
 # SMF manifest
-mkdir -p $RPM_BUILD_ROOT/var/svc/manifest
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/var/svc/manifest/php-fpm72-jposug.xml
+mkdir -p $RPM_BUILD_ROOT/var/svc/manifest/network
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/var/svc/manifest/network/php-fpm72jposug.xml
 
 # Log
 install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/log/php-fpm
@@ -368,10 +360,10 @@ ln -s phar.phar phar
 
 mkdir $RPM_BUILD_ROOT/usr/bin
 cd $RPM_BUILD_ROOT/usr/bin
-ln -s ../../opt/jposug/php/%{major_version}jposug/bin/phar .
-ln -s ../../opt/jposug/php/%{major_version}jposug/bin/php .
-ln -s ../../opt/jposug/php/%{major_version}jposug/bin/php-config .
-ln -s ../../opt/jposug/php/%{major_version}jposug/bin/phpize .
+ln -s ../../opt/jposug/php/%{major_version}/bin/phar .
+ln -s ../../opt/jposug/php/%{major_version}/bin/php .
+ln -s ../../opt/jposug/php/%{major_version}/bin/php-config .
+ln -s ../../opt/jposug/php/%{major_version}/bin/phpize .
 
 rm -rf $RPM_BUILD_ROOT%{_prefix}/share/
 rm -rf $RPM_BUILD_ROOT/etc/logrotate.d
@@ -429,7 +421,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0755, root, sys) /var/log/php-fpm
 %dir %attr (0755, root, sys) /var/svc
 %dir %attr (0755, root, sys) /var/svc/manifest
-%attr (0644, root, sys) /var/svc/manifest/php-fpm72-jposug.xml
+%dir %attr (0755, root, sys) /var/svc/manifest/network
+%class(manifest) %attr (0644, root, sys) /var/svc/manifest/network/*
 # %dir %attr (0755, root, sys) /var/run
 # %attr (0755, root, root) /var/run/php-fpm
 %dir %attr (0755, root, bin) /usr/apache2
@@ -438,10 +431,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
-* Wed Nov 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 7.2.12
-* Mon Oct 15 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* Sat Dec 22 2018 - me@tsundoku.ne.jp
+- bump to 7.2.13
+- remove nkf operaton - the files come with LF endings now
+* Sun Oct 28 2018 - <me@tsundoku.ne.jp>
 - bump to 7.2.11
+* Sun Sep 30 2018 - <me@tsundoku.ne.jp>
+- bump to 7.2.10
+- fix some minor issues with /opt/jposug path
 * Mon Jul 30 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.2.8
 * Fri Jun 01 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

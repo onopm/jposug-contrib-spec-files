@@ -3,7 +3,7 @@
 
 %define _prefix /usr/php
 %define tarball_name     php
-%define tarball_version  7.0.15
+%define tarball_version  7.0.31
 %define major_version	 7.0
 %define prefix_name      SFEphp70
 %define _basedir         %{_prefix}/%{major_version}
@@ -59,6 +59,11 @@ do
 nkf -Lu --overwrite=.bak ${i}
 done
 
+echo "
+#if defined(__sun) && defined(__SVR4) //Solaris
+#include <ieeefp.h>
+#define isfinite finite
+#endif" >>  main/php_config.h.in
 
 %build
 mkdir build-cgi build-apache build-embedded build-zts build-ztscli build-fpm
@@ -122,7 +127,7 @@ CC=${CC} CXX=${CXX} ./configure --prefix=/usr \
     --with-mhash \
     --enable-opcache=yes \
     --enable-dtrace \
-    --enable-intl=shared \
+    --disable-intl \
     $*
     if test $? != 0; then
 	tail -500 config.log
@@ -446,6 +451,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php7.0.so
 
 %changelog
+* Mon Jul 30 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.31
+* Mon May 14 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.30
+* Fri Mar 02 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.28
+* Wed Nov 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.26 and disable intl
+- add isfinite definition to main/php_config.h.in to build intl
+* Mon Feb 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.0.16
 * Thu Jan 26 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 7.0.15
 * Mon Dec 12 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

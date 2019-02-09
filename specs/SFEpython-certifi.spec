@@ -9,7 +9,7 @@
 
 %define tarball_index c
 %define tarball_name certifi
-%define tarball_version 2017.1.23
+%define tarball_version 2018.4.16
 %define include_executable 0
 
 Name:                    SFEpython-certifi
@@ -180,5 +180,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Jun 13 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2018.4.16
 * Tue Feb 14 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

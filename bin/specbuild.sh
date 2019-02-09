@@ -57,6 +57,7 @@ esac
 
 
 LC_ALL=C ${PKGTOOL} build-only \
+  --nosourcepkg \
   --autodeps --nonotify --specdirs=`pwd`:`pwd`/include:`pwd`/base-specs \
   --patchdirs=`pwd`/patches \
   --sourcedirs=`pwd`/ext-sources:`pwd`/copyright:`pwd`/include \

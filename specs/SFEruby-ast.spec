@@ -16,7 +16,7 @@
 Summary:          A library for working with Abstract Syntax Trees.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.3.0
+Version:          2.4.0
 License:          MIT
 URL:              https://whitequark.github.io/ast/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -341,6 +341,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu May 10 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.4.0
 * Sat Dec 30 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build packages for ruby-2{3,4,5}jposug
 * Fri Dec 02 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

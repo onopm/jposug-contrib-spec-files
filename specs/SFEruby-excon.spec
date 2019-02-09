@@ -16,7 +16,7 @@
 Summary:          EXtended http(s) CONnections
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          0.60.0
+Version:          0.62.0
 License:          MIT
 URL:              https://github.com/excon/excon
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -341,6 +341,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Aug 27 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.62.0
 * Sat Dec 30 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 0.60.0 and build packges for ruby-2{3,4,5}jposug
 * Wed Dec 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

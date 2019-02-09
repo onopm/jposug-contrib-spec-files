@@ -3,7 +3,7 @@
 
 %define _prefix /opt/jposug/php
 %define tarball_name     php
-%define tarball_version  7.2.13
+%define tarball_version  7.2.15
 %define major_version    7.2
 %define prefix_name      SFEphp72jposug
 %define _basedir         %{_prefix}/%{major_version}
@@ -56,10 +56,10 @@ mkdir build-cgi build-apache build-embedded build-zts build-ztscli build-fpm
 # use GCC To avoid error with Solaris Studio,
 export CC=/usr/bin/gcc
 export CXX=/usr/bin/g++
-export CFLAGS="-std=gnu99 -m64 -O2"
+export CFLAGS="-std=gnu99 -m64 -O2 -I/opt/jposug/include "
 export CPPFLAGS="-std=gnu99 -m64 -O2 -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I../CPPFLAGSTEST"
-export LDFLAGS="-L/lib/%{_arch64} -L/usr/lib/%{_arch64} -R/lib/%{_arch64} -R/usr/lib/%{_arch64} -R%{_basedir}/lib/extensions/no-debug-non-zts-%{zts}"
-
+export LDFLAGS="-L/opt/jposug/lib -L/lib/%{_arch64} -L/usr/lib/%{_arch64} -R/opt/jposug/lib -R/lib/%{_arch64} -R/usr/lib/%{_arch64} -R%{_basedir}/lib/extensions/no-debug-non-zts-%{zts}"
+export PKG_CONFIG_PATH=/opt/jposug/lib/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -161,7 +161,7 @@ build \
     --enable-json=shared \
     --enable-zip=shared \
     --without-readline \
-    --with-libedit \
+    --with-libedit=/opt/jposug/lib \
     --enable-phar=shared \
     --with-tidy=shared \
     --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
@@ -431,6 +431,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
+* Sat Feb 09 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.2.15 and use /opt/jposug/lib/libedit.so.0
 * Sat Dec 22 2018 - me@tsundoku.ne.jp
 - bump to 7.2.13
 - remove nkf operaton - the files come with LF endings now

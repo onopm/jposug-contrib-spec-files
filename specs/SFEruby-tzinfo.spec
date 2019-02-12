@@ -17,7 +17,7 @@
 Summary:          TZInfo provides access to time zone data and allows times to be converted using time zone rules.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.0.0
+Version:          1.2.5
 License:          MIT
 URL:              https://tzinfo.github.io
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -44,8 +44,8 @@ IPS_package_name: library/ruby/%{gemname}-23
 Summary:          TZInfo provides access to time zone data and allows times to be converted using time zone rules.
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-# concurrent-ruby ~> 1.0
-Requires:         library/ruby/concurrent-ruby-23
+# thread_safe ~> 0.1
+Requires:         library/ruby/thread_safe-23
 # Requires:         library/ruby/%{gemname}
 
 %description 23
@@ -59,8 +59,8 @@ IPS_package_name: jposug/library/ruby/%{gemname}-23jposug
 Summary:          TZInfo provides access to time zone data and allows times to be converted using time zone rules.
 BuildRequires:    jposug/runtime/ruby-23jposug = *
 Requires:         jposug/runtime/ruby-23jposug = *
-# concurrent-ruby ~> 1.0
-Requires:         jposug/library/ruby/concurrent-ruby-23jposug
+# thread_safe ~> 0.1
+Requires:         jposug/library/ruby/thread_safe-23jposug
 # Requires:         library/ruby/%{gemname}
 
 %description 23jposug
@@ -74,8 +74,8 @@ IPS_package_name: jposug/library/ruby/%{gemname}-24jposug
 Summary:          TZInfo provides access to time zone data and allows times to be converted using time zone rules.
 BuildRequires:    jposug/runtime/ruby-24jposug = *
 Requires:         jposug/runtime/ruby-24jposug = *
-# concurrent-ruby ~> 1.0
-Requires:         jposug/library/ruby/concurrent-ruby-24jposug
+# thread_safe ~> 0.1
+Requires:         jposug/library/ruby/thread_safe-24jposug
 # Requires:         library/ruby/%{gemname}
 
 %description 24jposug
@@ -89,8 +89,8 @@ IPS_package_name: jposug/library/ruby/%{gemname}-25jposug
 Summary:          TZInfo provides access to time zone data and allows times to be converted using time zone rules.
 BuildRequires:    jposug/runtime/ruby-25jposug = *
 Requires:         jposug/runtime/ruby-25jposug = *
-# concurrent-ruby ~> 1.0
-Requires:         jposug/library/ruby/concurrent-ruby-25jposug
+# thread_safe ~> 0.1
+Requires:         jposug/library/ruby/thread_safe-25jposug
 # Requires:         library/ruby/%{gemname}
 
 %description 25jposug
@@ -104,8 +104,8 @@ IPS_package_name: jposug/library/ruby/%{gemname}-26jposug
 Summary:          TZInfo provides access to time zone data and allows times to be converted using time zone rules.
 BuildRequires:    jposug/runtime/ruby-26jposug = *
 Requires:         jposug/runtime/ruby-26jposug = *
-# concurrent-ruby ~> 1.0
-Requires:         jposug/library/ruby/concurrent-ruby-26jposug
+# thread_safe ~> 0.1
+Requires:         jposug/library/ruby/thread_safe-26jposug
 # Requires:         library/ruby/%{gemname}
 
 %description 26jposug
@@ -301,6 +301,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Tue Feb 12 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- back to 1.2.5 because some gems are not compatible with 2.0.0
 - bump to 2.0.0, add Ruby 2.6 and obsolete Ruby 2.1 and 2.2
 * Fri Jun 29 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.2.5

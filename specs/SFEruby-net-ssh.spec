@@ -1,8 +1,6 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
@@ -14,10 +12,12 @@
 %define gemname net-ssh
 %define sfe_gemname net-ssh
 
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+# Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          4.2.0
+Version:          5.1.0
 License:          MIT
 URL:              https://github.com/net-ssh/net-ssh
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -26,59 +26,11 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 %description
 Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
 
-%if %{build21}
-%if %{keep_dependency}
-%package 21-old
-IPS_package_name: library/ruby-21/%{gemname}
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}-21
-
-%description 21-old
-Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
-%endif
-
-%package 21
-IPS_package_name: library/ruby/%{gemname}-21
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}
-
-%description 21
-Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
-%endif
-
-%if %{build22}
-%if %{keep_dependency}
-%package 22-old
-IPS_package_name: library/ruby-22/%{gemname}
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}-22
-
-%description 22-old
-Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
-%endif
-
-%package 22
-IPS_package_name: library/ruby/%{gemname}-22
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}
-
-%description 22
-Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
-%endif
-
 %if %{build23}
 %if %{keep_dependency}
 %package 23-old
 IPS_package_name: library/ruby-23/%{gemname}
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
 # Requires:         library/ruby/%{gemname}-23
@@ -89,7 +41,7 @@ Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you 
 
 %package 23
 IPS_package_name: library/ruby/%{gemname}-23
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
 # Requires:         library/ruby/%{gemname}
@@ -102,7 +54,7 @@ Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you 
 
 %package 23jposug
 IPS_package_name: jposug/library/ruby/%{gemname}-23jposug
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol
 BuildRequires:    jposug/runtime/ruby-23jposug = *
 Requires:         jposug/runtime/ruby-23jposug = *
 # Requires:         library/ruby/%{gemname}
@@ -115,7 +67,7 @@ Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you 
 
 %package 24jposug
 IPS_package_name: jposug/library/ruby/%{gemname}-24jposug
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol
 BuildRequires:    jposug/runtime/ruby-24jposug = *
 Requires:         jposug/runtime/ruby-24jposug = *
 # Requires:         library/ruby/%{gemname}
@@ -128,7 +80,7 @@ Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you 
 
 %package 25jposug
 IPS_package_name: jposug/library/ruby/%{gemname}-25jposug
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol
 BuildRequires:    jposug/runtime/ruby-25jposug = *
 Requires:         jposug/runtime/ruby-25jposug = *
 # Requires:         library/ruby/%{gemname}
@@ -141,7 +93,7 @@ Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you 
 
 %package 26jposug
 IPS_package_name: jposug/library/ruby/%{gemname}-26jposug
-Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol. It allows you to write programs that invoke and interact with processes on remote servers, via SSH2.
+Summary:          Net::SSH: a pure-Ruby implementation of the SSH2 client protocol
 BuildRequires:    jposug/runtime/ruby-26jposug = *
 Requires:         jposug/runtime/ruby-26jposug = *
 # Requires:         library/ruby/%{gemname}
@@ -169,22 +121,13 @@ build_for() {
 
     ${bindir}/gem install --local \
         --no-env-shebang \
+        --no-document \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
-        --no-ri \
-        --no-rdoc \
         -V \
         --force %{SOURCE0}
 }
 
-%if %{build21}
-# ruby-21
-build_for 2.1
-%endif
-%if %{build22}
-# ruby-22
-build_for 2.2
-%endif
 %if %{build23}
 # ruby-23
 build_for 2.3
@@ -268,12 +211,6 @@ install_for() {
 
 }
 
-%if %{build21}
-install_for 2.1
-%endif
-%if %{build22}
-install_for 2.2
-%endif
 %if %{build23}
 install_for 2.3
 %endif
@@ -295,28 +232,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build21}
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*21
-%endif
-%endif
-
-%if %{build22}
-%files 22
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.2
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*22
-%endif
-%endif
 
 %if %{build23}
 %files 23
@@ -375,6 +290,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Feb 13 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 5.1.0 and obsolete packages for ruby-21 and ruby-22
 * Sat Mar 03 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build packages for ruby-26jposug
 * Sun Dec 31 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

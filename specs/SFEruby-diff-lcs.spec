@@ -1,8 +1,6 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
@@ -34,82 +32,6 @@ This is release 1.3, providing a tentative fix to a long-standing issue related
 to incorrect detection of a patch direction. Also modernizes the gem
 infrastructure, testing infrastructure, and provides a warning-free experience
 to Ruby 2.4 users.
-
-%if %{build21}
-%if %{keep_dependency}
-%package 21-old
-IPS_package_name: library/ruby-21/%{gemname}
-Summary:          Diff::LCS computes the difference between two Enumerable sequences using the McIlroy-Hunt longest common subsequence (LCS) algorithm
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}-21
-
-%description 21-old
-Diff::LCS computes the difference between two Enumerable sequences using the
-McIlroy-Hunt longest common subsequence (LCS) algorithm. It includes utilities
-to create a simple HTML diff output format and a standard diff-like tool.
-
-This is release 1.3, providing a tentative fix to a long-standing issue related
-to incorrect detection of a patch direction. Also modernizes the gem
-infrastructure, testing infrastructure, and provides a warning-free experience
-to Ruby 2.4 users.
-%endif
-
-%package 21
-IPS_package_name: library/ruby/%{gemname}-21
-Summary:          Diff::LCS computes the difference between two Enumerable sequences using the McIlroy-Hunt longest common subsequence (LCS) algorithm
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}
-
-%description 21
-Diff::LCS computes the difference between two Enumerable sequences using the
-McIlroy-Hunt longest common subsequence (LCS) algorithm. It includes utilities
-to create a simple HTML diff output format and a standard diff-like tool.
-
-This is release 1.3, providing a tentative fix to a long-standing issue related
-to incorrect detection of a patch direction. Also modernizes the gem
-infrastructure, testing infrastructure, and provides a warning-free experience
-to Ruby 2.4 users.
-%endif
-
-%if %{build22}
-%if %{keep_dependency}
-%package 22-old
-IPS_package_name: library/ruby-22/%{gemname}
-Summary:          Diff::LCS computes the difference between two Enumerable sequences using the McIlroy-Hunt longest common subsequence (LCS) algorithm
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}-22
-
-%description 22-old
-Diff::LCS computes the difference between two Enumerable sequences using the
-McIlroy-Hunt longest common subsequence (LCS) algorithm. It includes utilities
-to create a simple HTML diff output format and a standard diff-like tool.
-
-This is release 1.3, providing a tentative fix to a long-standing issue related
-to incorrect detection of a patch direction. Also modernizes the gem
-infrastructure, testing infrastructure, and provides a warning-free experience
-to Ruby 2.4 users.
-%endif
-
-%package 22
-IPS_package_name: library/ruby/%{gemname}-22
-Summary:          Diff::LCS computes the difference between two Enumerable sequences using the McIlroy-Hunt longest common subsequence (LCS) algorithm
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}
-
-%description 22
-Diff::LCS computes the difference between two Enumerable sequences using the
-McIlroy-Hunt longest common subsequence (LCS) algorithm. It includes utilities
-to create a simple HTML diff output format and a standard diff-like tool.
-
-This is release 1.3, providing a tentative fix to a long-standing issue related
-to incorrect detection of a patch direction. Also modernizes the gem
-infrastructure, testing infrastructure, and provides a warning-free experience
-to Ruby 2.4 users.
-%endif
 
 %if %{build23}
 %if %{keep_dependency}
@@ -248,22 +170,13 @@ build_for() {
 
     ${bindir}/gem install --local \
         --no-env-shebang \
+        --no-document \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
-        --no-ri \
-        --no-rdoc \
         -V \
         --force %{SOURCE0}
 }
 
-%if %{build21}
-# ruby-21
-build_for 2.1
-%endif
-%if %{build22}
-# ruby-22
-build_for 2.2
-%endif
 %if %{build23}
 # ruby-23
 build_for 2.3
@@ -347,12 +260,6 @@ install_for() {
 
 }
 
-%if %{build21}
-install_for 2.1
-%endif
-%if %{build22}
-install_for 2.2
-%endif
 %if %{build23}
 install_for 2.3
 %endif
@@ -374,28 +281,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build21}
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*21
-%endif
-%endif
-
-%if %{build22}
-%files 22
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.2
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*22
-%endif
-%endif
 
 %if %{build23}
 %files 23
@@ -454,6 +339,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Feb 13 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- obsolete packages for ruby-21 and ruby-22
 * Tue Mar 13 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.3 and build packages for ruby-{23,24,25,26}jposug
 * Sun Dec 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

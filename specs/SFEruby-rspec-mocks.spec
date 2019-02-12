@@ -1,8 +1,6 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
@@ -14,10 +12,12 @@
 %define gemname rspec-mocks
 %define sfe_gemname rspec-mocks
 
+# RSpec's 'test double' framework, with support for stubbing and mocking
+
 Summary:          RSpec's 'test double' framework, with support for stubbing and mocking
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          3.7.0
+Version:          3.8.0
 License:          MIT
 URL:              https://github.com/rspec/rspec-mocks
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -25,62 +25,6 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 %description
 RSpec's 'test double' framework, with support for stubbing and mocking
-
-%if %{build21}
-%if %{keep_dependency}
-%package 21-old
-IPS_package_name: library/ruby-21/%{gemname}
-Summary:          RSpec's 'test double' framework, with support for stubbing and mocking
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}-21
-
-%description 21-old
-RSpec's 'test double' framework, with support for stubbing and mocking
-%endif
-
-%package 21
-IPS_package_name: library/ruby/%{gemname}-21
-Summary:          RSpec's 'test double' framework, with support for stubbing and mocking
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# diff-lcs < 2.0, >= 1.2.0
-Requires:         library/ruby/diff-lcs-21
-# rspec-support ~> 3.7.0
-Requires:         library/ruby/rspec-support-21
-# Requires:         library/ruby/%{gemname}
-
-%description 21
-RSpec's 'test double' framework, with support for stubbing and mocking
-%endif
-
-%if %{build22}
-%if %{keep_dependency}
-%package 22-old
-IPS_package_name: library/ruby-22/%{gemname}
-Summary:          RSpec's 'test double' framework, with support for stubbing and mocking
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}-22
-
-%description 22-old
-RSpec's 'test double' framework, with support for stubbing and mocking
-%endif
-
-%package 22
-IPS_package_name: library/ruby/%{gemname}-22
-Summary:          RSpec's 'test double' framework, with support for stubbing and mocking
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# diff-lcs < 2.0, >= 1.2.0
-Requires:         library/ruby/diff-lcs-22
-# rspec-support ~> 3.7.0
-Requires:         library/ruby/rspec-support-22
-# Requires:         library/ruby/%{gemname}
-
-%description 22
-RSpec's 'test double' framework, with support for stubbing and mocking
-%endif
 
 %if %{build23}
 %if %{keep_dependency}
@@ -102,7 +46,7 @@ BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
 # diff-lcs < 2.0, >= 1.2.0
 Requires:         library/ruby/diff-lcs-23
-# rspec-support ~> 3.7.0
+# rspec-support ~> 3.8.0
 Requires:         library/ruby/rspec-support-23
 # Requires:         library/ruby/%{gemname}
 
@@ -119,7 +63,7 @@ BuildRequires:    jposug/runtime/ruby-23jposug = *
 Requires:         jposug/runtime/ruby-23jposug = *
 # diff-lcs < 2.0, >= 1.2.0
 Requires:         jposug/library/ruby/diff-lcs-23jposug
-# rspec-support ~> 3.7.0
+# rspec-support ~> 3.8.0
 Requires:         jposug/library/ruby/rspec-support-23jposug
 # Requires:         library/ruby/%{gemname}
 
@@ -136,7 +80,7 @@ BuildRequires:    jposug/runtime/ruby-24jposug = *
 Requires:         jposug/runtime/ruby-24jposug = *
 # diff-lcs < 2.0, >= 1.2.0
 Requires:         jposug/library/ruby/diff-lcs-24jposug
-# rspec-support ~> 3.7.0
+# rspec-support ~> 3.8.0
 Requires:         jposug/library/ruby/rspec-support-24jposug
 # Requires:         library/ruby/%{gemname}
 
@@ -153,7 +97,7 @@ BuildRequires:    jposug/runtime/ruby-25jposug = *
 Requires:         jposug/runtime/ruby-25jposug = *
 # diff-lcs < 2.0, >= 1.2.0
 Requires:         jposug/library/ruby/diff-lcs-25jposug
-# rspec-support ~> 3.7.0
+# rspec-support ~> 3.8.0
 Requires:         jposug/library/ruby/rspec-support-25jposug
 # Requires:         library/ruby/%{gemname}
 
@@ -170,7 +114,7 @@ BuildRequires:    jposug/runtime/ruby-26jposug = *
 Requires:         jposug/runtime/ruby-26jposug = *
 # diff-lcs < 2.0, >= 1.2.0
 Requires:         jposug/library/ruby/diff-lcs-26jposug
-# rspec-support ~> 3.7.0
+# rspec-support ~> 3.8.0
 Requires:         jposug/library/ruby/rspec-support-26jposug
 # Requires:         library/ruby/%{gemname}
 
@@ -197,22 +141,13 @@ build_for() {
 
     ${bindir}/gem install --local \
         --no-env-shebang \
+        --no-document \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
-        --no-ri \
-        --no-rdoc \
         -V \
         --force %{SOURCE0}
 }
 
-%if %{build21}
-# ruby-21
-build_for 2.1
-%endif
-%if %{build22}
-# ruby-22
-build_for 2.2
-%endif
 %if %{build23}
 # ruby-23
 build_for 2.3
@@ -296,12 +231,6 @@ install_for() {
 
 }
 
-%if %{build21}
-install_for 2.1
-%endif
-%if %{build22}
-install_for 2.2
-%endif
 %if %{build23}
 install_for 2.3
 %endif
@@ -323,28 +252,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build21}
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*21
-%endif
-%endif
-
-%if %{build22}
-%files 22
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.2
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*22
-%endif
-%endif
 
 %if %{build23}
 %files 23
@@ -403,6 +310,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Feb 13 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.8.0, add package for ruby-26jposug and obsolete ruby-21 and ruby-22
 * Mon Mar 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 3.7.0
 * Fri Oct 14 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

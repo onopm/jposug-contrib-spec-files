@@ -1,8 +1,6 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
@@ -13,6 +11,8 @@
 
 %define gemname net-scp
 %define sfe_gemname net-scp
+
+# A pure Ruby implementation of the SCP client protocol
 
 Summary:          A pure Ruby implementation of the SCP client protocol
 Name:             SFEruby-%{sfe_gemname}
@@ -25,58 +25,6 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 %description
 A pure Ruby implementation of the SCP client protocol
-
-%if %{build21}
-%if %{keep_dependency}
-%package 21-old
-IPS_package_name: library/ruby-21/%{gemname}
-Summary:          A pure Ruby implementation of the SCP client protocol
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}-21
-
-%description 21-old
-A pure Ruby implementation of the SCP client protocol
-%endif
-
-%package 21
-IPS_package_name: library/ruby/%{gemname}-21
-Summary:          A pure Ruby implementation of the SCP client protocol
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# net-ssh >= 2.6.5
-Requires:         library/ruby/net-ssh-21
-# Requires:         library/ruby/%{gemname}
-
-%description 21
-A pure Ruby implementation of the SCP client protocol
-%endif
-
-%if %{build22}
-%if %{keep_dependency}
-%package 22-old
-IPS_package_name: library/ruby-22/%{gemname}
-Summary:          A pure Ruby implementation of the SCP client protocol
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}-22
-
-%description 22-old
-A pure Ruby implementation of the SCP client protocol
-%endif
-
-%package 22
-IPS_package_name: library/ruby/%{gemname}-22
-Summary:          A pure Ruby implementation of the SCP client protocol
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# net-ssh >= 2.6.5
-Requires:         library/ruby/net-ssh-22
-# Requires:         library/ruby/%{gemname}
-
-%description 22
-A pure Ruby implementation of the SCP client protocol
-%endif
 
 %if %{build23}
 %if %{keep_dependency}
@@ -183,22 +131,13 @@ build_for() {
 
     ${bindir}/gem install --local \
         --no-env-shebang \
+        --no-document \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
-        --no-ri \
-        --no-rdoc \
         -V \
         --force %{SOURCE0}
 }
 
-%if %{build21}
-# ruby-21
-build_for 2.1
-%endif
-%if %{build22}
-# ruby-22
-build_for 2.2
-%endif
 %if %{build23}
 # ruby-23
 build_for 2.3
@@ -282,12 +221,6 @@ install_for() {
 
 }
 
-%if %{build21}
-install_for 2.1
-%endif
-%if %{build22}
-install_for 2.2
-%endif
 %if %{build23}
 install_for 2.3
 %endif
@@ -309,28 +242,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build21}
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*21
-%endif
-%endif
-
-%if %{build22}
-%files 22
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.2
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*22
-%endif
-%endif
 
 %if %{build23}
 %files 23
@@ -389,6 +300,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Feb 13 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- obsolete packages for ruby-21 and ruby-22
 * Mon Mar 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build packages for ruby-26jposug
 * Tue Jan 02 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

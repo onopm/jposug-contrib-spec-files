@@ -1,8 +1,6 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
@@ -13,6 +11,8 @@
 
 %define gemname json
 %define sfe_gemname json
+
+# This is a JSON implementation as a Ruby extension in C.
 
 Summary:          This is a JSON implementation as a Ruby extension in C.
 Name:             SFEruby-%{sfe_gemname}
@@ -25,54 +25,6 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 %description
 This is a JSON implementation as a Ruby extension in C.
-
-%if %{build21}
-%if %{keep_dependency}
-%package 21-old
-IPS_package_name: library/ruby-21/%{gemname}
-Summary:          This is a JSON implementation as a Ruby extension in C.
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}-21
-
-%description 21-old
-This is a JSON implementation as a Ruby extension in C.
-%endif
-
-%package 21
-IPS_package_name: library/ruby/%{gemname}-21
-Summary:          This is a JSON implementation as a Ruby extension in C.
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}
-
-%description 21
-This is a JSON implementation as a Ruby extension in C.
-%endif
-
-%if %{build22}
-%if %{keep_dependency}
-%package 22-old
-IPS_package_name: library/ruby-22/%{gemname}
-Summary:          This is a JSON implementation as a Ruby extension in C.
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}-22
-
-%description 22-old
-This is a JSON implementation as a Ruby extension in C.
-%endif
-
-%package 22
-IPS_package_name: library/ruby/%{gemname}-22
-Summary:          This is a JSON implementation as a Ruby extension in C.
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}
-
-%description 22
-This is a JSON implementation as a Ruby extension in C.
-%endif
 
 %if %{build23}
 %if %{keep_dependency}
@@ -169,22 +121,13 @@ build_for() {
 
     ${bindir}/gem install --local \
         --no-env-shebang \
+        --no-document \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
-        --no-ri \
-        --no-rdoc \
         -V \
         --force %{SOURCE0}
 }
 
-%if %{build21}
-# ruby-21
-build_for 2.1
-%endif
-%if %{build22}
-# ruby-22
-build_for 2.2
-%endif
 %if %{build23}
 # ruby-23
 build_for 2.3
@@ -268,12 +211,6 @@ install_for() {
 
 }
 
-%if %{build21}
-install_for 2.1
-%endif
-%if %{build22}
-install_for 2.2
-%endif
 %if %{build23}
 install_for 2.3
 %endif
@@ -295,28 +232,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build21}
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*21
-%endif
-%endif
-
-%if %{build22}
-%files 22
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.2
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*22
-%endif
-%endif
 
 %if %{build23}
 %files 23
@@ -375,6 +290,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Feb 12 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix build for Ruby 2.6 and obsolete Ruby 2.1 and 2.2
 * Fri Mar 02 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.1.0
 * Fri Jan 13 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

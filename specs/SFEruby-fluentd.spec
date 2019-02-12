@@ -30,7 +30,7 @@ Requires:	library/ruby/sigdump-25jposug >= 0.2.2
 Requires:	library/ruby/strptime-25jposug >= 0.1.7
 Requires:	library/ruby/dig_rb-25jposug >= 0.1.7
 Requires:	library/ruby/yajl-ruby-25jposug >= 1.0
-Requires:	library/ruby/tzinfo-25jposug >= 1.0.0
+Requires:	library/ruby/tzinfo-25jposug < 2.0.0
 Requires:	library/ruby/tzinfo-data-25jposug >= 1.0.0
 
 %description
@@ -128,6 +128,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Tue Feb 12 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use tzinfo < 2.0.0
 - bump to 1.3.3 and use Ruby 2.5
 * Tue Aug 28 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.2.5

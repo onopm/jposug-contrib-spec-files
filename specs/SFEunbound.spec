@@ -8,7 +8,7 @@
 Summary:	Validating, recursive, and caching DNS resolver
 IPS_Package_Name:	network/dns/unbound
 Name:		SFEunbound
-Version:	1.5.5
+Version:	1.7.3
 License:	BSD
 URL:		http://www.nlnetlabs.nl/unbound/
 Source:		http://www.unbound.net/downloads/unbound-%{version}.tar.gz
@@ -130,8 +130,34 @@ user ftpuser=false gcos-field="Unbound Reserved UID" username="unbound" password
 %{_mandir}/*/*
 %{_includedir}/*
 %{_libdir}/libunbound*
+%dir %attr (0755, root, other) /usr/lib/pkgconfig
+%attr (0444, root, bin) /usr/lib/pkgconfig/libunbound.pc
 
 %changelog
+* Fri Jun 22 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7.3
+* Fri Jun 01 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix file attr
+* Thu May 10 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7.1
+* Fri Mar 16 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7.0
+* Fri Jan 26 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.8
+* Thu Oct 12 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.7
+* Tue Aug 21 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.5
+* Tue Jun 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.3
+* Wed Feb 22 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.1
+* Fri Dec 16 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.6.0
+* Wed Mar 09 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.8
+* Mon Dec 14 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5.7
 * Thu Oct 15 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.5.5
 * Thu Sep 24 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

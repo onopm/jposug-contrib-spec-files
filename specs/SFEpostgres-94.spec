@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  9.4.5
+%define tarball_version  9.4.11
 %define major_version	 9.4
 %define prefix_name      SFEpostgres-94
 %define _basedir         %{_prefix}/%{major_version}
@@ -652,12 +652,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/config/missing
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/makefiles
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/amd64/pgxs/src/test/regress
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/config
+%attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/config/missing
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/makefiles
 %dir %attr (0755, root, bin) %{_prefix}/%{major_version}/lib/pgxs/src/test
@@ -1225,6 +1227,14 @@ rm -rf $RPM_BUILD_ROOT
 %ips_tag (mediator=postgres mediator-version=%{major_version}) /usr/bin/amd64/pg_recvlogical
 
 %changelog
+* Fri Feb 10 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.4.11
+* Mon Nov 21 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.4.10
+* Fri Jul 15 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.4.8
+* Mon Apr 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 9.4.7
 * Fri Nov 06 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - change definition 'oracle_solaris_11_2' to 'after_oracle_solaris_11_2' because it is used also with Oracle Solaris 11.3.
 - bump to 9.4.5

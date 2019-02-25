@@ -76,6 +76,12 @@
 #>=133
 %endif
 
+#Packages renamed from 11.3 -> 11.4
+#Leave osbuild at 175 to not interfere with the above conditionals
+%if %{s114}
+%include packagenames.define-11.4.inc
+%endif
+
 %if %{omnios}
 # The packagenames.define-omnios151014 have been built on r15014,
 # but we want support for all distributions of OmniOS.
@@ -92,6 +98,8 @@
 %include packagenames.define.allbuilds.inc
 
 %changelog
+* Sat Sep 29 2018 - me@tsundoku.ne.jp
+- add support for Solaris 11.4
 * Wed May 20 2015 - YAMAMOTO Takashi yamachan@piwikjapan.org
 - add support for OmniOS
 * Wed Mar 16 2011 - Thomas Wagner

@@ -1,0 +1,11 @@
+--- php-5.4.16.orig/sapi/apache2handler/config.m4	2013-06-05 14:03:57.000000000 +0900
++++ php-5.4.16/sapi/apache2handler/config.m4	2014-05-29 16:17:05.289031505 +0900
+@@ -47,7 +47,7 @@
+   APU_CONFIG=`$APXS -q APU_CONFIG 2>/dev/null ||
+     echo $APU_BINDIR/apu-config`
+ 
+-  APR_CFLAGS="`$APR_CONFIG --cppflags --includes`"
++  APR_CFLAGS="`$APR_CONFIG --cppflags --includes | sed -e 's|-mt||'`"
+   APU_CFLAGS="`$APU_CONFIG --includes`"
+ 
+   for flag in $APXS_CFLAGS; do

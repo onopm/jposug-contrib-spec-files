@@ -1,0 +1,12 @@
+--- mailman-2.1.14+j7/Makefile.in.orig	2014-04-23 22:48:31.639745806 +0900
++++ mailman-2.1.14+j7/Makefile.in	2014-04-23 22:49:04.459801000 +0900
+@@ -124,8 +124,7 @@
+ 	do \
+ 	    (cd $$d; $(MAKE) DESTDIR=$(DESTDIR) install); \
+ 	done
+-	$(PYTHON) -c 'from compileall import *; compile_dir("$(DESTDIR)$(prefix)/Mailman",ddir="$(prefix)/Mailman")'
+-
++	$(PYTHON) -c 'from compileall import *; compile_dir("$(DESTDIR)$(prefix)/bin",ddir="$(prefix)/bin")'
+ # Only run bin/update if we aren't installing in DESTDIR, as this
+ # means there are probably no lists to deal with, and it wouldn't
+ # work anyway (because of import paths.)

@@ -1,0 +1,10 @@
+--- common.gypi.orig  2016-04-04 17:38:38.134801741 +0900
++++ common.gypi 2016-04-04 17:42:25.324743153 +0900
+@@ -273,6 +273,7 @@
+             'ldflags': [ '-m64' ],
+           }],
+           [ 'OS=="solaris"', {
++            'defines': ['_GLIBCXX_USE_C99_MATH'],
+             'cflags': [ '-pthreads' ],
+             'ldflags': [ '-pthreads' ],
+             'cflags!': [ '-pthread' ],

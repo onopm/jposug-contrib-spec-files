@@ -1,0 +1,20 @@
+--- configure.orig      2017-12-14 23:36:11.000000000 +0000
++++ configure   2018-10-22 11:27:39.981464874 +0000
+@@ -21590,17 +21590,6 @@
+ fi
+ done
+
+-for ac_func in qsort_s
+-do :
+-  ac_fn_c_check_func "$LINENO" "qsort_s" "ac_cv_func_qsort_s"
+-if test "x$ac_cv_func_qsort_s" = xyes; then :
+-  cat >>confdefs.h <<_ACEOF
+-#define HAVE_QSORT_S 1
+-_ACEOF
+-
+-fi
+-done
+-
+ for ac_func in readlink
+ do :
+   ac_fn_c_check_func "$LINENO" "readlink" "ac_cv_func_readlink"

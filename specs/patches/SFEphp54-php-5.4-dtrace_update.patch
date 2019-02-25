@@ -1,0 +1,11 @@
+--- php-5.4.16.orig/update.sh	1970-01-01 09:00:00.000000000 +0900
++++ php-5.4.16/update.sh	2014-05-27 11:18:53.495530019 +0900
+@@ -0,0 +1,8 @@
++#!/bin/bash
++if  [ -f ../Zend/zend_dtrace.d -a -f main/main.o -a -f Zend/zend_API.o -a -f Zend/zend_execute.o -a -f Zend/zend_exceptions.o -a -f Zend/zend_dtrace.o -a -f Zend/zend.o ]; then
++  dtrace -G -o Zend/zend_dtrace.d.o -s ../Zend/zend_dtrace.d main/main.o Zend/zend_API.o Zend/zend_execute.o Zend/zend_exceptions.o Zend/zend_dtrace.o Zend/zend.o
++  cp -f Zend/zend_API.o Zend/zend_execute.o Zend/zend_exceptions.o Zend/zend_dtrace.o Zend/zend.o Zend/zend_dtrace.d.o Zend/.libs/
++  mkdir -p main/.libs
++  cp -f main/main.o main/.libs/
++  echo "Dtrace probes and updating of the source object files - OK."
++fi

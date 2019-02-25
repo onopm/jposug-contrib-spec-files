@@ -1,0 +1,20 @@
+--- src/sys.h.orig	2013-01-09 16:03:43.762984449 +0900
++++ src/sys.h	2013-01-09 16:04:57.950260164 +0900
+@@ -130,12 +130,14 @@
+ #define	REGEX		/* Use POSIX.2 regular expression functions */
+ #undef	REGEXP		/* Use UNIX V8 regular expression functions */
+ 
+-#if defined(__sun)
++#ifndef HAVE_TERMCAP_H
+ extern int tgetent(char *, const char *);
+-extern int tgetflag(char *);
+-extern int tgetnum(char *);
+ extern int tputs(const char *, int, int (*)(int));
+ extern char* tgoto(const char*, int, int);
++#endif
++#if defined(__sun)
++extern int tgetflag(char *);
++extern int tgetnum(char *);
+ extern char* tgetstr(char*, char**);
+ #endif
+ 

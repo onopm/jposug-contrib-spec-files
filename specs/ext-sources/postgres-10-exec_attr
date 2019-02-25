@@ -1,0 +1,13 @@
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/initdb:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/pg_controldata:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/pg_ctl:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/pg_resetxlog:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/postgres:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/postmaster:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/64/initdb:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/64/pg_controldata:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/64/pg_ctl:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/64/pg_resetxlog:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/64/pg_rewind:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/64/postgres:uid=postgres
+Postgres Administration:solaris:cmd:::/usr/postgres/10/bin/64/postmaster:uid=postgres

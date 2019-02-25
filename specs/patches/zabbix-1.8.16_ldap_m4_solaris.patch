@@ -1,0 +1,11 @@
+--- zabbix-1.8.16/m4/ldap.m4	2013-01-16 23:10:08.000000000 +0900
++++ zabbix-1.8.16.new/m4/ldap.m4	2013-11-26 11:20:34.851077853 +0900
+@@ -72,7 +72,7 @@
+ 
+                LDAP_CPPFLAGS="-I$LDAP_INCDIR"
+                LDAP_LDFLAGS="-L$LDAP_LIBDIR"
+-               LDAP_LIBS="-lldap -llber $LDAP_LIBS"
++               LDAP_LIBS="-lldap-2.4 -llber-2.4 $LDAP_LIBS"
+ 
+                found_ldap="yes"
+                AC_DEFINE(HAVE_LDAP,1,[Define to 1 if LDAP should be enabled.])

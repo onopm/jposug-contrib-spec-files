@@ -10,18 +10,20 @@
 
 Name:		SFEnagios-plugins
 IPS_package_name:        diagnostic/nagios/plugins
-Version:	1.4.15
+Version:	2.2.1
 Summary:	Nagios plugins
 Group:		Applications/System
 License:	GPLv2
 URL:		http://www.nagios.org/
-Source:		%{sf_download}/nagiosplug/nagios-plugins-%{version}.tar.gz
+# Source:		%{sf_download}/nagiosplug/nagios-plugins-%{version}.tar.gz
+# Source:	http://assets.nagios.com/downloads/nagiosplugins/nagios-plugins-%{version}.tar.gz
+Source:         https://nagios-plugins.org/download/nagios-plugins-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 SUNW_BaseDir:   %{_basedir}
 %include default-depend.inc
 
 BuildRequires:	diagnostic/nagios/devel
-Requires:	diagnostic/nagios
+Requires:	diagnostic/nagios/common
 
 %description
 Provides Nagios plugins
@@ -31,8 +33,8 @@ IPS_package_name:        diagnostic/nagios/plugins/dig
 Group:		Applications/System
 Summary:	Provides check_dig plugin.
 SUNW_BaseDir:	/
-BuildRequires:  network/dns/bind
-Requires:       network/dns/bind
+# BuildRequires:  pkg:/network/dns/bind
+Requires:       pkg:/network/dns/bind
 
 %description dig
 Provides check_dig plugin.
@@ -42,8 +44,8 @@ IPS_package_name:        diagnostic/nagios/plugins/dns
 Group:		Applications/System
 Summary:	Provides check_dns plugin.
 SUNW_BaseDir:	/
-BuildRequires:  network/dns/bind
-Requires:       network/dns/bind
+# BuildRequires:  pkg:/network/dns/bind
+Requires:       pkg:/network/dns/bind
 
 %description dns
 Provides check_dns plugin.
@@ -122,6 +124,11 @@ do
     install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
 done
 
+# check_uptime works on Linux only and it is not builded on Solaris.
+# But check_uptime.c is installed because mode of check_uptime.c is 0755.
+# Then delete installed check_uptime.c
+# rm %{buildroot}%{_libdir}/nagios/plugins/check_uptime.c
+
 cd ../plugins-root
 for i in check_* pst3
 do
@@ -130,10 +137,14 @@ do
 done
 
 cd ../plugins-scripts
-for i in check_*
+for i in check_* utils.sh utils.pm
 do
-    [ -x $i ] && \
-    install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
+    if [ -x $i ]
+    then
+	install -m 0755 $i %{buildroot}%{_libdir}/nagios/plugins
+    else
+	install -m 0644 $i %{buildroot}%{_libdir}/nagios/plugins
+    fi
 done
 
 
@@ -141,7 +152,9 @@ done
 rm -rf %{buildroot}
 
 %files
-%defattr(-, root, bin)
+%defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
 %dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_apt
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_breeze
@@ -170,6 +183,7 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_ircd
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_ircd.pl
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_jabber
+%attr (0555, root, bin) %{_libdir}/nagios/plugins/check_ldap
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_load
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_log
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_log.sh
@@ -214,21 +228,65 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/negate
 %attr (4555, root, bin) %{_libdir}/nagios/plugins/pst3
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/urlize
+%attr (0644, root, bin) %{_libdir}/nagios/plugins/utils.sh
+%attr (0644, root, bin) %{_libdir}/nagios/plugins/utils.pm
 
 
 %files dig
 %defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
+%dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_dig
 
 %files dns
 %defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
+%dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_dns
 
 %files fping
 %defattr(-, root, sys)
+%dir %attr(0755, root, bin) %{_libdir}
+%dir %attr(0755, root, bin) %{_libdir}/nagios
+%dir %attr(0755, root, bin) %{_libdir}/nagios/plugins
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Wed Feb 14 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.1
+* Thu Feb 02 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.2.0
+* Fri Dec 16 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.4
+* Sat Nov 07 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.1
+* Wed Dec 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump  to 2.0.3
+* Tue May 27 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.2
+* Fri Apr 18 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.1
+* Wed Mar 05 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0
+* Mon Feb 17 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %defattr
+* Tue Jan 21 2014 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.5
+* Tue Jan 22 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %attr
+* Sun Dec 23 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify Requires and BuildRequires
+* Tue Jul 17 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.4.16
+
+* Fri Apr 13 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add utils.sh and utils.pm to %files
+
+* Tue Mar 27 2012 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add check_ldap to %files
+
 * Fri May 20 2011 - Fumihisa Tonaka <fumi.ftnk@gmail.com>
 - modify install section.
 - add make check_swap

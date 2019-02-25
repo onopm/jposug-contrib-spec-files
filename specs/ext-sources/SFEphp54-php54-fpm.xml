@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<service_bundle type="manifest" name="php54-fpm">
+	<service name="site/php54-fpm" type="service" version="1">
+		<single_instance/>
+		<dependency name="fs-local" grouping="require_all" restart_on="none" type="service">
+			<service_fmri value="svc:/system/filesystem/local"/>
+		</dependency>
+		<dependency name="network-service" grouping="require_all" restart_on="none" type="service">
+			<service_fmri value="svc:/network/service"/>
+		</dependency>
+		<dependency name="name-services" grouping="require_all" restart_on="refresh" type="service">
+			<service_fmri value="svc:/milestone/name-services"/>
+		</dependency>
+		<dependency name="identity" grouping="optional_all" restart_on="refresh" type="service">
+			<service_fmri value="svc:/system/identity:domain"/>
+		</dependency>
+		<dependency name="system-log" grouping="optional_all" restart_on="none" type="service">
+			<service_fmri value="svc:/system/system-log"/>
+		</dependency>
+		<instance name="default" enabled="false">
+			<dependency name="config-file" grouping="require_all" restart_on="refresh" type="path">
+				<service_fmri value="file://localhost/etc/php/5.4/php-fpm.conf"/>
+			</dependency>
+			<exec_method type="method" name="start" exec="/lib/svc/method/php54-fpm start" timeout_seconds="120"/>
+			<exec_method type="method" name="stop" exec="/lib/svc/method/php54-fpm stop" timeout_seconds="60"/>
+			<property_group name="startd" type="framework">
+				<propval name="ignore_error" type="astring" value="core,signal"/>
+			</property_group>
+			<property_group name="general" type="framework">
+				<propval name="action_authorization" type="astring" value="solaris.smf.manage.php54-fpm"/>
+			</property_group>
+			<template>
+				<common_name>
+					<loctext xml:lang="C">
+               PHP FastCGI Process Manager
+            </loctext>
+				</common_name>
+				<documentation>
+					<manpage title="php-fpm" section="8" manpath="/usr/php/5.4/man"/>
+				</documentation>
+			</template>
+		</instance>
+		<stability value="Unstable"/>
+	</service>
+</service_bundle>

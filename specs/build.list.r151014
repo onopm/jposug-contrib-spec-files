@@ -1,0 +1,11 @@
+#
+# マスタリングビルドマシンで、ビルドをさせるためには、このファイルにspecファイルの名前を追加すること。
+#
+SFEpostfix.spec
+SFElibdrm.spec
+SFExorg-x11-util-macros.spec
+SFExcb-proto.spec
+SFEpkg-config.spec
+SFElibpciaccess.spec
+SFEpopt.spec
+SFEOpenIPMI.spec

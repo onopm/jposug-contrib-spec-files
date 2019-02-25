@@ -1,0 +1,10 @@
+--- common.gypi.orig	2017-03-23 11:41:40.853384039 +0900
++++ common.gypi	2017-03-23 11:45:39.999914669 +0900
+@@ -323,6 +323,7 @@
+             'ldflags': [ '-m64', '-march=z196' ],
+           }],
+           [ 'OS=="solaris"', {
++            'defines': ['_GLIBCXX_USE_C99_MATH'],
+             'cflags': [ '-pthreads' ],
+             'ldflags': [ '-pthreads' ],
+             'cflags!': [ '-pthread' ],

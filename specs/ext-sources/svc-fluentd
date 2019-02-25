@@ -1,0 +1,57 @@
+#!/bin/sh
+
+. /lib/svc/share/smf_include.sh
+
+getproparg() {
+        val=`svcprop -p $1 $SMF_FMRI`
+        [ -n "$val" ] && echo $val
+}
+
+CONFIG=`getproparg fluentd/config`
+PIDFILE=`getproparg fluentd/pidfile`
+LOGFILE=`getproparg fluentd/logfile`
+
+if [ -z $SMF_FMRI ]; then
+	echo "Error: SMF framework variables are not initialized"
+	exit $SMF_EXIT_ERR
+fi
+
+if [ ! -f $CONFIG ]; then
+        echo "Error: fluentd/config property is incorrect"
+        exit $SMF_EXIT_ERR_CONFIG
+fi
+
+case "$1" in
+'start')
+	printf "Starting fluentd:"
+	export LIBEV_FLAGS=3
+	/usr/bin/fluentd -c ${CONFIG} -d ${PIDFILE} -o ${LOGFILE}
+        ;;
+
+'stop')
+    if [ -f $PIDFILE ]
+    then
+	printf "Stopping fluentd:"
+	kill `cat ${PIDFILE}`
+    else
+	printf "pid file not found: ${PIDFILE}"
+    fi
+    ;;
+
+'refresh')
+    if [ -f ${PIDFILE} ]
+    then
+	printf "refresh fluentd:"
+	kill -HUP `cat $PIDFILE`
+    else
+	printf "pid file not found: ${PIDFILE}"
+    fi
+    ;;
+
+*)
+        echo "Usage: $0 {start|stop|refresh}"
+        exit 1
+        ;;
+
+esac
+exit $SMF_EXIT_OK

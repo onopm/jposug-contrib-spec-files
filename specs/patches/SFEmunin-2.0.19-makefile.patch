@@ -1,0 +1,11 @@
+--- Makefile.dist	2014-03-05 07:29:56.704744413 +0900
++++ Makefile	2014-03-05 07:30:19.621312349 +0900
+@@ -285,7 +285,7 @@
+              -e 's|@@BASH@@|$(BASH)|g'                          \
+              -e 's|@@HASSETR@@|$(HASSETR)|g'                    \
+              --in-place                                         \
+-             ./master/blib/libdoc/Munin::Master::HTMLOld.3pm    \
++             ./master/blib/libdoc/Munin::Master::HTMLOld.3      \
+              ./master/blib/lib/Munin/Master/HTMLOld.pm          \
+              ./node/blib/sbin/munin-node-configure              \
+              ./node/blib/sbin/munin-node                        \

@@ -1,8 +1,6 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
@@ -19,7 +17,7 @@
 Summary:          A really Ruby Mail handler.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.7.0
+Version:          2.7.1
 License:          MIT
 URL:              https://github.com/mikel/mail
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -27,58 +25,6 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 %description
 A really Ruby Mail handler.
-
-%if %{build21}
-%if %{keep_dependency}
-%package 21-old
-IPS_package_name: library/ruby-21/%{gemname}
-Summary:          A really Ruby Mail handler.
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}-21
-
-%description 21-old
-A really Ruby Mail handler.
-%endif
-
-%package 21
-IPS_package_name: library/ruby/%{gemname}-21
-Summary:          A really Ruby Mail handler.
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# mini_mime >= 0.1.1
-Requires:         library/ruby/mini_mime-21
-# Requires:         library/ruby/%{gemname}
-
-%description 21
-A really Ruby Mail handler.
-%endif
-
-%if %{build22}
-%if %{keep_dependency}
-%package 22-old
-IPS_package_name: library/ruby-22/%{gemname}
-Summary:          A really Ruby Mail handler.
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}-22
-
-%description 22-old
-A really Ruby Mail handler.
-%endif
-
-%package 22
-IPS_package_name: library/ruby/%{gemname}-22
-Summary:          A really Ruby Mail handler.
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# mini_mime >= 0.1.1
-Requires:         library/ruby/mini_mime-22
-# Requires:         library/ruby/%{gemname}
-
-%description 22
-A really Ruby Mail handler.
-%endif
 
 %if %{build23}
 %if %{keep_dependency}
@@ -185,22 +131,13 @@ build_for() {
 
     ${bindir}/gem install --local \
         --no-env-shebang \
+        --no-document \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
-        --no-ri \
-        --no-rdoc \
         -V \
         --force %{SOURCE0}
 }
 
-%if %{build21}
-# ruby-21
-build_for 2.1
-%endif
-%if %{build22}
-# ruby-22
-build_for 2.2
-%endif
 %if %{build23}
 # ruby-23
 build_for 2.3
@@ -284,12 +221,6 @@ install_for() {
 
 }
 
-%if %{build21}
-install_for 2.1
-%endif
-%if %{build22}
-install_for 2.2
-%endif
 %if %{build23}
 install_for 2.3
 %endif
@@ -311,28 +242,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build21}
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*21
-%endif
-%endif
-
-%if %{build22}
-%files 22
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.2
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*22
-%endif
-%endif
 
 %if %{build23}
 %files 23
@@ -391,6 +300,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Feb 26 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.7.1, use '--no-document' instead of '--no-ri' and '--no-rdoc' and obsolete packages for ruby-21 and ruby-22
 * Tue Aug 28 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.7.0
 * Wed May 29 2013 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

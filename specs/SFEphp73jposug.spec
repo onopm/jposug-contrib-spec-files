@@ -7,14 +7,12 @@
 %define major_version    7.3
 %define prefix_name      SFEphp73jposug
 %define _basedir         %{_prefix}/%{major_version}
-%define zts              20160731
+%define zts              20180731
 
 %define oracle_solaris_11_2 %(egrep 'Oracle Solaris (11.[23]|12.0)' /etc/release > /dev/null ; if [ $? -eq 0 ]; then echo '1'; else echo '0'; fi)
 
-%define gcc_version %(pkg mediator -H gcc | awk '{print $3}')
-
 Name:                    %{prefix_name}
-IPS_package_name:        web/php-73jposug
+IPS_package_name:        jposug/web/php-73jposug
 Summary:                 php
 Version:                 %{tarball_version}
 License:                 PHP
@@ -26,28 +24,20 @@ Vendor:                  OpenSolaris Community
 SUNW_Copyright:          %{prefix_name}.copyright
 BuildRoot:               %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:  library/spell-checking/enchant
-#%if %{oracle_solaris_11_2}
-BuildRequires: library/libedit
-#%else
-#BuildRequires: SFEeditline
-#%endif
+BuildRequires: library/spell-checking/enchant
+BuildRequires: jposug/library/editline
 BuildRequires: developer/icu
-BuildRequires: developer/gcc-%{gcc_version}
-BuildRequires: SFElibzip
+BuildRequires: developer/gcc
+BuildRequires: jposug/library/libzip
 
 Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       text/tidy
 Requires:       library/libtool/libltdl
 Requires:       web/php-common
-#%if %{oracle_solaris_11_2}
-Requires:       library/libedit
-#%else
-#Requires:       SFEeditline
-#%endif
+Requires:       jposug/library/editline
 Requires:       library/icu
 Requires:       system/library/gcc/gcc-runtime
-Requires:		SFElibzip
+Requires:       jposug/library/libzip
 
 %description
 PHP
@@ -69,8 +59,8 @@ export CC=/usr/bin/gcc
 export CXX=/usr/bin/g++
 export CFLAGS="-std=gnu99 -m64 -O2"
 export CPPFLAGS="-std=gnu99 -m64 -O2 -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I../CPPFLAGSTEST"
-export LDFLAGS="-L/lib/%{_arch64} -L/usr/lib/%{_arch64} -R/lib/%{_arch64} -R/usr/lib/%{_arch64} -R%{_basedir}/lib/extensions/no-debug-non-zts-%{zts}"
-
+export LDFLAGS="-L/opt/jposug/lib -L/lib/%{_arch64} -L/usr/lib/%{_arch64} -R/opt/jposug/lib -R/lib/%{_arch64} -R/usr/lib/%{_arch64} -R%{_basedir}/lib/extensions/no-debug-non-zts-%{zts}"
+export PKG_CONFIG_PATH=/opt/jposug/lib/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig
 
 CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
 if test "x$CPUS" = "x" -o $CPUS = 0; then
@@ -442,8 +432,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
+* Tue Feb 26 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix IPS package name, use jposug/library/editline and jposug/library/libzip, fix %zts
 * Thu Feb 14 2019 - <me@tsundoku.ne.jp>
-^ bump to 7.3.2
+- bump to 7.3.2
 * Sat Jan 19 2018 - <me@tsundoku.ne.jp>
 - bump to 7.3.1
 * Sun Dec 23 2018 - <me@tsundoku.ne.jp>

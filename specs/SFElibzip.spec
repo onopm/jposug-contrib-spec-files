@@ -1,139 +1,73 @@
-#
-# spec file for package SFElibzip
-#
-# includes module(s): libzip
-#
-# This file and all modifications and additions to the pristine
-# package are under the same license as the package itself.
-#
-
 %include Solaris.inc
 %include packagenamemacros.inc
 
-%ifarch amd64 sparcv9
-%include arch64.inc
-%use libzip_64 = libzip.spec
-%endif
+%define _prefix /opt/jposug
+%define tarball_version 1.5.1
+%define tarball_name libzip
+%define src_url https://libzip.org/download/
 
-%include base.inc
-%use libzip = libzip.spec
+Name:             SFElibzip
+Summary:          A C library for reading, creating, and modifying zip archives.
+Version:          %{tarball_version}
+IPS_package_name: jposug/library/libzip
+License:          3-clause BSD license
+Source:           %{src_url}/%{tarball_name}-%{tarball_version}.tar.xz
+BuildRoot:        %{_tmppath}/%{name}-%{version}-build
+SUNW_Copyright:   %{name}.copyright
 
-Name:		SFElibzip
-IPS_Package_Name:	library/libzip
-Summary:        C library for reading, creating, and modifying zip archives
-Group:		Applications/System Utilities
-Version:	%{libzip.version}
-URL:            http://www.nih.at/libzip/index.html
-Source:         http://www.nih.at/libzip/libzip-%{version}.tar.xz
-License:        BSD
-SUNW_Copyright:	%{license}.copyright
-SUNW_BaseDir:	%{_basedir}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-build
-
-%include default-depend.inc
-
-#vendor cmake in Solaris < 11.4 is too old for this package
-#assume vendor cmake is new enough on non-Oracle distros
-%if %{solaris11}
-%if %{s110400}
-BuildRequires: %{pnm_buildrequires_SUNWcmake_devel}
-%else
-BuildRequires: SFEcmake >= 3.0.2
-%endif
-%else
-BuildRequires: %{pnm_buildrequires_SUNWcmake_devel}
-%endif
-
-%package devel
-Summary:	%{summary} - development files
-SUNW_BaseDir:	%{_basedir}
-%include default-depend.inc
-
-%description
-libzip is a C library for reading, creating, and modifying zip archives. Files
-can be added from data buffers, files, or compressed data copied directly from 
-other zip archives. Changes made without closing the archive can be reverted. 
-The API is documented by man pages.
+BuildRequires: jposug/developer/build/cmake
 
 %prep
-rm -rf %name-%version
-mkdir %name-%version
-%ifarch amd64 sparcv9
-mkdir %name-%version/%_arch64
-%libzip_64.prep -d %name-%version/%_arch64
-%endif
-
-mkdir %name-%version/%{base_arch}
-%libzip.prep -d %name-%version/%{base_arch}
+%setup -n %{tarball_name}-%{version}
 
 %build
 
-%ifarch amd64 sparcv9
-%libzip_64.build -d %name-%version/%_arch64
+CPUS=`/usr/sbin/psrinfo | grep on-line | wc -l | tr -d ' '`
+if test "x$CPUS" = "x" -o $CPUS = 0; then
+     CPUS=1
+fi
+
+%ifarch sparc
+%define target sparc-sun-solaris
+%else
+%define target i386-sun-solaris
 %endif
 
-%libzip.build -d %name-%version/%{base_arch}
+export CC=cc
+export CFLAGS="-m64 -i -xO4 -xspace -xstrconst -Kpic -xregs=no%frameptr -xCC"
+
+mkdir build
+cd build
+/opt/jposug/bin/cmake \
+    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    -DBUILD_SHARED_LIBS=on \
+    ..
+make -j$CPUS
+make test
 
 %install
-rm -rf $RPM_BUILD_ROOT
-%ifarch amd64 sparcv9
-%libzip_64.install -d %name-%version/%_arch64
-%endif
-
-%libzip.install -d %name-%version/%{base_arch}
-
-mkdir -p %{buildroot}/%{_bindir}/%{base_isa}
-for binary in `cd %{buildroot}/%{_bindir}; ls -1d zip*`
-  do
-  mv %{buildroot}/%{_bindir}/$binary %{buildroot}/%{_bindir}/%{base_isa}/
-  ln -f -s /usr/lib/isaexec %{buildroot}/%{_bindir}/$binary
-done #for binary
+[ -d $RPM_BUILD_ROOT ] && rm -rf ${RPM_BUILD_ROOT}
+cd build
+make install DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr (-, root, bin)
-%ifarch amd64 sparcv9
-%{_bindir}/%{base_isa}/*
-%{_bindir}/%{_arch64}/*
-%hard %{_bindir}/ziptool
-%hard %{_bindir}/zipmerge
-%hard %{_bindir}/zipcmp
-#those are symlinks to the binaries above
-%else
-%{_bindir}/*
-%endif
-%dir %attr (0755, root, sys) %{_datadir}
-%dir %attr(0755, root, bin) %{_mandir}
-%dir %attr(0755, root, bin) %{_mandir}/man1
-%dir %attr(0755, root, bin) %{_mandir}/man3
-%{_mandir}/man*/*
-
-%dir %attr (0755, root, bin) %{_libdir}
-%{_libdir}/libzip.so*
-%ifarch amd64 sparcv9
-%{_libdir}/%{_arch64}/libzip.so*
-%endif
-
-%files devel
-%defattr (-, root, bin)
-%{_includedir}/*
-#%{_libdir}/libzip/include/*
-#%ifarch amd64 sparcv9
-#%{_libdir}/%{_arch64}/libzip/include/*
-#%endif
-%dir %attr (0755, root, other) %{_libdir}/pkgconfig
-%{_libdir}/pkgconfig/libzip.pc
-%ifarch amd64 sparcv9
-%dir %attr (0755, root, other) %{_libdir}/%{_arch64}/pkgconfig
-%{_libdir}/%{_arch64}/pkgconfig/libzip.pc
-%endif
+%dir %attr(0755, root, bin) %{_prefix}
+%dir %attr(0755, root, bin) %{_prefix}/bin
+%dir %attr(0755, root, bin) %{_prefix}/lib
+%dir %attr(0755, root, other) %{_prefix}/lib/pkgconfig
+%dir %attr(0755, root, bin) %{_prefix}/include
+%dir %attr(0755, root, sys) %{_prefix}/share
+%dir %attr(0755, root, bin) %{_prefix}/share/man
+%{_prefix}/bin/*
+%{_prefix}/include/*
+%{_prefix}/lib/libzip*
+%{_prefix}/lib/pkgconfig/*
+%{_prefix}/share/man/*
 
 %changelog
-* Sun Dec 23 2018 - tsundoku
-- add conditional cmake dependency
-* Fri Dec 11 2015 - Alex Viskovatoff <herzen@imap.cc>
-- update to 1.0.1
-* Sun Feb 10 2013 - Thomas Wagner
-- initial spec
+* Mon Feb 25 2019 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- initial commit

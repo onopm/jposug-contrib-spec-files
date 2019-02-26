@@ -78,7 +78,7 @@
 
 #Packages renamed from 11.3 -> 11.4
 #Leave osbuild at 175 to not interfere with the above conditionals
-%if %{s114}
+%if %{s110400}
 %include packagenames.define-11.4.inc
 %endif
 

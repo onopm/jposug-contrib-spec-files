@@ -7,7 +7,7 @@
 %include packagenamemacros.inc
 
 %define _prefix /opt/jposug
-%define	tarball_version	0.1.7
+%define	tarball_version	0.2.1
 %define	tarball_name yaml
 %define	src_url	http://pyyaml.org/download/libyaml
 
@@ -72,5 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/include/*
 
 %changelog
+* Sat Mar 02 2019 <me@tsundoku.ne.jp>
+- bump to 0.2.1
 * Fri Feb 08 2019 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

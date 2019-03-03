@@ -11,7 +11,7 @@
 %define _prefix /usr/postgres
 %define _var_prefix /var/postgres
 %define tarball_name     postgresql
-%define tarball_version  10.5
+%define tarball_version  10.7
 %define major_version	 10
 %define prefix_name      SFEpostgres-10
 %define _basedir         %{_prefix}/%{major_version}
@@ -395,9 +395,9 @@ rm -f $RPM_BUILD_ROOT%{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/plpy
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-#%actions server
-#group groupname="postgres"
-#user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" password=NP group="postgres"
+%actions -n %{prefix_name}-server
+group groupname="postgres"
+user ftpuser=false gcos-field="PostgreSQL Reserved UID" username="postgres" password=NP group="postgres"
 
 %files
 %defattr (-, root, bin)
@@ -1194,6 +1194,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{major_version}/share/extension/pg_stat_statements--1.3--1.4.sql
 %{_prefix}/%{major_version}/share/extension/pg_stat_statements--1.4.sql
 %{_prefix}/%{major_version}/share/extension/pg_stat_statements--1.4--1.5.sql
+%{_prefix}/%{major_version}/share/extension/pg_stat_statements--1.5--1.6.sql
 %{_prefix}/%{major_version}/share/extension/pg_stat_statements.control
 %{_prefix}/%{major_version}/share/extension/pg_trgm--1.0--1.1.sql
 %{_prefix}/%{major_version}/share/extension/pg_trgm--1.1--1.2.sql
@@ -1293,6 +1294,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0644, root, other) %{_prefix}/%{major_version}/share/locale/*/LC_MESSAGES/pg_archivecleanup-%{major_version}.mo
 
 %changelog
+* Sat Mar 02 2019 - <me@tsundoku.ne.jp>
+- bump to 10.7
+- add missing file pg_stat_statements--1.5--1.6.sql to %files
+- uncomment user/group creation and set to valid package name
 * Fri Aug 10 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 10.5 and use jposug/library/editline
 * Mon May 14 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

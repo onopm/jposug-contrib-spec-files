@@ -1,4 +1,4 @@
-%define version 2.6.0
+%define version 2.6.2
 %define major_version 2.6
 %define unmangled_version 2.6.0
 %define version_suffix 26jposug
@@ -125,6 +125,8 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Thu Mar 14 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.6.2
 * Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix source1
 - initial commit

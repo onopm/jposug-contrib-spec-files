@@ -1,4 +1,4 @@
-%define version 2.6.0
+%define version 2.6.2
 %define major_version 2.6
 %define unmangled_version 2.6.0
 %define version_suffix 26jposug
@@ -125,18 +125,8 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Thu Mar 14 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.6.2
 * Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix source1
-* Wed Sep 20 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- fix libdir and add LDFLAGS
-- bump to 2.4.2
-* Thu Mar 23 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 2.4.1
-* Wed Mar 08 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- modify to build on SPARC 
-* Wed Dec 28 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- add '-std=gnu99' to CFALGS in rbconfig.rb
-* Tue Dec 27 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
-- bump to 2.4.0
-* Fri Nov 18 2016 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

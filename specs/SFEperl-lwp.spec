@@ -19,8 +19,8 @@
 Summary:               The World-Wide Web library for Perl
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               6.33
-IPS_component_version: 6.33
+Version:               6.38
+IPS_component_version: 6.38
 License:               perl_5
 URL:                   https://metacpan.org/pod/libwww::perl
 Source0:               http://cpan.metacpan.org/authors/id/O/OA/OALDERS/libwww-perl-%{version}.tar.gz
@@ -792,6 +792,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Apr 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 6.38
 * Fri May 25 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 6.33 and build packages for perl-5{22,26{,jposug}}
 * Sun Nov 15 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

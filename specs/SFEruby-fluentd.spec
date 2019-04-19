@@ -6,7 +6,7 @@
 %define geminstdir25 %{gemdir25}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 1.3.3
+%define tarball_version 1.4.2
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -127,6 +127,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Wed Apr 10 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.4.2
 * Tue Feb 12 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use tzinfo < 2.0.0
 - bump to 1.3.3 and use Ruby 2.5

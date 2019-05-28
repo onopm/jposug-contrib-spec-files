@@ -40,7 +40,7 @@ BuildRequires:    library/perl-5/encode-584
 BuildRequires:    library/perl-5/pod-simple-584
 %endif
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-584
 Requires:         library/perl-5/pod-simple-584
 
@@ -54,10 +54,12 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          Convert POD data to various other formats
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
+%if %{enable_test}
 BuildRequires:    library/perl-5/encode-510
 BuildRequires:    library/perl-5/pod-simple-510
+%endif
 Requires:         runtime/perl-510 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-510
 Requires:         library/perl-5/pod-simple-510
 
@@ -76,7 +78,7 @@ BuildRequires:    library/perl-5/encode-512
 BuildRequires:    library/perl-5/pod-simple-512
 %endif
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-512
 Requires:         library/perl-5/pod-simple-512
 
@@ -90,13 +92,13 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          Convert POD data to various other formats
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 %if %{enable_test}
 BuildRequires:    library/perl-5/encode-516
 BuildRequires:    library/perl-5/pod-simple-516
 %endif
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-516
 Requires:         library/perl-5/pod-simple-516
 
@@ -115,7 +117,7 @@ BuildRequires:    library/perl-5/encode-522
 BuildRequires:    library/perl-5/pod-simple-522
 %endif
 Requires:         runtime/perl-522 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-522
 Requires:         library/perl-5/pod-simple-522
 
@@ -134,7 +136,7 @@ BuildRequires:    library/perl-5/encode-526
 BuildRequires:    library/perl-5/pod-simple-526
 %endif
 Requires:         runtime/perl-526 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-526
 Requires:         library/perl-5/pod-simple-526
 
@@ -153,7 +155,7 @@ BuildRequires:    library/perl-5/encode-526jposug
 BuildRequires:    library/perl-5/pod-simple-526jposug
 %endif
 Requires:         runtime/perl-526jposug = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-526jposug
 Requires:         library/perl-5/pod-simple-526jposug
 
@@ -167,6 +169,8 @@ Convert POD data to various other formats
 
 %build
 build_with_makefile.pl_for() {
+    [ -f xdefine ] && rm -f xdefine
+    [ -d blib ] && rm -rf blib
     test=$2
     if [ "x${1}" = 'x5.26jposug' ]
     then
@@ -470,6 +474,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue May 28 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- to avoid conflict, delete 'Require library/perl-5/%{ips_cpan_name}'
 * Tue Jun 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - delete some files to avoid conflict with files included in solaris/runtime/perl-5*
 * Mon May 21 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -19,8 +19,8 @@
 Summary:               Create a module Makefile
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               7.34
-IPS_component_version: 7.34
+Version:               7.36
+IPS_component_version: 7.36
 License:               perl_5
 URL:                   https://metacpan.org/pod/ExtUtils::MakeMaker
 Source0:               http://cpan.metacpan.org/authors/id/B/BI/BINGOS/ExtUtils-MakeMaker-%{version}.tar.gz
@@ -41,7 +41,7 @@ BuildRequires:    library/perl-5/pathtools-584
 BuildRequires:    library/perl-5/podlators-584
 %endif
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-584
 Requires:         library/perl-5/encode-584
 Requires:         library/perl-5/pathtools-584
@@ -56,12 +56,14 @@ Create a module Makefile
 IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          Create a module Makefile
 BuildRequires:    runtime/perl-510 = *
+%if %{enable_test}
 BuildRequires:    library/perl-5/data-dumper-510
 BuildRequires:    library/perl-5/encode-510
 BuildRequires:    library/perl-5/pathtools-510
 BuildRequires:    library/perl-5/podlators-510
+%endif
 Requires:         runtime/perl-510 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-510
 Requires:         library/perl-5/encode-510
 Requires:         library/perl-5/pathtools-510
@@ -83,7 +85,7 @@ BuildRequires:    library/perl-5/pathtools-512
 BuildRequires:    library/perl-5/podlators-512
 %endif
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-512
 Requires:         library/perl-5/encode-512
 Requires:         library/perl-5/pathtools-512
@@ -98,7 +100,7 @@ Create a module Makefile
 IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          Create a module Makefile
 BuildRequires:    runtime/perl-516 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 %if %{enable_test}
 BuildRequires:    library/perl-5/data-dumper-516
 BuildRequires:    library/perl-5/encode-516
@@ -106,7 +108,7 @@ BuildRequires:    library/perl-5/pathtools-516
 BuildRequires:    library/perl-5/podlators-516
 %endif
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-516
 Requires:         library/perl-5/encode-516
 Requires:         library/perl-5/pathtools-516
@@ -128,7 +130,7 @@ BuildRequires:    library/perl-5/pathtools-522
 BuildRequires:    library/perl-5/podlators-522
 %endif
 Requires:         runtime/perl-522 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-522
 Requires:         library/perl-5/encode-522
 Requires:         library/perl-5/pathtools-522
@@ -150,7 +152,7 @@ BuildRequires:    library/perl-5/pathtools-526
 BuildRequires:    library/perl-5/podlators-526
 %endif
 Requires:         runtime/perl-526 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-526
 Requires:         library/perl-5/encode-526
 Requires:         library/perl-5/pathtools-526
@@ -172,7 +174,7 @@ BuildRequires:    library/perl-5/pathtools-526jposug
 BuildRequires:    library/perl-5/podlators-526jposug
 %endif
 Requires:         runtime/perl-526jposug = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/data-dumper-526jposug
 Requires:         library/perl-5/encode-526jposug
 Requires:         library/perl-5/pathtools-526jposug
@@ -188,6 +190,8 @@ Create a module Makefile
 
 %build
 build_with_makefile.pl_for() {
+    [ -f xdefine ] && rm -f xdefine
+    [ -d blib ] && rm -rf blib
     test=$2
     if [ "x${1}" = 'x5.26jposug' ]
     then
@@ -309,6 +313,7 @@ modify_man_dir() {
         then
             rmdir $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}
         fi
+
     fi
 }
 
@@ -493,6 +498,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue May 28 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.36
 * Mon Jun 18 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - add '--no-run-if-empty' to xargs
 * Tue Jun 05 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

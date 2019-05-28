@@ -6,6 +6,7 @@
 %define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define build526 %( if [ -x /usr/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526jposug %( if [ -x /opt/jposug/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 
 %define include_executable 0
@@ -18,8 +19,8 @@
 Summary:               Perl interface for cyclic redundancy check generation
 Name:                  SFEperl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               1.6
-IPS_component_version: 1.6
+Version:               1.7
+IPS_component_version: 1.7
 License:               unrestricted
 URL:                   https://metacpan.org/pod/String::CRC32
 Source0:               http://cpan.metacpan.org/authors/id/L/LE/LEEJO/String-CRC32-%{version}.tar.gz
@@ -37,7 +38,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-584
 %if %{enable_test}
 %endif
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 584
 Perl interface for cyclic redundancy check generation
@@ -49,8 +50,10 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          Perl interface for cyclic redundancy check generation
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
+%if %{enable_test}
+%endif
 Requires:         runtime/perl-510 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 510
 Perl interface for cyclic redundancy check generation
@@ -65,7 +68,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-512
 %if %{enable_test}
 %endif
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 512
 Perl interface for cyclic redundancy check generation
@@ -77,11 +80,11 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          Perl interface for cyclic redundancy check generation
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 %if %{enable_test}
 %endif
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 516
 Perl interface for cyclic redundancy check generation
@@ -96,7 +99,7 @@ BuildRequires:    library/perl-5/extutils-makemaker-522
 %if %{enable_test}
 %endif
 Requires:         runtime/perl-522 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 522
 Perl interface for cyclic redundancy check generation
@@ -111,9 +114,24 @@ BuildRequires:    library/perl-5/extutils-makemaker-526
 %if %{enable_test}
 %endif
 Requires:         runtime/perl-526 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 
 %description 526
+Perl interface for cyclic redundancy check generation
+%endif
+
+%if %{build526jposug}
+%package 526jposug
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526jposug
+Summary:          Perl interface for cyclic redundancy check generation
+BuildRequires:    runtime/perl-526jposug = *
+BuildRequires:    library/perl-5/extutils-makemaker-526jposug
+%if %{enable_test}
+%endif
+Requires:         runtime/perl-526jposug = *
+# Requires:         library/perl-5/%{ips_cpan_name}
+
+%description 526jposug
 Perl interface for cyclic redundancy check generation
 %endif
 
@@ -123,12 +141,22 @@ Perl interface for cyclic redundancy check generation
 
 %build
 build_with_makefile.pl_for() {
-    perl_ver=$1
+    [ -f xdefine ] && rm -f xdefine
+    [ -d blib ] && rm -rf blib
     test=$2
-    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    if [ "x${1}" = 'x5.26jposug' ]
+    then
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
-    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
-    site_dir="/usr/perl5/site_perl/${perl_ver}"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
 
     export PERL5LIB=${vendor_dir}
 %if %{install_to_site_dir}
@@ -137,25 +165,39 @@ build_with_makefile.pl_for() {
     perl_libdir="${vendor_dir}"
 %endif
 
-    ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
+    ${bindir}/perl Makefile.PL PREFIX=${prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${perl_libdir}
 
-    export CC='cc -m32'
-    export LD='cc -m32'
-    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null && bin64=0 || bin64=1
+    if [ ${bin64} -eq 0 ]
+    then
+        export CC='cc -m32'
+        export LD='cc -m32'
+    else
+        export CC='cc -m64'
+        export LD='cc -m64'
+    fi
     make CC="${CC}" LD="${LD}"
     [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
 build_with_build.pl_for() {
-    perl_ver=$1
     test=$2
-    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    if [ "x${1}" = 'x5.26jposug' ]
+    then
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
-    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
-    site_dir="/usr/perl5/site_perl/${perl_ver}"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
 
 %if %{install_to_site_dir}
     installdir='site'
@@ -173,38 +215,54 @@ build_with_build.pl_for() {
 }
 
 modify_bin_dir() {
-    perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/bin ]
+    if [ "x${1}" = 'x5.26jposug' ]
     then
-      [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
-      mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+
+    if [ -d $RPM_BUILD_ROOT/${prefix}/bin ]
+    then
+      [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver} ] || mkdir -p ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}
+      mv $RPM_BUILD_ROOT${prefix}/bin $RPM_BUILD_ROOT/${prefix}/perl5/${perl_ver}/bin
     fi
       
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin ]
+    if [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin ]
     then
-        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
+        for i in ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!${prefix}/perl5/${perl_ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
 }
 
 modify_man_dir() {
-    perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man ]
+    if [ "x${1}" = 'x5.26jposug' ]
+    then
+        perl_ver=$(echo $1 | sed -e 's/jposug//')
+        prefix=/opt/jposug
+    else
+        perl_ver=$1
+        prefix=/usr
+    fi
+
+    if [ -d $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man ]
     then
         if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
         then
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         else
             mkdir -p $RPM_BUILD_ROOT%{_datadir}
-            mv $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            mv $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         fi
         if [ %{include_executable} -eq 0 ]
         then
-            rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+            rmdir $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}
         fi
 
     fi
@@ -249,12 +307,28 @@ build_for 5.22
 build_for 5.26
 %endif
 
+%if %{build526jposug}
+build_for 5.26jposug
+%endif
+
 %install
 if [ -d $RPM_BUILD_ROOT%{_prefix}/man ]
 then
     mkdir -p $RPM_BUILD_ROOT%{_datadir}
     mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 fi
+
+if [ -d $RPM_BUILD_ROOT/opt/jposug/man ]
+then
+    if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
+    then
+        rm -rf $RPM_BUILD_ROOT/opt/jposug/man
+    else
+        [ -d $RPM_BUILD_ROOT%{_datadir} ] || mkdir -p $RPM_BUILD_ROOT%{_datadir}
+        mv $RPM_BUILD_ROOT/opt/jposug/man $RPM_BUILD_ROOT%{_datadir}
+    fi
+fi
+
 if [ -d $RPM_BUILD_ROOT%{_datadir}/man/man3 ]
 then
     mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
@@ -351,7 +425,23 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build526jposug}
+%files 526jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+%if %{install_to_site_dir}
+/opt/jposug/perl5/site_perl/5.26
+%else
+/opt/jposug/perl5/vendor_perl/5.26
+%endif
+%if %{include_executable}
+/opt/jposug/perl5/5.26
+%endif
+%endif
+
 %changelog
+* Tue May 28 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7 and add package for perl-526jposug
 * Fri May 11 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.6 and build packages for perl-52{2,6}
 * Sat Dec 05 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

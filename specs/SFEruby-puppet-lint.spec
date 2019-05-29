@@ -1,8 +1,6 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
@@ -14,10 +12,12 @@
 %define gemname puppet-lint
 %define sfe_gemname puppet-lint
 
+# Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
+
 Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.3.3
+Version:          2.3.6
 License:          MIT License
 URL:              https://github.com/rodjek/puppet-lint/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -26,58 +26,6 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 %description
 Checks your Puppet manifests against the Puppetlabs
   style guide and alerts you to any discrepancies.
-
-%if %{build21}
-%if %{keep_dependency}
-%package 21-old
-IPS_package_name: library/ruby-21/%{gemname}
-Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}-21
-
-%description 21-old
-Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
-%endif
-
-%package 21
-IPS_package_name: library/ruby/%{gemname}-21
-Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-# Requires:         library/ruby/%{gemname}
-
-%description 21
-Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
-%endif
-
-%if %{build22}
-%if %{keep_dependency}
-%package 22-old
-IPS_package_name: library/ruby-22/%{gemname}
-Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}-22
-
-%description 22-old
-Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
-%endif
-
-%package 22
-IPS_package_name: library/ruby/%{gemname}-22
-Summary:          Checks your Puppet manifests against the Puppetlabs style guide and alerts you to any discrepancies.
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-# Requires:         library/ruby/%{gemname}
-
-%description 22
-Checks your Puppet manifests against the Puppetlabs
-  style guide and alerts you to any discrepancies.
-%endif
 
 %if %{build23}
 %if %{keep_dependency}
@@ -180,22 +128,13 @@ build_for() {
 
     ${bindir}/gem install --local \
         --no-env-shebang \
+        --no-document \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
-        --no-ri \
-        --no-rdoc \
         -V \
         --force %{SOURCE0}
 }
 
-%if %{build21}
-# ruby-21
-build_for 2.1
-%endif
-%if %{build22}
-# ruby-22
-build_for 2.2
-%endif
 %if %{build23}
 # ruby-23
 build_for 2.3
@@ -279,12 +218,6 @@ install_for() {
 
 }
 
-%if %{build21}
-install_for 2.1
-%endif
-%if %{build22}
-install_for 2.2
-%endif
 %if %{build23}
 install_for 2.3
 %endif
@@ -306,28 +239,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build21}
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*21
-%endif
-%endif
-
-%if %{build22}
-%files 22
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.2
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*22
-%endif
-%endif
 
 %if %{build23}
 %files 23
@@ -386,6 +297,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed May 29 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.6 and remove packages for ruby-{21,22}
 * Tue Mar 06 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for ruby-26jposug
 * Fri Dec 29 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

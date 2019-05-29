@@ -1,22 +1,21 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build21 %( if [ -x /usr/ruby/2.1/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build22 %( if [ -x /usr/ruby/2.2/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build25jposug %( if [ -x /opt/jposug/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define generate_executable 0
+%define build26jposug %( if [ -x /opt/jposug/ruby/2.6/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define generate_executable 1
 %define keep_dependency 0
 
 %define gemname nokogiri
 %define sfe_gemname nokogiri
 
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
+Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.8.1
+Version:          1.10.3
 License:          MIT
 URL:              http://nokogiri.org
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -27,87 +26,14 @@ Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
 Nokogiri's many features is the ability to search documents via XPath
 or CSS3 selectors.
 
-%if %{build21}
-%if %{keep_dependency}
-%package 21-old
-IPS_package_name: library/ruby-21/%{gemname}
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
-BuildRequires:    runtime/ruby-21 = *
-Requires:         runtime/ruby-21 = *
-Requires:         library/ruby/%{gemname}-21
-
-%description 21-old
-Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
-Nokogiri's many features is the ability to search documents via XPath
-or CSS3 selectors.
-%endif
-
-%package 21
-IPS_package_name: library/ruby/%{gemname}-21
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
-BuildRequires:    runtime/ruby-21 = *
-BuildRequires:    library/ruby/mini_portile2-21 >= 2.3.0
-BuildRequires:    library/libxml2
-BuildRequires:    library/libxslt
-Requires:         runtime/ruby-21 = *
-# mini_portile2 ~> 2.3.0
-Requires:         library/ruby/mini_portile2-21 >= 2.3.0
-Requires:         library/ruby/%{gemname}
-Requires:         library/libxml2
-Requires:         library/libxslt
-
-%description 21
-Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
-Nokogiri's many features is the ability to search documents via XPath
-or CSS3 selectors.
-%endif
-
-%if %{build22}
-%if %{keep_dependency}
-%package 22-old
-IPS_package_name: library/ruby-22/%{gemname}
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
-BuildRequires:    runtime/ruby-22 = *
-Requires:         runtime/ruby-22 = *
-Requires:         library/ruby/%{gemname}-22
-Requires:         library/libxml2
-
-%description 22-old
-Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
-Nokogiri's many features is the ability to search documents via XPath
-or CSS3 selectors.
-%endif
-
-%package 22
-IPS_package_name: library/ruby/%{gemname}-22
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
-BuildRequires:    runtime/ruby-22 = *
-BuildRequires:    library/ruby/mini_portile2-22 >= 2.3.0
-BuildRequires:    library/libxml2
-BuildRequires:    library/libxslt
-Requires:         runtime/ruby-22 = *
-# mini_portile2 ~> 2.3.0
-Requires:         library/ruby/mini_portile2-22 >= 2.3.0
-Requires:         library/ruby/%{gemname}
-Requires:         library/libxml2
-Requires:         library/libxslt
-
-%description 22
-Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
-Nokogiri's many features is the ability to search documents via XPath
-or CSS3 selectors.
-%endif
-
 %if %{build23}
 %if %{keep_dependency}
 %package 23-old
 IPS_package_name: library/ruby-23/%{gemname}
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
+Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser
 BuildRequires:    runtime/ruby-23 = *
 Requires:         runtime/ruby-23 = *
-Requires:         library/ruby/%{gemname}-23
-Requires:         library/libxml2
-Requires:         library/libxslt
+# Requires:         library/ruby/%{gemname}-23
 
 %description 23-old
 Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
@@ -117,17 +43,12 @@ or CSS3 selectors.
 
 %package 23
 IPS_package_name: library/ruby/%{gemname}-23
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
+Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser
 BuildRequires:    runtime/ruby-23 = *
-BuildRequires:    library/ruby/mini_portile2-23 >= 2.3.0
-BuildRequires:    library/libxml2
-BuildRequires:    library/libxslt
 Requires:         runtime/ruby-23 = *
-# mini_portile2 ~> 2.3.0
-Requires:         library/ruby/mini_portile2-23 >= 2.3.0
-Requires:         library/ruby/%{gemname}
-Requires:         library/libxml2
-Requires:         library/libxslt
+# mini_portile2 ~> 2.4.0
+Requires:         library/ruby/mini_portile2-23
+# Requires:         library/ruby/%{gemname}
 
 %description 23
 Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
@@ -139,14 +60,12 @@ or CSS3 selectors.
 
 %package 23jposug
 IPS_package_name: jposug/library/ruby/%{gemname}-23jposug
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
+Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser
 BuildRequires:    jposug/runtime/ruby-23jposug = *
-BuildRequires:    jposug/library/ruby/mini_portile2-23jposug >= 2.3.0
 Requires:         jposug/runtime/ruby-23jposug = *
-# mini_portile2 ~> 2.3.0
-Requires:         jposug/library/ruby/mini_portile2-23jposug >= 2.3.0
-Requires:         library/ruby/%{gemname}
-Requires:         library/libxml2
+# mini_portile2 ~> 2.4.0
+Requires:         jposug/library/ruby/mini_portile2-23jposug
+# Requires:         library/ruby/%{gemname}
 
 %description 23jposug
 Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
@@ -158,17 +77,12 @@ or CSS3 selectors.
 
 %package 24jposug
 IPS_package_name: jposug/library/ruby/%{gemname}-24jposug
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
+Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser
 BuildRequires:    jposug/runtime/ruby-24jposug = *
-BuildRequires:    jposug/library/ruby/mini_portile2-24jposug >= 2.3.0
-BuildRequires:    library/libxml2
-BuildRequires:    library/libxslt
 Requires:         jposug/runtime/ruby-24jposug = *
-# mini_portile2 ~> 2.3.0
-Requires:         jposug/library/ruby/mini_portile2-24jposug >= 2.3.0
-Requires:         library/ruby/%{gemname}
-Requires:         library/libxml2
-Requires:         library/libxslt
+# mini_portile2 ~> 2.4.0
+Requires:         jposug/library/ruby/mini_portile2-24jposug
+# Requires:         library/ruby/%{gemname}
 
 %description 24jposug
 Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
@@ -180,19 +94,31 @@ or CSS3 selectors.
 
 %package 25jposug
 IPS_package_name: jposug/library/ruby/%{gemname}-25jposug
-Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser. 
+Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser
 BuildRequires:    jposug/runtime/ruby-25jposug = *
-BuildRequires:    jposug/library/ruby/mini_portile2-25jposug >= 2.3.0
-BuildRequires:    library/libxml2
-BuildRequires:    library/libxslt
 Requires:         jposug/runtime/ruby-25jposug = *
-# mini_portile2 ~> 2.3.0
-Requires:         jposug/library/ruby/mini_portile2-25jposug >= 2.3.0
-Requires:         library/ruby/%{gemname}
-Requires:         library/libxml2
-Requires:         library/libxslt
+# mini_portile2 ~> 2.4.0
+Requires:         jposug/library/ruby/mini_portile2-25jposug
+# Requires:         library/ruby/%{gemname}
 
 %description 25jposug
+Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
+Nokogiri's many features is the ability to search documents via XPath
+or CSS3 selectors.
+%endif
+
+%if %{build26jposug}
+
+%package 26jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-26jposug
+Summary:          Nokogiri is an HTML, XML, SAX, and Reader parser
+BuildRequires:    jposug/runtime/ruby-26jposug = *
+Requires:         jposug/runtime/ruby-26jposug = *
+# mini_portile2 ~> 2.4.0
+Requires:         jposug/library/ruby/mini_portile2-26jposug
+# Requires:         library/ruby/%{gemname}
+
+%description 26jposug
 Nokogiri is an HTML, XML, SAX, and Reader parser.  Among
 Nokogiri's many features is the ability to search documents via XPath
 or CSS3 selectors.
@@ -206,7 +132,7 @@ or CSS3 selectors.
 export CC=/usr/bin/gcc
 
 build_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         bindir="/opt/jposug/ruby/${ruby_ver}/bin"
@@ -219,23 +145,14 @@ build_for() {
 
     ${bindir}/gem install --local \
         --no-env-shebang \
+        --no-document \
         --install-dir .${gemdir} \
         --bindir .${bindir} \
-        --no-ri \
-        --no-rdoc \
         -V \
         --force %{SOURCE0} \
         -- --use-system-libraries
 }
 
-%if %{build21}
-# ruby-21
-build_for 2.1
-%endif
-%if %{build22}
-# ruby-22
-build_for 2.2
-%endif
 %if %{build23}
 # ruby-23
 build_for 2.3
@@ -252,6 +169,10 @@ build_for 2.4jposug
 # ruby-25jposug
 build_for 2.5jposug
 %endif
+%if %{build26jposug}
+# ruby-26jposug
+build_for 2.6jposug
+%endif
 
 %install
 rm -rf %{buildroot}
@@ -261,7 +182,7 @@ mkdir -p %{buildroot}/%{_bindir}
 %endif
 
 install_for() {
-    if [ "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         dir_prefix="/opt/jposug/ruby/${ruby_ver}"
@@ -302,7 +223,7 @@ install_for() {
 	fi
     done
 
-    [ -d %{buildroot}${geminstdir}/test ] && rm -rf %{buildroot}${geminstdir}/test
+    [ -d %{buildroot}${geminstdir}/test ] && rm -rf %{buildroot}${geminstdir}/test || true
 
 %if %{generate_executable}
     pushd %{buildroot}%{_bindir}
@@ -315,12 +236,6 @@ install_for() {
 
 }
 
-%if %{build21}
-install_for 2.1
-%endif
-%if %{build22}
-install_for 2.2
-%endif
 %if %{build23}
 install_for 2.3
 %endif
@@ -333,34 +248,15 @@ install_for 2.4jposug
 %if %{build25jposug}
 install_for 2.5jposug
 %endif
+%if %{build26jposug}
+install_for 2.6jposug
+%endif
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build21}
-%files 21
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.1
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*21
-%endif
-%endif
-
-%if %{build22}
-%files 22
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.2
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*22
-%endif
-%endif
 
 %if %{build23}
 %files 23
@@ -406,8 +302,21 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build26jposug}
+%files 26jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.6
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*26jposug
+%endif
+%endif
+
 
 %changelog
+* Tue May 07 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.10.3, add package for ruby-26jposug and delete packages for ruby-21 and ruby-22
 * Wed Feb 28 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix typo
 * Sun Jan 21 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -14,7 +14,7 @@
 
 Name:		SFEnagios-jposug
 IPS_package_name:        jposug/diagnostic/nagios
-Version:	4.4.3
+Version:	4.4.5
 Summary:	Host/service/network monitoring program
 Group:		Applications/System
 License:	GPLv2
@@ -245,5 +245,7 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_libdir}/nagios/libnagios.a
 
 %changelog
+* Sat Sep 21 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 4.4.5
 * Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

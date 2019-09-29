@@ -17,7 +17,7 @@
 Summary:          TZInfo::Data contains data from the IANA Time Zone database packaged as Ruby modules for use with TZInfo.
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          1.2018.9
+Version:          1.2019.3
 License:          MIT
 URL:              http://tzinfo.github.io
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -300,6 +300,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Sep 29 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.2019.3
 * Tue Feb 12 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.2018.9 and obsolete Ruby 2.1 and 2.2
 * Fri Jun 29 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

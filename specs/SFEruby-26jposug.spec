@@ -1,4 +1,4 @@
-%define version 2.6.4
+%define version 2.6.5
 %define major_version 2.6
 %define unmangled_version 2.6.0
 %define version_suffix 26jposug
@@ -125,6 +125,8 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Wed Oct 02 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.6.5
 * Thu Sep 05 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.6.4
 * Fri Apr 19 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -18,6 +18,7 @@ Meta(info.upstream_url): https://github.com/cisco/cjose
 
 BuildREquires: jposug/library/security/libressl
 BuildREquires: jposug/library/jansson
+BuildRequires: developer/documentation-tool/doxygen
 REquires:      jposug/library/security/libressl
 REquires:      jposug/library/jansson
 
@@ -62,10 +63,16 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(0755, root, bin) %{_prefix}/lib
 %dir %attr(0755, root, other) %{_prefix}/lib/pkgconfig
 %dir %attr(0755, root, bin) %{_prefix}/include
-%{_prefix}/lib/lib*
-%{_prefix}/lib/pkgconfig/*
+%dir %attr(0755, root, sys) %{_prefix}/share
+%dir %attr(0755, root, other) %{_prefix}/share/doc
+%dir %attr(0755, root, bin) %{_prefix}/share/doc/cjose
+%dir %attr(0755, root, bin) %{_prefix}/share/doc/cjose/html
+%{_prefix}/lib/libcjose*
+%{_prefix}/lib/pkgconfig/cjose.pc
 %{_prefix}/include/*
+%{_prefix}/share/doc/cjose/html/*
 
 %changelog
 * Thu Oct 03 2019 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
+- build documents

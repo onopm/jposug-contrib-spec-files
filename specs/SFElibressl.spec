@@ -2,7 +2,7 @@
 %include packagenamemacros.inc
 
 %define _prefix /opt/jposug
-%define tarball_version 2.9.2
+%define tarball_version 3.0.2
 %define tarball_name libressl
 %define src_url https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/
 
@@ -37,6 +37,7 @@ export CFLAGS="-m64 -lmd"
 
 ./configure --prefix=%{_prefix}
 make -j$CPUS
+gmake check -j$CPUS
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -70,5 +71,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/share/man/man5/*
 
 %changelog
+* Thu Oct 31 2019 Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 3.0.2 and add 'make check'
 * Thu Oct 03 2019 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

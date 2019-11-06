@@ -23,12 +23,13 @@ Source:                 https://cache.ruby-lang.org/pub/ruby/%{major_version}/ru
 Source1:                rbconfig.sedscript.ruby26
 Url:                    http://www.ruby-lang.org/
 
-
 BuildRequires: jposug/library/text/yaml >= 0.1.7
 BuildRequires: system/network/bpf
 BuildRequires: system/library/libnet
+BuildRequires: jposug/library/security/libressl
 Requires:      jposug/library/text/yaml >= 0.1.7
 Requires:      jposug/library/ruby/bundler-26jposug
+Requires:      jposug/library/security/libressl
 
 %description
 
@@ -67,6 +68,7 @@ fi
     --enable-shared \
     --disable-install-doc \
     --with-openssl \
+    --with-openssl-dir=/opt/jposug \
     --with-curses-dir=/usr \
     --with-setjmp-type=_setjmp \
     --with-tclConfig-file=/usr/lib/64/tclConfig.sh
@@ -125,6 +127,8 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Wed Nov 06 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use LibreSSL
 * Wed Oct 02 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.6.5
 * Thu Sep 05 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

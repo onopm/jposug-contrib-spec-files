@@ -3,7 +3,7 @@
 
 %define _prefix /opt/jposug/php
 %define tarball_name     php
-%define tarball_version  7.3.2
+%define tarball_version  7.3.11
 %define major_version    7.3
 %define prefix_name      SFEphp73jposug
 %define _basedir         %{_prefix}/%{major_version}
@@ -29,6 +29,7 @@ BuildRequires: jposug/library/editline
 BuildRequires: developer/icu
 BuildRequires: developer/gcc
 BuildRequires: jposug/library/libzip
+BuildRequires: jposug/library/security/libressl
 
 Requires:       system/management/snmp/net-snmp >= 5.4.1
 Requires:       text/tidy
@@ -38,6 +39,7 @@ Requires:       jposug/library/editline
 Requires:       library/icu
 Requires:       system/library/gcc/gcc-runtime
 Requires:       jposug/library/libzip
+Requires:       jposug/library/security/libressl
 
 %description
 PHP
@@ -102,7 +104,7 @@ CC=${CC} CXX=${CXX} ./configure --prefix=%{_prefix} \
     --without-gdbm \
     --with-gettext \
     --with-iconv \
-    --with-openssl \
+    --with-openssl=/opt/jposug \
     --with-zlib \
     --with-layout=PHP \
     --enable-exif \
@@ -432,6 +434,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
+* Tue Oct 29 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use libressl
+* Sun Oct 27 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.3.11
+* Wed Oct 23 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.3.10
+* Tue Aug 27 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.3.8
+* Mon Jul 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.3.7
+* Thu Jun 06 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.3.6
+* Thu May 16 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.3.5
+* Wed Apr 10 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.3.4
 * Tue Feb 26 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix IPS package name, use jposug/library/editline and jposug/library/libzip, fix %zts
 * Thu Feb 14 2019 - <me@tsundoku.ne.jp>

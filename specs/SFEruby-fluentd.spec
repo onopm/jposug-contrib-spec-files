@@ -1,12 +1,12 @@
 %include Solaris.inc
 
 %define gemname fluentd
-%define bindir25 /opt/jposug/ruby/2.5/bin
-%define gemdir25 %(%{bindir25}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)
-%define geminstdir25 %{gemdir25}/gems/%{gemname}-%{version}
+%define bindir26 /opt/jposug/ruby/2.6/bin
+%define gemdir26 %(%{bindir26}/ruby -r rubygems -e 'puts Gem::dir' 2>/dev/null)
+%define geminstdir26 %{gemdir26}/gems/%{gemname}-%{version}
 
 %define tarball_name    fluentd
-%define tarball_version 1.4.2
+%define tarball_version 1.7.3
 
 Name:             SFEfluentd
 IPS_package_name: system/fluentd
@@ -19,19 +19,19 @@ Source1:          fluentd.xml
 Source2:          svc-fluentd
 BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
-BuildRequires:	jposug/runtime/ruby-25jposug
-Requires:	jposug/runtime/ruby-25jposug
-Requires:	library/ruby/cool.io-25jposug >= 1.4.6
-Requires:	library/ruby/http_parser.rb-25jposug >= 0.6.0
-Requires:	library/ruby/json-25jposug
-Requires:	library/ruby/msgpack-25jposug >= 1.0.2
-Requires:	library/ruby/serverengine-25jposug >= 2.0.4
-Requires:	library/ruby/sigdump-25jposug >= 0.2.2
-Requires:	library/ruby/strptime-25jposug >= 0.1.7
-Requires:	library/ruby/dig_rb-25jposug >= 0.1.7
-Requires:	library/ruby/yajl-ruby-25jposug >= 1.0
-Requires:	library/ruby/tzinfo-25jposug < 2.0.0
-Requires:	library/ruby/tzinfo-data-25jposug >= 1.0.0
+BuildRequires:	jposug/runtime/ruby-26jposug
+Requires:	jposug/runtime/ruby-26jposug
+Requires:	library/ruby/cool.io-26jposug >= 1.4.6
+Requires:	library/ruby/http_parser.rb-26jposug >= 0.6.0
+Requires:	library/ruby/json-26jposug
+Requires:	library/ruby/msgpack-26jposug >= 1.0.2
+Requires:	library/ruby/serverengine-26jposug >= 2.0.4
+Requires:	library/ruby/sigdump-26jposug >= 0.2.2
+Requires:	library/ruby/strptime-26jposug >= 0.1.7
+Requires:	library/ruby/dig_rb-26jposug >= 0.1.7
+Requires:	library/ruby/yajl-ruby-26jposug >= 1.0
+Requires:	library/ruby/tzinfo-26jposug < 2.0.0
+Requires:	library/ruby/tzinfo-data-26jposug >= 1.0.0
 
 %description
 Fluentd is a log collector daemon written in Ruby. Fluentd receives logs as JSON streams, buffers them, and sends them to other systems like MySQL, MongoDB, or even other instances of Fluentd.
@@ -39,37 +39,37 @@ Fluentd is a log collector daemon written in Ruby. Fluentd receives logs as JSON
 %prep
 %setup -q -c -T
 
-mkdir -p .%{gemdir25}
+mkdir -p .%{gemdir26}
 %build
 
 mkdir -p .%{_bindir}
-%{bindir25}/gem install --local --install-dir .%{gemdir25} \
+%{bindir26}/gem install --local --install-dir .%{gemdir26} \
             --bindir .%{_bindir} \
             --force %{SOURCE0}
 
 pushd ./%{_bindir}
 for i in fluent*
 do
-    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/opt/jposug/ruby/2.5/bin/ruby$' > ${i}.tmp
+    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/opt/jposug/ruby/2.6/bin/ruby$' > ${i}.tmp
     mv ${i}.tmp ${i}
 done
 popd
 
-pushd .%{geminstdir25}/bin
+pushd .%{geminstdir26}/bin
 for i in fluent*
 do
-    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/opt/jposug/ruby/2.5/bin/ruby$' > ${i}.tmp
+    cat ${i} | sed -e 's$#!/usr/bin/env ruby$#!/opt/jposug/ruby/2.6/bin/ruby$' > ${i}.tmp
     mv ${i}.tmp ${i}
 done
 popd
 
 # ruby > 2.3 does not require string-scrub
-cp .%{gemdir25}/specifications/fluentd-%{version}.gemspec \
-    .%{gemdir25}/specifications/fluentd-%{version}.gemspec.tmp
+cp .%{gemdir26}/specifications/fluentd-%{version}.gemspec \
+    .%{gemdir26}/specifications/fluentd-%{version}.gemspec.tmp
 
 sed -e 's/.*string-scrub.*//' \
-    .%{gemdir25}/specifications/fluentd-%{version}.gemspec.tmp > \
-    .%{gemdir25}/specifications/fluentd-%{version}.gemspec
+    .%{gemdir26}/specifications/fluentd-%{version}.gemspec.tmp > \
+    .%{gemdir26}/specifications/fluentd-%{version}.gemspec
 
 %install
 rm -rf %{buildroot}
@@ -78,11 +78,11 @@ mkdir -p %{buildroot}/usr/bin
 cp ./usr/bin/* \
         %{buildroot}/usr/bin/
 
-mkdir -p %{buildroot}%{gemdir25}
-cp -r .%{gemdir25}/* \
-        %{buildroot}%{gemdir25}/
+mkdir -p %{buildroot}%{gemdir26}
+cp -r .%{gemdir26}/* \
+        %{buildroot}%{gemdir26}/
 
-rm -rf %{buildroot}%{geminstdir25}/.yardoc/
+rm -rf %{buildroot}%{geminstdir26}/.yardoc/
 
 # SMF
 mkdir -p %{buildroot}/lib/svc/manifest/system
@@ -112,7 +112,7 @@ rm -rf %{buildroot}
 %attr(0555, root, bin) /usr/bin/fluent-plugin-config-format
 %attr(0555, root, bin) /usr/bin/fluent-plugin-generate
 %attr(0555, root, bin) /usr/bin/fluent-ca-generate
-%{gemdir25}
+%{gemdir26}
 %dir %attr(0755, root, bin) /lib/
 %dir %attr(0755, root, bin) /lib/svc
 %dir %attr(0755, root, sys) /lib/svc/manifest
@@ -127,6 +127,8 @@ rm -rf %{buildroot}
 %dir %attr(0755, root, sys) /etc/fluentd
 
 %changelog
+* Wed Oct 23 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.7.3
 * Wed Apr 10 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.4.2
 * Tue Feb 12 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

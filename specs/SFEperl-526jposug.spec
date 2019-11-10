@@ -1,4 +1,4 @@
-%define version 5.26.2
+%define version 5.26.3
 %define major_version 5.26
 %define version_suffix 526jposug
 %define patchlevel 0
@@ -80,5 +80,7 @@ rm -rf $RPM_BUILD_ROOT
 /opt/jposug/perl5
 
 %changelog
+* Fri Oct 18 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+* bump to 5.26.3
 * Wed May 16 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

@@ -3,7 +3,7 @@
 
 %define _prefix /opt/jposug/php
 %define tarball_name     php
-%define tarball_version  7.3.11
+%define tarball_version  7.3.12
 %define major_version    7.3
 %define prefix_name      SFEphp73jposug
 %define _basedir         %{_prefix}/%{major_version}
@@ -434,6 +434,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr (0444, root, bin) /usr/apache2/2.4/libexec/mod_php%{major_version}jposug.so
 
 %changelog
+* Fri Nov 22 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 7.3.12
 * Tue Oct 29 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use libressl
 * Sun Oct 27 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

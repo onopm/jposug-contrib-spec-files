@@ -20,8 +20,8 @@ Group:		Applications/System
 License:	GPLv2
 URL:		http://www.nagios.org/
 Source:		https://assets.nagios.com/downloads/nagioscore/releases/nagios-%{version}.tar.gz
-Source1:	nagios4.xml
-Source2:	svc-nagios4
+Source1:	nagios-jposug.xml
+Source2:	svc-nagios-jposug
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %include default-depend.inc
 
@@ -208,10 +208,10 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %dir %attr (0755, root, sys) %{_localstatedir}/svc
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
-%class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/site/nagios4.xml
+%class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/site/nagios-jposug.xml
 %dir %attr (0755, root, bin) /lib/svc
 %dir %attr (0755, root, bin) /lib/svc/method
-%attr (0555, root, bin) /lib/svc/method/svc-nagios4
+%attr (0555, root, bin) /lib/svc/method/svc-nagios-jposug
 %dir %attr(0755, root, sys) %{_sysconfdir}
 %dir %attr(0755, root, nagios) %{_sysconfdir}/nagios
 %config(noreplace) %{_sysconfdir}/nagios/*cfg
@@ -245,6 +245,8 @@ user ftpuser=false gcos-field="Nagios Reserved UID" username="nagios" password=N
 %{_libdir}/nagios/libnagios.a
 
 %changelog
+* Thu Dec 12 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix SOURCE1 and SOURCE2
 * Sat Sep 21 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 4.4.5
 * Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

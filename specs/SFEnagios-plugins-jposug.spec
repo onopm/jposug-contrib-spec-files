@@ -27,7 +27,11 @@ SUNW_BaseDir:   /
 %include default-depend.inc
 
 BuildRequires:  jposug/diagnostic/nagios/devel
+BuildRequires:  jposug/library/security/libressl
+BuildRequires:  jposug/runtime/perl-526jposug
 Requires:       jposug/diagnostic/nagios/common
+Requires:       jposug/library/security/libressl
+Requires:       jposug/runtime/perl-526jposug
 
 %description
 Provides Nagios plugins
@@ -237,7 +241,6 @@ rm -rf %{buildroot}
 %attr (0644, root, bin) %{_libdir}/nagios/plugins/utils.sh
 %attr (0644, root, bin) %{_libdir}/nagios/plugins/utils.pm
 
-
 %files dig
 %defattr(-, root, sys)
 %dir %attr (0755, root, sys) /opt
@@ -266,6 +269,8 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Wed Dec 11 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add BuildRequires and Requires
 * Tue Dec 10 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.3.1
 * Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

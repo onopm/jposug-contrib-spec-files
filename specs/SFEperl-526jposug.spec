@@ -228,6 +228,15 @@ rm -rf $RPM_BUILD_ROOT
 /opt/jposug/perl5/5.26/lib/Exporter.pm
 %dir /opt/jposug/perl5/5.26/lib/ExtUtils
 /opt/jposug/perl5/5.26/lib/Fatal.pm
+%dir /opt/jposug/perl5/5.26/lib/File
+/opt/jposug/perl5/5.26/lib/File/Basename.pm
+/opt/jposug/perl5/5.26/lib/File/Compare.pm
+/opt/jposug/perl5/5.26/lib/File/Copy.pm
+/opt/jposug/perl5/5.26/lib/File/Fetch.pm
+/opt/jposug/perl5/5.26/lib/File/Find.pm
+/opt/jposug/perl5/5.26/lib/File/Path.pm
+/opt/jposug/perl5/5.26/lib/File/Temp.pm
+/opt/jposug/perl5/5.26/lib/File/stat.pm
 /opt/jposug/perl5/5.26/lib/FileCache.pm
 /opt/jposug/perl5/5.26/lib/FileHandle.pm
 %dir /opt/jposug/perl5/5.26/lib/Filter
@@ -1304,7 +1313,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/jposug/perl5/5.26/lib/Compress
 /opt/jposug/perl5/5.26/lib/Compress/*
 %dir /opt/jposug/perl5/5.26/lib/File
-/opt/jposug/perl5/5.26/lib/File/*
+/opt/jposug/perl5/5.26/lib/File/GlobMapper.pm
 %dir /opt/jposug/perl5/5.26/lib/IO
 %dir /opt/jposug/perl5/5.26/lib/IO/Compress
 /opt/jposug/perl5/5.26/lib/IO/Compress/*
@@ -1395,6 +1404,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/jposug/perl5/5.26/man/man3
 
 %changelog
+* Fri Dec 20 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %files
 * Mon Dec 16 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - Split into multiple packages
 * Fri Oct 18 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

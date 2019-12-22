@@ -226,7 +226,22 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/jposug/perl5/5.26/lib/Exporter
 /opt/jposug/perl5/5.26/lib/Exporter/*
 /opt/jposug/perl5/5.26/lib/Exporter.pm
+
 %dir /opt/jposug/perl5/5.26/lib/ExtUtils
+%dir /opt/jposug/perl5/5.26/lib/ExtUtils/CBuilder
+/opt/jposug/perl5/5.26/lib/ExtUtils/CBuilder/*
+/opt/jposug/perl5/5.26/lib/ExtUtils/CBuilder.pm
+/opt/jposug/perl5/5.26/lib/ExtUtils/Manifest.pm
+/opt/jposug/perl5/5.26/lib/ExtUtils/Miniperl.pm
+/opt/jposug/perl5/5.26/lib/ExtUtils/Packlist.pm
+/opt/jposug/perl5/5.26/lib/ExtUtils/typemap
+%dir /opt/jposug/perl5/5.26/lib/ExtUtils/Constant
+/opt/jposug/perl5/5.26/lib/ExtUtils/Constant/*
+/opt/jposug/perl5/5.26/lib/ExtUtils/Constant.pm
+/opt/jposug/perl5/5.26/lib/ExtUtils/Embed.pm
+/opt/jposug/perl5/5.26/lib/ExtUtils/Install.pm
+/opt/jposug/perl5/5.26/lib/ExtUtils/Installed.pm
+/opt/jposug/perl5/5.26/lib/ExtUtils/MANIFEST.SKIP
 /opt/jposug/perl5/5.26/lib/Fatal.pm
 %dir /opt/jposug/perl5/5.26/lib/File
 /opt/jposug/perl5/5.26/lib/File/Basename.pm
@@ -1236,35 +1251,21 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/jposug/perl5/5.26
 %dir /opt/jposug/perl5/5.26/bin
 /opt/jposug/perl5/5.26/bin/instmodsh
-%dir /opt/jposug/perl5/5.26/lib/ExtUtils/CBuilder
-/opt/jposug/perl5/5.26/lib/ExtUtils/CBuilder/*
-/opt/jposug/perl5/5.26/lib/ExtUtils/CBuilder.pm
 %dir /opt/jposug/perl5/5.26/lib/ExtUtils/Command
 /opt/jposug/perl5/5.26/lib/ExtUtils/Command/*
 /opt/jposug/perl5/5.26/lib/ExtUtils/Command.pm
-%dir /opt/jposug/perl5/5.26/lib/ExtUtils/Constant
-/opt/jposug/perl5/5.26/lib/ExtUtils/Constant/*
-/opt/jposug/perl5/5.26/lib/ExtUtils/Constant.pm
-/opt/jposug/perl5/5.26/lib/ExtUtils/Embed.pm
-/opt/jposug/perl5/5.26/lib/ExtUtils/Install.pm
-/opt/jposug/perl5/5.26/lib/ExtUtils/Installed.pm
 %dir /opt/jposug/perl5/5.26/lib/ExtUtils/Liblist
 /opt/jposug/perl5/5.26/lib/ExtUtils/Liblist/*
 /opt/jposug/perl5/5.26/lib/ExtUtils/Liblist.pm
-/opt/jposug/perl5/5.26/lib/ExtUtils/MANIFEST.SKIP
 /opt/jposug/perl5/5.26/lib/ExtUtils/MM.pm
 /opt/jposug/perl5/5.26/lib/ExtUtils/MM_*.pm
 /opt/jposug/perl5/5.26/lib/ExtUtils/MY.pm
 %dir /opt/jposug/perl5/5.26/lib/ExtUtils/MakeMaker
 /opt/jposug/perl5/5.26/lib/ExtUtils/MakeMaker/*
 /opt/jposug/perl5/5.26/lib/ExtUtils/MakeMaker.pm
-/opt/jposug/perl5/5.26/lib/ExtUtils/Manifest.pm
-/opt/jposug/perl5/5.26/lib/ExtUtils/Miniperl.pm
 /opt/jposug/perl5/5.26/lib/ExtUtils/Mkbootstrap.pm
 /opt/jposug/perl5/5.26/lib/ExtUtils/Mksymlists.pm
-/opt/jposug/perl5/5.26/lib/ExtUtils/Packlist.pm
 /opt/jposug/perl5/5.26/lib/ExtUtils/testlib.pm
-/opt/jposug/perl5/5.26/lib/ExtUtils/typemap
 %dir /opt/jposug/perl5/5.26/man
 %dir /opt/jposug/perl5/5.26/man/man3
 /opt/jposug/perl5/5.26/man/man3/ExtUtils::MakeMaker.3
@@ -1404,6 +1405,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/jposug/perl5/5.26/man/man3
 
 %changelog
+* Sun Dec 22 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %files
 * Fri Dec 20 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %files
 * Mon Dec 16 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

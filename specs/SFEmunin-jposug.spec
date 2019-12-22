@@ -8,7 +8,7 @@
 
 Name:      munin
 IPS_package_name:        jposug/diagnostic/munin
-Version:   2.0.45
+Version:   2.0.50
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -18,8 +18,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 # Source0: http://downloads.sourceforge.net/sourceforge/munin/%{tarball_name}-%{version}.tar.gz
 Source0:        http://downloads.munin-monitoring.org/munin/stable/%{version}/%{tarball_name}-%{version}.tar.gz
-Source1:	munin-asyncd.xml
-Source2:	svc-munin-asyncd
+Source1:        munin-asyncd.xml
+Source2:        svc-munin-asyncd
 Source3:        SFEmunin-Makefile-jposug.config
 Source4:        munin.logadm.conf
 Source5:        munin-node.logadm.conf
@@ -431,7 +431,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %dir %attr(0755, root, sys) /opt
 %dir %attr(0755, root, bin) /opt/jposug
 %dir %attr(0755, root, bin) %{_sbindir}
-/opt/jposug/sbin/munin-sched
+# /opt/jposug/sbin/munin-sched
 
 %files async
 %defattr(-, root, bin)
@@ -458,6 +458,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Mon Oct 28 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.50
 * Tue Feb 26 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.45
 * Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

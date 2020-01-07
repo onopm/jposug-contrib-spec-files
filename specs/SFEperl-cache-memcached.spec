@@ -21,7 +21,7 @@ Name:                  perl-%{sfe_cpan_name}
 IPS_package_name:      library/perl-5/%{ips_cpan_name}
 Version:               1.30
 IPS_component_version: 1.30
-License:               unknown
+License:               GPL
 URL:                   https://metacpan.org/pod/Cache::Memcached
 Source0:               http://cpan.metacpan.org/authors/id/D/DO/DORMANDO/Cache-Memcached-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
@@ -42,7 +42,7 @@ BuildRequires:    library/perl-5/string-crc32-584
 BuildRequires:    library/perl-5/time-hires-584
 %endif
 Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-584
 Requires:         library/perl-5/storable-584
 Requires:         library/perl-5/string-crc32-584
@@ -58,12 +58,14 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-510
 Summary:          client library for memcached (memory cache daemon)
 BuildRequires:    runtime/perl-510 = *
 BuildRequires:    library/perl-5/extutils-makemaker-510
+%if %{enable_test}
 BuildRequires:    library/perl-5/encode-510
 BuildRequires:    library/perl-5/storable-510
 BuildRequires:    library/perl-5/string-crc32-510
 BuildRequires:    library/perl-5/time-hires-510
+%endif
 Requires:         runtime/perl-510 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-510
 Requires:         library/perl-5/storable-510
 Requires:         library/perl-5/string-crc32-510
@@ -86,7 +88,7 @@ BuildRequires:    library/perl-5/string-crc32-512
 BuildRequires:    library/perl-5/time-hires-512
 %endif
 Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-512
 Requires:         library/perl-5/storable-512
 Requires:         library/perl-5/string-crc32-512
@@ -102,7 +104,7 @@ IPS_package_name: library/perl-5/%{ips_cpan_name}-516
 Summary:          client library for memcached (memory cache daemon)
 BuildRequires:    runtime/perl-516 = *
 BuildRequires:    library/perl-5/extutils-makemaker-516
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 %if %{enable_test}
 BuildRequires:    library/perl-5/encode-516
 BuildRequires:    library/perl-5/storable-516
@@ -110,7 +112,7 @@ BuildRequires:    library/perl-5/string-crc32-516
 BuildRequires:    library/perl-5/time-hires-516
 %endif
 Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-516
 Requires:         library/perl-5/storable-516
 Requires:         library/perl-5/string-crc32-516
@@ -133,7 +135,7 @@ BuildRequires:    library/perl-5/string-crc32-522
 BuildRequires:    library/perl-5/time-hires-522
 %endif
 Requires:         runtime/perl-522 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-522
 Requires:         library/perl-5/storable-522
 Requires:         library/perl-5/string-crc32-522
@@ -156,7 +158,7 @@ BuildRequires:    library/perl-5/string-crc32-526
 BuildRequires:    library/perl-5/time-hires-526
 %endif
 Requires:         runtime/perl-526 = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-526
 Requires:         library/perl-5/storable-526
 Requires:         library/perl-5/string-crc32-526
@@ -179,7 +181,7 @@ BuildRequires:    library/perl-5/string-crc32-526jposug
 BuildRequires:    library/perl-5/time-hires-526jposug
 %endif
 Requires:         runtime/perl-526jposug = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/encode-526jposug
 Requires:         library/perl-5/storable-526jposug
 Requires:         library/perl-5/string-crc32-526jposug
@@ -195,6 +197,8 @@ client library for memcached (memory cache daemon)
 
 %build
 build_with_makefile.pl_for() {
+    [ -f xdefine ] && rm -f xdefine
+    [ -d blib ] && rm -rf blib
     test=$2
     if [ "x${1}" = 'x5.26jposug' ]
     then
@@ -281,7 +285,7 @@ modify_bin_dir() {
       [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver} ] || mkdir -p ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}
       mv $RPM_BUILD_ROOT${prefix}/bin $RPM_BUILD_ROOT/${prefix}/perl5/${perl_ver}/bin
     fi
-      
+
     if [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin ]
     then
         for i in ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin/*
@@ -492,6 +496,8 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Jan 07 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix license and modify dependencies
 * Thu May 17 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - build package for perl-526jposug
 * Fri May 11 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
@@ -506,4 +512,3 @@ rm -rf %{buildroot}
 - add BuildRequires
 -* Wed Sep 26 JST 2012 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit
-- add Requires

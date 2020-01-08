@@ -19,8 +19,7 @@ Version:                %{version}
 Release:                %{patchlevel}
 IPS_component_version:  %{version}.%{patchlevel}
 License:                2-clause BSDL
-# Source:                 https://cache.ruby-lang.org/pub/ruby/%{major_version}/ruby-%{version}.tar.xz
-Source:                 https://cache.ruby-lang.org/pub/ruby/%{major_version}/ruby-%{version}-preview2.tar.xz
+Source:                 https://cache.ruby-lang.org/pub/ruby/%{major_version}/ruby-%{version}.tar.xz
 Source1:                rbconfig.sedscript.ruby26
 Url:                    http://www.ruby-lang.org/
 
@@ -36,19 +35,21 @@ Requires:      jposug/library/security/libressl
 
 %prep
 # %setup -n ruby-%{version}-p%{patchlevel}
-%setup -n ruby-%{version}-preview2
-# %setup -n ruby-%{version}
+%setup -n ruby-%{version}
 
 %build
 export CC=/usr/bin/gcc
+export CXX=/usr/bin/g++
 %ifarch sparcv9
 # export CFLAGS='-m64 -xO4 -D__sparc -mt -DFFI_NO_RAW_API -Kpic'
 export CFLAGS='-m64 -g -O3 -fPIC -std=gnu99 -D__sparc'
+export CXXFLAGS='-m64 -g -O3 -fPIC -D__sparc'
 %endif
 
 %ifarch amd64
 # export CFLAGS='-m64 -xO4 -Ui386 -U__i386 -D__amd64 -xregs=no%frameptr -mt -DFFI_NO_RAW_API'
 export CFLAGS='-m64 -g -O3 -fPIC -std=gnu99 -Ui386 -U__i386 -D__amd64'
+export CXXFLAGS='-m64 -g -O3 -fPIC -Ui386 -U__i386 -D__amd64'
 %endif
 
 export LIBDIR=%{libdir}
@@ -130,6 +131,8 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}
 
 %changelog
+* Wed Jan 08 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.7.0
 * Thu Nov 07 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use LibreSSL
 * Wed Oct 23 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

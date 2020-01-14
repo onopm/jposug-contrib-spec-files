@@ -16,7 +16,7 @@
 Summary:          Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably
 Name:             SFEruby-%{sfe_gemname}
 IPS_package_name: library/ruby/%{gemname}
-Version:          2.0.2
+Version:          2.1.4
 License:          MIT
 URL:              https://bundler.io/
 Source0:          http://rubygems.org/downloads/%{gemname}-%{version}.gem
@@ -247,6 +247,8 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Jan 14 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.1.4
 * Thu Nov 07 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.2 and obsolete Ruby 2.3
 * Tue Feb 12 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

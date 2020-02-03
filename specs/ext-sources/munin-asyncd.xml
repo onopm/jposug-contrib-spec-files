@@ -8,21 +8,21 @@
    2012-10-02 Fumihisa TONAKA <fumi.ftnk@gmail.com>
 
    based on site/munin-node by Stig Sandbeck Mathisen <ssm@fnord.no>
-   
+
    ==============================================================
    Solaris SMF method for site/munin-node
 
    2010-06-02 Stig Sandbeck Mathisen <ssm@fnord.no>
-   
+
    Usage
    =====
-   
+
    Copy the munin-node script to /lib/svc/method/, and
    make it executale
-   
+
    Copy the munin-node.xml manifest to /var/svc/manifest/site/, and
    then run:
-   
+
    # svccfg import /var/svc/manifest/site/munin-node.xml
 
    Check
@@ -31,7 +31,7 @@
    Check the status of your running munin-node with:
 
    # svcs site/munin-node
-     
+
   -->
 
 <service_bundle type='manifest' name='export'>
@@ -62,7 +62,7 @@
 
     <property_group name='munin-asyncd' type='application'>
       <propval name='bin' type='astring'
-	       value='/usr/share/munin/munin-asyncd' />
+	       value='/opt/jposug/share/munin/munin-asyncd' />
       <propval name='host' type='astring'
 	       value='localhost' />
       <propval name='port' type='count'
@@ -80,7 +80,7 @@
       <propval name='runfile' type='astring'
 	       value='/var/run/munin/munin-asyncd.pid' />
     </property_group>
-    
+
     <stability value='Unstable'/>
 
     <template>

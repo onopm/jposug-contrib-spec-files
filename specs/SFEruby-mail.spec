@@ -1,11 +1,9 @@
 %include Solaris.inc
 %include default-depend.inc
 
-%define build23 %( if [ -x /usr/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build23jposug %( if [ -x /opt/jposug/ruby/2.3/bin/ruby ]; then echo '1'; else echo '0'; fi)
-%define build24jposug %( if [ -x /opt/jposug/ruby/2.4/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build25jposug %( if [ -x /opt/jposug/ruby/2.5/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define build26jposug %( if [ -x /opt/jposug/ruby/2.6/bin/ruby ]; then echo '1'; else echo '0'; fi)
+%define build27jposug %( if [ -x /opt/jposug/ruby/2.7/bin/ruby ]; then echo '1'; else echo '0'; fi)
 %define generate_executable 0
 %define keep_dependency 0
 
@@ -25,62 +23,6 @@ BuildRoot:        %{_tmppath}/%{name}-%{version}-build
 
 %description
 A really Ruby Mail handler.
-
-%if %{build23}
-%if %{keep_dependency}
-%package 23-old
-IPS_package_name: library/ruby-23/%{gemname}
-Summary:          A really Ruby Mail handler.
-BuildRequires:    runtime/ruby-23 = *
-Requires:         runtime/ruby-23 = *
-# Requires:         library/ruby/%{gemname}-23
-
-%description 23-old
-A really Ruby Mail handler.
-%endif
-
-%package 23
-IPS_package_name: library/ruby/%{gemname}-23
-Summary:          A really Ruby Mail handler.
-BuildRequires:    runtime/ruby-23 = *
-Requires:         runtime/ruby-23 = *
-# mini_mime >= 0.1.1
-Requires:         library/ruby/mini_mime-23
-# Requires:         library/ruby/%{gemname}
-
-%description 23
-A really Ruby Mail handler.
-%endif
-
-%if %{build23jposug}
-
-%package 23jposug
-IPS_package_name: jposug/library/ruby/%{gemname}-23jposug
-Summary:          A really Ruby Mail handler.
-BuildRequires:    jposug/runtime/ruby-23jposug = *
-Requires:         jposug/runtime/ruby-23jposug = *
-# mini_mime >= 0.1.1
-Requires:         jposug/library/ruby/mini_mime-23jposug
-# Requires:         library/ruby/%{gemname}
-
-%description 23jposug
-A really Ruby Mail handler.
-%endif
-
-%if %{build24jposug}
-
-%package 24jposug
-IPS_package_name: jposug/library/ruby/%{gemname}-24jposug
-Summary:          A really Ruby Mail handler.
-BuildRequires:    jposug/runtime/ruby-24jposug = *
-Requires:         jposug/runtime/ruby-24jposug = *
-# mini_mime >= 0.1.1
-Requires:         jposug/library/ruby/mini_mime-24jposug
-# Requires:         library/ruby/%{gemname}
-
-%description 24jposug
-A really Ruby Mail handler.
-%endif
 
 %if %{build25jposug}
 
@@ -112,13 +54,28 @@ Requires:         jposug/library/ruby/mini_mime-26jposug
 A really Ruby Mail handler.
 %endif
 
+%if %{build27jposug}
+
+%package 27jposug
+IPS_package_name: jposug/library/ruby/%{gemname}-27jposug
+Summary:          A really Ruby Mail handler.
+BuildRequires:    jposug/runtime/ruby-27jposug = *
+Requires:         jposug/runtime/ruby-27jposug = *
+# mini_mime >= 0.1.1
+Requires:         jposug/library/ruby/mini_mime-27jposug
+# Requires:         library/ruby/%{gemname}
+
+%description 27jposug
+A really Ruby Mail handler.
+%endif
+
 
 %prep
 %setup -q -c -T
 
 %build
 build_for() {
-    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.7jposug' -o "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         bindir="/opt/jposug/ruby/${ruby_ver}/bin"
@@ -138,18 +95,6 @@ build_for() {
         --force %{SOURCE0}
 }
 
-%if %{build23}
-# ruby-23
-build_for 2.3
-%endif
-%if %{build23jposug}
-# ruby-23jposug
-build_for 2.3jposug
-%endif
-%if %{build24jposug}
-# ruby-24jposug
-build_for 2.4jposug
-%endif
 %if %{build25jposug}
 # ruby-25jposug
 build_for 2.5jposug
@@ -157,6 +102,10 @@ build_for 2.5jposug
 %if %{build26jposug}
 # ruby-26jposug
 build_for 2.6jposug
+%endif
+%if %{build27jposug}
+# ruby-27jposug
+build_for 2.7jposug
 %endif
 
 %install
@@ -167,7 +116,7 @@ mkdir -p %{buildroot}/%{_bindir}
 %endif
 
 install_for() {
-    if [ "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
+    if [ "x${1}" = 'x2.7jposug' -o "x${1}" = 'x2.6jposug' -o "x${1}" = 'x2.5jposug' -o "x${1}" = 'x2.4jposug' -o "x${1}" = 'x2.3jposug' ]
     then
         ruby_ver=$(echo $1 | sed -e 's/jposug//')
         dir_prefix="/opt/jposug/ruby/${ruby_ver}"
@@ -221,20 +170,14 @@ install_for() {
 
 }
 
-%if %{build23}
-install_for 2.3
-%endif
-%if %{build23jposug}
-install_for 2.3jposug
-%endif
-%if %{build24jposug}
-install_for 2.4jposug
-%endif
 %if %{build25jposug}
 install_for 2.5jposug
 %endif
 %if %{build26jposug}
 install_for 2.6jposug
+%endif
+%if %{build27jposug}
+install_for 2.7jposug
 %endif
 
 %clean
@@ -242,39 +185,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,bin,-)
-
-%if %{build23}
-%files 23
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/ruby/2.3
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*23
-%endif
-%endif
-
-%if %{build23jposug}
-%files 23jposug
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /opt
-/opt/jposug/ruby/2.3
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*23jposug
-%endif
-%endif
-
-%if %{build24jposug}
-%files 24jposug
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /opt
-/opt/jposug/ruby/2.4
-%if %{generate_executable}
-%dir %attr (0755, root, bin) /usr/bin
-%attr (0755, root, bin) /usr/bin/*24jposug
-%endif
-%endif
 
 %if %{build25jposug}
 %files 25jposug
@@ -298,8 +208,21 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build27jposug}
+%files 27jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+/opt/jposug/ruby/2.7
+%if %{generate_executable}
+%dir %attr (0755, root, bin) /usr/bin
+%attr (0755, root, bin) /usr/bin/*27jposug
+%endif
+%endif
+
 
 %changelog
+* Mon Feb 03 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- add packge for ruby-27jposug and obsolete packages for ruby-23jposug and ruby-24jposug
 * Tue Feb 26 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.7.1, use '--no-document' instead of '--no-ri' and '--no-rdoc' and obsolete packages for ruby-21 and ruby-22
 * Tue Aug 28 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

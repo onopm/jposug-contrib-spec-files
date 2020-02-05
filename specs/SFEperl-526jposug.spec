@@ -10,6 +10,12 @@
 %define site_dir %{jposug_prefix}/perl5/site_perl/%{major_version}
 %define vendor_dir %{jposug_prefix}/perl5/vendor_perl/%{major_version}
 
+%ifarch sparc
+%define perl_dir sun4-solaris-thread-multi-64
+%else
+%define perl_dir i86pc-solaris-thread-multi-64
+%endif
+
 Name:                   SFEperl-%{version_suffix}
 IPS_Package_Name:       jposug/runtime/perl-%{version_suffix}
 Summary:                Perl 5 is a highly capable, feature-rich programming language
@@ -18,6 +24,8 @@ Release:                %{patchlevel}
 IPS_Component_Version:  %{version}.%{patchlevel}
 License:                GPL
 Source:                 https://www.cpan.org/src/5.0/perl-%{version}.tar.gz
+# Patch0:               https://rt.cpan.org/Public/Ticket/Attachment/1776857/956088/0001-Fix-Time-Local-tests.patch
+Patch0:                 https://rt.cpan.org/Public/Ticket/Attachment/1776857/956088/0001-Fix-Time-Local-tests.patch
 Url:                    https://www.perl.org/
 
 %description
@@ -33,7 +41,7 @@ Requires: library/perl-5/pod-parser-526jposug
 
 %package encode
 IPS_Package_Name:       library/perl-5/encode-526jposug
-IPS_Component_Version:  4.9
+IPS_Component_Version:  2.88
 Summary:        perl encode module
 SUNW_BaseDir:   /opt/jposug
 Requires:       jposug/runtime/perl-%{version_suffix}
@@ -43,7 +51,7 @@ perl encode module
 
 %package podlators
 IPS_Package_Name:       library/perl-5/podlators-526jposug
-IPS_Component_Version:  2.88
+IPS_Component_Version:  4.09
 Summary:        perl podlators module
 SUNW_BaseDir:   /opt/jposug
 Requires:       jposug/runtime/perl-%{version_suffix}
@@ -53,7 +61,7 @@ perl podlators module
 
 %package ext-mm
 IPS_Package_Name:       library/perl-5/extutils-makemaker-526jposug
-IPS_Component_Version:  2.88
+IPS_Component_Version:  7.24
 Summary:        perl extutils-makemaker module
 SUNW_BaseDir:   /opt/jposug
 Requires:       jposug/runtime/perl-%{version_suffix}
@@ -109,6 +117,7 @@ perl pod-parser module
 
 %prep
 %setup -n perl-%{version}
+%patch0 -p1
 
 %build
 %ifarch sparc
@@ -303,8 +312,6 @@ rm -rf $RPM_BUILD_ROOT
 /opt/jposug/perl5/5.26/lib/Pod/Simple.pm
 /opt/jposug/perl5/5.26/lib/Pod/Simple.pod
 /opt/jposug/perl5/5.26/lib/Pod/Simple/*
-%dir /opt/jposug/perl5/5.26/lib/Pod/Text
-/opt/jposug/perl5/5.26/lib/Pod/Text/*
 /opt/jposug/perl5/5.26/lib/Pod/Text.pm
 /opt/jposug/perl5/5.26/lib/Pod/Usage.pm
 /opt/jposug/perl5/5.26/lib/Safe.pm
@@ -393,84 +400,84 @@ rm -rf $RPM_BUILD_ROOT
 /opt/jposug/perl5/5.26/lib/warnings.pm
 
 
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/.packlist
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/B
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/B/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/B.pm
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/CORE
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/CORE/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Compress
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Compress/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Config.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Config.pod
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Config_git.pl
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Config_heavy.pl
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Cwd.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/DB_File.pm
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Data
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Data/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Devel
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Devel/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Digest
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Digest/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/DynaLoader.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Errno.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Fcntl.pm
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/File
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/File/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Filter
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Filter/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/GDBM_File.pm
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Hash
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Hash/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/I18N
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/I18N/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/IO
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/IO/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/IO.pm
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/IPC
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/IPC/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/List
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/List/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/MIME
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/MIME/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Math
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Math/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/NDBM_File.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/O.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/ODBM_File.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Opcode.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/POSIX.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/POSIX.pod
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/PerlIO
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/PerlIO/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/SDBM_File.pm
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Scalar
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Scalar/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Socket.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Storable.pm
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Sub
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Sub/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Sys
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Sys/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Tie
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Tie/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Time
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Time/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Unicode
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Unicode/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/arybase.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/attributes.pm
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/auto
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/auto/*
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/encoding.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/lib.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/mro.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/ops.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/re.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/threads
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/threads.pm
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/.packlist
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/B
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/B/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/B.pm
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/CORE
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/CORE/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Compress
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Compress/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Config.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Config.pod
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Config_git.pl
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Config_heavy.pl
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Cwd.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/DB_File.pm
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Data
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Data/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Devel
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Devel/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Digest
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Digest/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/DynaLoader.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Errno.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Fcntl.pm
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/File
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/File/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Filter
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Filter/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/GDBM_File.pm
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Hash
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Hash/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/I18N
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/I18N/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/IO
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/IO/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/IO.pm
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/IPC
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/IPC/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/List
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/List/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/MIME
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/MIME/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Math
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Math/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/NDBM_File.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/O.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/ODBM_File.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Opcode.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/POSIX.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/POSIX.pod
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/PerlIO
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/PerlIO/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/SDBM_File.pm
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Scalar
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Scalar/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Socket.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Storable.pm
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Sub
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Sub/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Sys
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Sys/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Tie
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Tie/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Time
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Time/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Unicode
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Unicode/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/arybase.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/attributes.pm
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/auto
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/auto/*
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/encoding.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/lib.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/mro.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/ops.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/re.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/threads
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/threads.pm
 
 %dir /opt/jposug/perl5/5.26/man
 %dir /opt/jposug/perl5/5.26/man/man1
@@ -1131,7 +1138,7 @@ rm -rf $RPM_BUILD_ROOT
 /opt/jposug/perl5/5.26/man/man3/warnings::register.3
 %dir /opt/jposug/perl5/site_perl
 %dir /opt/jposug/perl5/site_perl/5.26
-%dir /opt/jposug/perl5/site_perl/5.26/i86pc-solaris-thread-multi-64
+%dir /opt/jposug/perl5/site_perl/5.26/%{perl_dir}
 
 %files encode
 %defattr(-,root,bin)
@@ -1144,10 +1151,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/jposug/perl5/5.26/lib
 %dir /opt/jposug/perl5/5.26/lib/Encode
 /opt/jposug/perl5/5.26/lib/Encode/*
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64
-%dir /opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Encode
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Encode.pm
-/opt/jposug/perl5/5.26/lib/i86pc-solaris-thread-multi-64/Encode/*
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}
+%dir /opt/jposug/perl5/5.26/lib/%{perl_dir}/Encode
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Encode.pm
+/opt/jposug/perl5/5.26/lib/%{perl_dir}/Encode/*
 %dir /opt/jposug/perl5/5.26/man
 %dir /opt/jposug/perl5/5.26/man/man3
 /opt/jposug/perl5/5.26/man/man3/Encode.3
@@ -1186,7 +1193,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir /opt/jposug/perl5/5.26/lib/Pod
 /opt/jposug/perl5/5.26/lib/Pod/Man.pm
-/opt/jposug/perl5/5.26/lib/Pod/ParseUtils.pm
 /opt/jposug/perl5/5.26/lib/Pod/ParseLink.pm
 %dir /opt/jposug/perl5/5.26/lib/Pod/Text
 /opt/jposug/perl5/5.26/lib/Pod/Text/*
@@ -1199,7 +1205,6 @@ rm -rf $RPM_BUILD_ROOT
 /opt/jposug/perl5/5.26/man/man3/Pod::InputObjects.3
 /opt/jposug/perl5/5.26/man/man3/Pod::Man.3
 /opt/jposug/perl5/5.26/man/man3/Pod::ParseLink.3
-/opt/jposug/perl5/5.26/man/man3/Pod::ParseUtils.3
 /opt/jposug/perl5/5.26/man/man3/Pod::Parser.3
 /opt/jposug/perl5/5.26/man/man3/Pod::Perldoc.3
 /opt/jposug/perl5/5.26/man/man3/Pod::Perldoc::BaseTo.3
@@ -1403,8 +1408,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/jposug/perl5/5.26/man
 %dir /opt/jposug/perl5/5.26/man/man1
 %dir /opt/jposug/perl5/5.26/man/man3
+/opt/jposug/perl5/5.26/man/man3/Pod::ParseUtils.3
 
 %changelog
+* Wed Feb 05 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix %files and some package versions
 * Sun Dec 22 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %files
 * Fri Dec 20 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

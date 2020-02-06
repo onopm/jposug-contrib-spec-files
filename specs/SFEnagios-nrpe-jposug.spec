@@ -29,7 +29,9 @@ Source1:	nagios-nrpe-jposug.xml
 Source2:	svc-nagios-nrpe-jposug
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
+BuildREquires:  jposug/library/security/libressl
 Requires:       jposug/diagnostic/nagios/common
+Requires:       jposug/library/security/libressl
 
 %description
 NRPE allows you to remotely execute Nagios plugins on other Linux/Unix machines. This allows you to monitor remote machine metrics (disk usage, CPU load, etc.). NRPE can also communicate with some of the Windows agent addons, so you can execute scripts and check metrics on remote Windows machines as well.
@@ -43,23 +45,31 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
      CPUS=1
 fi
 
+
+PATH=/opt/jposug/bin:/opt/jposug/sbin:${PATH}
 export CC='/usr/bin/gcc -m64'
 # export CFLAGS="%{optflags}"
 # export LDFLAGS="%{_ldflags}"
+export LDFLAGS="-L/opt/jposug/lib -L/lib/%{_arch64} -L/usr/lib/%{_arch64} -R/opt/jposug/lib -R/lib/%{_arch64} -R/usr/lib/%{_arch64}"
+export PKG_CONFIG_PATH=/opt/jposug/lib/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig
 
 ./configure \
-	--prefix=%{_datadir}/nagios \
-	--exec-prefix=%{_libdir}/nagios \
-	--with-init-dir=%{_initrddir} \
-	--with-lockfile=%{_localstatedir}/run/nagios-nrpe.pid \
-	--libdir=%{_libdir}/nagios \
-	--bindir=%{_sbindir} \
-	--sbindir=%{_libdir}/nagios/cgi-bin \
-	--libexecdir=%{_libdir}/nagios/plugins \
-	--sysconfdir=%{_sysconfdir}/nagios \
-	--localstatedir=%{_localstatedir}/log/nagios \
-	--datadir=%{_datadir}/nagios/html \
-        --enable-command-args
+        --prefix=%{_datadir}/nagios \
+        --exec-prefix=%{_libdir}/nagios \
+        --with-init-dir=%{_initrddir} \
+        --with-lockfile=%{_localstatedir}/run/nagios-nrpe.pid \
+        --libdir=%{_libdir}/nagios \
+        --bindir=%{_sbindir} \
+        --sbindir=%{_libdir}/nagios/cgi-bin \
+        --libexecdir=%{_libdir}/nagios/plugins \
+        --sysconfdir=%{_sysconfdir}/nagios \
+        --localstatedir=%{_localstatedir}/log/nagios \
+        --datadir=%{_datadir}/nagios/html \
+        --enable-command-args \
+        --with-opsys=solaris \
+        --with-init-type=smf11 \
+        --with-inetd-type=smf11 \
+        --with-ssl=/opt/jposug
 
 make -j$CPUS all
 
@@ -108,5 +118,7 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Feb 06 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use libressl
 * Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

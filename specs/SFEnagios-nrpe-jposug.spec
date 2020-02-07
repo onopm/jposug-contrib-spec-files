@@ -17,16 +17,14 @@
 %define _sysconfdir /etc
 %define _localstatedir /var
 
-Name:		SFEnagios-nrpe
+Name:           SFEnagios-nrpe
 IPS_package_name:        jposug/diagnostic/nagios/nrpe
-Version:	%{tarball_version}
-Summary:	NRPE - Nagios Remote Plugin Executor
-Group:		Applications/System
-License:	GPL
-URL:		http://www.nagios.org/
+Version:        %{tarball_version}
+Summary:        NRPE - Nagios Remote Plugin Executor
+Group:          Applications/System
+License:        GPL
+URL:            http://www.nagios.org/
 Source:         https://github.com/NagiosEnterprises/nrpe/archive/nrpe-%{tarball_version}.tar.gz
-Source1:	nagios-nrpe-jposug.xml
-Source2:	svc-nagios-nrpe-jposug
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildREquires:  jposug/library/security/libressl
@@ -45,11 +43,8 @@ if test "x$CPUS" = "x" -o $CPUS = 0; then
      CPUS=1
 fi
 
-
 PATH=/opt/jposug/bin:/opt/jposug/sbin:${PATH}
 export CC='/usr/bin/gcc -m64'
-# export CFLAGS="%{optflags}"
-# export LDFLAGS="%{_ldflags}"
 export LDFLAGS="-L/opt/jposug/lib -L/lib/%{_arch64} -L/usr/lib/%{_arch64} -R/opt/jposug/lib -R/lib/%{_arch64} -R/usr/lib/%{_arch64}"
 export PKG_CONFIG_PATH=/opt/jposug/lib/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig
 
@@ -81,9 +76,7 @@ mkdir -p %{buildroot}/%{_sysconfdir}/nagios
 install -m 0644 sample-config/nrpe.cfg %{buildroot}%{_sysconfdir}/nagios/nrpe.cfg
 
 install -d 0755 %{buildroot}%/var/svc/manifest/site
-install -m 0644 %{SOURCE1} %{buildroot}%/var/svc/manifest/site
-install -d 0755 %{buildroot}%/lib/svc/method
-install -m 0555 %{SOURCE2} %{buildroot}%/lib/svc/method
+install -m 0644 startup/solaris-init.xml %{buildroot}%/var/svc/manifest/site/nagios-nrpe-jposug.xml
 
 rm %{buildroot}%{_sbindir}/nrpe-uninstall
 
@@ -112,12 +105,10 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
 %class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/site/nagios-nrpe-jposug.xml
-%dir %attr (0755, root, bin) /lib/svc
-%dir %attr (0755, root, bin) /lib/svc/method
-%attr (0555, root, bin) /lib/svc/method/svc-nagios-nrpe-jposug
-
 
 %changelog
+* Fri Feb 07 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use generated SMF manifest instead of JPOUSG's
 * Thu Feb 06 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use libressl
 * Fri Feb 08 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

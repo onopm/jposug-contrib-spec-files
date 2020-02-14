@@ -51,7 +51,7 @@ perl encode module
 
 %package podlators
 IPS_Package_Name:       library/perl-5/podlators-526jposug
-IPS_Component_Version:  4.09
+IPS_Component_Version:  4.9
 Summary:        perl podlators module
 SUNW_BaseDir:   /opt/jposug
 Requires:       jposug/runtime/perl-%{version_suffix}
@@ -1411,6 +1411,8 @@ rm -rf $RPM_BUILD_ROOT
 /opt/jposug/perl5/5.26/man/man3/Pod::ParseUtils.3
 
 %changelog
+* Thu Feb 06 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- fix Bad version in podlators
 * Wed Feb 05 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix %files and some package versions
 * Sun Dec 22 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

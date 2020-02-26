@@ -1,0 +1,10 @@
+--- plugins/check_by_ssh.c.orig	2018-12-05 17:12:35.089616902 +0000
++++ plugins/check_by_ssh.c	2018-12-05 17:12:50.941107669 +0000
+@@ -220,7 +220,6 @@
+ 			timeout_interval = parse_timeout_string (optarg);
+ 			break;
+ 		case 'H':									/* host */
+-			host_or_die(optarg);
+ 			hostname = optarg;
+ 			break;
+ 		case 'p': /* port number */

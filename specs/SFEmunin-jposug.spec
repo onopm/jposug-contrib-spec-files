@@ -8,7 +8,7 @@
 
 Name:      munin
 IPS_package_name:        jposug/diagnostic/munin
-Version:   2.0.50
+Version:   2.0.56
 Summary:   Network-wide graphing framework (grapher/gatherer)
 License:   GPLv2 and Bitstream Vera
 Group:     System Environment/Daemons
@@ -390,6 +390,7 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 %dir %attr(0755, root, sys) /opt
 %dir %attr(0755, root, bin) /opt/jposug
 %dir %attr(0755, root, bin) %{_sbindir}
+%{_bindir}/munin-get
 %{_sbindir}/munin-run
 %{_sbindir}/munin-node
 %{_sbindir}/munin-node-configure
@@ -458,6 +459,8 @@ user ftpuser=false gcos-field="munin Reserved UID" username="munin" password=NP 
 # %endif
 
 %changelog
+* Wed Feb 26 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.0.56
 * Mon Oct 28 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.0.50
 * Tue Feb 26 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

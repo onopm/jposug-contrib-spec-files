@@ -29,16 +29,16 @@ Url:                    https://www.perl.org/
 %description
 Perl 5 is a highly capable, feature-rich programming language with over 30 years of development.
 
-Requires: library/perl-5/encode-530jposug
-Requires: library/perl-5/podlators-530jposug
-Requires: library/perl-5/extutils-makemaker-530jposug
-Requires: library/perl-5/io-compress-530jposug
-Requires: library/perl-5/json-pp-530jposug
-Requires: library/perl-5/extutils-parsexs-530jposug
-Requires: library/perl-5/pod-parser-530jposug
+Requires: jposug/library/perl-5/encode-530jposug
+Requires: jposug/library/perl-5/podlators-530jposug
+Requires: jposug/library/perl-5/extutils-makemaker-530jposug
+Requires: jposug/library/perl-5/io-compress-530jposug
+Requires: jposug/library/perl-5/json-pp-530jposug
+Requires: jposug/library/perl-5/extutils-parsexs-530jposug
+Requires: jposug/library/perl-5/pod-parser-530jposug
 
 %package encode
-IPS_Package_Name:       library/perl-5/encode-530jposug
+IPS_Package_Name:       jposug/library/perl-5/encode-530jposug
 IPS_Component_Version:  2.88
 Summary:        perl encode module
 SUNW_BaseDir:   /opt/jposug
@@ -48,7 +48,7 @@ Requires:       jposug/runtime/perl-%{version_suffix}
 perl encode module
 
 %package podlators
-IPS_Package_Name:       library/perl-5/podlators-530jposug
+IPS_Package_Name:       jposug/library/perl-5/podlators-530jposug
 IPS_Component_Version:  4.09
 Summary:        perl podlators module
 SUNW_BaseDir:   /opt/jposug
@@ -58,7 +58,7 @@ Requires:       jposug/runtime/perl-%{version_suffix}
 perl podlators module
 
 %package ext-mm
-IPS_Package_Name:       library/perl-5/extutils-makemaker-530jposug
+IPS_Package_Name:       jposug/library/perl-5/extutils-makemaker-530jposug
 IPS_Component_Version:  7.24
 Summary:        perl extutils-makemaker module
 SUNW_BaseDir:   /opt/jposug
@@ -69,7 +69,7 @@ perl extutils-makemaker module
 
 #
 %package io-compress
-IPS_Package_Name:       library/perl-5/io-compress-530jposug
+IPS_Package_Name:       jposug/library/perl-5/io-compress-530jposug
 IPS_Component_Version:  2.74
 Summary:        perl io-compress module
 SUNW_BaseDir:   /opt/jposug
@@ -80,7 +80,7 @@ perl io-compress module
 
 #
 %package json-pp
-IPS_Package_Name:       library/perl-5/json-pp-530jposug
+IPS_Package_Name:       jposug/library/perl-5/json-pp-530jposug
 IPS_Component_Version:  2.274
 Summary:        perl json-pp module
 SUNW_BaseDir:   /opt/jposug
@@ -91,7 +91,7 @@ perl json-pp module
 
 #
 %package ext-parsexs
-IPS_Package_Name:       library/perl-5/extutils-parsexs-530jposug
+IPS_Package_Name:       jposug/library/perl-5/extutils-parsexs-530jposug
 IPS_Component_Version:  3.34
 Summary:        perl extutils-parsexs module
 SUNW_BaseDir:   /opt/jposug
@@ -102,7 +102,7 @@ perl extutils-parsexs module
 
 #
 %package pod-parser
-IPS_Package_Name:       library/perl-5/pod-parser-530jposug
+IPS_Package_Name:       jposug/library/perl-5/pod-parser-530jposug
 IPS_Component_Version:  1.63
 Summary:        perl extutils-parsexs module
 SUNW_BaseDir:   /opt/jposug
@@ -1372,5 +1372,7 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/man/man3/Pod::ParseUtils.3
 
 %changelog
+* Tue Feb 25 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- modify IPS package names
 * Fri Feb 14 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - initial commit

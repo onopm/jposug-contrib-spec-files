@@ -1,0 +1,10 @@
+--- plugins-root/pst3.c.dist	2019-12-10 12:46:41.628121674 +0000
++++ plugins-root/pst3.c	2019-12-10 12:47:20.115268672 +0000
+@@ -122,6 +122,7 @@
+     int as_fd;
+     off_t argoff;
+     int i;
++    int j;
+     char *args;
+     char *procname;
+     char *ptr;

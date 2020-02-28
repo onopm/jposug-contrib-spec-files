@@ -1,14 +1,11 @@
 %include Solaris.inc
 
-%define build584 0
-%define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526 %( if [ -x /opt/jposug/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build530 %( if [ -x /opt/jposug/perl5/5.30/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 
 %define include_executable 0
-%define install_to_site_dir 1
+%define install_to_site_dir 0
 
 %define cpan_name Error
 %define sfe_cpan_name error
@@ -16,9 +13,9 @@
 
 Summary:               Error/exception handling in an OO-ish way
 Name:                  SFEperl-%{sfe_cpan_name}
-IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               0.17024
-IPS_component_version: 0.17024
+IPS_package_name:      jposug/library/perl-5/%{ips_cpan_name}
+Version:               0.17029
+IPS_component_version: 0.17029
 License:               perl_5
 URL:                   https://metacpan.org/pod/Error
 Source0:               http://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/Error-%{version}.tar.gz
@@ -27,87 +24,53 @@ BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 %description
 Error/exception handling in an OO-ish way
 
-%if %{build584}
-%package 584
-IPS_package_name: library/perl-5/%{ips_cpan_name}-584
+%if %{build526}
+%package 526jposug
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526jposug
 Summary:          Error/exception handling in an OO-ish way
-BuildRequires:    runtime/perl-584 = *
-BuildRequires:    library/perl-5/module-build-584
+BuildRequires:    runtime/perl-526jposug = *
+BuildRequires:    library/perl-5/extutils-makemaker-526jposug
+BuildRequires:    library/perl-5/io-526jposug
+BuildRequires:    library/perl-5/module-build-526jposug
+BuildRequires:    library/perl-5/pathtools-526jposug
 %if %{enable_test}
-BuildRequires:    library/perl-5/scalar-list-utils-584
+BuildRequires:    library/perl-5/test-simple-526jposug
+BuildRequires:    library/perl-5/carp-526jposug
+BuildRequires:    library/perl-5/exporter-526jposug
+BuildRequires:    library/perl-5/scalar-list-utils-526jposug
 %endif
-Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/scalar-list-utils-584
+Requires:         runtime/perl-526jposug = *
+# Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/carp-526jposug
+Requires:         library/perl-5/exporter-526jposug
+Requires:         library/perl-5/scalar-list-utils-526jposug
 
-%description 584
+%description 526jposug
 Error/exception handling in an OO-ish way
 %endif
 
-%if %{build510}
-%package 510
-IPS_package_name: library/perl-5/%{ips_cpan_name}-510
+%if %{build530}
+%package 530jposug
+IPS_package_name: jposug/library/perl-5/%{ips_cpan_name}-530jposug
 Summary:          Error/exception handling in an OO-ish way
-BuildRequires:    runtime/perl-510 = *
-BuildRequires:    library/perl-5/module-build-510
-BuildRequires:    library/perl-5/scalar-list-utils-510
-Requires:         runtime/perl-510 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/scalar-list-utils-510
-
-%description 510
-Error/exception handling in an OO-ish way
-%endif
-
-%if %{build512}
-%package 512
-IPS_package_name: library/perl-5/%{ips_cpan_name}-512
-Summary:          Error/exception handling in an OO-ish way
-BuildRequires:    runtime/perl-512 = *
-BuildRequires:    library/perl-5/module-build-512
+BuildRequires:    runtime/perl-530jposug = *
+BuildRequires:    jposug/library/perl-5/extutils-makemaker-530jposug
+BuildRequires:    jposug/library/perl-5/io-530jposug
+BuildRequires:    jposug/library/perl-5/module-build-530jposug
+BuildRequires:    jposug/library/perl-5/pathtools-530jposug
 %if %{enable_test}
-BuildRequires:    library/perl-5/scalar-list-utils-512
+BuildRequires:    library/perl-5/test-simple-530jposug
+BuildRequires:    jposug/library/perl-5/carp-530jposug
+BuildRequires:    jposug/library/perl-5/exporter-530jposug
+BuildRequires:    jposug/library/perl-5/scalar-list-utils-530jposug
 %endif
-Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/scalar-list-utils-512
+Requires:         runtime/perl-530jposug = *
+# Requires:         jposug/library/perl-5/%{ips_cpan_name}
+Requires:         jposug/library/perl-5/carp-530jposug
+Requires:         jposug/library/perl-5/exporter-530jposug
+Requires:         jposug/library/perl-5/scalar-list-utils-530jposug
 
-%description 512
-Error/exception handling in an OO-ish way
-%endif
-
-%if %{build516}
-%package 516
-IPS_package_name: library/perl-5/%{ips_cpan_name}-516
-Summary:          Error/exception handling in an OO-ish way
-BuildRequires:    runtime/perl-516 = *
-BuildRequires:    library/perl-5/module-build-516
-Requires:         library/perl-5/%{ips_cpan_name}
-%if %{enable_test}
-BuildRequires:    library/perl-5/scalar-list-utils-516
-%endif
-Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/scalar-list-utils-516
-
-%description 516
-Error/exception handling in an OO-ish way
-%endif
-
-%if %{build522}
-%package 522
-IPS_package_name: library/perl-5/%{ips_cpan_name}-522
-Summary:          Error/exception handling in an OO-ish way
-BuildRequires:    runtime/perl-522 = *
-BuildRequires:    library/perl-5/module-build-522
-%if %{enable_test}
-BuildRequires:    library/perl-5/scalar-list-utils-522
-%endif
-Requires:         runtime/perl-522 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/scalar-list-utils-522
-
-%description 522
+%description 530jposug
 Error/exception handling in an OO-ish way
 %endif
 
@@ -118,12 +81,16 @@ Error/exception handling in an OO-ish way
 
 %build
 build_with_makefile.pl_for() {
+    [ -f xdefine ] && rm -f xdefine
+    [ -d blib ] && rm -rf blib
     perl_ver=$1
     test=$2
-    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    prefix=/opt/jposug
+
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
-    vendor_dir="${perl_dir_prefix}/vendor_perl/${perl_ver}"
-    site_dir="/usr/perl5/site_perl/${perl_ver}"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
 
     export PERL5LIB=${vendor_dir}
 %if %{install_to_site_dir}
@@ -132,25 +99,26 @@ build_with_makefile.pl_for() {
     perl_libdir="${vendor_dir}"
 %endif
 
-    ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
+    ${bindir}/perl Makefile.PL PREFIX=${prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${perl_libdir}
 
-    export CC='cc -m32'
-    export LD='cc -m32'
-    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null || (export CC='cc -m64'; export LD='cc -m64')
+    export CC='cc -m64'
+    export LD='cc -m64'
     make CC="${CC}" LD="${LD}"
     [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
 build_with_build.pl_for() {
-    perl_ver=$1
     test=$2
-    perl_dir_prefix="/usr/perl5/${perl_ver}"
+    perl_ver=$1
+    prefix=/opt/jposug
+
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
-    vendor_dir="${perl_dir_prefix}/vendor_perl/${perl_ver}"
-    site_dir="/usr/perl5/site_perl/${perl_ver}"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
 
 %if %{install_to_site_dir}
     installdir='site'
@@ -169,17 +137,19 @@ build_with_build.pl_for() {
 
 modify_bin_dir() {
     perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/bin ]
+    prefix=/opt/jposug
+
+    if [ -d $RPM_BUILD_ROOT/${prefix}/bin ]
     then
-      [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
-      mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
+      [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver} ] || mkdir -p ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}
+      mv $RPM_BUILD_ROOT${prefix}/bin $RPM_BUILD_ROOT/${prefix}/perl5/${perl_ver}/bin
     fi
-      
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin ]
+
+    if [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin ]
     then
-        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
+        for i in ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s!/usr/bin/env perl!/usr/perl5/${perl-ver}/bin/perl!" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!${prefix}/perl5/${perl_ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
@@ -187,19 +157,21 @@ modify_bin_dir() {
 
 modify_man_dir() {
     perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man ]
+    prefix=/opt/jposug
+
+    if [ -d $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man ]
     then
         if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
         then
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         else
             mkdir -p $RPM_BUILD_ROOT%{_datadir}
-            mv $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            mv $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         fi
         if [ %{include_executable} -eq 0 ]
         then
-            rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+            rmdir $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}
         fi
 
     fi
@@ -220,24 +192,12 @@ build_for() {
 
 # To build without test, pass 'without_test' to build_for commaond.
 # like 'build_for version without_test'
-%if %{build584}
-build_for 5.8.4
+%if %{build526}
+build_for 5.26
 %endif
 
-%if %{build510}
-build_for 5.10
-%endif
-
-%if %{build512}
-build_for 5.12
-%endif
-
-%if %{build516}
-build_for 5.16
-%endif
-
-%if %{build522}
-build_for 5.22
+%if %{build530}
+build_for 5.30
 %endif
 
 %install
@@ -246,6 +206,18 @@ then
     mkdir -p $RPM_BUILD_ROOT%{_datadir}
     mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 fi
+
+if [ -d $RPM_BUILD_ROOT/opt/jposug/man ]
+then
+    if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
+    then
+        rm -rf $RPM_BUILD_ROOT/opt/jposug/man
+    else
+        [ -d $RPM_BUILD_ROOT%{_datadir} ] || mkdir -p $RPM_BUILD_ROOT%{_datadir}
+        mv $RPM_BUILD_ROOT/opt/jposug/man $RPM_BUILD_ROOT%{_datadir}
+    fi
+fi
+
 if [ -d $RPM_BUILD_ROOT%{_datadir}/man/man3 ]
 then
     mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
@@ -258,77 +230,37 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %{_datadir}/man
 
-%if %{build584}
-%files 584
+%if %{build526}
+%files 526jposug
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, sys) /opt
 %if %{install_to_site_dir}
-/usr/perl5/site_perl/5.8.4
+/opt/jposug/perl5/site_perl/5.26
 %else
-/usr/perl5/vendor_perl/5.8.4
+/opt/jposug/perl5/vendor_perl/5.26
 %endif
 %if %{include_executable}
-/usr/perl5/5.8.4
+/opt/jposug/perl5/5.26
 %endif
 %endif
 
-%if %{build510}
-%files 510
+%if %{build530}
+%files 530jposug
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
+%dir %attr (0755, root, sys) /opt
 %if %{install_to_site_dir}
-/usr/perl5/site_perl/5.10
+/opt/jposug/perl5/site_perl/5.30
 %else
-/usr/perl5/vendor_perl/5.10
+/opt/jposug/perl5/vendor_perl/5.30
 %endif
 %if %{include_executable}
-/usr/perl5/5.1.0
-%endif
-%endif
-
-%if %{build512}
-%files 512
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-%if %{install_to_site_dir}
-/usr/perl5/site_perl/5.12
-%else
-/usr/perl5/vendor_perl/5.12
-%endif
-%if %{include_executable}
-/usr/perl5/5.12
-%endif
-%endif
-
-%if %{build516}
-%files 516
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-%if %{install_to_site_dir}
-/usr/perl5/site_perl/5.16
-%else
-/usr/perl5/vendor_perl/5.16
-%endif
-%if %{include_executable}
-/usr/perl5/5.16
-%endif
-%endif
-
-%if %{build522}
-%files 522
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-%if %{install_to_site_dir}
-/usr/perl5/site_perl/5.22
-%else
-/usr/perl5/vendor_perl/5.22
-%endif
-%if %{include_executable}
-/usr/perl5/5.22
+/opt/jposug/perl5/5.30
 %endif
 %endif
 
 %changelog
+* Fri Feb 28 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.17029 and build only for JPOSUG Perl packages
 * Mon Aug 28 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - fix site_dir path
 * Thu Jun 15 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

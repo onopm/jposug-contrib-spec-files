@@ -14,7 +14,7 @@
 
 Name:           SFEnagios-plugins
 IPS_package_name:        jposug/diagnostic/nagios/plugins
-Version:        2.3.2
+Version:        2.3.3
 Summary:        Nagios plugins
 Group:          Applications/System
 License:        GPLv3
@@ -269,6 +269,8 @@ rm -rf %{buildroot}
 %attr (0555, root, bin) %{_libdir}/nagios/plugins/check_fping
 
 %changelog
+* Thu Mar 12 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 2.3.3
 * Wed Feb 26 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 2.3.2
 * Wed Dec 11 2019 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

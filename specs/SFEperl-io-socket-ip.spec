@@ -1,11 +1,11 @@
 %include Solaris.inc
 
-%define build584 0
-%define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build520 %( if [ -x /usr/perl5/5.20/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526 %( if [ -x /opt/jposug/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build530 %( if [ -x /opt/jposug/perl5/5.30/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
+
 %define include_executable 0
+%define install_to_site_dir 0
 
 %define cpan_name IO-Socket-IP
 %define sfe_cpan_name io-socket-ip
@@ -13,9 +13,9 @@
 
 Summary:               Family-neutral IP socket supporting both IPv4 and IPv6
 Name:                  SFEperl-%{sfe_cpan_name}
-IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               0.37
-IPS_component_version: 0.37
+IPS_package_name:      jposug/library/perl-5/%{ips_cpan_name}
+Version:               0.39
+IPS_component_version: 0.39
 License:               perl_5
 URL:                   https://metacpan.org/pod/IO::Socket::IP
 Source0:               http://cpan.metacpan.org/authors/id/P/PE/PEVANS/IO-Socket-IP-%{version}.tar.gz
@@ -24,131 +24,120 @@ BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 %description
 Family-neutral IP socket supporting both IPv4 and IPv6
 
-%if %{build584}
-%package 584
-IPS_package_name: library/perl-5/%{ips_cpan_name}-584
+%if %{build526}
+%package 526jposug
+IPS_package_name: library/perl-5/%{ips_cpan_name}-526jposug
 Summary:          Family-neutral IP socket supporting both IPv4 and IPv6
-BuildRequires:    runtime/perl-584 = *
-BuildRequires:    library/perl-5/test-simple-584
-Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/io-584
-Requires:         library/perl-5/socket-584
+BuildRequires:    runtime/perl-526jposug = *
+%if %{enable_test}
+BuildRequires:    library/perl-5/test-simple-526jposug
+BuildRequires:    library/perl-5/io-526jposug
+BuildRequires:    library/perl-5/socket-526jposug
+%endif
+Requires:         runtime/perl-526jposug = *
+# Requires:         library/perl-5/%{ips_cpan_name}
+Requires:         library/perl-5/io-526jposug
+Requires:         library/perl-5/socket-526jposug
 
-%description 584
+%description 526jposug
 Family-neutral IP socket supporting both IPv4 and IPv6
 %endif
 
-%if %{build510}
-%package 510
-IPS_package_name: library/perl-5/%{ips_cpan_name}-510
+%if %{build530}
+%package 530jposug
+IPS_package_name: jposug/library/perl-5/%{ips_cpan_name}-530jposug
 Summary:          Family-neutral IP socket supporting both IPv4 and IPv6
-BuildRequires:    runtime/perl-510 = *
-BuildRequires:    library/perl-5/test-simple-510
-Requires:         runtime/perl-510 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/io-510
-Requires:         library/perl-5/socket-510
-
-%description 510
-Family-neutral IP socket supporting both IPv4 and IPv6
+BuildRequires:    runtime/perl-530jposug = *
+%if %{enable_test}
+BuildRequires:    library/perl-5/test-simple-530jposug
+BuildRequires:    jposug/library/perl-5/io-530jposug
+BuildRequires:    jposug/library/perl-5/socket-530jposug
 %endif
+Requires:         runtime/perl-530jposug = *
+# Requires:         jposug/library/perl-5/%{ips_cpan_name}
+Requires:         jposug/library/perl-5/io-530jposug
+Requires:         jposug/library/perl-5/socket-530jposug
 
-%if %{build512}
-%package 512
-IPS_package_name: library/perl-5/%{ips_cpan_name}-512
-Summary:          Family-neutral IP socket supporting both IPv4 and IPv6
-BuildRequires:    runtime/perl-512 = *
-BuildRequires:    library/perl-5/test-simple-512
-Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/io-512
-Requires:         library/perl-5/socket-512
-
-%description 512
-Family-neutral IP socket supporting both IPv4 and IPv6
-%endif
-
-%if %{build516}
-%package 516
-IPS_package_name: library/perl-5/%{ips_cpan_name}-516
-Summary:          Family-neutral IP socket supporting both IPv4 and IPv6
-BuildRequires:    runtime/perl-516 = *
-BuildRequires:    library/perl-5/test-simple-516
-Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/io-516
-Requires:         library/perl-5/socket-516
-
-%description 516
-Family-neutral IP socket supporting both IPv4 and IPv6
-%endif
-
-%if %{build520}
-%package 520
-IPS_package_name: library/perl-5/%{ips_cpan_name}-520
-Summary:          Family-neutral IP socket supporting both IPv4 and IPv6
-BuildRequires:    runtime/perl-520 = *
-BuildRequires:    library/perl-5/test-simple-520
-Requires:         runtime/perl-520 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/io-520
-Requires:         library/perl-5/socket-520
-
-%description 520
+%description 530jposug
 Family-neutral IP socket supporting both IPv4 and IPv6
 %endif
 
 
 %prep
 %setup -q -n %{cpan_name}-%{version}
-rm -rf %{buildroot}
+[ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
 build_with_makefile.pl_for() {
+    [ -f xdefine ] && rm -f xdefine
+    [ -d blib ] && rm -rf blib
     perl_ver=$1
     test=$2
-    bindir="/usr/perl5/${perl_ver}/bin"
-    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+    prefix=/opt/jposug
+
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
+    bindir="${perl_dir_prefix}/bin"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
 
     export PERL5LIB=${vendor_dir}
-    ${bindir}/perl Makefile.PL PREFIX=%{_prefix} \
+%if %{install_to_site_dir}
+    perl_libdir="${site_dir}"
+%else
+    perl_libdir="${vendor_dir}"
+%endif
+
+    ${bindir}/perl Makefile.PL PREFIX=${prefix} \
                    DESTDIR=$RPM_BUILD_ROOT \
-                   LIB=${vendor_dir}
-    make
-    [ x${test} = 'xwithout_test' ] || make test
+                   LIB=${perl_libdir}
+
+    export CC='cc -m64'
+    export LD='cc -m64'
+    make CC="${CC}" LD="${LD}"
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
 }
 
 build_with_build.pl_for() {
-    perl_ver=$1
     test=$2
-    bindir="/usr/perl5/${perl_ver}/bin"
-    vendor_dir="/usr/perl5/vendor_perl/${perl_ver}"
+    perl_ver=$1
+    prefix=/opt/jposug
 
+    perl_dir_prefix="${prefix}/perl5/${perl_ver}"
+    bindir="${perl_dir_prefix}/bin"
+    vendor_dir="${prefix}/perl5/vendor_perl/${perl_ver}"
+    site_dir="${prefix}/perl5/site_perl/${perl_ver}"
+
+%if %{install_to_site_dir}
+    installdir='site'
+%else
+    installdir='vendor'
+%endif
     export PERL5LIB=${vendor_dir}
     ${bindir}/perl Build.PL \
-                   --installdirs vendor \
+                   --installdirs ${installdir} \
                    --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build
-    [ x${test} = 'xwithout_test' ] || ${bindir}/perl ./Build test
+    [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || ${bindir}/perl ./Build test
     ${bindir}/perl ./Build install --destdir $RPM_BUILD_ROOT
     ${bindir}/perl ./Build clean
 }
 
 modify_bin_dir() {
     perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/bin ]
+    prefix=/opt/jposug
+
+    if [ -d $RPM_BUILD_ROOT/${prefix}/bin ]
     then
-      [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver} ] || mkdir -p $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
-      mv $RPM_BUILD_ROOT/usr/bin $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin
+      [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver} ] || mkdir -p ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}
+      mv $RPM_BUILD_ROOT${prefix}/bin $RPM_BUILD_ROOT/${prefix}/perl5/${perl_ver}/bin
     fi
-      
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin ]
+
+    if [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin ]
     then
-        for i in $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/bin/*
+        for i in ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin/*
         do
-            sed -i.bak -e "s/\/usr\/bin\/env ruby/\/usr\/perl5\/${perl-ver}\/bin\/ruby/" ${i}
+            sed -i.bak -e "s!/usr/bin/env perl!${prefix}/perl5/${perl_ver}/bin/perl!" ${i}
             [ -f ${i}.bak] || rm -f ${i}.bak
         done
     fi
@@ -156,19 +145,21 @@ modify_bin_dir() {
 
 modify_man_dir() {
     perl_ver=$1
-    if [ -d $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man ]
+    prefix=/opt/jposug
+
+    if [ -d $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man ]
     then
         if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
         then
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         else
             mkdir -p $RPM_BUILD_ROOT%{_datadir}
-            mv $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
-            rm -rf $RPM_BUILD_ROOT/usr/perl5/${perl_ver}/man
+            mv $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man $RPM_BUILD_ROOT%{_datadir}/
+            rm -rf $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man
         fi
         if [ %{include_executable} -eq 0 ]
         then
-            rmdir $RPM_BUILD_ROOT/usr/perl5/${perl_ver}
+            rmdir $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}
         fi
 
     fi
@@ -189,24 +180,12 @@ build_for() {
 
 # To build without test, pass 'without_test' to build_for commaond.
 # like 'build_for version without_test'
-%if %{build584}
-build_for 5.8.4
+%if %{build526}
+build_for 5.26
 %endif
 
-%if %{build510}
-build_for 5.10
-%endif
-
-%if %{build512}
-build_for 5.12
-%endif
-
-%if %{build516}
-build_for 5.16
-%endif
-
-%if %{build520}
-build_for 5.20
+%if %{build530}
+build_for 5.30
 %endif
 
 %install
@@ -215,6 +194,18 @@ then
     mkdir -p $RPM_BUILD_ROOT%{_datadir}
     mv $RPM_BUILD_ROOT%{_prefix}/man $RPM_BUILD_ROOT%{_datadir}
 fi
+
+if [ -d $RPM_BUILD_ROOT/opt/jposug/man ]
+then
+    if [ -d $RPM_BUILD_ROOT%{_datadir}/man ]
+    then
+        rm -rf $RPM_BUILD_ROOT/opt/jposug/man
+    else
+        [ -d $RPM_BUILD_ROOT%{_datadir} ] || mkdir -p $RPM_BUILD_ROOT%{_datadir}
+        mv $RPM_BUILD_ROOT/opt/jposug/man $RPM_BUILD_ROOT%{_datadir}
+    fi
+fi
+
 if [ -d $RPM_BUILD_ROOT%{_datadir}/man/man3 ]
 then
     mv $RPM_BUILD_ROOT%{_datadir}/man/man3 $RPM_BUILD_ROOT%{_datadir}/man/man3perl
@@ -227,58 +218,37 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %{_datadir}/man
 
-%if %{build584}
-%files 584
+%if %{build526}
+%files 526jposug
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.8.4
+%dir %attr (0755, root, sys) /opt
+%if %{install_to_site_dir}
+/opt/jposug/perl5/site_perl/5.26
+%else
+/opt/jposug/perl5/vendor_perl/5.26
+%endif
 %if %{include_executable}
-/usr/perl5/5.8.4
+/opt/jposug/perl5/5.26
 %endif
 %endif
 
-%if %{build510}
-%files 510
+%if %{build530}
+%files 530jposug
 %defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.10
+%dir %attr (0755, root, sys) /opt
+%if %{install_to_site_dir}
+/opt/jposug/perl5/site_perl/5.30
+%else
+/opt/jposug/perl5/vendor_perl/5.30
+%endif
 %if %{include_executable}
-/usr/perl5/5.1.0
+/opt/jposug/perl5/5.30
 %endif
 %endif
-
-%if %{build512}
-%files 512
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.12
-%if %{include_executable}
-/usr/perl5/5.12
-%endif
-%endif
-
-%if %{build516}
-%files 516
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.16
-%if %{include_executable}
-/usr/perl5/5.16
-%endif
-%endif
-
-%if %{build520}
-%files 520
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-/usr/perl5/vendor_perl/5.20
-%if %{include_executable}
-/usr/perl5/5.20
-%endif
-%endif
-
 
 %changelog
+* Wed Mar 18 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 0.39 and only build for JPOSUG perl packages
 * Thu Dec 03 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - not build package for perl-584, build package for perl-510 and fix Requires
 * Mon Nov 02 2015 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

@@ -1,12 +1,7 @@
 %include Solaris.inc
 
-%define build584 0
-%define build510 %( if [ -x /usr/perl5/5.10/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build512 %( if [ -x /usr/perl5/5.12/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build516 %( if [ -x /usr/perl5/5.16/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build522 %( if [ -x /usr/perl5/5.22/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build526 %( if [ -x /usr/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
-%define build526jposug %( if [ -x /opt/jposug/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build526 %( if [ -x /opt/jposug/perl5/5.26/bin/perl ]; then echo '1'; else echo '0'; fi)
+%define build530 %( if [ -x /opt/jposug/perl5/5.30/bin/perl ]; then echo '1'; else echo '0'; fi)
 %define enable_test %( if [ "x${PERL_DISABLE_TEST}" = 'xtrue' ]; then echo '0'; else echo '1'; fi )
 
 %define include_executable 0
@@ -18,263 +13,18 @@
 
 Summary:               Uniform Resource Identifiers (absolute and relative)
 Name:                  SFEperl-%{sfe_cpan_name}
-IPS_package_name:      library/perl-5/%{ips_cpan_name}
-Version:               1.74
-IPS_component_version: 1.74
+IPS_package_name:      jposug/library/perl-5/%{ips_cpan_name}
+Version:               1.76
+IPS_component_version: 1.76
 License:               perl_5
 URL:                   https://metacpan.org/pod/URI
-Source0:               http://cpan.metacpan.org/authors/id/E/ET/ETHER/URI-%{version}.tar.gz
+Source0:               http://cpan.metacpan.org/authors/id/O/OA/OALDERS/URI-%{version}.tar.gz
 BuildRoot:             %{_tmppath}/%{name}-%{version}-build
 
 %description
 Uniform Resource Identifiers (absolute and relative)
 
-%if %{build584}
-%package 584
-IPS_package_name: library/perl-5/%{ips_cpan_name}-584
-Summary:          Uniform Resource Identifiers (absolute and relative)
-BuildRequires:    runtime/perl-584 = *
-BuildRequires:    library/perl-5/cpan-meta-584
-BuildRequires:    library/perl-5/extutils-makemaker-584
-BuildRequires:    library/perl-5/file-temp-584
-BuildRequires:    library/perl-5/json-pp-584
-BuildRequires:    library/perl-5/pathtools-584
-%if %{enable_test}
-BuildRequires:    library/perl-5/test-needs-584
-BuildRequires:    library/perl-5/test-simple-584
-BuildRequires:    library/perl-5/carp-584
-BuildRequires:    library/perl-5/constant-584
-BuildRequires:    library/perl-5/data-dumper-584
-BuildRequires:    library/perl-5/encode-584
-BuildRequires:    library/perl-5/exporter-584
-BuildRequires:    library/perl-5/mime-base64-584
-BuildRequires:    library/perl-5/net-domain-584
-BuildRequires:    library/perl-5/parent-584
-BuildRequires:    library/perl-5/pathtools-584
-BuildRequires:    library/perl-5/scalar-list-utils-584
-%endif
-Requires:         runtime/perl-584 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/carp-584
-Requires:         library/perl-5/constant-584
-Requires:         library/perl-5/data-dumper-584
-Requires:         library/perl-5/encode-584
-Requires:         library/perl-5/exporter-584
-Requires:         library/perl-5/mime-base64-584
-Requires:         library/perl-5/net-domain-584
-Requires:         library/perl-5/parent-584
-Requires:         library/perl-5/pathtools-584
-Requires:         library/perl-5/scalar-list-utils-584
-
-%description 584
-Uniform Resource Identifiers (absolute and relative)
-%endif
-
-%if %{build510}
-%package 510
-IPS_package_name: library/perl-5/%{ips_cpan_name}-510
-Summary:          Uniform Resource Identifiers (absolute and relative)
-BuildRequires:    runtime/perl-510 = *
-BuildRequires:    library/perl-5/cpan-meta-510
-BuildRequires:    library/perl-5/extutils-makemaker-510
-BuildRequires:    library/perl-5/file-temp-510
-BuildRequires:    library/perl-5/json-pp-510
-BuildRequires:    library/perl-5/pathtools-510
-BuildRequires:    library/perl-5/test-needs-510
-BuildRequires:    library/perl-5/test-simple-510
-BuildRequires:    library/perl-5/carp-510
-BuildRequires:    library/perl-5/constant-510
-BuildRequires:    library/perl-5/data-dumper-510
-BuildRequires:    library/perl-5/encode-510
-BuildRequires:    library/perl-5/exporter-510
-BuildRequires:    library/perl-5/mime-base64-510
-BuildRequires:    library/perl-5/net-domain-510
-BuildRequires:    library/perl-5/parent-510
-BuildRequires:    library/perl-5/pathtools-510
-BuildRequires:    library/perl-5/scalar-list-utils-510
-Requires:         runtime/perl-510 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/carp-510
-Requires:         library/perl-5/constant-510
-Requires:         library/perl-5/data-dumper-510
-Requires:         library/perl-5/encode-510
-Requires:         library/perl-5/exporter-510
-Requires:         library/perl-5/mime-base64-510
-Requires:         library/perl-5/net-domain-510
-Requires:         library/perl-5/parent-510
-Requires:         library/perl-5/pathtools-510
-Requires:         library/perl-5/scalar-list-utils-510
-
-%description 510
-Uniform Resource Identifiers (absolute and relative)
-%endif
-
-%if %{build512}
-%package 512
-IPS_package_name: library/perl-5/%{ips_cpan_name}-512
-Summary:          Uniform Resource Identifiers (absolute and relative)
-BuildRequires:    runtime/perl-512 = *
-BuildRequires:    library/perl-5/cpan-meta-512
-BuildRequires:    library/perl-5/extutils-makemaker-512
-BuildRequires:    library/perl-5/file-temp-512
-BuildRequires:    library/perl-5/json-pp-512
-BuildRequires:    library/perl-5/pathtools-512
-%if %{enable_test}
-BuildRequires:    library/perl-5/test-needs-512
-BuildRequires:    library/perl-5/test-simple-512
-BuildRequires:    library/perl-5/carp-512
-BuildRequires:    library/perl-5/constant-512
-BuildRequires:    library/perl-5/data-dumper-512
-BuildRequires:    library/perl-5/encode-512
-BuildRequires:    library/perl-5/exporter-512
-BuildRequires:    library/perl-5/mime-base64-512
-BuildRequires:    library/perl-5/net-domain-512
-BuildRequires:    library/perl-5/parent-512
-BuildRequires:    library/perl-5/pathtools-512
-BuildRequires:    library/perl-5/scalar-list-utils-512
-%endif
-Requires:         runtime/perl-512 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/carp-512
-Requires:         library/perl-5/constant-512
-Requires:         library/perl-5/data-dumper-512
-Requires:         library/perl-5/encode-512
-Requires:         library/perl-5/exporter-512
-Requires:         library/perl-5/mime-base64-512
-Requires:         library/perl-5/net-domain-512
-Requires:         library/perl-5/parent-512
-Requires:         library/perl-5/pathtools-512
-Requires:         library/perl-5/scalar-list-utils-512
-
-%description 512
-Uniform Resource Identifiers (absolute and relative)
-%endif
-
-%if %{build516}
-%package 516
-IPS_package_name: library/perl-5/%{ips_cpan_name}-516
-Summary:          Uniform Resource Identifiers (absolute and relative)
-BuildRequires:    runtime/perl-516 = *
-BuildRequires:    library/perl-5/cpan-meta-516
-BuildRequires:    library/perl-5/extutils-makemaker-516
-BuildRequires:    library/perl-5/file-temp-516
-BuildRequires:    library/perl-5/json-pp-516
-BuildRequires:    library/perl-5/pathtools-516
-Requires:         library/perl-5/%{ips_cpan_name}
-%if %{enable_test}
-BuildRequires:    library/perl-5/test-needs-516
-BuildRequires:    library/perl-5/test-simple-516
-BuildRequires:    library/perl-5/carp-516
-BuildRequires:    library/perl-5/constant-516
-BuildRequires:    library/perl-5/data-dumper-516
-BuildRequires:    library/perl-5/encode-516
-BuildRequires:    library/perl-5/exporter-516
-BuildRequires:    library/perl-5/mime-base64-516
-BuildRequires:    library/perl-5/net-domain-516
-BuildRequires:    library/perl-5/parent-516
-BuildRequires:    library/perl-5/pathtools-516
-BuildRequires:    library/perl-5/scalar-list-utils-516
-%endif
-Requires:         runtime/perl-516 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/carp-516
-Requires:         library/perl-5/constant-516
-Requires:         library/perl-5/data-dumper-516
-Requires:         library/perl-5/encode-516
-Requires:         library/perl-5/exporter-516
-Requires:         library/perl-5/mime-base64-516
-Requires:         library/perl-5/net-domain-516
-Requires:         library/perl-5/parent-516
-Requires:         library/perl-5/pathtools-516
-Requires:         library/perl-5/scalar-list-utils-516
-
-%description 516
-Uniform Resource Identifiers (absolute and relative)
-%endif
-
-%if %{build522}
-%package 522
-IPS_package_name: library/perl-5/%{ips_cpan_name}-522
-Summary:          Uniform Resource Identifiers (absolute and relative)
-BuildRequires:    runtime/perl-522 = *
-BuildRequires:    library/perl-5/cpan-meta-522
-BuildRequires:    library/perl-5/extutils-makemaker-522
-BuildRequires:    library/perl-5/file-temp-522
-BuildRequires:    library/perl-5/json-pp-522
-BuildRequires:    library/perl-5/pathtools-522
-%if %{enable_test}
-BuildRequires:    library/perl-5/test-needs-522
-BuildRequires:    library/perl-5/test-simple-522
-BuildRequires:    library/perl-5/carp-522
-BuildRequires:    library/perl-5/constant-522
-BuildRequires:    library/perl-5/data-dumper-522
-BuildRequires:    library/perl-5/encode-522
-BuildRequires:    library/perl-5/exporter-522
-BuildRequires:    library/perl-5/mime-base64-522
-BuildRequires:    library/perl-5/net-domain-522
-BuildRequires:    library/perl-5/parent-522
-BuildRequires:    library/perl-5/pathtools-522
-BuildRequires:    library/perl-5/scalar-list-utils-522
-%endif
-Requires:         runtime/perl-522 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/carp-522
-Requires:         library/perl-5/constant-522
-Requires:         library/perl-5/data-dumper-522
-Requires:         library/perl-5/encode-522
-Requires:         library/perl-5/exporter-522
-Requires:         library/perl-5/mime-base64-522
-Requires:         library/perl-5/net-domain-522
-Requires:         library/perl-5/parent-522
-Requires:         library/perl-5/pathtools-522
-Requires:         library/perl-5/scalar-list-utils-522
-
-%description 522
-Uniform Resource Identifiers (absolute and relative)
-%endif
-
 %if %{build526}
-%package 526
-IPS_package_name: library/perl-5/%{ips_cpan_name}-526
-Summary:          Uniform Resource Identifiers (absolute and relative)
-BuildRequires:    runtime/perl-526 = *
-BuildRequires:    library/perl-5/cpan-meta-526
-BuildRequires:    library/perl-5/extutils-makemaker-526
-BuildRequires:    library/perl-5/file-temp-526
-BuildRequires:    library/perl-5/json-pp-526
-BuildRequires:    library/perl-5/pathtools-526
-%if %{enable_test}
-BuildRequires:    library/perl-5/test-needs-526
-BuildRequires:    library/perl-5/test-simple-526
-BuildRequires:    library/perl-5/carp-526
-BuildRequires:    library/perl-5/constant-526
-BuildRequires:    library/perl-5/data-dumper-526
-BuildRequires:    library/perl-5/encode-526
-BuildRequires:    library/perl-5/exporter-526
-BuildRequires:    library/perl-5/mime-base64-526
-BuildRequires:    library/perl-5/net-domain-526
-BuildRequires:    library/perl-5/parent-526
-BuildRequires:    library/perl-5/pathtools-526
-BuildRequires:    library/perl-5/scalar-list-utils-526
-%endif
-Requires:         runtime/perl-526 = *
-Requires:         library/perl-5/%{ips_cpan_name}
-Requires:         library/perl-5/carp-526
-Requires:         library/perl-5/constant-526
-Requires:         library/perl-5/data-dumper-526
-Requires:         library/perl-5/encode-526
-Requires:         library/perl-5/exporter-526
-Requires:         library/perl-5/mime-base64-526
-Requires:         library/perl-5/net-domain-526
-Requires:         library/perl-5/parent-526
-Requires:         library/perl-5/pathtools-526
-Requires:         library/perl-5/scalar-list-utils-526
-
-%description 526
-Uniform Resource Identifiers (absolute and relative)
-%endif
-
-%if %{build526jposug}
 %package 526jposug
 IPS_package_name: library/perl-5/%{ips_cpan_name}-526jposug
 Summary:          Uniform Resource Identifiers (absolute and relative)
@@ -293,20 +43,18 @@ BuildRequires:    library/perl-5/data-dumper-526jposug
 BuildRequires:    library/perl-5/encode-526jposug
 BuildRequires:    library/perl-5/exporter-526jposug
 BuildRequires:    library/perl-5/mime-base64-526jposug
-BuildRequires:    library/perl-5/net-domain-526jposug
 BuildRequires:    library/perl-5/parent-526jposug
 BuildRequires:    library/perl-5/pathtools-526jposug
 BuildRequires:    library/perl-5/scalar-list-utils-526jposug
 %endif
 Requires:         runtime/perl-526jposug = *
-Requires:         library/perl-5/%{ips_cpan_name}
+# Requires:         library/perl-5/%{ips_cpan_name}
 Requires:         library/perl-5/carp-526jposug
 Requires:         library/perl-5/constant-526jposug
 Requires:         library/perl-5/data-dumper-526jposug
 Requires:         library/perl-5/encode-526jposug
 Requires:         library/perl-5/exporter-526jposug
 Requires:         library/perl-5/mime-base64-526jposug
-Requires:         library/perl-5/net-domain-526jposug
 Requires:         library/perl-5/parent-526jposug
 Requires:         library/perl-5/pathtools-526jposug
 Requires:         library/perl-5/scalar-list-utils-526jposug
@@ -315,21 +63,57 @@ Requires:         library/perl-5/scalar-list-utils-526jposug
 Uniform Resource Identifiers (absolute and relative)
 %endif
 
+%if %{build530}
+%package 530jposug
+IPS_package_name: jposug/library/perl-5/%{ips_cpan_name}-530jposug
+Summary:          Uniform Resource Identifiers (absolute and relative)
+BuildRequires:    runtime/perl-530jposug = *
+BuildRequires:    jposug/library/perl-5/cpan-meta-530jposug
+BuildRequires:    jposug/library/perl-5/extutils-makemaker-530jposug
+BuildRequires:    jposug/library/perl-5/file-temp-530jposug
+BuildRequires:    jposug/library/perl-5/json-pp-530jposug
+BuildRequires:    jposug/library/perl-5/pathtools-530jposug
+%if %{enable_test}
+BuildRequires:    library/perl-5/test-needs-530jposug
+BuildRequires:    library/perl-5/test-simple-530jposug
+BuildRequires:    jposug/library/perl-5/carp-530jposug
+BuildRequires:    jposug/library/perl-5/constant-530jposug
+BuildRequires:    jposug/library/perl-5/data-dumper-530jposug
+BuildRequires:    jposug/library/perl-5/encode-530jposug
+BuildRequires:    jposug/library/perl-5/exporter-530jposug
+BuildRequires:    jposug/library/perl-5/mime-base64-530jposug
+BuildRequires:    jposug/library/perl-5/parent-530jposug
+BuildRequires:    jposug/library/perl-5/pathtools-530jposug
+BuildRequires:    jposug/library/perl-5/scalar-list-utils-530jposug
+%endif
+Requires:         runtime/perl-530jposug = *
+# Requires:         jposug/library/perl-5/%{ips_cpan_name}
+Requires:         jposug/library/perl-5/carp-530jposug
+Requires:         jposug/library/perl-5/constant-530jposug
+Requires:         jposug/library/perl-5/data-dumper-530jposug
+Requires:         jposug/library/perl-5/encode-530jposug
+Requires:         jposug/library/perl-5/exporter-530jposug
+Requires:         jposug/library/perl-5/mime-base64-530jposug
+Requires:         jposug/library/perl-5/parent-530jposug
+Requires:         jposug/library/perl-5/pathtools-530jposug
+Requires:         jposug/library/perl-5/scalar-list-utils-530jposug
+
+%description 530jposug
+Uniform Resource Identifiers (absolute and relative)
+%endif
+
+
 %prep
 %setup -q -n %{cpan_name}-%{version}
 [ -d %{buildroot} ] && rm -rf %{buildroot}
 
 %build
 build_with_makefile.pl_for() {
+    [ -f xdefine ] && rm -f xdefine
+    [ -d blib ] && rm -rf blib
+    perl_ver=$1
     test=$2
-    if [ "x${1}" = 'x5.26jposug' ]
-    then
-        perl_ver=$(echo $1 | sed -e 's/jposug//')
-        prefix=/opt/jposug
-    else
-        perl_ver=$1
-        prefix=/usr
-    fi
+    prefix=/opt/jposug
 
     perl_dir_prefix="${prefix}/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
@@ -347,15 +131,8 @@ build_with_makefile.pl_for() {
                    DESTDIR=$RPM_BUILD_ROOT \
                    LIB=${perl_libdir}
 
-    echo ${perl_ver} | egrep '5\.(84|12)' > /dev/null && bin64=0 || bin64=1
-    if [ ${bin64} -eq 0 ]
-    then
-        export CC='cc -m32'
-        export LD='cc -m32'
-    else
-        export CC='cc -m64'
-        export LD='cc -m64'
-    fi
+    export CC='cc -m64'
+    export LD='cc -m64'
     make CC="${CC}" LD="${LD}"
     [ "x${PERL_DISABLE_TEST}" = 'xtrue' ] || [ "x${test}" = 'xwithout_test' ] || make test CC="${CC}" "LD=${LD}"
     make pure_install
@@ -363,14 +140,8 @@ build_with_makefile.pl_for() {
 
 build_with_build.pl_for() {
     test=$2
-    if [ "x${1}" = 'x5.26jposug' ]
-    then
-        perl_ver=$(echo $1 | sed -e 's/jposug//')
-        prefix=/opt/jposug
-    else
-        perl_ver=$1
-        prefix=/usr
-    fi
+    perl_ver=$1
+    prefix=/opt/jposug
 
     perl_dir_prefix="${prefix}/perl5/${perl_ver}"
     bindir="${perl_dir_prefix}/bin"
@@ -393,21 +164,15 @@ build_with_build.pl_for() {
 }
 
 modify_bin_dir() {
-    if [ "x${1}" = 'x5.26jposug' ]
-    then
-        perl_ver=$(echo $1 | sed -e 's/jposug//')
-        prefix=/opt/jposug
-    else
-        perl_ver=$1
-        prefix=/usr
-    fi
+    perl_ver=$1
+    prefix=/opt/jposug
 
     if [ -d $RPM_BUILD_ROOT/${prefix}/bin ]
     then
       [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver} ] || mkdir -p ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}
       mv $RPM_BUILD_ROOT${prefix}/bin $RPM_BUILD_ROOT/${prefix}/perl5/${perl_ver}/bin
     fi
-      
+
     if [ -d ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin ]
     then
         for i in ${RPM_BUILD_ROOT}${prefix}/perl5/${perl_ver}/bin/*
@@ -419,14 +184,8 @@ modify_bin_dir() {
 }
 
 modify_man_dir() {
-    if [ "x${1}" = 'x5.26jposug' ]
-    then
-        perl_ver=$(echo $1 | sed -e 's/jposug//')
-        prefix=/opt/jposug
-    else
-        perl_ver=$1
-        prefix=/usr
-    fi
+    perl_ver=$1
+    prefix=/opt/jposug
 
     if [ -d $RPM_BUILD_ROOT${prefix}/perl5/${perl_ver}/man ]
     then
@@ -461,32 +220,12 @@ build_for() {
 
 # To build without test, pass 'without_test' to build_for commaond.
 # like 'build_for version without_test'
-%if %{build584}
-build_for 5.8.4
-%endif
-
-%if %{build510}
-build_for 5.10
-%endif
-
-%if %{build512}
-build_for 5.12
-%endif
-
-%if %{build516}
-build_for 5.16
-%endif
-
-%if %{build522}
-build_for 5.22
-%endif
-
 %if %{build526}
 build_for 5.26
 %endif
 
-%if %{build526jposug}
-build_for 5.26jposug
+%if %{build530}
+build_for 5.30
 %endif
 
 %install
@@ -519,91 +258,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,bin,-)
 %{_datadir}/man
 
-%if %{build584}
-%files 584
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-%if %{install_to_site_dir}
-/usr/perl5/site_perl/5.8.4
-%else
-/usr/perl5/vendor_perl/5.8.4
-%endif
-%if %{include_executable}
-/usr/perl5/5.8.4
-%endif
-%endif
-
-%if %{build510}
-%files 510
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-%if %{install_to_site_dir}
-/usr/perl5/site_perl/5.10
-%else
-/usr/perl5/vendor_perl/5.10
-%endif
-%if %{include_executable}
-/usr/perl5/5.1.0
-%endif
-%endif
-
-%if %{build512}
-%files 512
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-%if %{install_to_site_dir}
-/usr/perl5/site_perl/5.12
-%else
-/usr/perl5/vendor_perl/5.12
-%endif
-%if %{include_executable}
-/usr/perl5/5.12
-%endif
-%endif
-
-%if %{build516}
-%files 516
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-%if %{install_to_site_dir}
-/usr/perl5/site_perl/5.16
-%else
-/usr/perl5/vendor_perl/5.16
-%endif
-%if %{include_executable}
-/usr/perl5/5.16
-%endif
-%endif
-
-%if %{build522}
-%files 522
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-%if %{install_to_site_dir}
-/usr/perl5/site_perl/5.22
-%else
-/usr/perl5/vendor_perl/5.22
-%endif
-%if %{include_executable}
-/usr/perl5/5.22
-%endif
-%endif
-
 %if %{build526}
-%files 526
-%defattr(0755,root,bin,-)
-%dir %attr (0755, root, sys) /usr
-%if %{install_to_site_dir}
-/usr/perl5/site_perl/5.26
-%else
-/usr/perl5/vendor_perl/5.26
-%endif
-%if %{include_executable}
-/usr/perl5/5.26
-%endif
-%endif
-
-%if %{build526jposug}
 %files 526jposug
 %defattr(0755,root,bin,-)
 %dir %attr (0755, root, sys) /opt
@@ -617,7 +272,23 @@ rm -rf %{buildroot}
 %endif
 %endif
 
+%if %{build530}
+%files 530jposug
+%defattr(0755,root,bin,-)
+%dir %attr (0755, root, sys) /opt
+%if %{install_to_site_dir}
+/opt/jposug/perl5/site_perl/5.30
+%else
+/opt/jposug/perl5/vendor_perl/5.30
+%endif
+%if %{include_executable}
+/opt/jposug/perl5/5.30
+%endif
+%endif
+
 %changelog
+* Wed Mar 18 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- bump to 1.76 and only build for JPOSUG perl packages
 * Fri May 25 2018 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - bump to 1.74 and add apcakges for perl-526{,jposug}
 * Thu Apr 06 2017 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

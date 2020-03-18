@@ -25,6 +25,9 @@ Group:          Applications/System
 License:        GPL
 URL:            http://www.nagios.org/
 Source:         https://github.com/NagiosEnterprises/nrpe/archive/nrpe-%{tarball_version}.tar.gz
+Source1:        nagios-nrpe-jposug.xml
+Source2:        svc-nagios-nrpe-jposug
+
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 BuildREquires:  jposug/library/security/libressl
@@ -68,7 +71,6 @@ export PKG_CONFIG_PATH=/opt/jposug/lib/pkgconfig:/usr/lib/pkgconfig:/usr/share/p
 
 make -j$CPUS all
 
-
 %install
 rm -rf %{buildroot}
 make DESTDIR=%{buildroot} NAGIOS_INSTALL_OPTS="" NRPE_INSTALL_OPTS="" install
@@ -76,7 +78,9 @@ mkdir -p %{buildroot}/%{_sysconfdir}/nagios
 install -m 0644 sample-config/nrpe.cfg %{buildroot}%{_sysconfdir}/nagios/nrpe.cfg
 
 install -d 0755 %{buildroot}%/var/svc/manifest/site
-install -m 0644 startup/solaris-init.xml %{buildroot}%/var/svc/manifest/site/nagios-nrpe-jposug.xml
+install -m 0644 %{SOURCE1} %{buildroot}%/var/svc/manifest/site
+install -d 0755 %{buildroot}%/lib/svc/method
+install -m 0555 %{SOURCE2} %{buildroot}%/lib/svc/method
 
 rm %{buildroot}%{_sbindir}/nrpe-uninstall
 
@@ -105,8 +109,13 @@ rm -rf %{buildroot}
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest
 %dir %attr (0755, root, sys) %{_localstatedir}/svc/manifest/site
 %class(manifest) %attr(0444, root, sys) %{_localstatedir}/svc/manifest/site/nagios-nrpe-jposug.xml
+%dir %attr (0755, root, bin) /lib/svc
+%dir %attr (0755, root, bin) /lib/svc/method
+%attr (0555, root, bin) /lib/svc/method/svc-nagios-nrpe-jposug
 
 %changelog
+* Fri Mar 13 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
+- use JPOSUG's SMF manifest. using generated SMF manifest requries updating configuration
 * Fri Feb 07 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>
 - use generated SMF manifest instead of JPOUSG's
 * Thu Feb 06 2020 - Fumihisa TONAKA <fumi.ftnk@gmail.com>

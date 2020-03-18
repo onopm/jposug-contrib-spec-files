@@ -62,7 +62,6 @@ fi
 case "$1" in
   start)
 	# Start daemons.
-	echo -n "Starting nrpe: "
 	NrpeRunDir=`dirname $NrpeRunFile`
 	if [ ! -d $NrpeRunDir ]
 	then
@@ -75,15 +74,12 @@ case "$1" in
 	$NrpeBin -c $NrpeCfgFile -d
 	mkdir -p $NrpeLockDir
 	touch $NrpeLockDir/$NrpeLockFile
-	echo " done."
 	exit 0
 	;;
   stop)
 	# Stop daemons.
-	echo -n "Shutting down nrpe: "
 	pid_nrpe
 	killproc_nrpe
-	echo
 	rm -f $NrpeLockDir/$NrpeLockFile $NrpeRunFile
 	;;
   restart)
